@@ -1,0 +1,80 @@
+\section{Hamiltonian Cycles}
+
+\begin{definition}
+
+                A \textbf{Hamiltonian Cycle} is a cycle in $G = (V, E)$ that contains every vertex exactly once.
+            
+\end{definition}
+
+\begin{theorem}
+
+                Let $m, n \ge 2$. An $n \times m$ grid contains a Hamiltonian cycle iff $n \cdot m$ is even.
+            
+\end{theorem}
+
+\begin{theorem}
+
+                A bipartite graph $G = (A \cup B, E)$ with $|A| \neq |B|$ cannot contain a Hamiltonian cycle.
+            
+\end{theorem}
+
+\begin{theorem}
+
+\textbf{Dirac's Theorem (1952)}:\\
+
+                Every graph $G = (V, E)$ with $|V| \ge 3$ and minimum degree $\delta(G) \ge |V|/2$ contains a
+                Hamiltonian cycle.
+            
+\end{theorem}
+
+\begin{algorithm}
+
+\textbf{Dynamic Programming for Hamiltonian Cycle}:\\
+
+                Time complexity $O(n^2 2^n)$.
+                Define $P_{S, x} = 1$ if there is a $1-x$ path containing exactly the vertices in $S$.
+                Recursion:\\
+
+                $$P_{S, x} = \max \{ P_{S \setminus \{x\}, y} \mid y \in N(x) \cap S, y \neq 1 \}$$
+            
+\end{algorithm}
+
+\subsection{Travelling Salesman Problem (TSP)}
+
+            The travelling salesman problem is the problem of finding a Hamiltonian cycle in a complete graph $K_n$ with
+            minimal weight. In other words, the shortes roundtrip/roundtour.
+
+            \begin{theorem}
+
+                The travelling salesman problem is NP-Complete.
+            
+\end{theorem}
+
+            This is easy to prove by reduction from Hamiltonian Cycle. Assume we have a
+            Graph $G$ and want to check if it is Hamiltionian. Now lets extend the graph to be complete and set the
+            weight $w_e$ of every edge $e = (u,v) \in G$ to 0 and the weight of all the newly added edges to 1. Now we
+            can check if the TSP has a solution with weight 0. If it does, then $G$ has a Hamiltonian cycle, otherwise
+            it does not. Therfore TSP has to be NP-Complete as Hamiltionian decision is to.
+
+            \subsubsection{Metric TSP}
+
+            Assume we have a graph $G$ for which the triangle inequality holds, i.e.:
+            $$w(u,v) \le w(u,w) + w(w,v) \quad \forall u,v,w \in V$$
+
+            For this problem there is a 2 and even a 1.5 approximation algorithm.
+            \begin{algorithm}
+
+\textbf{2-Approximation for Metric TSP}:\\
+
+\begin{itemize}
+    \item Determine a minimal-spanning Tree $T$
+    \item Double all the edges of $T$ to get an Eulerian multigraph $T'$
+    \item Go along that Eulertour and skip every vertex that has already been visited
+    \item The resulting tour is a Hamiltonian cycle
+\end{itemize}
+
+                This Hamiltionian cycle has length at most $2 \cdot |E(T)| = 2 \cdot (|V|-1)$.
+
+            
+\end{algorithm}
+

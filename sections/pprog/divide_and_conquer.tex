@@ -1,0 +1,89 @@
+\section{Divide and Conquer}
+
+\begin{definition}
+
+\textbf{Divide and Conquer } refers to the strategy of splitting a problem into smaller subproblems,
+                solving them recursively, and combining the results.
+            
+\end{definition}
+
+            This concept can be used in many parallel algorithms. Until now we have used manual fork (.start()) and join
+            (.join()) of Threads. We can continue using manual fork/join with D \&C, but this can lead to several
+            Problems.
+
+            \begin{itemize}
+    \item Poor reusability of code
+    \item We need to commit to a number of threads a priori and can not dynamically adjust.
+    \item Subproblems are not automatically assigned to a thread.
+\end{itemize}
+.
+
+            \begin{remark}
+
+                There are some fixes that can improve manual fork/join such as sequential-cutoffs or running one
+                subproblem on the thread itself, instad of creating two new threads.
+            
+\end{remark}
+
+\subsection{Executor Service}
+
+            The Executor Service framework provides the way to schedule and run tasks on a thread-pool automatically.
+
+            \begin{remark}
+
+                Executor service can handle Runnables as well as Callables, with the diffrence that Callables return a
+                result.
+            
+\end{remark}
+
+            Pros and Cons of Executor service:
+            \begin{itemize}
+    \item Not suited for: Recursive subproblems that depend on each other and have a deep fork-tree. As the
+                    service will eventually run out of threads.
+    \item Suited for: flat structures that can run independently in parallel.
+\end{itemize}
+
+\subsection{Fork-Join}
+
+            The fork-join framework is built for divide and conquer parallelism. It automatically manages a pool of
+            threads to solve the recursive tasks using a work-stealing strategy, where threads have local task-queues
+            which they work an and if empty steal from other threads.
+
+            \begin{codeexample}
+
+                class myTask extends RecursiveTask {
+                myTask(int start, int end) {
+                //doWork
+                }
+                protected compute() {
+                if (end-start == 1) { return baseCase();} } else { left=new myTask(start, (start+end)/2);
+                right=new myTask((start+end)/2, end); left.fork(); right.fork(); return left.join() + right.join();
+                } }
+            
+\end{codeexample}
+
+\begin{important}
+
+                Make sure that every task has enough work to do (aprox. 100-10'000 ops.), else the overhead will be
+                larger than the parallel
+                speedup gain.
+            
+\end{important}
+
+\subsection{Task graphs}
+
+            The execution of parallel programs using Fork-Join can be represented as a Task-Graph (DAG).
+
+            \begin{definition}
+
+                We introduce a new size $T_{\infty}$ which is the execution time assuming unlimited hardware. This is
+                called the \textbf{span} and can be visualized as the sum of the execution times of the longest dependent
+                path in our
+                DAG.
+            
+\end{definition}
+
+            It is the programmers responsibility to find the optimal decomposition/alogrithm for the problem to ensure a
+            minimal span. Fork-join will guarantee optimal scheduling of tha tasks with minimal idletime.
+
+        

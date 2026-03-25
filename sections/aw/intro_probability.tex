@@ -1,0 +1,205 @@
+\section{Intro: Probability}
+
+\begin{definition}
+
+                A \textbf{discrete probability space} is a set of elementary events often denoted as $\Omega = \{
+                \omega_1,
+                \omega_2, \dots, \omega_n \}$.
+                \\
+
+                Every \textbf{elementary event} $\omega_i$ has a probability $P[\omega_i] \in [0,1]$ such that
+                $$\sum_{\omega_i \in \Omega} P[\omega_i] = 1$$
+            
+\end{definition}
+
+\begin{remark}
+
+                A finite probability space, in which every elementary event has the same probability is called a
+                \textbf{Laplace-Space}. Observe that for a Laplace-Space $\Omega$ and an arbitrary event $E$ we have:
+                $$P[E] = \frac{\vert E \vert}{\vert \Omega \vert}$$
+            
+\end{remark}
+
+\begin{definition}
+
+                An \textbf{Event} $E \subseteq \Omega$ is a set of elementary events. The probability of an event is
+                defined as:
+                $$P[E] = \sum_{\omega_i \in E} P[\omega_i]$$
+                The complementary event $\bar{E} = \Omega \setminus E$ has probability:
+                $$P[\bar{E}] = 1 - P[E]$$
+            
+\end{definition}
+
+\begin{theorem}
+
+                For two events $A, B$ in a probability space $\Omega$ we have:
+                \begin{itemize}
+    \item $P[\emptyset] = 0$ and $P[\Omega] = 1$
+    \item $P[A] \in [0,1]$
+    \item $P[\bar{A}] = 1 - P[A]$
+    \item If $A \subset B$ then $P[A] \le P[B]$
+\end{itemize}
+
+\end{theorem}
+
+\begin{theorem}
+
+                For events $A_1, A_2, ... A_n$ it holds
+                $$P[A_1 \cup A_2 \cup \dots \cup A_n] \leq \sum_{i=1}^n P[A_i]$$
+                with equality iff $A_1, A_2, ... A_n$ are pairwise disjoint.
+            
+\end{theorem}
+
+\begin{theorem}
+
+\textbf{Inclusion-Exclusion Principle: } For events $A_1, A_2, ... A_n$ with $n \geq 2$ it holds
+                $$P[\bigcup_{i=1}^n A_i] = \sum_{i=1}^n (-1)^{i+1} P[\bigcap_{j=1}^i A_j]$$
+            
+\end{theorem}
+
+            To proof this theorem we look at an arbitrary $\omega \in \bigcup_{i=1}^n A_i$. If $\omega$ is in exactly
+            $k$ of the events $A_i$, then it is counted $N_k$ times where
+            $$N_k = k - \binom{k}{2} + \binom{k}{3} - \dots + (-1)^{k+1} \binom{k}{k}$$
+            We show that $N_k = 1$ for all $k \in \{1, 2, \dots, n\}$. For that we use the binomial theorem:
+            $$(x-y)^k = \sum_{i=0}^k \binom{k}{i} x^{k-i} (-y)^i$$
+            Now let $x=1$ and $y=1$:
+            $$(1-1)^k = \sum_{i=0}^k \binom{k}{i} (-1)^i = \binom{k}{0} - \binom{k}{1} + \binom{k}{2} - \dots + (-1)^k
+            \binom{k}{k} = 1- N_k$$
+            Therfore:
+            $$N_k = 1 - (1-1)^k = 1$$
+
+            \subsection{Conditional Probability}
+
+\begin{definition}
+
+                Let $A$ and $B$ be events with $P[B] > 0$. The \textbf{conditional probability} of $A$ given $B$ is
+                defined as:
+                $$P[A \mid B] = \frac{P[A \cap B]}{P[B]}$$
+            
+\end{definition}
+
+\begin{example}
+
+                Assume a family with two children from which we know that one of them is a girl ($B$). What is the
+                probability that the other child is also a girl ($A$)?
+                $$P[A \mid B] = \frac{P[A \cap B]}{P[B]} = \frac{1/4}{3/4} = \frac{1}{3}$$
+            
+\end{example}
+
+\begin{theorem}
+
+\textbf{Multiplication-Theorem: } Let $A_1, A_2, .. A_n$ be events. If $P[A_1 \cap A_2 \cap \dots \cap
+                A_{n-1}] > 0$ then it holds:
+                $$P[A_1 \cap A_2 \cap \dots \cap A_n] = P[A_1] \cdot P[A_2 \mid A_1] \cdot P[A_3 \mid A_1 \cap A_2]
+                \cdot \dots \cdot P[A_n \mid A_1 \cap A_2 \cap \dots \cap A_{n-1}]$$
+            
+\end{theorem}
+
+            We can prove the correctness of this theorem by using the definition of conditional probability:
+            $$P[A_1] \cdot P[A_2 \mid A_1] \cdot P[A_3 \mid A_1 \cap A_2] \dots P[A_n \mid A_1 \cap A_2 \cap \dots \cap
+            A_{n-1}]$$
+            $$ = P[A_1] \cdot \frac{P[A_1 \cap A_2]}{P[A_1]} \cdot \frac{P[A_1 \cap A_2 \cap A_3]}{P[A_1 \cap A_2]}
+            \dots \frac{P[A_1 \cap A_2 \cap \dots \cap A_n]}{P[A_1 \cap A_2 \cap \dots \cap A_{n-1}]}$$
+            $$ = P[A_1 \cap A_2 \cap \dots \cap A_n]$$
+
+            \begin{example}
+
+\textbf{Birthday Problem: } What is the probability of two people in a room of $m$ having the same
+                birthday? We find the probability
+                that none of them have the same birthday this is $\frac{364}{365} \cdot \frac{363}{365} \cdot \dots
+                \cdot \frac{365-m+1}{365}$.
+            
+\end{example}
+
+\begin{theorem}
+
+\textbf{Theorem of total probability: }Let $A_1, ... A_n$ be pairwise disjoint events and let $B \subseteq
+                A_1 \cup ... \cup A_n$ then it
+                holds:
+                $$P[B] = \sum_{i=1}^n P[B \mid A_i] P[A_i]$$
+            
+\end{theorem}
+
+\begin{example}
+
+\textbf{Goat Problem: } Assume three doors of which we know that one hides a sportscar and the other two a
+                goat. You pick one
+                arbitrary door, then one of the other two opens and you see a goat. Should you now switch to the other
+                door
+                that is left or should you stay with the one you are?
+
+                Let $A_1$ be the event that you picked the door with the car and $A_2$ the event that you are infront of
+                the door with a goat. Further let $B$ be the event that you win if you change doors. Now observe
+                tracking-tight
+                $$Pr[B \mid A_1] = 0$$
+                $$Pr[B \mid A_2] = 1$$
+                $$Pr[A_1] = 1/3$$
+                $$Pr[A_2] = 2/3$$
+
+                Using the theorem above we get:
+                $$Pr[B] = Pr[B \mid A_1] Pr[A_1] + Pr[B \mid A_2] Pr[A_2] = 0 \cdot 1/3 + 1 \cdot 2/3 = 2/3$$
+            
+\end{example}
+
+\begin{theorem}
+
+\textbf{Bayes' Theorem: }
+                Let $A_1, A_2 ... A_n$ be pariwise disjoint events and $B \subseteq A_1 \cup A_2 ... \cup A_n$ with
+                $P[B] > 0$. Then:
+                $$P[A_i \mid B] = \frac{P[B \mid A_i] P[A_i]}{\sum_{j=1}^n P[B \mid
+                A_j] P[A_j]}$$
+            
+\end{theorem}
+
+            To prove bayes theorem we use the theorem of total probability:
+            $$P[A_i \mid B] = \frac{P[B \cap A_i]}{P[B]} = \frac{P[B \mid A_i] P[A_i]}{\sum_{j=1}^n P[B \mid
+            A_j] P[A_j]}$$
+
+            \begin{example}
+
+\textbf{Desease Test: }We test a person for a desease that has a probability of $P[A] = 0.01$ to occur.
+                Let $A$ be the event that the tested person has the desease. Further let $B$ be the event that the test
+                was positive. Assume we know the sensitivity of the test $P[B \mid A] = 0.72$ and the specificity
+                $P[\bar{B} \mid \bar{A}] = 0.98$. We want to find the probability that a person has the desease under
+                the condition that the test is positive:
+                $$P[A \mid B] = \frac{P[B \mid A] P[A]}{P[B \mid A] P[A] + P[B \mid
+                \bar{A}] P[\bar{A}]} = \frac{0.72 \cdot 0.01}{0.72 \cdot 0.01 + 0.02 \cdot 0.99} = \frac{0.0072}{0.027}
+                \approx 0.267$$
+                Here we see that even if the test is quite accurate, the probability that a person has the desease
+                is still quite low. This is because the probability of the desease is very low. If the probability of
+                the desease was higher, the probability of the test being positive would be higher.
+            
+\end{example}
+
+\subsection{Independence}
+
+\begin{definition}
+
+                Two events $A$ and $B$ are \textbf{independent} if $P[A \cap B] = P[A] P[B]$ or equivalently $P[A \mid B]
+                = P[A]$.
+            
+\end{definition}
+
+\begin{definition}
+
+                Events $A_1, A_2, \dots, A_n$ are independent if for all subsets $I \subseteq \{1, 2, \dots, n\}$ it
+                holds:
+                $$P[\bigcap_{i \in I} A_i] = \prod_{i \in I} P[A_i]$$
+            
+\end{definition}
+
+\begin{lemma}
+
+                Let $A_1, A_2 \dots A_n$ be events and let $A_i^{0} \coloneqq \bar{A_i}$ and $A_i^{1} \coloneqq A_i$ for
+                $i \in \{1, 2, \dots, n\}$.
+                Then $A_1, A_2 \dots A_n$ are independent iff for all $(s_1, \dots s_n) \in \{0,1\}^{n}$ it holds that:
+                $$P[\bigcap_{i=1}^n A_i^{s_i}] = \prod_{i=1}^n P[A_i^{s_i}]$$
+            
+\end{lemma}
+
+\begin{lemma}
+
+                Let $A, B$ and $C$ be independent events then so are $A \cap B$ and $C$ and also $A \cup B$ and $C$.
+            
+\end{lemma}
+

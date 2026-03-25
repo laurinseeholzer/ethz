@@ -1,0 +1,25 @@
+\contentsline {section}{\numberline {1}Threads \& Processes}{2}{}%
+\contentsline {subsection}{\numberline {1.1}Parallelism}{2}{}%
+\contentsline {subsection}{\numberline {1.2}Multithreading}{3}{}%
+\contentsline {section}{\numberline {2}Synchronization}{5}{}%
+\contentsline {subsection}{\numberline {2.1}Locks and Synchronized}{5}{}%
+\contentsline {subsection}{\numberline {2.2}Wait, notify, notifyAll}{6}{}%
+\contentsline {subsection}{\numberline {2.3}Lock API}{7}{}%
+\contentsline {section}{\numberline {3}Optimization}{8}{}%
+\contentsline {subsection}{\numberline {3.1}Caching}{8}{}%
+\contentsline {subsection}{\numberline {3.2}Vectorization}{8}{}%
+\contentsline {subsection}{\numberline {3.3}Superscalar and Speculative Execution (ILP)}{8}{}%
+\contentsline {subsection}{\numberline {3.4}Pipelining}{9}{}%
+\contentsline {subsection}{\numberline {3.5}Parallel Performance}{9}{}%
+\contentsline {section}{\numberline {4}Divide and Conquer}{10}{}%
+\contentsline {subsection}{\numberline {4.1}Executor Service}{10}{}%
+\contentsline {subsection}{\numberline {4.2}Fork-Join}{11}{}%
+\contentsline {subsection}{\numberline {4.3}Task graphs}{11}{}%
+\contentsline {section}{\numberline {5}Parallel Algorithms}{11}{}%
+\contentsline {subsection}{\numberline {5.1}Parallel Patterns}{11}{}%
+\contentsline {subsection}{\numberline {5.2}Parallel Algorithms}{12}{}%
+\contentsline {subsubsection}{\numberline {5.2.1}Prefix-Sum}{12}{}%
+\contentsline {subsubsection}{\numberline {5.2.2}Pack}{12}{}%
+\contentsline {subsubsection}{\numberline {5.2.3}Quicksort}{13}{}%
+\contentsline {section}{\numberline {6}Shared Resources}{13}{}%
+\contentsline {subsection}{\numberline {6.1}Race Conditions}{13}{}%
