@@ -1,0 +1,46 @@
+\section{Functions}
+
+\begin{definition}
+A \textbf{function} $f: D \to C$ is a map from a domian $D$ to a codomain $C$ s.t. for each $x \in D$ there is exactly one $y \in C$ st. $f(x) = y$.
+\end{definition}
+
+\begin{remark}
+The input is called the \textbf{independent variable} (argument) while the output is called the \textbf{dependent variable}.
+\end{remark}
+
+\begin{definition}
+A function $f$ is called
+\begin{itemize}
+    \item \textbf{injective} iff $\forall x_1, x_2 \in A : f(x_1) = f(x_2) \implies x_1 = x_2$.
+    \item \textbf{surjective} iff $\forall y \in B \exists x \in A : f(x) = y$.
+    \item \textbf{bijective} iff $f$ is injective and surjective.
+\end{itemize}
+\end{definition}
+
+\begin{example}
+Let $f: \mathbb{R} \to \mathbb{R}$ with $f(x) = x^2$. Observe that $f$ is not surjective as no output is negative, nor is it injective as for ex. $f(1) = f(-1) = 1$.\\\\
+But $g: \mathbb{R}_{0}^+ \to \mathbb{R}_{0}^+$ with $g(x) = x^2$ is both injective and surjective.
+\end{example}
+
+\begin{definition}
+The \textbf{restriction} of $f$ under $D' \subset \mathbb{D}$ is defined as $f\upharpoonleft_{D'}: D' \to C, x \mapsto f(x) \quad \forall x \in \mathbb{D}$.
+\end{definition}
+
+\begin{remark}
+Note that $f\upharpoonleft_{D'}$ and $f$ are two diffrent functions.
+\end{remark}
+
+\begin{definition}
+Let $f: D \to C$ and $g: C \to B$ be functions then $$ g \circ f: D \to B \quad \text{with} \quad g \circ f(x) = g(f(x)) \quad \forall x \in D $$
+is called the \textbf{composition} of $f$ and $g$.
+\end{definition}
+
+\begin{definition}
+The \textbf{identity function} $id_D: D \to D$ is defined as $id_D(x) = x \quad \forall x \in D$.
+\end{definition}
+
+\begin{definition}
+If a function $f: D \to C$ is bijective then there exists a unique function $f^{-1}: C \to D$ such that
+$$f(f^{-1}(y)) = id_C = y \quad \forall y \in C \quad \text{and} \quad f^{-1}(f(x)) = id_D = x \quad \forall x \in D$$
+$f^{-1}$ is called the \textbf{inverse function} of $f$.
+\end{definition}

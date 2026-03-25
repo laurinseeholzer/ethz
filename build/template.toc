@@ -1,0 +1,4 @@
+\contentsline {section}{\numberline {1}Template Features}{2}{}%
+\contentsline {subsection}{\numberline {1.1}Standard Core Blocks}{2}{}%
+\contentsline {subsection}{\numberline {1.2}Distinguishable Enhancements}{2}{}%
+\contentsline {subsection}{\numberline {1.3}Technical Implementations}{2}{}%

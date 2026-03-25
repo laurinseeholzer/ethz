@@ -1,0 +1,153 @@
+\section{Sequences and Series}
+
+\subsection{Sequences}
+
+\begin{definition}
+A \textbf{sequence} (Folge) $(a_n)_{n \in \mathbb{N}_0}$ is a list of numbers, mathematically a mapping $f: \mathbb{N}_0 \to X$. It can be given explicitly ($a_n = f(n)$) or recursively ($a_n = g(a_{n-1}, a_{n-2}, \dots)$).
+\end{definition}
+
+\begin{definition}
+A sequence $(a_n)$ is called \textbf{convergent} with limit $L \in \mathbb{R}$ if:
+$$\forall \epsilon \gt 0 \exists N \gt 0 \text{ s.t. } \forall n \gt N : |a_n - L| \lt \epsilon$$
+Written as $\lim_{n \to \infty} a_n = L$.
+\\ \\
+If no such $L$ exists, the sequence is \textbf{divergent}. Sequences that diverge to $\pm \infty$ are a special case of divergent sequences.
+\end{definition}
+
+\begin{theorem}
+The limit of a sequence is unique aslong as it exists.
+\end{theorem}
+
+\begin{theorem}
+A subsequence $(a_{n_k})_{k \in \mathbb{N}_0}$ of a convergent sequence converges to the same limit $L$.
+\end{theorem}
+
+\begin{definition}
+An \textbf{accumulation point} (Häufungspunkt) $A \in \mathbb{R}$ of a sequence fulfills:
+$$\forall \epsilon \gt 0 \forall N \in \mathbb{N}_0 \exists n \ge N \text{ such that } |a_n - A| \lt \epsilon$$
+$A$ is an accumulation point iff there exists a convergent subsequence with limit $A$. Every convergent sequence has exactly one accumulation point (its limit).
+\end{definition}
+
+\begin{theorem}
+Limit arithmetic: For $\lim a_n = K$ and $\lim b_n = L$:
+\begin{itemize}
+    \item $\lim (a_n \pm b_n) = K \pm L$
+    \item $\lim (a_n \cdot b_n) = K \cdot L$
+    \item $\lim (a_n / b_n) = K / L$ (if $L \neq 0$ and $b_n \neq 0$)
+\end{itemize}
+\end{theorem}
+
+\begin{theorem}
+\textbf{Sandwich-Theorem:} If $a_n \le b_n \le c_n$ for $n \ge N_0$, and $\lim a_n = \lim c_n = L$, then $\lim b_n = L$.
+\end{theorem}
+
+\begin{remark}
+Important limits:
+\begin{itemize}
+    \item $\lim_{n \to \infty} \frac{\ln n}{n} = 0$
+    \item $\lim_{n \to \infty} n^{1/n} = 1$
+    \item $\lim_{n \to \infty} x^{1/n} = 1 \quad (x \gt 0)$
+    \item $\lim_{n \to \infty} \left(1 + \frac{x}{n}\right)^n = e^x$
+    \item $\lim_{n \to \infty} \frac{x^n}{n!} = 0$
+\end{itemize}
+\end{remark}
+
+\begin{definition}
+A sequence is
+\begin{itemize}
+    \item \textbf{monotonically increasing (decreasing)} if $a_n \le (\geq) a_m$ for $m \gt n$.
+    \item \textbf{upper (lower) bounded} if there exists $M$such that $|a_n| \le (\geq) M \quad \forall n \in \mathbb{N}_0$.
+\end{itemize}
+\end{definition}
+
+\begin{theorem}
+\textbf{Bolzano-Weierstrass Theorem:} Every bounded sequence has an accumulation point.
+\end{theorem}
+
+\begin{theorem}
+\textbf{Monotone Convergence Theorem:} Every bounded monotonic sequence converges to its supremum (infimum).
+\end{theorem}
+
+\begin{definition}
+The limit of the supremum is called \textbf{limes superior} and writen as:
+$$\limsup_{n \to \infty} a_n = \lim_{n \to \infty} \sup_{k \ge n} a_k$$
+The limit of the infimum is called \textbf{limes inferior} and writen as:
+$$\liminf_{n \to \infty} a_n = \lim_{n \to \infty} \inf_{k \ge n} a_k$$
+\end{definition}
+
+\begin{definition}
+A sequence is a \textbf{Cauchy sequence} if $\forall \epsilon \gt 0 \exists N \in \mathbb{N} \text{ such that } \forall m, n \ge N : |a_n - a_m| \lt \epsilon$.
+A real sequence converges iff it is a Cauchy sequence.
+\end{definition}
+
+\begin{theorem}
+A sequence of real numbers converges iff it is a cauchy sequence.
+\end{theorem}
+
+\subsection{Series}
+
+\begin{definition}
+A \textbf{series} (Reihe) is an infinite sum $\sum_{i=0}^\infty a_i$ of the terms of a sequence $(a_n)$.
+\end{definition}
+
+\begin{theorem}
+\textbf{Necessary condition for convergence:} for $\sum_{i=0}^\infty a_i$ to converge we need $\lim_{n \to \infty} a_n = 0$.
+\end{theorem}
+
+\begin{theorem}
+For \textbf{series with non-negative terms} $a_n \ge 0$, the sequence of partial sums is monotonically increasing. \textbf{It converges iff it is bounded.}
+\end{theorem}
+
+\begin{theorem}
+\textbf{Comparison test} (Vergleichskriterium): If $c_n \le b_n \le a_n$ for $n \ge N$:
+\begin{itemize}
+    \item If $\sum a_n$ converges, then $\sum b_n$ converges (\textbf{Majorantenkriterium}).
+    \item If $\sum c_n$ diverges, then $\sum b_n$ diverges (\textbf{Minorantenkriterium}).
+\end{itemize}
+\end{theorem}
+
+\begin{definition}
+A series is \textbf{absolutely convergent} if $\sum |a_n|$ converges. Absolute convergence implies normal convergence.
+A \textbf{conditionally convergent} series converges, but not absolutely.
+\end{definition}
+
+\begin{theorem}
+\textbf{Riemann's rearrangement theorem:}
+Let $\sum a_n$ be a conditionally convergent series. Then for any $x \in \mathbb{R}$, there exists a rearrangement of the series that converges to $x$.
+\end{theorem}
+
+\begin{theorem}
+\textbf{Leibniz Criterion}: For an alternating series $\sum (-1)^n a_n$ with a monotonically decreasing null sequence $(a_n)$, the series converges.
+\end{theorem}
+
+\begin{theorem}
+\textbf{Cauchy Criterion:} The series $\sum a_n$ converges iff $$\forall \epsilon \gt 0 \exists N \in \mathbb{N} \text{ such that } \forall m, n \ge N : |\sum_{k=n}^m a_k| \lt \epsilon$$
+\end{theorem}
+
+\begin{theorem}
+More criterions for convergence:
+\begin{itemize}
+    \item \textbf{Root Criterion} (Wurzelkriterium): Let $\rho = \limsup \sqrt[n]{|a_n|}$. If $\rho \lt 1$, abs conv; if $\rho \gt 1$, div.
+    \item \textbf{Ratio Criterion} (Quotientenkriterium): Let $\rho = \lim \left| \frac{a_{n+1}}{a_n} \right|$. If $\rho \lt 1$, abs conv; if $\rho \gt 1$, div.
+\end{itemize}
+\end{theorem}
+
+\begin{definition}
+A \textbf{power series} (Potenzreihe) centered at $a$ has the form $\sum_{k=0}^\infty c_k(x-a)^k$.
+\end{definition}
+
+\begin{theorem}
+Every power series has a \textbf{convergence radius} $R$, with the \textbf{interval of convergence} $(a-R, a+R)$.
+$R$ is computed by the formula $R = \frac{1}{\limsup |c_n|^{1/n}}$.
+\end{theorem}
+
+\begin{example}
+$$\sum_{n=1}^\infty (-1)^{n+1} \frac{1}{n}x^n$$
+$$\rho = \limsup \frac{1}{n^{1/n}} = 1 \implies R = 1$$
+Therfore the series converges for $$x \in (-1, 1)$$.
+\end{example}
+
+\begin{remark}
+For $x = 1$ we have the harmonic series, which diverges.
+For $x = -1$ we have the alternating harmonic series, which converges.
+\end{remark}

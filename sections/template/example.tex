@@ -1,0 +1,53 @@
+\section{Template Features}
+
+This document serves as a template to demonstrate the various styling blocks available. By isolating \texttt{packages.tex}, \texttt{commands.tex}, and \texttt{theorem\_styles.tex}, the \texttt{main.tex} remains clean and dedicated strictly to document structure.
+
+\subsection{Standard Core Blocks}
+
+\begin{definition}
+A \textbf{Definition block} is used to declare and explain a new mathematical concept or term. It utilizes the unified standard styling.
+\end{definition}
+
+\begin{theorem}
+A \textbf{Theorem block} is intended for major educational results. It utilizes the unified standard styling exactly like Definition and Lemma.
+$$ a^2 + b^2 = c^2 $$
+\end{theorem}
+
+\begin{lemma}
+A \textbf{Lemma} highlights a stepping-stone result. It also utilizes the unified standard styling with a strong left vertical alignment line.
+\end{lemma}
+
+\subsection{Distinguishable Enhancements}
+
+\begin{example}
+An \textbf{Example block} demonstrates applications purely with standard formatting—no special borders or backgrounds, just clear plain text layout.
+\end{example}
+
+\begin{remark}
+A \textbf{Remark block} provides supplementary information, edge cases, or commentary. It sits subtly on a light gray background with no borders.
+\end{remark}
+
+\begin{important}
+An \textbf{Important block} is reserved for crucial warnings, common pitfalls, or core takeaways that the reader absolutely must not miss. It sticks out with a bold, full border enclosure.
+\end{important}
+
+\subsection{Technical Implementations}
+
+\begin{codeexample}[language=Python]
+# We use the Code Example block to distinctly encapsulate programming 
+# snippets or configuration strings, utilizing a subtle gray frame 
+# and clean line numbering.
+
+def compile_latex(file):
+    print(f"Compiling {file}...")
+    return compile(file)
+\end{codeexample}
+
+\begin{algorithm}
+The \textbf{Algorithm block} is meant to present structured pseudocode or computational sequences. It utilizes strong top and bottom bounding borders to structurally isolate it from standard literature.
+
+Initialize $x \gets 0$ \\
+Loop while $x \lt 10$ \\
+\quad $x \gets x + 1$ \\
+Output $x$
+\end{algorithm}
