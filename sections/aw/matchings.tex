@@ -2,9 +2,9 @@
 
 \begin{definition}
 
-                An edge set $M \subseteq E$ is called a \textbf{matching} in $G = (V, E)$ if no vertex is incident to
-                more than one edge from $M$.
-                \begin{itemize}
+    An edge set $M \subseteq E$ is called a \textbf{matching} in $G = (V, E)$ if no vertex is incident to
+    more than one edge from $M$.
+    \begin{itemize}
     \item A vertex $v$ is \textbf{covered} by $M$ if it is incident to an edge in $M$.
     \item A matching is \textbf{perfect} if every vertex is covered ($|M| = |V|/2$).
     \item A matching is \textbf{maximal} if it cannot be extended by adding edges.
@@ -15,47 +15,48 @@
 
 \begin{algorithm}
 
-\textbf{Greedy Algorithm}:\\
+#Greedy Algorithm
+#This leads to a maximal matching M. 
+#The size of M is at least half the size of a maximum matching.
 
-                While there are still edges in $E$ choose an arbitrary edge $e \in E$ and add it to $M$. Remove all
-                edges incident to the endpoints of $e$ from $E$.
-                \\
-
-                This leads to a maximal matching $M$. The size of $M$ is at least half the size of a maximum
-                matching.
-            
+M = empty set
+while E is not empty:
+    choose an arbitrary edge e from E
+    add e to M
+    remove all edges incident to the endpoints of e from E
+    
 \end{algorithm}
 
 \begin{theorem}
 
 \textbf{Hall's Marriage Theorem}:\\
 
-                A bipartite graph $G = (A \cup B, E)$ contains a matching of cardinality $|M|=|A|$ iff:
-                $$\forall X \subseteq A : |X| \le |N(X)|$$
-            
+    A bipartite graph $G = (A \cup B, E)$ contains a matching of cardinality $|M|=|A|$ iff:
+    $$\forall X \subseteq A : |X| \le |N(X)|$$
+    
 \end{theorem}
 
 \begin{theorem}
 
 \textbf{Frobenius Corollary}:\\
 
-                Every $k$-regular bipartite graph contains a perfect matching.
-            
+    Every $k$-regular bipartite graph contains a perfect matching.
+    
 \end{theorem}
 
 \begin{definition}
 
-                An \textbf{$M$-augmenting path} is a path that alternates between edges in $M$ and not in $M$,
-                starting
-                and ending in uncovered vertices.
-            
+    An \textbf{$M$-augmenting path} is a path that alternates between edges in $M$ and not in $M$,
+    starting
+    and ending in uncovered vertices.
+    
 \end{definition}
 
 \begin{theorem}
 
 \textbf{Berge's Theorem (1957)}:\\
 
-                A matching $M$ is maximum iff there is no $M$-augmenting path.
-            
+    A matching $M$ is maximum iff there is no $M$-augmenting path.
+    
 \end{theorem}
 

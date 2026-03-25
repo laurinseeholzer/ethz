@@ -44,3 +44,93 @@ If a function $f: D \to C$ is bijective then there exists a unique function $f^{
 $$f(f^{-1}(y)) = id_C = y \quad \forall y \in C \quad \text{and} \quad f^{-1}(f(x)) = id_D = x \quad \forall x \in D$$
 $f^{-1}$ is called the \textbf{inverse function} of $f$.
 \end{definition}
+
+\begin{definition}
+    A function  $f: \mathbb{R} \to \mathbb{R}$ is called 
+    \begin{itemize}
+        \item \textbf{(strictly) monotonically increasing} iff $\forall x_1, x_2 \in \mathbb{R} : x_1 < x_2 \implies f(x_1) < f(x_2)$
+        \item \textbf{(strictly) monotonically decreasing} iff $\forall x_1, x_2 \in \mathbb{R} : x_1 < x_2 \implies f(x_1) > f(x_2)$
+        \item \textbf{(strictly) monotonic} iff $f$ is either (strictly) monotonically increasing or (strictly) monotonically decreasing
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    A function $f: \mathbb{R} \to \mathbb{R}$ is called 
+    \begin{itemize}
+        \item \textbf{even} iff $\forall x \in \mathbb{R} : f(-x) = f(x)$
+        \item \textbf{odd} iff $\forall x \in \mathbb{R} : f(-x) = -f(x)$
+    \end{itemize}
+\end{definition}
+
+\begin{example}
+    The function $f: \mathbb{R} \to \mathbb{R}$ with $f(x) = x^3$ is odd as $f(-x) = (-x)^3 = -x^3 = -f(x)$ while the function $g: \mathbb{R} \to \mathbb{R}$ with $g(x) = x^2$ is even as $g(-x) = (-x)^2 = x^2 = g(x)$.
+\end{example}
+
+\begin{remark}
+    Observe that functions do not have to be even or odd.
+\end{remark}
+
+\begin{definition}
+    The \textbf{graph} of a function $f: D \to C$ is the set of all ordered pairs $(x, f(x))$ for $x \in D$. It is \textbf{konvex} if it lies below the line segment connecting any two points on the graph. Similarly it is called \textbf{konkav} if it lies above the line segment connecting any two points on the graph.
+\end{definition}
+
+\subsection{Limits in the context of functions}
+
+\begin{definition}
+    Let $f: \mathbb{D} \to \mathbb{R}$ be a function satisfying $\mathbb{D} \cap (x_0 - \delta, x_0 + \delta) \neq \emptyset$ for all $\delta > 0$ and $x_0 \in \mathbb{R}$. We say that $\lim_{x \to x_0} f(x) = L$ iff 
+    $$\forall \varepsilon > 0 \exists \delta > 0  \text{s.t.}$$
+    $$x \in \mathbb{D} \cup (x_0 - \delta, x_0 + \delta) \implies |f(x) - L| < \varepsilon$$
+    The limit $L$ is unique.
+\end{definition}
+
+\begin{remark}
+The intuition behind the definition of the limit is that for any given distance $\varepsilon > 0$ around $L$, 
+we can find a $\delta > 0$ such that for all $x \in \mathbb{D}$ that are at least $\delta$ close to $x_0$, we have $|f(x) - L| < \varepsilon$. 
+\\
+So for any boound on the output ($\varepsilon$) there exists a bound on the input ($\delta$) such that all elements in the input bound $(x_0 - \delta, x_0 + \delta)$ are mapped to the output bound $(L - \varepsilon, L + \varepsilon)$.
+\end{remark}
+
+\begin{definition}
+    A function $f: \mathbb{D} \to \mathbb{R}$ has in $x_0$ a
+
+    \begin{itemize}
+        \item \textbf{right-sided limit} $\quad \lim_{x \searrow x_0} f(x) = \lim_{x \to x_0^+} f(x) = L$ iff 
+        $$\forall \varepsilon > 0 \exists \delta > 0  \quad \text{s.t.} \quad \forall x \in \mathbb{D} (x_0 < x < x_0 + \delta \implies |f(x) - L| < \varepsilon)$$
+        \item \textbf{left-sided limit} $\lim_{x \nearrow x_0} f(x) = L$ iff 
+        $$\forall \varepsilon > 0 \exists \delta > 0  \quad \text{s.t.} \quad \forall x \in \mathbb{D} (x_0 - \delta < x < x_0 \implies |f(x) - L| < \varepsilon)$$
+    \end{itemize}
+    
+\end{definition}
+
+\begin{definition}
+    A function $f: \mathbb{D} \to \mathbb{R}$ has a
+    \begin{itemize}
+        \item \textbf{limit for x approaching infinity} $\lim_{x \to \infty} f(x) = L$ iff 
+        $$\forall \varepsilon > 0 \exists M > 0 \quad \text{s.t.} \quad \forall x \in \mathbb{D} (x > M \implies |f(x) - L| < \varepsilon)$$
+        \item \textbf{limit for x approaching negative infinity} $\lim_{x \to -\infty} f(x) = L$ iff 
+        $$\forall \varepsilon > 0 \exists M > 0 \quad \text{s.t.} \quad \forall x \in \mathbb{D} (x < M \implies |f(x) - L| < \varepsilon)$$
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    A function $f: \mathbb{D} \to \mathbb{R}$ has in $x_0$ a
+    \begin{itemize}
+        \item \textbf{improper limit approaching infinity} $\lim_{x \to x_0} f(x) = \infty$ iff 
+        $$\forall N > 0 \exists \delta > 0 \quad \text{s.t.} \quad \forall x \in \mathbb{D} (0 < |x - x_0| < \delta \implies f(x) > N)$$
+        \item \textbf{improper limit approaching negative infinity} $\lim_{x \to x_0} f(x) = -\infty$ iff 
+        $$\forall N > 0 \exists \delta > 0 \quad \text{s.t.} \quad \forall x \in \mathbb{D} (0 < |x - x_0| < \delta \implies f(x) < -N)$$
+     \end{itemize}
+\end{definition}
+
+\begin{theorem}
+    Let $A \in \mathbb{R}$ and assume $\lim_{x \to x_0} f(x) = K (\neq \pm \infty)$ and $\lim_{x \to x_0} g(x) = L (\neq \pm \infty)$.
+    \begin{itemize}
+        \item $\lim_{x \to x_0} (f(x) + g(x)) = K + L$
+        \item $\lim_{x \to x_0} (f(x) - g(x)) = K - L$
+        \item $\lim_{x \to x_0} (f(x) g(x)) = K L$
+        \item $\lim_{x \to x_0} (f(x) / g(x)) = K / L$
+        \item $\lim_{x \to x_0} (A f(x)) = A K$
+        \item $\lim_{x \to x_0} (f(x)/g(x)) = K/L$ if $L \neq 0$
+    \end{itemize}
+\end{theorem}
+

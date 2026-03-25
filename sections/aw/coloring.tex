@@ -2,42 +2,40 @@
 
 \begin{definition}
 
-                A \textbf{$k$-coloring} of $G = (V, E)$ is a mapping $c: V \to [k]$ such that $c(u) \neq c(v)$ for all
-                $\{u,v\} \in E$.
-                \\
+    A \textbf{$k$-coloring} of $G = (V, E)$ is a mapping $c: V \to [k]$ such that $c(u) \neq c(v)$ for all
+    $\{u,v\} \in E$.
+    \\
 
-                The \textbf{chromatic number} $\chi(G)$ is the minimum number of colors.
-                \\
+    The \textbf{chromatic number} $\chi(G)$ is the minimum number of colors.
+    \\
 
-                $\chi(G) \le 2 \iff G$ is bipartite.
-            
+    $\chi(G) \le 2 \iff G$ is bipartite.
+    
 \end{definition}
 
 \begin{theorem}
 
-                For $k \ge 3$, the problem "Is $\chi(G) \le k$?" is NP-complete.
-            
+    For $k \ge 3$, the problem "Is $\chi(G) \le k$?" is NP-complete.
+    
 \end{theorem}
 
 \begin{algorithm}
 
-\textbf{Greedy Coloring}:\\
+#Greedy Coloring
+#Requires at most maximum degree + 1 colors.
 
-                Requires at most $\Delta(G)+1$ colors.
-                \\
-
-\textbf{Heuristic}: Delete vertices in order of minimum degree. Gives $\le k+1$ colors if all
-                subgraphs
-                have a vertex with degree $\le k$.
-            
+Heuristic: 
+delete vertices in order of minimum degree
+#Gives <= k+1 colors if all subgraphs have a vertex with degree <= k.
+    
 \end{algorithm}
 
 \begin{theorem}
 
 \textbf{Brooks' Theorem}:\\
 
-                For a connected graph $G$ that is neither a complete graph $K_n$ nor an odd cycle $C_{2n+1}$:
-                $$\chi(G) \le \Delta(G)$$
-            
+    For a connected graph $G$ that is neither a complete graph $K_n$ nor an odd cycle $C_{2n+1}$:
+    $$\chi(G) \le \Delta(G)$$
+    
 \end{theorem}
 

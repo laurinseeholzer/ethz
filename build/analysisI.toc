@@ -8,3 +8,4 @@
 \contentsline {subsection}{\numberline {2.1}Sequences}{8}{}%
 \contentsline {subsection}{\numberline {2.2}Series}{10}{}%
 \contentsline {section}{\numberline {3}Functions}{11}{}%
+\contentsline {subsection}{\numberline {3.1}Limits in the context of functions}{13}{}%

@@ -2,21 +2,21 @@
 
 \begin{definition}
 
-                An \textbf{Eulertour} is a closed walk in a graph $G$ that contains every edge exactly once.
-            
+    An \textbf{Eulertour} is a closed walk in a graph $G$ that contains every edge exactly once.
+    
 \end{definition}
 
 \begin{theorem}
 
-                A connected graph $G = (V, E)$ contains an Eulertour iff the degree of every vertex is even.
-            
+    A connected graph $G = (V, E)$ contains an Eulertour iff the degree of every vertex is even.
+    
 \end{theorem}
 
-            We can find an Eulertour in time $O(|E|)$. Using an algorithm illustrated by a Runner and a Turtle. The
-            Runner is set lose and traverses the graph until he reaches a vertex he has already visited (we found a
-            cycle). Then the Turtle
-            is set lose and traverses the graph along that path until it reaches a vertex that has unvisited neighbours,
-            from where on the Runner is set lose again (we expand the cycle by findin a new one adjacent to it). This
-            process expands the tour by a cycle at a time until all
-            edges have been traversed.
+    We can find an Eulertour in time $O(|E|)$. Using an algorithm illustrated by a Runner and a Turtle. The
+    Runner is set lose and traverses the graph until he reaches a vertex he has already visited (we found a
+    cycle). Then the Turtle
+    is set lose and traverses the graph along that path until it reaches a vertex that has unvisited neighbours,
+    from where on the Runner is set lose again (we expand the cycle by findin a new one adjacent to it). This
+    process expands the tour by a cycle at a time until all
+    edges have been traversed.
         
