@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1774440039.8177 "/home/laurin/dev/ethz/aw.tex" "build/aw.pdf" "aw" 1774440040.63592 0
+["pdflatex"] 1774522811.24232 "/home/laurin/dev/ethz/aw.tex" "build/aw.pdf" "aw" 1774522812.11918 0
   "/home/laurin/dev/ethz/aw.tex" 1774433677.98863 547 d8af49e8693e007b5b469397a93fefdd ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.enc" 1561323594 2496 4d35740f3a177992ff7b134746c0a1db ""
@@ -121,15 +121,15 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1774398240.84368 4602601 5d02a5c5d52d7237566d144856366042 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1774397783 7753788 a0020c5830dd8c877264576b28708675 ""
   "aw.tex" 1774433677.98863 547 d8af49e8693e007b5b469397a93fefdd ""
-  "build/aw.aux" 1774440040.51486 1243 414ac19dc002782f812e2bfc905d72f3 "pdflatex"
-  "build/aw.toc" 1774440040.51486 724 6adb88f8808e904930a2b25fa2e9e9b6 "pdflatex"
+  "build/aw.aux" 1774522811.99725 1450 548f184573144b7f092501d74879268e "pdflatex"
+  "build/aw.toc" 1774522811.99825 849 89f449d5b7b6750bae7159958ae27439 "pdflatex"
   "sections/aw/coloring.tex" 1774440038.7879 854 3b85fdc1653f2a48e672a67f886ddf1a ""
   "sections/aw/connectivness_of_graphs.tex" 1774439878.48449 4231 167a45286d2df41a7d804dfb40fcc294 ""
   "sections/aw/eulertours.tex" 1774439591.21673 862 63bef3ebbe3e3c40db391139dbaef1b5 ""
   "sections/aw/hamiltonian_cycles.tex" 1774440015.20298 2320 35169a6d9e19a9ce81bd1113180abbcf ""
   "sections/aw/intro_probability.tex" 1774439591.21733 7434 726266b20d6611b03bd73016fb1b92a8 ""
   "sections/aw/matchings.tex" 1774440013.19599 1563 5dec4bb0439d5efe35632f7db4ca8a29 ""
-  "sections/aw/random_variables.tex" 1774439591.21754 409 05e47e258987fc4df9c1984cdbd91bf5 ""
+  "sections/aw/random_variables.tex" 1774522811.00425 4409 1dfe2eacc98a2f271db5bb5a2dd15389 ""
   "template/commands.tex" 1774398211.32166 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
   "template/packages.tex" 1774399071.0618 419 a4a7f712da8bfb18dde6dd329f00198a ""
   "template/theorem_styles.tex" 1774430432.08921 2530 5415b1d3cc1c5ce9df9c2be1dad76ee8 ""
