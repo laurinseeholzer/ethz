@@ -1,0 +1,150 @@
+\section{Connectivness of Graphs}
+
+\begin{definition}
+
+    Let $G = (V, E)$ be a graph, $u, v \in V, u \neq v$. $u$ and $v$ are called \textbf{connected} if there is
+    a $u-v$-path in $G$.
+    
+\end{definition}
+
+\begin{definition}
+
+    A graph $G = (V, E)$ is called \textbf{connected} if $\forall u, v \in V, u \neq v$ a $u-v$-path in $G$
+    exists.
+    
+\end{definition}
+
+\begin{definition}
+
+    Let $G = (V, E)$ be a graph, $u, v \in V, u \neq v$. $u$ and $v$ are called \textbf{$k$-connected} if $|V|
+    \ge k+1$ and
+    $$\forall X \subseteq V \setminus \{u, v\} \text{ with } |X| \lt k, u \text{ and } v \text{ are
+    connected in } G[V \setminus X]$$
+    
+\end{definition}
+
+\begin{definition}
+
+    A graph $G = (V, E)$ is called \textbf{$k$-connected} if $|V| \gt k$ and
+    $$\forall X \subseteq V \text{ with } |X| \lt k, G[V \setminus X] \text{ is connected}$$
+    
+\end{definition}
+
+\begin{definition}
+
+    Let $G = (V, E)$ be a graph, $u, v \in V$ and $X \subseteq V \setminus \{u, v\}$. $X$ is called a
+    \textbf{$u-v$-separator} if $u$ and $v$ are in different connected components of $G[V \setminus X]$.
+    
+\end{definition}
+
+    More generally one can say that if a Graph $G$ contians a vertex $v$ stuch that $deg(v) \lt k$, then $G$ can
+    not be $k$-connected.
+
+    \begin{theorem}
+
+\textbf{Menger's Theorem (Vertex Version)}:\\
+
+    Let $G = (V, E)$ be a graph and $u, v \in V$. The minimum size of a $u-v$-separator is equal to the
+    maximum number of internally vertex-disjoint $u-v$-paths.
+    \\
+\\
+
+    A graph $G$ is $k$-connected iff. $\forall u, v \in V, u \neq v$ there are $k$ internally
+    vertex-disjoint $u-v$-paths.
+    
+\end{theorem}
+
+\begin{definition}
+
+    A graph $G = (V, E)$ is called \textbf{$k$-edge-connected} if
+    $$\forall X \subseteq E \text{ with } |X| \lt k, (V, E \setminus X) \text{ is connected}$$
+    
+\end{definition}
+
+\begin{theorem}
+
+\textbf{Menger's Theorem (Edge Version)}:\\
+
+    A graph $G$ is $k$-edge-connected iff. $\forall u, v \in V, u \neq v$ there are $k$ edge-disjoint
+    $u-v$-paths.
+    
+\end{theorem}
+
+\begin{theorem}
+
+    It always holds that:
+    $$\text{Vertex Connectivity} \le \text{Edge Connectivity} \le \text{Minimum Degree } \delta(G)$$
+    
+\end{theorem}
+
+    Lets look at the special case where $k=1$
+
+    \begin{definition}
+
+    Let $G = (V, E)$ be a connected graph.
+    \begin{itemize}
+    \item A vertex $v \in V$ is called a \textbf{cut vertex} (Artikulationsknoten) iff. $G[V \setminus
+            \{v\}]$ is disconnected.
+    \item An edge $e \in E$ is called a \textbf{bridge} (Brücke) iff. $(V, E \setminus \{e\})$ is
+            disconnected.
+\end{itemize}
+
+\end{definition}
+
+\begin{lemma}
+
+    If $e = \{x, y\} \in E$ is a bridge, then $\text{deg}(x) = 1$ or $x$ is a cut vertex (analogously for
+    $y$).
+    
+\end{lemma}
+
+\begin{definition}
+
+\textbf{Blocks}:\\
+
+    We define an equivalence relation $\sim$ on $E$ by:
+    $$e \sim f \iff e=f \lor \exists \text{ cycle containing } e \text{ and } f$$
+    The equivalence classes are called \textbf{blocks}.
+    
+\end{definition}
+
+    Note that two blocks can share at most one vertex, more over this vertex has to be a cut vertex.
+
+    \begin{definition}
+
+\textbf{Block Graph}:\\
+
+    The block graph of a connected graph $G$ is a bipartite graph $T = (A \cup B, E_T)$ where:
+    \begin{itemize}
+    \item $A = \{\text{cut vertices of } G\}$
+    \item $B = \{\text{blocks of } G\}$
+    \item Edge $\{a, b\} \in E_T \iff a$ is incident to an edge in block $b$.
+\end{itemize}
+
+\end{definition}
+
+\begin{theorem}
+
+    If $G$ is connected, the block graph of $G$ is a tree.
+    
+\end{theorem}
+
+\begin{algorithm}
+
+#Depth-First Search (DFS) \& Low Values
+#For efficient computation of cut vertices and bridges in time $O(|V|+|E|)$.
+
+low[v] := #the smallest DFS number reachable from $v$ by a directed path consisting of tree edges and at most one back edge.
+
+#It holds that:
+low[v] = min{ dfs[v], min_{(v,w)  back edge} dfs[w], min_{(v,w)  tree edge} low[w] }
+
+#A vertex v is a cut vertex iff:
+
+v != root and there exists a child u with low[u] >= df s[v].
+v = root and has >= 2 children in the DFS tree.
+
+A tree edge (v,w) is a bridge iff low[w] >= df s[v].
+    
+\end{algorithm}
+

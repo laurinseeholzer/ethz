@@ -1,0 +1,97 @@
+% Define Theorem Styles
+
+% 1. Definition, Theorem, Lemma (all look the same)
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{lemma}[definition]{Lemma}
+
+\mdfdefinestyle{grayBlock}{
+    hidealllines=true,
+    backgroundcolor=black!5,
+    skipabove=\baselineskip, skipbelow=\baselineskip,
+    innertopmargin=10pt, innerbottommargin=10pt
+}
+\surroundwithmdframed[style=grayBlock]{definition}
+\surroundwithmdframed[style=grayBlock]{theorem}
+\surroundwithmdframed[style=grayBlock]{lemma}
+
+
+% 2. Remark (slight gray background, no border)
+\newtheorem{remark}[definition]{Remark}
+
+\mdfdefinestyle{standardBlock}{
+    linewidth=2pt,
+    linecolor=black,
+    backgroundcolor=white,
+    topline=false, rightline=false, bottomline=false,
+    skipabove=\baselineskip, skipbelow=\baselineskip,
+    innertopmargin=10pt, innerbottommargin=10pt
+}
+\surroundwithmdframed[style=standardBlock]{remark}
+
+
+% 3. Important (border that makes it stick out)
+\newtheorem{important}[definition]{Important}
+\surroundwithmdframed[
+    linewidth=2pt,
+    linecolor=black,
+    backgroundcolor=white,
+    skipabove=\baselineskip, skipbelow=\baselineskip,
+    innertopmargin=10pt, innerbottommargin=10pt
+]{important}
+
+
+% 4. Example (no special style, just standard theorem text)
+\newtheorem{example}[definition]{Example}
+
+
+% 5. Code Example
+\lstnewenvironment{codeexample}[1][]
+{
+    \refstepcounter{definition}
+    \noindent\textbf{Code Example \thedefinition}\endgraf\vspace{0em}
+    \lstset{
+        basicstyle=\ttfamily\small,
+        numbers=left,
+        numberstyle=\tiny\color{black!50},
+        stepnumber=1,
+        numbersep=10pt,
+        xleftmargin=20pt,
+        framexleftmargin=18pt,
+        tabsize=4,
+        showspaces=false,
+        showstringspaces=false,
+        breaklines=true,
+        frame=single,
+        rulecolor=\color{black!30},
+        backgroundcolor=\color{black!2},
+        #1
+    }
+}
+{}
+
+
+% 6. Algorithm
+\lstnewenvironment{algorithm}[1][]
+{
+    \refstepcounter{definition}
+    \noindent\textbf{Algorithm \thedefinition}\endgraf\vspace{0em}
+    \lstset{
+        basicstyle=\ttfamily\small,
+        numbers=left,
+        numberstyle=\tiny\color{black!50},
+        stepnumber=1,
+        numbersep=10pt,
+        xleftmargin=20pt,
+        framexleftmargin=18pt,
+        tabsize=4,
+        showspaces=false,
+        showstringspaces=false,
+        breaklines=true,
+        frame=single,
+        rulecolor=\color{black!30},
+        backgroundcolor=\color{black!2},
+        #1
+    }
+}
+{}

@@ -1,0 +1,191 @@
+\section{Synchronization}
+
+\begin{example}
+
+                Assume we have a program where two calculations are made at the same time using two diffrent threads. T1
+                calculates "5+5" while T2 calculates "3+3" now what if we start both threads at once and they both write
+                to the console first their calculation and then their answer. One possible interleaving would be "5+5
+                3+3 = 9 = 10" or even worse "3+3 5+5 = 9 = 10"
+            
+\end{example}
+
+\begin{example}
+
+                Another famous example is the counter. When a counter c is incremented using c++ or ++c the value of c
+                first
+                gets read, then incremented and then stored. The counter fails if one thread stores his result between
+                the time another reads and stores.
+            
+\end{example}
+
+\begin{definition}
+
+                Such a codeblock (incrementing the counter) that might lead to bad interleavings is called a critical
+                section. To ensure program correctness we need the enforce mutual exclusion on them.
+            
+\end{definition}
+
+\begin{definition}
+
+                Thread safty refers to nothing bad happeing in all possible interleavings and thus implies program
+                safety.
+            
+\end{definition}
+
+\begin{definition}
+
+                Thread Liveness refers to something good happening eventually, which implies the correctness of a
+                program.
+            
+\end{definition}
+
+\subsection{Locks and Synchronized}
+
+            Every Java-Object has an intrinsic lock or lock monitor. These locks are unique and can be optaind by
+            threads which allows us to lock a certain codeblock. If a thread wants to access such a codeblock and
+            execute the code within it first has to optain the lock, while it has the lock, no other thread can accuire
+            it.
+
+            \begin{codeexample}
+
+                synchronized(lockObject) {
+                i++;
+                }
+            
+\end{codeexample}
+
+            This ensures mutual exlusion on the synchronized codeblock. It is also possible to use synchronized as a
+            keyword in a function to sync. the whole function.
+
+            \begin{remark}
+
+                By default synchronized uses "this" as the lock-object.
+            
+\end{remark}
+
+\begin{remark}
+
+                Java-Locks are reentrant meaning they can be locked multiple times by the same Thread recursively (It
+                will then have to release the look as many times as it aquired it).
+            
+\end{remark}
+
+            For indementing and decrementing integers there is a special DataType AtomicInteger which has built in
+            synchronization as incrementing/decrementing is done in a single step.
+
+            \begin{codeexample}
+
+                AtomicInteger counter = new AtomicInteger(0);
+                counter.incrementAndGet();
+            
+\end{codeexample}
+
+\subsection{Wait, notify, notifyAll}
+
+            We can use wait() on a lock-object to tell the current thread to sleep until further notice if the lock is
+            not available. This allows use to save ressources.
+
+            \begin{codeexample}
+
+                synchronized(lockObject) {
+                while(!condition) {
+                lockObject.wait();
+                }
+                // do work
+                }
+            
+\end{codeexample}
+
+            To wake one or multiple threads and tell them that the lock is now available we can use notify() or
+            notifyAll() on the lock-object to wake up an aribtrary waiting thread or all of them.
+
+            \begin{important}
+
+                Always wait inside a while loop, as this ensures checking the condition after beeing notified.
+            
+\end{important}
+
+\begin{codeexample}
+
+                synchronized(lockObject) {
+                while (!condition) {
+                lockObject.wait();
+                }
+                //do work
+                notifyAll();
+                }
+            
+\end{codeexample}
+
+\subsection{Lock API}
+
+\begin{codeexample}
+
+                class BankAccount {
+                int balance() {return balance;}
+                void setBalance (in x) {balance = x;}
+                void withdraw(int amount) {
+                int b = balance();
+                if (b less than amount) {
+                throw new Exception("Not enough money");
+                }
+                setBalance(b-amount);
+                }
+                }
+            
+\end{codeexample}
+
+            The problem with the above code is that it is not thread-safe. If two threads try to withdraw money
+            at the same time, they might both read the same balance and then both write to it, resulting in a
+            wrong or even negative final balance. We need mutual exclusion in that critical section.
+            \\
+\\
+
+            Instead of using built-in synchronized blocks we can also use locks from the java.util.concurrent.locks
+            package.
+
+            \begin{codeexample}
+
+                class BankAccount {
+                private Lock lock = new ReentrantLock();
+                ...
+                void withdraw(int amount) {
+                lock.lock();
+                try {
+                ...
+                } finally {
+                lock.unlock();
+                }
+                }
+                }
+            
+\end{codeexample}
+
+\begin{important}
+
+                Always use a try-finally block to ensure the lock is released even if an error occures.
+            
+\end{important}
+
+\begin{remark}
+
+                There is also a lock.tryLock(100, TimeUnit.MILLISECONDS) method which tries to accuire the lock only for
+                a given amount of time. This is useful for avoiding deadlocks (ex. when two threads have each one lock
+                and wait on the other to get released)
+            
+\end{remark}
+
+\begin{tabular}{|c|c|c|}
+\hline
+Aspect & synchronized & Lock API \\\hline
+Lock handling & Automatic (JVM managed) & Manual (lock() / unlock()) \\\hline
+Lock release & Automatic & Must be done explicitly (finally!) \\\hline
+Scope & Method or block scoped & Flexible (can span multiple methods) \\\hline
+Waiting behavior & Thread blocks indefinitely & tryLock() avoids blocking \\\hline
+Interruptibility & Not interruptible while waiting & lockInterruptibly() supports interrupt \\\hline
+Flexibility & Low & High \\\hline
+Complexity & Simple, less error-prone & More complex, error-prone \\\hline
+Deadlock risk & Lower & Higher (if unlock forgotten) \\\hline
+Typical use & Simple synchronization & Advanced concurrency control \\\hline
+\end{tabular}
+

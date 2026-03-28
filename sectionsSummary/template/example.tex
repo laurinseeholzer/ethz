@@ -1,0 +1,87 @@
+% < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < 
+% BEGIN: MULTICOL ENV.
+% < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < 
+
+% ---------------------- MULTICOL. ENV. PARAMETERS ----------------------
+\begin{multicols*}{3}
+\setlength{\columnseprule}{1pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{15pt}
+% -----------------------------------------------------------------------
+
+% ---------------------------- SET THE TITLE ----------------------------
+\begin{center} % Begin document title
+\normalsize{\textsc{\textbf{Computer Science Summary \textendash{} ETH Zürich}}}
+\rule[0pt]{\columnwidth}{1.5pt}
+\end{center}
+\vspace{10pt}
+% -----------------------------------------------------------------------
+
+% ----------------------- SET A SECTION TITLE ---------------------------
+\section{\textsc{Analysis and Programming}}
+\rule[0pt]{\columnwidth}{0.5pt}
+\vspace{10pt}
+% -----------------------------------------------------------------------
+
+\begin{definition}[Limit]
+    A limit is the value that a function approaches as the input approaches some value.
+    $\lim_{x \to c} f(x) = L$.
+\end{definition}
+
+\begin{theorem}[Taylor Expansion]
+    $f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!} (x-a)^n$.
+\end{theorem}
+
+\begin{lemma}[Squeeze Theorem]
+    If $g(x) \leq f(x) \leq h(x)$ and $\lim_{x \to c} g(x) = \lim_{x \to c} h(x) = L$, then $\lim_{x \to c} f(x) = L$.
+\end{lemma}
+
+\begin{remark}
+    Limit laws apply only when the limits exist.
+\end{remark}
+
+\begin{important}
+    The Big-O notation describes the limiting behavior of a function.
+\end{important}
+
+\begin{example}
+    $O(n \log n)$ is the complexity of Merge Sort.
+\end{example}
+
+\begin{codeexample}[language=C++]
+// Merge Sort Example
+void mergeSort(int arr[], int l, int r);
+\end{codeexample}
+
+\begin{algorithm}[caption=Binary Search]
+Target x in sorted arr[]
+1. l=0, r=n-1
+2. while l <= r:
+   m = (l+r)/2
+   if arr[m] == x: return m
+   if arr[m] < x: l = m+1
+   else: r = m-1
+\end{algorithm}
+
+% ---------------------- SET A SUBSECTION TITLE -------------------------
+\subsection{\textsc{Complexity Table}}
+\hdashrule[0pt]{\columnwidth}{0.5pt}{1mm}
+\vspace{10pt}
+
+\begin{center}
+    \begin{tabular}{l|c}
+    \textbf{Algorithm} & \textbf{Complexity} \\
+    \hline\hline
+    Quick Sort & $O(n^2)$ / $O(n \log n)$ \\
+    Binary Search & $O(\log n)$ \\
+    DFS / BFS & $O(V + E)$ \\
+    \end{tabular}
+\end{center}
+
+\end{multicols*}
+
+% < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < 
+% END: MULTICOL ENV.
+% < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < < 

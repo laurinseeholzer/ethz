@@ -1,0 +1,140 @@
+\section{Random Variables}
+
+\begin{definition}
+    A \textbf{random variable } is a map $X: \Omega \to \mathbb{R}$ where $\Omega$ is the set of all events of
+    a probability space.
+\end{definition}
+
+\begin{example}
+    The event that the random variable X takes a value less than or equal to 5 is denoted as:
+    $$
+        X \leq 5 \coloneqq \{\omega \in \Omega \mid X(\omega) \leq 5\}
+    $$
+\end{example}
+
+\subsection{Expectation}
+
+\begin{definition}
+    Let $X$ be a random variable. The expectation of $X$ is defined as:
+    $$
+    \mathbb{E}[X] \coloneqq \sum_{\alpha \in W_x} \alpha P(X=\alpha)
+    $$
+    aslong as the sum is absolutely convergent, else we say the expectation is undefined.
+\end{definition}
+
+\begin{theorem}
+    Let $X$ be a random variable with values in $\mathbb{N}_0$. Then:
+    $$
+        \mathbb{E}[X] = \sum_{k=1}^\infty P(X \geq k)
+    $$
+\end{theorem}
+
+\begin{proof}
+    $$
+        \mathbb{E}[X] = \sum_{k=1}^\infty k P(X=k) = \sum_{k=1}^\infty \sum_{j=1}^k P(X=k) = \sum_{j=1}^\infty \sum_{k=j}^\infty P(X=k) = \sum_{j=1}^\infty P(X \geq j)
+    $$
+\end{proof}
+
+\begin{example}
+    We throw a coin and we know $P[\text{head}] = p$. We want to know $\mathbb{E}[X]$ with $X \coloneqq \text{number of throws until we get head}$. Using the above theorem we get:
+    $$
+        \mathbb{E}[X] = \sum_{k=1}^\infty P(X \geq k) = \sum_{k=1}^\infty (1-p)^{k-1} = \frac{1}{1-(1-p)} = \frac{1}{p}
+    $$
+\end{example}
+
+\begin{definition}
+    For an event $E \subseteq \Omega$ the corresponding indicator-variable $X_E$ is defined as:
+    $$
+        X_E(\omega) = \begin{cases} 1 & \text{if } \omega \in E \\ 0 & \text{if } \omega \notin E \end{cases}
+    $$
+\end{definition}
+
+\begin{remark}
+    For an indicator variable $X_E$ we have:
+    $$
+        \mathbb{E}[X_E] = P(E)
+    $$
+\end{remark}
+
+\begin{theorem}
+    For random variables $X_1, \dots, X_n$ we have:
+    $$
+        X \coloneqq \sum_{i=1}^n a_i X_i \mid a_1, \dots, a_n \in \mathbb{R}
+    $$
+    $$
+        \mathbb{E}[X] = \sum_{i=1}^n a_i \mathbb{E}[X_i]
+    $$
+    This is called the linearity of expectation.
+\end{theorem}
+
+\begin{proof}
+    $$
+        \mathbb{E}[X] = \sum_{\omega \in \Omega} X(\omega) P(\omega) = \sum_{\omega \in \Omega} (a_1 X_1(\omega) + \dots + a_n X_n(\omega)) P(\omega)
+    $$
+    $$
+        = a_1 \sum_{\omega \in \Omega} X_1(\omega) P(\omega) + \dots + a_n \sum_{\omega \in \Omega} X_n(\omega) P(\omega) = a_1 \mathbb{E}[X_1] + \dots + a_n \mathbb{E}[X_n]
+    $$
+\end{proof}
+
+\begin{example}
+    We throw a coin $m$ times. Let $X \coloneqq$ number of partial sequences with threetimes heads. What is the expectation of $X$?
+    $$
+        X = X_1 + X_2 + \dots + X_{m-2}
+    $$
+    where $X_i$ is the indicator variable for the event that the $i$-th partial sequence is three heads.
+    $$
+        \mathbb{E}[X_i] = \frac{1}{8}
+    $$
+    By the linearity of the expectation we get:
+    $$
+        \mathbb{E}[X] = \sum_{i=1}^{m-2} \mathbb{E}[X_i] = \frac{m-2}{8}
+    $$
+\end{example}
+
+\begin{algorithm}
+#Recall Stable sets in a graph is a set of vertices that are not adjacent to each other. We will now use a randomized algorithm to determin a maximal stable set.
+
+S[v] = 1/0 with probability p
+for all u,v in E:
+    if S[u] = 1 and S[v] = 1:
+        S[v] = 0
+return S
+\end{algorithm}
+
+this results in a stable set but what is the expected size of S?
+
+\begin{theorem}
+    The algorithm produces a stable set of expected size at least $n*P-m*P^2$
+\end{theorem}
+
+\begin{proof}
+    Let $X$ be the random variable for the size of the stable set $S$ after the first step. Further let $Y$ be the random variable for the amount of edges we looked at in step 2. Observe
+    $$
+\mid S \mid  \geq X - Y
+    $$
+    By the linearity of expectation we get:
+    $$
+        \mathbb{E}[\mid S \mid] \geq \mathbb{E}[X] - \mathbb{E}[Y]
+    $$
+    We know that $\mathbb{E}[X] = nP$. Further we know that $\mathbb{E}[Y] = mP^2$. Thus we get:
+    $$
+        \mathbb{E}[\mid S \mid] \geq nP - mP^2
+    $$
+\end{proof}
+
+\subsection{Variance}
+
+\begin{definition}
+    For a random variable $X$ with $\mathbb{E}[X] = \mu$ the variance is defined as:
+    $$
+        Var[X] \coloneqq \mathbb{E}[(X-\mu)^2]
+    $$
+    The standard deviation is defined as $\sigma \coloneqq \sqrt{Var[X]}$.
+\end{definition}
+
+\begin{theorem}
+    For a random variable $X$ we have $Var[X] = \mathbb{E}[X^2] - \mathbb{E}[X]^2$
+\end{theorem}
+
+
+

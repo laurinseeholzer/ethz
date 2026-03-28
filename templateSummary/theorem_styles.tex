@@ -1,0 +1,86 @@
+% Define Theorem Styles for Cheatsheet (Compact)
+
+% 1. Definition, Theorem, Lemma (all look the same)
+\newtheorem{definition}{Def}[section]
+\newtheorem{theorem}[definition]{Thm}
+\newtheorem{lemma}[definition]{Lem}
+
+\mdfdefinestyle{grayBlock}{
+    hidealllines=true,
+    backgroundcolor=black!5,
+    skipabove=2pt, skipbelow=2pt,
+    innertopmargin=2pt, innerbottommargin=2pt,
+    innerleftmargin=5pt, innerrightmargin=5pt
+}
+\surroundwithmdframed[style=grayBlock]{definition}
+\surroundwithmdframed[style=grayBlock]{theorem}
+\surroundwithmdframed[style=grayBlock]{lemma}
+
+
+% 2. Remark (slight gray background, no border)
+\newtheorem{remark}[definition]{Rem}
+
+\mdfdefinestyle{standardBlock}{
+    linewidth=1pt,
+    linecolor=black,
+    backgroundcolor=white,
+    topline=false, rightline=false, bottomline=false,
+    skipabove=2pt, skipbelow=2pt,
+    innertopmargin=2pt, innerbottommargin=2pt,
+    innerleftmargin=5pt, innerrightmargin=5pt
+}
+\surroundwithmdframed[style=standardBlock]{remark}
+
+
+% 3. Important (border that makes it stick out)
+\newtheorem{important}[definition]{Imp}
+\surroundwithmdframed[
+    linewidth=1pt,
+    linecolor=black,
+    backgroundcolor=white,
+    skipabove=2pt, skipbelow=2pt,
+    innertopmargin=2pt, innerbottommargin=2pt,
+    innerleftmargin=5pt, innerrightmargin=5pt
+]{important}
+
+
+% 4. Example (no special style, just standard theorem text)
+\newtheorem{example}[definition]{Ex}
+
+
+% 5. Code Example (Compact)
+\lstnewenvironment{codeexample}[1][]
+{
+    \refstepcounter{definition}
+    \noindent\textbf{Code Ex \thedefinition}\endgraf\vspace{0em}
+    \lstset{
+        backgroundcolor=\color{black!2},
+        tabsize=2,
+        breaklines=true,
+        showstringspaces=false,
+        basicstyle=\tiny\ttfamily,
+        frame=single,
+        rulecolor=\color{black!30},
+        #1
+    }
+}
+{}
+
+
+% 6. Algorithm (Compact)
+\lstnewenvironment{algorithm}[1][]
+{
+    \refstepcounter{definition}
+    \noindent\textbf{Algo \thedefinition}\endgraf\vspace{0em}
+    \lstset{
+        backgroundcolor=\color{black!2},
+        tabsize=2,
+        breaklines=true,
+        showstringspaces=false,
+        basicstyle=\tiny\ttfamily,
+        frame=single,
+        rulecolor=\color{black!30},
+        #1
+    }
+}
+{}

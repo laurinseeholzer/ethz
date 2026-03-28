@@ -1,0 +1,16 @@
+\ifthenelse{\lengthtest{\paperwidth = 11in}}
+{\geometry{top=.5cm,left=.5cm,right=.5cm,bottom=.5cm} }
+{\ifthenelse{\lengthtest{\paperwidth = 297mm}}
+{\geometry{top=0.5cm,left=0.5cm,right=0.5cm,bottom=0.5cm} }
+{\geometry{top=0.5cm,left=0.5cm,right=0.5cm,bottom=0.5cm} }}
+\pagestyle{empty}
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}{8pt}{5pt}
+{\small\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}{4pt}{5pt}
+{\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}{1pt}
+{1pt}{}}
+\makeatother
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}

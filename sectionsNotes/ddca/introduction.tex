@@ -1,0 +1,100 @@
+\section{Fundamentals}
+
+\subsection{Complementary MOS (CMOS)}
+\begin{definition}
+An n-type MOS transistor acts as a switch that is \textbf{closed (ON)} when the Gate voltage is High ($1$) and \textbf{open (OFF)} when the Gate voltage is Low ($0$). It is efficient at passing a logic $0$ (strong 0) but inefficient at passing a logic $1$ (weak 1).
+\end{definition}
+
+\begin{definition}
+A p-type MOS transistor is the dual of nMOS. It is \textbf{closed (ON)} when the Gate voltage is Low ($0$) and \textbf{open (OFF)} when the Gate voltage is High ($1$). It is efficient at passing a logic $1$ (strong 1) but inefficient at passing a logic $0$ (weak 0).
+\end{definition}
+
+\begin{definition}
+In CMOS logic, transistors are organized into two networks:
+\begin{itemize}
+    \item \textbf{Pull-Up Network (PUN):} Built with pMOS to connect the output to $V_{DD}$ (1).
+    \item \textbf{Pull-Down Network (PDN):} Built with nMOS to connect the output to Ground (0).
+\end{itemize}
+This ensures the output is always driven strongly to either $1$ or $0$ without drawing significant static power.
+\end{definition}
+
+\begin{example}
+The simplest CMOS gate is the NOT gate. It consists of one pMOS in the PUN and one nMOS in the PDN, both connected to the same input $A$.
+$$Y = \overline{A}$$
+\end{example}
+
+\subsection{Logic Gates}
+
+\begin{definition}[NOT Gate (Inverter)]
+The simplest gate; it flips the input.
+\begin{itemize}
+    \item \textbf{Logic:} $Y = \overline{A}$
+    \item \textbf{Transistors:} 2 (1 pMOS, 1 nMOS)
+\end{itemize}
+\end{definition}
+
+\begin{definition}[NAND Gate]
+Outputs 0 only if both inputs are 1.
+\begin{itemize}
+    \item \textbf{Logic:} $Y = \overline{A \cdot B}$
+    \item \textbf{Transistors:} 4 (2 pMOS parallel, 2 nMOS series)
+\end{itemize}
+\end{definition}
+
+\begin{definition}[NOR Gate]
+Outputs 1 only if both inputs are 0.
+\begin{itemize}
+    \item \textbf{Logic:} $Y = \overline{A + B}$
+    \item \textbf{Transistors:} 4 (2 pMOS series, 2 nMOS parallel)
+\end{itemize}
+\end{definition}
+
+\begin{remark}
+\textbf{AND/OR} are typically implemented as NAND/NOR followed by an inverter because inverting gates are more natural in CMOS. (\textbf{NAND/NOR} are universally used because they are efficient to build with 4 transistors for 2 inputs.)
+\end{remark}
+
+\begin{remark}[XOR and XNOR Gates]
+Used for comparisons and parity.
+\begin{itemize}
+    \item \textbf{XOR:} $Y = A \oplus B$ (1 if inputs are \textbf{different})
+    \item \textbf{XNOR:} $Y = \overline{A \oplus B}$ (1 if inputs are the \textbf{same})
+\end{itemize}
+\end{remark}
+
+\begin{definition}[Buffer]
+The output equals the input ($Y = A$). It is used for signal amplification or delay and is physically implemented as two NOT gates in series.
+\end{definition}
+
+\subsection{Boolean Algebra}
+
+\begin{definition}
+Logic circuits follow specific mathematical rules:
+\begin{itemize}
+    \item \textbf{Identity:} $A \cdot 1 = A$ and $A + 0 = A$
+    \item \textbf{Complement:} $A \cdot \overline{A} = 0$ and $A + \overline{A} = 1$
+    \item \textbf{Distributive:} $A \cdot (B + C) = (A \cdot B) + (A \cdot C)$
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[DeMorgan's Law]
+DeMorgan's theorems allow for the conversion between AND/OR and inverted logic:
+$$\text{Law 1: } \overline{A \cdot B} = \overline{A} + \overline{B}$$
+$$\text{Law 2: } \overline{A + B} = \overline{A} \cdot \overline{B}$$
+\end{theorem}
+
+\begin{important}[Logical Completeness]
+A set of gates is \textbf{logically complete} if any Boolean function can be realized using only those gates. The most common complete sets are $\{AND, OR, NOT\}$, $\{NAND\}$, and $\{NOR\}$.
+\end{important}
+
+\begin{definition}
+\textbf{Minterm}: A product (AND) term containing all input variables in either true or complemented form.
+\textbf{Sum of Products (SOP)}: A function expressed as the OR of minterms for which the output is 1.
+\end{definition}
+
+\begin{algorithm}
+To simplify logic using a Karnaugh Map (K-Map)
+
+1. Map the truth table values into a grid where adjacent cells differ by only one bit (Gray code).
+2. Circle groups of 2^n adjacent 1s (rectangular blocks).
+3. Each circle represents a simplified product term where variables that change within the circle are eliminated.
+\end{algorithm}
