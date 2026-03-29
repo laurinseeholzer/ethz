@@ -15,7 +15,7 @@
 \contentsline {subsection}{\numberline {4.3}Clock Skew and Performance}{11}{}%
 \contentsline {section}{\numberline {5}Von Neumann Model and ISA}{12}{}%
 \contentsline {subsection}{\numberline {5.1}Instruction Set Architecture (ISA)}{13}{}%
-\contentsline {subsection}{\numberline {5.2}Assembly}{13}{}%
+\contentsline {subsection}{\numberline {5.2}Assembly}{14}{}%
 \contentsline {section}{\numberline {6}Microarchitecture and Processor Design}{15}{}%
 \contentsline {subsection}{\numberline {6.1}Fundamentals}{15}{}%
 \contentsline {subsection}{\numberline {6.2}Single-Cycle Microarchitecture}{15}{}%

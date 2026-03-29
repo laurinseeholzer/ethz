@@ -1,7 +1,7 @@
 \section{Von Neumann Model and ISA}
 
 \begin{definition}
-The Von Neumann model, proposed in 1946, defines a universal architecture for general-purpose computers consisting of five fundamental components:
+The \textbf{Von Neumann model}, proposed in 1946, defines a universal architecture for general-purpose computers consisting of five fundamental components:
 \begin{itemize}
     \item \textbf{Memory:} Stores both the program (instructions) and the data.
     \item \textbf{Processing Unit:} Performs arithmetic and logical operations. It contains the Arithmetic Logic Unit (ALU) and small temporary storage (registers).
@@ -21,26 +21,34 @@ Modern computing is based on two key properties of this model:
 
 \begin{remark}
 The process of executing a single instruction follows a specific sequence of phases:
-1. \textbf{FETCH:} Obtain instruction from memory into the IR and increment the PC.
-2. \textbf{DECODE:} Identify the opcode and determine the control signals needed.
-3. \textbf{EVALUATE ADDRESS:} Calculate the memory address of operands if needed (e.g., for loads).
-4. \textbf{FETCH OPERANDS:} Get the required source values from memory or registers.
-5. \textbf{EXECUTE:} Perform the actual operation in the ALU.
-6. \textbf{STORE RESULT:} Write the final value into the destination register or memory.
+\begin{itemize}
+    \item 1. \textbf{FETCH:} Obtain instruction from memory into the IR and increment the PC.
+    \item 2. \textbf{DECODE:} Identify the opcode and determine the control signals needed.
+    \item 3. \textbf{EVALUATE ADDRESS:} Calculate the memory address of operands if needed (e.g., for loads).
+    \item 4. \textbf{FETCH OPERANDS:} Get the required source values from memory or registers.
+    \item 5. \textbf{EXECUTE:} Perform the actual operation in the ALU.
+    \item 6. \textbf{STORE RESULT:} Write the final value into the destination register or memory.
+\end{itemize}
 \end{remark}
 
 \begin{definition}
-\begin{itemize}
-    \item \textbf{Address Space:} The total number of uniquely identifiable memory locations. (LC-3: $2^{16}$; MIPS: $2^{32}$).
-    \item \textbf{Addressability:} The number of bits stored at each address (e.g., byte-addressable vs. word-addressable).
-    \item \textbf{Endianness:} The order of bytes in a word. \textbf{Big Endian} stores the Most Significant Byte (MSB) at the lowest address, while \textbf{Little Endian} stores the Least Significant Byte (LSB) at the lowest address.
-\end{itemize}
+\textbf{Address Space:} The total number of uniquely identifiable memory locations. (LC-3: $2^{16}$; MIPS: $2^{32}$).
+\end{definition}
+
+\begin{definition}
+\textbf{Addressability:} The number of bits stored at each address (e.g., byte-addressable (8 bit) vs. word-addressable (32 bit)).
+\end{definition}
+
+\begin{definition}
+\textbf{Endianness:} The order of bytes in a word. \textbf{Big Endian} stores the Most Significant Byte (MSB) at the lowest address, while \textbf{Little Endian} stores the Least Significant Byte (LSB) at the lowest address.
 \end{definition}
 
 \begin{example}
 To read from memory:
-1. Load the \textbf{Memory Address Register (MAR)} with the target address.
-2. The memory hardware places the data from that address into the \textbf{Memory Data Register (MDR)}.
+\begin{enumerate}
+    \item Load the \textbf{Memory Address Register (MAR)} with the target address.
+    \item The memory hardware places the data from that address into the \textbf{Memory Data Register (MDR)}.
+\end{enumerate}
 To write, both MAR (address) and MDR (data) are loaded before activating the write-enable signal.
 \end{example}
 
@@ -92,12 +100,12 @@ Mechanisms used to specify where an operand is located:
 High-level: $a = b + c$
 \begin{itemize}
     \item \textbf{LC-3 Assembly:} `ADD R0, R1, R2` (R0 is destination).
-    \item \textbf{MIPS Assembly:} `add $s0, $s1, $s2` ($s0 is destination).
+    \item \textbf{MIPS Assembly:} `add \$s0, \$s1, \$s2` (\$s0 is destination).
 \end{itemize}
 \end{example}
 
 \begin{important}
-In RISC architectures, operands must be moved into registers before processing.
+In RISC (Reduced Instruction Set Computing) architectures, operands must be moved into registers before processing.
 \begin{itemize}
     \item \textbf{Load (LD/LDR/lw):} Reads data from memory into a register.
     \item \textbf{Store (ST/STR/sw):} Writes data from a register into memory.
@@ -111,20 +119,3 @@ The sequential execution order can be altered using:
     \item \textbf{Unconditional Jumps:} Always change the PC (e.g., `JMP` in LC-3, `j` in MIPS).
 \end{itemize}
 \end{remark}
-
-\begin{example}
-Procedure calls require saving the "return address" so the program can resume after the function ends.
-\begin{itemize}
-    \item \textbf{MIPS:} `jal` (Jump and Link) saves the return address in `\$ra`. `jr \$ra` is used to return.
-    \item \textbf{Stack:} Memory area used to save registers if a function needs to use them. In MIPS, the \textbf{Stack Pointer} (`\$sp`) typically grows downward in memory.
-\end{itemize}
-\end{example}
-
-\begin{example}
-The `TRAP` instruction allows programs to request services from the Operating System:
-\begin{itemize}
-    \item `TRAP x21` (OUT): Output character in R0 to monitor.
-    \item `TRAP x23` (IN): Input character from keyboard to R0.
-    \item `TRAP x25` (HALT): Stop program execution.
-\end{itemize}
-\end{example}

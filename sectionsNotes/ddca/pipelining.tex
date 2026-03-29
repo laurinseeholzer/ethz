@@ -3,7 +3,7 @@
 \subsection{Principles of Pipelining}
 
 \begin{definition}
-Pipelining is a microarchitecture implementation technique where multiple instructions are overlapped in execution. It functions like an assembly line, dividing the processing of an instruction into a sequence of stages so that a different instruction can be processed in each stage simultaneously.
+\textbf{Pipelining} is a microarchitecture implementation technique where \textbf{multiple instructions are overlapped} in execution. It functions like an assembly line, dividing the processing of an instruction into a sequence of stages so that a different instruction can be processed in each stage simultaneously.
 \end{definition}
 
 \begin{important}
@@ -49,7 +49,7 @@ A hazard is a situation that prevents the next instruction in the stream from ex
 \end{itemize}
 \end{definition}
 
-\begin{remark}
+\begin{definition}
 Data dependencies are primarily of three types:
 \begin{itemize}
     \item \textbf{Flow Dependence (RAW):} Instruction $j$ needs data produced by instruction $i$.
@@ -57,25 +57,13 @@ Data dependencies are primarily of three types:
     \item \textbf{Output Dependence (WAW):} Both instructions write to the same location.
 \end{itemize}
 In a standard 5-stage in-order pipeline, only RAW hazards require hardware intervention.
-\end{remark}
+\end{definition}
 
 \subsection{Resolving Data Hazards}
 
 \begin{lemma}
 \textbf{Forwarding (Bypassing)} resolves many data hazards by routing the result of an instruction directly from the EX or MEM stage to the ALU input of a following instruction, bypassing the register file.
 \end{lemma}
-
-
-
-\begin{codeexample}
-# Python representation of forwarding logic for Source A
-if rsE != 0 and rsE == WriteRegM and RegWriteM:
-    forward_ae = 0b10  # Forward from MEM stage
-elif rsE != 0 and rsE == WriteRegW and RegWriteW:
-    forward_ae = 0b01  # Forward from WB stage
-else:
-    forward_ae = 0b00  # No forwarding
-\end{codeexample}
 
 \begin{important}
 Forwarding cannot resolve a \textbf{Load-Use Hazard} (where a load is immediately followed by an instruction using the loaded data). This requires a \textbf{Stall}. The hardware must:
@@ -85,20 +73,10 @@ Forwarding cannot resolve a \textbf{Load-Use Hazard} (where a load is immediatel
 \end{enumerate}
 \end{important}
 
-\begin{codeexample}
-# Python representation of load-use stall logic
-lw_stall = ((rsD == rtE) or (rtD == rtE)) and MemtoRegE
-stall_f = lw_stall
-stall_d = lw_stall
-flush_e = lw_stall
-\end{codeexample}
-
-
-
 \subsection{Control Hazards and Branching}
 
 \begin{definition}
-Control hazards arise from the delay in determining the branch outcome. If the pipeline fetches the wrong instructions, it must \textbf{flush} those instructions once the branch is resolved.
+\textbf{Control hazards} arise from the delay in determining the branch outcome. If the pipeline fetches the wrong instructions, it must \textbf{flush} those instructions once the branch is resolved.
 \end{definition}
 
 \begin{remark}
@@ -109,8 +87,6 @@ Common strategies for handling branches include:
     \item \textbf{Early Branch Resolution:} Moving the branch comparison to the Decode stage to reduce the misprediction penalty.
 \end{itemize}
 \end{remark}
-
-
 
 \subsection{Advanced Pipeline Issues}
 
