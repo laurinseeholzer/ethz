@@ -1,0 +1,33 @@
+% --- Global Layout Settings ---
+\setlength{\columnsep}{0.2in}       % Slightly wider gap for 3 columns
+\setlength{\columnseprule}{0.5pt}   
+\setlength{\parindent}{0pt}         
+\setlength{\parskip}{2pt}           
+\binoppenalty=0
+\relpenalty=0
+\clubpenalty=0
+\widowpenalty=0
+\displaywidowpenalty=0
+
+% --- AUTO-FLOW & MATH FIXES ---
+\allowdisplaybreaks 
+\sloppy                             % <-- NEW: Allows LaTeX to stretch spaces to prevent math from running off the page
+
+% --- Section & Subsection Formatting ---
+\setcounter{secnumdepth}{0}         
+
+\titleformat{\section}
+  {\normalfont\large\bfseries}      
+  {\thesection}{0em}                
+  {}                                
+  [{\vspace{2pt}\titlerule[0.8pt]\vspace{4pt}}] 
+
+\titlespacing*{\section}{0pt}{8pt}{0pt} 
+
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries}
+  {\thesubsection}{0em}
+  {}
+  [{\vspace{2pt}\titlerule[0.3pt]\vspace{3pt}}] 
+
+\titlespacing*{\subsection}{0pt}{6pt}{0pt}

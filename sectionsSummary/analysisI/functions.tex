@@ -1,0 +1,119 @@
+\section{Functions}
+
+\begin{definition}
+A \textbf{function} $f: D \to C$ is a map from a domian $D$ to a codomain $C$ s.t. for each $x \in D$ there is exactly one $y \in C$ st. $f(x) = y$.
+\end{definition}
+
+\begin{remark}
+The input is called the \textbf{independent variable} (argument) while the output is called the \textbf{dependent variable}.
+\end{remark}
+
+\begin{definition}
+A function $f$ is called \textbf{injective} iff 
+$$\forall x_1, x_2 \in A : f(x_1) = f(x_2) \implies x_1 = x_2$$
+\end{definition}
+
+\begin{definition}
+A function $f$ is called \textbf{surjective} iff 
+$$\forall y \in B \exists x \in A : f(x) = y$$
+\end{definition}
+
+\begin{definition}
+A function $f$ is called \textbf{bijective} iff $f$ is injective and surjective.
+\end{definition}
+
+\begin{definition}
+The \textbf{restriction} of $f$ under $D' \subset \mathbb{D}$ is defined as 
+$$f\upharpoonleft_{D'}: D' \to C, x \mapsto f(x) \quad \forall x \in \mathbb{D}$$
+\end{definition}
+
+\begin{definition}
+Let $f: D \to C$ and $g: C \to B$ be functions then 
+$$ g \circ f: D \to B \quad \text{with}$$
+$$g \circ f(x) = g(f(x)) \quad \forall x \in D $$
+is called the \textbf{composition} of $f$ and $g$.
+\end{definition}
+
+\begin{definition}
+The \textbf{identity function} $id_D: D \to D$ is defined as $id_D(x) = x \quad \forall x \in D$.
+\end{definition}
+
+\begin{definition}
+If a function $f: D \to C$ is bijective then there exists a unique function $f^{-1}: C \to D$ such that
+$$f(f^{-1}(y)) = id_C = y \quad \forall y \in C \quad \text{and}$$
+$$f^{-1}(f(x)) = id_D = x \quad \forall x \in D$$
+$f^{-1}$ is called the \textbf{inverse function} of $f$.
+\end{definition}
+
+\begin{definition}
+A function  $f: \mathbb{R} \to \mathbb{R}$ is called \textbf{(strictly) monotonically increasing (decreasing)} iff 
+$$\forall x_1, x_2 \in \mathbb{R} : x_1 < x_2 \implies f(x_1) < (>) f(x_2)$$
+\end{definition}
+
+\begin{definition}
+    A function $f: \mathbb{R} \to \mathbb{R}$ is called 
+    \begin{itemize}
+        \item \textbf{even} iff $\forall x \in \mathbb{R} : f(-x) = f(x)$
+        \item \textbf{odd} iff $\forall x \in \mathbb{R} : f(-x) = -f(x)$
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    The \textbf{graph} of a function $f: D \to C$ is the set of all ordered pairs $(x, f(x))$ for $x \in D$.
+\end{definition}
+
+\begin{definition}
+    A graph is \textbf{konvex} if it lies below the line segment connecting any two points on the graph. Similarly it is called \textbf{konkav} if it lies above the line segment connecting any two points on the graph.
+\end{definition}
+
+\subsection{Limits in the context of functions}
+
+\begin{definition}
+    Let $f: \mathbb{D} \to \mathbb{R}$ be a function satisfying $\mathbb{D} \cap (x_0 - \delta, x_0 + \delta) \neq \emptyset$ for all $\delta > 0$ and $x_0 \in \mathbb{R}$. We say that $\lim_{x \to x_0} f(x) = L$ iff 
+    $$\forall \varepsilon > 0 \exists \delta > 0  \text{s.t.}$$
+    $$x \in \mathbb{D} \cup (x_0 - \delta, x_0 + \delta) \implies |f(x) - L| < \varepsilon$$
+    The limit $L$ is unique.
+\end{definition}
+
+
+\begin{definition}
+    A function $f: \mathbb{D} \to \mathbb{R}$ has in $x_0$ a \textbf{right-sided limit} $\quad \lim_{x \searrow x_0} f(x) = \lim_{x \to x_0^+} f(x) = L$ iff 
+    $$\forall \varepsilon > 0 \exists \delta > 0  \quad \text{s.t.}$$ 
+    $$\forall x \in \mathbb{D} (x_0 < x < x_0 + \delta \implies |f(x) - L| < \varepsilon)$$
+    \textbf{left-sided limit} $\lim_{x \nearrow x_0} f(x) = L$ iff 
+    $$\forall \varepsilon > 0 \exists \delta > 0  \quad \text{s.t.}$$
+    $$\forall x \in \mathbb{D} (x_0 - \delta < x < x_0 \implies |f(x) - L| < \varepsilon)$$
+    
+\end{definition}
+
+\begin{definition}
+    A function $f: \mathbb{D} \to \mathbb{R}$ has a \textbf{limit for x approaching infinity} $\lim_{x \to \infty} f(x) = L$ iff 
+    $$\forall \varepsilon > 0 \exists M > 0 \quad \text{s.t.}$$ 
+    $$\forall x \in \mathbb{D} (x > M \implies |f(x) - L| < \varepsilon)$$
+    \textbf{limit for x approaching negative infinity} $\lim_{x \to -\infty} f(x) = L$ iff 
+    $$\forall \varepsilon > 0 \exists M > 0 \quad \text{s.t.}$$
+    $$\forall x \in \mathbb{D} (x < M \implies |f(x) - L| < \varepsilon)$$
+\end{definition}
+
+\begin{definition}
+    A function $f: \mathbb{D} \to \mathbb{R}$ has in $x_0$ a
+    \textbf{improper limit approaching infinity} $\lim_{x \to x_0} f(x) = \infty$ iff 
+    $$\forall N > 0 \exists \delta > 0 \quad \text{s.t.}$$
+    $$\forall x \in \mathbb{D} (0 < |x - x_0| < \delta \implies f(x) > N)$$
+    \textbf{improper limit approaching negative infinity} $\lim_{x \to x_0} f(x) = -\infty$ iff 
+    $$\forall N > 0 \exists \delta > 0 \quad \text{s.t.}$$
+    $$\forall x \in \mathbb{D} (0 < |x - x_0| < \delta \implies f(x) < -N)$$
+\end{definition}
+
+\begin{theorem}
+    Let $A \in \mathbb{R}$ and assume $\lim_{x \to x_0} f(x) = K (\neq \pm \infty)$ and $\lim_{x \to x_0} g(x) = L (\neq \pm \infty)$.
+    \begin{itemize}
+        \item $\lim_{x \to x_0} (f(x) + g(x)) = K + L$
+        \item $\lim_{x \to x_0} (f(x) - g(x)) = K - L$
+        \item $\lim_{x \to x_0} (f(x) g(x)) = K L$
+        \item $\lim_{x \to x_0} (f(x) / g(x)) = K / L$
+        \item $\lim_{x \to x_0} (A f(x)) = A K$
+        \item $\lim_{x \to x_0} (f(x)/g(x)) = K/L$ if $L \neq 0$
+    \end{itemize}
+\end{theorem}
+

@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1774542895.86492 "/home/laurin/dev/ethz/templateNotes.tex" "build/templateNotes.pdf" "templateNotes" 1774542896.55269 0
-  "/home/laurin/dev/ethz/templateNotes.tex" 1774542894.89403 365 da45815a170ce8f30bd381b4a592f174 ""
+["pdflatex"] 1774817476.43781 "/home/laurin/dev/ethz/templateNotes.tex" "build/templateNotes.pdf" "templateNotes" 1774817477.20251 0
+  "/home/laurin/dev/ethz/templateNotes.tex" 1774795684.82382 365 da45815a170ce8f30bd381b4a592f174 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.enc" 1561323594 2496 4d35740f3a177992ff7b134746c0a1db ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc" 1455745497 9446 fe5580ca6042a44427f18d450942e7d0 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -112,13 +112,13 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1770681600 40900 887e0dc8cac988a9e9c574af364cf837 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1774398240.84368 4602601 5d02a5c5d52d7237566d144856366042 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1774397783 7753788 a0020c5830dd8c877264576b28708675 ""
-  "build/templateNotes.aux" 1774542896.46189 524 64ac6288fb4bda1fe7bc2e062ca2f4fc "pdflatex"
-  "build/templateNotes.toc" 1774542896.46189 293 3cbb930562850890aa0d3bc985be123b "pdflatex"
-  "sectionsNotes/template/example.tex" 1774399740.12265 2166 eb03d334b04889488ad9d8abefabbc6f ""
-  "templateNotes.tex" 1774542894.89403 365 da45815a170ce8f30bd381b4a592f174 ""
-  "templateNotes/commands.tex" 1774398211.32166 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
-  "templateNotes/packages.tex" 1774399071.0618 419 a4a7f712da8bfb18dde6dd329f00198a ""
-  "templateNotes/theorem_styles.tex" 1774430432.08921 2530 5415b1d3cc1c5ce9df9c2be1dad76ee8 ""
+  "build/templateNotes.aux" 1774817477.08273 524 263398fc4fc467f6942ad90e797458f8 "pdflatex"
+  "build/templateNotes.toc" 1774817477.08273 293 7b344213e14fd12fe7b8b4311431924a "pdflatex"
+  "sectionsNotes/template/example.tex" 1774795684.82569 2166 eb03d334b04889488ad9d8abefabbc6f ""
+  "templateNotes.tex" 1774795684.82382 365 da45815a170ce8f30bd381b4a592f174 ""
+  "templateNotes/commands.tex" 1774795684.82424 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
+  "templateNotes/packages.tex" 1774795684.82409 493 dd01896e8ca6d5605bcdf6aeec6f0cbe ""
+  "templateNotes/theorem_styles.tex" 1774795684.82464 2530 5415b1d3cc1c5ce9df9c2be1dad76ee8 ""
   (generated)
   "build/templateNotes.aux"
   "build/templateNotes.log"
