@@ -1,0 +1,127 @@
+\section{Pipelining}
+
+\subsection{Principles of Pipelining}
+
+\begin{definition}
+Pipelining is a microarchitecture implementation technique where multiple instructions are overlapped in execution. It functions like an assembly line, dividing the processing of an instruction into a sequence of stages so that a different instruction can be processed in each stage simultaneously.
+\end{definition}
+
+\begin{important}
+The core objective of pipelining is to increase \textbf{instruction throughput} (the number of instructions completed per unit of time). While it significantly improves throughput, it generally does not decrease the \textbf{latency} of a single instruction; in fact, the latency may increase slightly due to the overhead of pipeline registers.
+\end{important}
+
+\begin{theorem}
+In an ideal scenario where all stages have equal delay and there are no dependencies, a pipeline with $k$ stages provides a $k$-fold speedup. However, in reality, the speedup is limited by:
+\begin{itemize}
+    \item \textbf{Unbalanced stages:} The clock period is determined by the slowest stage.
+    \item \textbf{Sequencing overhead:} Pipeline registers add setup time and clock-to-Q delays.
+    \item \textbf{Hazards:} Dependencies between instructions that prevent seamless overlapping.
+\end{itemize}
+\end{theorem}
+
+
+
+\subsection{The 5-Stage Instruction Pipeline}
+
+\begin{definition}
+A standard RISC pipeline (like MIPS or LC-3) typically consists of five stages:
+\begin{enumerate}
+    \item \textbf{Instruction Fetch (IF):} Fetch the instruction from memory and update the PC.
+    \item \textbf{Instruction Decode (ID):} Decode the instruction and read operands from the register file.
+    \item \textbf{Execute (EX):} Perform an arithmetic/logic operation or calculate a memory address.
+    \item \textbf{Memory Access (MEM):} Read from or write to the data memory.
+    \item \textbf{Write-Back (WB):} Write the result back into the register file.
+\end{enumerate}
+\end{definition}
+
+\begin{important}
+To maintain the state of different instructions in different stages, \textbf{Pipeline Registers} (IF/ID, ID/EX, EX/MEM, MEM/WB) are placed between the stages. These registers carry the data and control signals forward through the pipeline every clock cycle.
+\end{important}
+
+\subsection{Pipeline Hazards and Dependencies}
+
+\begin{definition}
+A hazard is a situation that prevents the next instruction in the stream from executing in its designated clock cycle.
+\begin{itemize}
+    \item \textbf{Structural Hazards:} Conflicts for hardware resources (e.g., using a single memory for both instructions and data).
+    \item \textbf{Data Hazards:} An instruction depends on the result of a previous instruction that has not yet completed.
+    \item \textbf{Control Hazards:} The next address to fetch is unknown because a branch or jump has not been resolved.
+\end{itemize}
+\end{definition}
+
+\begin{remark}
+Data dependencies are primarily of three types:
+\begin{itemize}
+    \item \textbf{Flow Dependence (RAW):} Instruction $j$ needs data produced by instruction $i$.
+    \item \textbf{Anti-Dependence (WAR):} Instruction $j$ writes to a location that instruction $i$ reads.
+    \item \textbf{Output Dependence (WAW):} Both instructions write to the same location.
+\end{itemize}
+In a standard 5-stage in-order pipeline, only RAW hazards require hardware intervention.
+\end{remark}
+
+\subsection{Resolving Data Hazards}
+
+\begin{lemma}
+\textbf{Forwarding (Bypassing)} resolves many data hazards by routing the result of an instruction directly from the EX or MEM stage to the ALU input of a following instruction, bypassing the register file.
+\end{lemma}
+
+
+
+\begin{codeexample}
+# Python representation of forwarding logic for Source A
+if rsE != 0 and rsE == WriteRegM and RegWriteM:
+    forward_ae = 0b10  # Forward from MEM stage
+elif rsE != 0 and rsE == WriteRegW and RegWriteW:
+    forward_ae = 0b01  # Forward from WB stage
+else:
+    forward_ae = 0b00  # No forwarding
+\end{codeexample}
+
+\begin{important}
+Forwarding cannot resolve a \textbf{Load-Use Hazard} (where a load is immediately followed by an instruction using the loaded data). This requires a \textbf{Stall}. The hardware must:
+\begin{enumerate}
+    \item Disable the PC and IF/ID register updates (holding instructions in place).
+    \item Flush the ID/EX register (inserting a "bubble" or NOP).
+\end{enumerate}
+\end{important}
+
+\begin{codeexample}
+# Python representation of load-use stall logic
+lw_stall = ((rsD == rtE) or (rtD == rtE)) and MemtoRegE
+stall_f = lw_stall
+stall_d = lw_stall
+flush_e = lw_stall
+\end{codeexample}
+
+
+
+\subsection{Control Hazards and Branching}
+
+\begin{definition}
+Control hazards arise from the delay in determining the branch outcome. If the pipeline fetches the wrong instructions, it must \textbf{flush} those instructions once the branch is resolved.
+\end{definition}
+
+\begin{remark}
+Common strategies for handling branches include:
+\begin{itemize}
+    \item \textbf{Static Prediction:} For example, "Always Predict Not Taken."
+    \item \textbf{Dynamic Prediction:} Using a Branch History Table to predict based on past execution.
+    \item \textbf{Early Branch Resolution:} Moving the branch comparison to the Decode stage to reduce the misprediction penalty.
+\end{itemize}
+\end{remark}
+
+
+
+\subsection{Advanced Pipeline Issues}
+
+\begin{important}
+\textbf{Precise Exceptions:} A pipelined processor must be able to stop execution on an exception-causing instruction while ensuring all prior instructions complete and no subsequent instructions have modified the architectural state. This is challenging because instructions finish at different times.
+\end{important}
+
+\begin{lemma}
+In systems with multi-cycle functional units (e.g., a fast integer ALU and a slow divider), instructions can finish \textbf{out of order}. This "out-of-order completion" can break the sequential semantics of the ISA if an exception occurs in the middle of a stream.
+\end{lemma}
+
+\begin{definition}
+\textbf{Fine-Grained Multithreading:} A technique where the processor switches to a different thread every clock cycle. This hides the latency of data and control hazards by ensuring that instructions currently in the pipeline are independent of one another.
+\end{definition}

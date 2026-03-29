@@ -1,0 +1,88 @@
+\section{Microarchitecture and Processor Design}
+
+\subsection{Fundamentals}
+
+\begin{definition}
+Microarchitecture is the specific implementation of an Instruction Set Architecture (ISA) under given design constraints and goals. It describes how hardware structures—such as registers, ALUs, and buses—are organized to execute the instructions defined by the ISA.
+\end{definition}
+
+\begin{remark}
+    While the ISA acts as the functional contract visible to the software, the microarchitecture is the internal logic that performs the work.
+\end{remark}
+
+\begin{important}
+A single ISA (such as x86, ARM, or MIPS) can be implemented by many different microarchitectures. This allows manufacturers to create different chips that run the same software but vary in performance, power consumption, or cost. The software remains unaware of whether the hardware uses a single-cycle, multi-cycle, or out-of-order execution strategy.
+\end{important}
+
+\begin{remark}
+Microarchitects evaluate their designs based on several critical metrics:
+\begin{itemize}
+    \item \textbf{Performance:} Usually measured by execution time or throughput.
+    \item \textbf{Cost:} Often determined by the silicon die area and circuit complexity.
+    \item \textbf{Power/Energy:} Critical for thermal management and battery-operated devices.
+    \item \textbf{Reliability:} The ability of the system to operate correctly despite aging or environmental interference.
+\end{itemize}
+\end{remark}
+
+\subsection{Single-Cycle Microarchitecture}
+
+\begin{definition}
+In a single-cycle microarchitecture, every instruction is executed in exactly one clock cycle. This requires all phases of the instruction cycle—Fetch, Decode, Execute, Memory Access, and Write-back—to be completed within a single period of the global clock.
+\end{definition}
+
+
+
+\begin{important}
+The timing and performance of a single-cycle processor are characterized by:
+\begin{itemize}
+    \item \textbf{CPI (Cycles Per Instruction):} The CPI is always 1.
+    \item \textbf{Clock Cycle Time ($T_c$):} The clock period must be long enough to allow the \textbf{slowest} instruction in the ISA to complete. 
+\end{itemize}
+\end{important}
+
+\begin{lemma}
+In most RISC architectures, the \texttt{lw} (load word) instruction defines the critical path. It requires an instruction fetch, a register read, an ALU operation to calculate the address, a data memory read, and a register write. Because the clock must accommodate this long path, faster instructions like \texttt{add} or \texttt{jump} waste a significant portion of the clock cycle waiting for the next edge.
+\end{lemma}
+
+\subsection{Multi-Cycle Microarchitecture}
+
+\begin{definition}
+A multi-cycle microarchitecture breaks the execution of a single instruction into multiple, shorter clock cycles. Each instruction takes a variable number of cycles depending on its specific requirements (e.g., an \texttt{add} might take 3 cycles, while a \texttt{lw} takes 5).
+\end{definition}
+
+
+
+\begin{important}
+Multi-cycle designs allow for significant hardware reuse and require internal storage:
+\begin{itemize}
+    \item \textbf{Functional Unit Reuse:} A single ALU can be used in different cycles of the same instruction (e.g., once to increment the PC and later to perform the arithmetic).
+    \item \textbf{Microarchitectural Registers:} Since an instruction spans multiple cycles, intermediate results must be saved in registers that are not visible to the ISA, such as the Instruction Register (IR), Memory Data Register (MDR), and ALUOut.
+\end{itemize}
+\end{important}
+
+\begin{example}
+The phases of a multi-cycle instruction typically include:
+\begin{enumerate}
+    \item \textbf{Cycle 1 (Fetch):} Instruction is fetched and PC is incremented.
+    \item \textbf{Cycle 2 (Decode):} Opcode is identified and registers are read.
+    \item \textbf{Cycle 3 (Execute):} ALU performs the calculation or address computation.
+    \item \textbf{Cycle 4 (Memory):} Data memory is accessed (only for loads/stores).
+    \item \textbf{Cycle 5 (Write-back):} Result is written back to the register file.
+\end{enumerate}
+\end{example}
+
+\begin{theorem}
+The execution time of a program is defined by the following equation:
+$$\text{Time} = \text{Instruction Count} \times \text{Average CPI} \times \text{Clock Cycle Time}$$
+While a multi-cycle design has a higher average CPI than a single-cycle design, it can achieve better performance because the clock cycle time ($T_c$) is much shorter, as it only needs to cover the delay of the single longest \textit{stage} rather than the entire instruction.
+\end{theorem}
+
+
+
+\begin{remark}
+The control unit in a multi-cycle processor is implemented as a Finite State Machine (FSM). It must keep track of the current step of an instruction to ensure the correct control signals (like \texttt{ALUSel} or \texttt{MemWrite}) are asserted at the correct time.
+\end{remark}
+
+\begin{lemma}
+The primary downside of multi-cycle designs is the "sequencing overhead." Each cycle transition adds a delay due to register setup times and clock-to-Q propagation. If instructions are broken into too many cycles, this overhead can eventually negate the performance benefits of a high clock frequency.
+\end{lemma}

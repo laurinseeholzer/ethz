@@ -25,7 +25,7 @@ $$Y = \overline{A}$$
 
 \subsection{Logic Gates}
 
-\begin{definition}[NOT Gate (Inverter)]
+\begin{definition}
 The simplest gate; it flips the input.
 \begin{itemize}
     \item \textbf{Logic:} $Y = \overline{A}$
@@ -33,7 +33,7 @@ The simplest gate; it flips the input.
 \end{itemize}
 \end{definition}
 
-\begin{definition}[NAND Gate]
+\begin{definition}
 Outputs 0 only if both inputs are 1.
 \begin{itemize}
     \item \textbf{Logic:} $Y = \overline{A \cdot B}$
@@ -41,7 +41,7 @@ Outputs 0 only if both inputs are 1.
 \end{itemize}
 \end{definition}
 
-\begin{definition}[NOR Gate]
+\begin{definition}
 Outputs 1 only if both inputs are 0.
 \begin{itemize}
     \item \textbf{Logic:} $Y = \overline{A + B}$
@@ -53,7 +53,7 @@ Outputs 1 only if both inputs are 0.
 \textbf{AND/OR} are typically implemented as NAND/NOR followed by an inverter because inverting gates are more natural in CMOS. (\textbf{NAND/NOR} are universally used because they are efficient to build with 4 transistors for 2 inputs.)
 \end{remark}
 
-\begin{remark}[XOR and XNOR Gates]
+\begin{remark}
 Used for comparisons and parity.
 \begin{itemize}
     \item \textbf{XOR:} $Y = A \oplus B$ (1 if inputs are \textbf{different})
@@ -61,7 +61,7 @@ Used for comparisons and parity.
 \end{itemize}
 \end{remark}
 
-\begin{definition}[Buffer]
+\begin{definition}
 The output equals the input ($Y = A$). It is used for signal amplification or delay and is physically implemented as two NOT gates in series.
 \end{definition}
 
@@ -76,13 +76,13 @@ Logic circuits follow specific mathematical rules:
 \end{itemize}
 \end{definition}
 
-\begin{theorem}[DeMorgan's Law]
+\begin{theorem}
 DeMorgan's theorems allow for the conversion between AND/OR and inverted logic:
 $$\text{Law 1: } \overline{A \cdot B} = \overline{A} + \overline{B}$$
 $$\text{Law 2: } \overline{A + B} = \overline{A} \cdot \overline{B}$$
 \end{theorem}
 
-\begin{important}[Logical Completeness]
+\begin{important}
 A set of gates is \textbf{logically complete} if any Boolean function can be realized using only those gates. The most common complete sets are $\{AND, OR, NOT\}$, $\{NAND\}$, and $\{NOR\}$.
 \end{important}
 

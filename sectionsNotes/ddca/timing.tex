@@ -1,0 +1,66 @@
+\section{Timing}
+
+\subsection{Combinational Circuit Timing}
+
+\begin{definition}
+The timing behavior of a combinational circuit is bounded by two parameters:
+\begin{itemize}
+    \item \textbf{Propagation Delay ($t_{pd}$):} The \textbf{maximum} time from when an input changes until the output has reached its final value (longest path).
+    \item \textbf{Contamination Delay ($t_{cd}$):} The \textbf{minimum} time from when an input changes until the output \textbf{starts} to change (shortest path).
+\end{itemize}
+\end{definition}
+
+\begin{remark}
+Transistors take finite time to switch due to capacitance, resistance, and the finite speed of light. Actual delays vary based on temperature, supply voltage, circuit aging, and whether the signal is rising or falling.
+\end{remark}
+
+\begin{example}
+A \textbf{glitch} occurs when a single input transition causes multiple transitions on the output before it settles. This is caused by different paths through the logic having different delays. While often ignored in steady-state logic, glitches can be fixed by adding redundant "consensus terms" in a K-map to cover transitions between prime implicants.
+\end{example}
+
+\subsection{Sequential Circuit Timing}
+
+\begin{definition}
+For a flip-flop to reliably sample data at the rising clock edge, the input $D$ must be stable within the \textbf{aperture time} ($t_a = t_{setup} + t_{hold}$):
+\begin{itemize}
+    \item \textbf{Setup Time ($t_{setup}$):} The time \textbf{before} the clock edge that data must be stable.
+    \item \textbf{Hold Time ($t_{hold}$):} The time \textbf{after} the clock edge that data must remain stable.
+\end{itemize}
+\end{definition}
+
+\begin{important}
+If the setup or hold time is violated, the flip-flop may enter a \textbf{metastable} state where the output is stuck between 0 and 1 before eventually settling non-deterministically. This can cause system failure.
+\end{important}
+
+\begin{definition}
+\begin{itemize}
+    \item \textbf{Propagation Clock-to-Q Delay ($t_{pcq}$):} The \textbf{maximum} time after the clock edge until the output $Q$ is stable.
+    \item \textbf{Contamination Clock-to-Q Delay ($t_{ccq}$):} The \textbf{minimum} time after the clock edge until $Q$ \textbf{starts} to change.
+\end{itemize}
+\end{definition}
+
+\begin{theorem}
+To ensure a synchronous system operates correctly, two conditions must be met:
+\begin{itemize}
+    \item \textbf{Setup Time Constraint:} The clock period $T_c$ must be long enough for the signal to propagate through the critical path:
+    $$T_c \geq t_{pcq} + t_{pd} + t_{setup}$$
+    This determines the \textbf{maximum operating frequency} ($f_{max} = 1/T_{c,min}$).
+    \item \textbf{Hold Time Constraint:} The signal must not reach the next flip-flop too quickly (shortest path):
+    $$t_{ccq} + t_{cd} > t_{hold}$$
+    If violated, data "shuffles" through multiple flip-flops in one cycle. This \textbf{cannot} be fixed by slowing the clock.
+\end{itemize}
+\end{theorem}
+
+\subsection{Clock Skew and Performance}
+
+\begin{definition}
+\textbf{Clock skew} ($t_{skew}$) is the time difference between the arrival of the clock signal at two different flip-flops. It is caused by the physical delay of the clock distribution network.
+\end{definition}
+
+\begin{important}
+Clock skew worsens both timing constraints:
+\begin{itemize}
+    \item \textbf{Setup:} $T_c \geq t_{pcq} + t_{pd} + t_{setup} + t_{skew}$ (effectively increases required period).
+    \item \textbf{Hold:} $t_{ccq} + t_{cd} > t_{hold} + t_{skew}$ (effectively increases required min delay).
+\end{itemize}
+\end{important}

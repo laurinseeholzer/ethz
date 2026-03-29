@@ -2,100 +2,100 @@
 
 \subsection{Fundamental Building Blocks}
 
-\begin{definition}[Sequential Logic]
-Unlike combinational logic, where the output depends solely on current inputs, sequential logic produces outputs based on both current and past input values[cite: 90]. These circuits incorporate storage elements to maintain a "state"[cite: 90].
+\begin{definition}
+Unlike combinational logic, where the output depends solely on current inputs, sequential logic produces outputs based on both current and past input values. These circuits incorporate storage elements to maintain a "state".
 \end{definition}
 
-\begin{definition}[Cross-coupled Inverters]
-The most basic storage element consists of two inverters connected in a feedback loop[cite: 91]. It has two stable states ($Q=1$ or $Q=0$) and a potential metastable state where outputs oscillate[cite: 91, 92].
+\begin{definition}
+The most basic storage element consists of two inverters connected in a feedback loop. It has two stable states ($Q=1$ or $Q=0$) and a potential metastable state where outputs oscillate.
 \end{definition}
 
-\begin{definition}[R-S Latch]
-A Reset-Set (R-S) latch is typically built from cross-coupled NAND gates[cite: 94]. 
+\begin{definition}
+A Reset-Set (R-S) latch is typically built from cross-coupled NAND gates. 
 \begin{itemize}
-    \item \textbf{Set ($S=0$):} Forces the output $Q$ to $1$[cite: 94].
-    \item \textbf{Reset ($R=0$):} Forces the output $Q$ to $0$[cite: 94].
-    \item \textbf{Forbidden ($S=0, R=0$):} This state is invalid as it breaks the $Q = \overline{Q'}$ invariant and can lead to metastability[cite: 98].
+    \item \textbf{Set ($S=0$):} Forces the output $Q$ to $1$.
+    \item \textbf{Reset ($R=0$):} Forces the output $Q$ to $0$.
+    \item \textbf{Forbidden ($S=0, R=0$):} This state is invalid as it breaks the $Q = \overline{Q'}$ invariant and can lead to metastability.
 \end{itemize}
 \end{definition}
 
 
-\begin{definition}[Gated D Latch]
-The Gated D Latch adds a Write Enable ($WE$) signal to an R-S latch to control when data is stored[cite: 101]. When $WE=1$, the output $Q$ follows the data input $D$; otherwise, it holds the previous value ($Q_{prev}$)[cite: 102].
+\begin{definition}
+The Gated D Latch adds a Write Enable ($WE$) signal to an R-S latch to control when data is stored. When $WE=1$, the output $Q$ follows the data input $D$; otherwise, it holds the previous value ($Q_{prev}$).
 \end{definition}
 
 
-\begin{important}[The Transparency Problem]
-Latches are "transparent" while their enable signal is high, meaning any change in $D$ immediately propagates to $Q$[cite: 144]. This is undesirable for state registers in synchronous systems because next-state values could overwrite current-state values before the cycle ends[cite: 147, 2491].
+\begin{important}
+Latches are "transparent" while their enable signal is high, meaning any change in $D$ immediately propagates to $Q$. This is undesirable for state registers in synchronous systems because next-state values could overwrite current-state values before the cycle ends.
 \end{important}
 
-\begin{definition}[D Flip-Flop (DFF)]
-A D Flip-Flop solves the transparency problem by using a master-slave configuration of two D latches[cite: 148]. It is \textbf{edge-triggered}, capturing the value of $D$ only at the rising edge of the clock ($0 \rightarrow 1$ transition) and maintaining it for the entire cycle[cite: 151, 2516].
+\begin{definition}
+A D Flip-Flop solves the transparency problem by using a master-slave configuration of two D latches. It is \textbf{edge-triggered}, capturing the value of $D$ only at the rising edge of the clock ($0 \rightarrow 1$ transition) and maintaining it for the entire cycle.
 \end{definition}
 
 
 \subsection{Timing and the Clock}
 
-\begin{definition}[Synchronous vs. Asynchronous Systems]
+\begin{definition}
 \begin{itemize}
-    \item \textbf{Asynchronous:} State transitions occur immediately in response to inputs with no global coordination[cite: 131, 2264].
-    \item \textbf{Synchronous:} State transitions are synchronized to a global \textbf{clock} signal and occur at fixed units of time[cite: 131, 2267].
+    \item \textbf{Asynchronous:} State transitions occur immediately in response to inputs with no global coordination.
+    \item \textbf{Synchronous:} State transitions are synchronized to a global \textbf{clock} signal and occur at fixed units of time.
 \end{itemize}
 \end{definition}
 
-\begin{definition}[Clock Signal]
-A periodic signal alternating between $0$ and $1$ that triggers state transitions across all sequential elements in a system[cite: 126, 134]. The clock period must be long enough to accommodate the worst-case delay of the combinational logic[cite: 135, 2321].
+\begin{definition}
+A periodic signal alternating between $0$ and $1$ that triggers state transitions across all sequential elements in a system. The clock period must be long enough to accommodate the worst-case delay of the combinational logic.
 \end{definition}
 
-\begin{important}[Edge-Triggering]
-Standard synchronous registers use rising-clock-edge triggered flip-flops[cite: 151, 2526]. This ensures that the state changes only once per clock cycle, making system behavior predictable and easier to design than level-triggered latch-based systems[cite: 136, 151].
+\begin{important}
+Standard synchronous registers use rising-clock-edge triggered flip-flops. This ensures that the state changes only once per clock cycle, making system behavior predictable and easier to design than level-triggered latch-based systems.
 \end{important}
 
 \subsection{Finite State Machines (FSM)}
 
-\begin{definition}[Finite State Machine]
-A discrete-time model of a stateful system consisting of a finite number of states, external inputs, external outputs, state transitions, and output logic[cite: 138, 139]. 
+\begin{definition}
+A discrete-time model of a stateful system consisting of a finite number of states, external inputs, external outputs, state transitions, and output logic. 
 \end{definition}
 
-\begin{theorem}[Moore vs. Mealy Machines]
+\begin{theorem}
 FSMs are categorized by how they generate outputs:
 \begin{itemize}
-    \item \textbf{Moore FSM:} Outputs depend \textbf{only} on the current state[cite: 154, 2021].
-    \item \textbf{Mealy FSM:} Outputs depend on \textbf{both} the current state and the current inputs[cite: 155, 2022].
+    \item \textbf{Moore FSM:} Outputs depend \textbf{only} on the current state.
+    \item \textbf{Mealy FSM:} Outputs depend on \textbf{both} the current state and the current inputs.
 \end{itemize}
 \end{theorem}
 
 [Image comparing Moore and Mealy FSM block diagrams]
 
-\begin{remark}[FSM Components]
-Every FSM implementation consists of three parts[cite: 140, 2376]:
+\begin{remark}
+Every FSM implementation consists of three parts:
 \begin{enumerate}
-    \item \textbf{State Register:} Sequential circuit storing the current state[cite: 141, 2420].
-    \item \textbf{Next State Logic:} Combinational circuit determining the next state based on current state and inputs[cite: 141, 2424].
-    \item \textbf{Output Logic:} Combinational circuit generating system outputs[cite: 142, 2435].
+    \item \textbf{State Register:} Sequential circuit storing the current state.
+    \item \textbf{Next State Logic:} Combinational circuit determining the next state based on current state and inputs.
+    \item \textbf{Output Logic:} Combinational circuit generating system outputs.
 \end{enumerate}
 \end{remark}
 
-\begin{example}[State Encoding Tradeoffs]
-States must be represented as binary values[cite: 195]. Common methods include:
+\begin{example}
+States must be represented as binary values. Common methods include:
 \begin{itemize}
-    \item \textbf{Binary Encoding:} Uses the minimum number of bits ($log_2(\text{states})$); minimizes flip-flops but may lead to complex combinational logic[cite: 196, 2095].
-    \item \textbf{One-Hot Encoding:} Uses one bit per state; simplifies next-state logic but maximizes flip-flop usage[cite: 196, 2095].
-    \item \textbf{Output Encoding:} Uses the output signals themselves as the state bits; minimizes output logic[cite: 197, 2096].
+    \item \textbf{Binary Encoding:} Uses the minimum number of bits ($log_2(\text{states})$); minimizes flip-flops but may lead to complex combinational logic.
+    \item \textbf{One-Hot Encoding:} Uses one bit per state; simplifies next-state logic but maximizes flip-flop usage.
+    \item \textbf{Output Encoding:} Uses the output signals themselves as the state bits; minimizes output logic.
 \end{itemize}
 \end{example}
 
 \subsection{Memory and Registers}
 
-\begin{definition}[Register]
-A structure that stores multiple bits (e.g., 4 or 32 bits) by grouping D flip-flops together with a common clock or write-enable signal[cite: 105, 152, 2164].
+\begin{definition}
+A structure that stores multiple bits (e.g., 4 or 32 bits) by grouping D flip-flops together with a common clock or write-enable signal.
 \end{definition}
 
-\begin{definition}[Memory Array]
-An organization of storage locations indexed by addresses[cite: 107, 2180]. 
+\begin{definition}
+An organization of storage locations indexed by addresses. 
 \begin{itemize}
-    \item \textbf{Address Space:} The total number of unique locations ($2^n$ for $n$ address bits)[cite: 107].
-    \item \textbf{Addressability:} The number of bits stored at each location[cite: 107].
-    \item \textbf{Hardware:} Uses an **Address Decoder** to select a location and a **Multiplexer** to route the selected data to the output[cite: 112, 118, 2184].
+    \item \textbf{Address Space:} The total number of unique locations ($2^n$ for $n$ address bits).
+    \item \textbf{Addressability:} The number of bits stored at each location.
+    \item \textbf{Hardware:} Uses an **Address Decoder** to select a location and a **Multiplexer** to route the selected data to the output.
 \end{itemize}
 \end{definition}
