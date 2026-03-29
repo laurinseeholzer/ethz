@@ -44,17 +44,17 @@ A D Flip-Flop solves the transparency problem by using a master-slave configurat
 \end{definition}
 
 \begin{definition}
-A periodic signal alternating between $0$ and $1$ that triggers state transitions across all sequential elements in a system. The clock period must be long enough to accommodate the worst-case delay of the combinational logic.
+\textbf{Clock (CLK):} A periodic signal alternating between $0$ and $1$ that triggers state transitions across all sequential elements in a system. The clock period must be long enough to accommodate the worst-case delay of the combinational logic.
 \end{definition}
 
 \begin{important}
-Standard synchronous registers use rising-clock-edge triggered flip-flops. This ensures that the state changes only once per clock cycle, making system behavior predictable and easier to design than level-triggered latch-based systems.
+Standard synchronous registers use \textbf{rising-clock-edge} triggered flip-flops. This ensures that the state changes only once per clock cycle, making system behavior predictable and easier to design than level-triggered latch-based systems.
 \end{important}
 
 \subsection{Finite State Machines (FSM)}
 
 \begin{definition}
-A discrete-time model of a stateful system consisting of a finite number of states, external inputs, external outputs, state transitions, and output logic. 
+\textbf{Finite State Machine (FSM):} A discrete-time model of a stateful system consisting of a finite number of states, external inputs, external outputs, state transitions, and output logic. 
 \end{definition}
 
 \begin{theorem}
@@ -64,8 +64,6 @@ FSMs are categorized by how they generate outputs:
     \item \textbf{Mealy FSM:} Outputs depend on \textbf{both} the current state and the current inputs.
 \end{itemize}
 \end{theorem}
-
-[Image comparing Moore and Mealy FSM block diagrams]
 
 \begin{remark}
 Every FSM implementation consists of three parts:
@@ -88,11 +86,11 @@ States must be represented as binary values. Common methods include:
 \subsection{Memory and Registers}
 
 \begin{definition}
-A structure that stores multiple bits (e.g., 4 or 32 bits) by grouping D flip-flops together with a common clock or write-enable signal.
+\textbf{Register:} A structure that stores multiple bits (e.g., 4 or 32 bits) by grouping D flip-flops together with a common clock or write-enable signal.
 \end{definition}
 
 \begin{definition}
-An organization of storage locations indexed by addresses. 
+\textbf{Memory:} An organization of storage locations indexed by addresses. 
 \begin{itemize}
     \item \textbf{Address Space:} The total number of unique locations ($2^n$ for $n$ address bits).
     \item \textbf{Addressability:} The number of bits stored at each location.

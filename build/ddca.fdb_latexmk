@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1774797615.97274 "/home/laurin/dev/ethz/ddca.tex" "build/ddca.pdf" "ddca" 1774797616.86234 0
+["pdflatex"] 1774799337.33006 "/home/laurin/dev/ethz/ddca.tex" "build/ddca.pdf" "ddca" 1774799338.2023 0
   "/home/laurin/dev/ethz/ddca.tex" 1774796833.80541 650 d9d9d03d1274c86fb964ed6ddb476f16 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.enc" 1561323594 2496 4d35740f3a177992ff7b134746c0a1db ""
@@ -116,15 +116,15 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1770681600 40900 887e0dc8cac988a9e9c574af364cf837 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1774398240.84368 4602601 5d02a5c5d52d7237566d144856366042 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1774397783 7753788 a0020c5830dd8c877264576b28708675 ""
-  "build/ddca.aux" 1774797616.74674 3403 23eed077e8c254f77c54887f8fb60c0a "pdflatex"
-  "build/ddca.toc" 1774797616.74774 2146 fe67931de5fd101cea4a226df6f16279 "pdflatex"
+  "build/ddca.aux" 1774799338.08412 3416 f3175ac94153bce91d364be2bd52030b "pdflatex"
+  "build/ddca.toc" 1774799338.08412 2159 ba4252cb117d77c25d43953a63ba8179 "pdflatex"
   "ddca.tex" 1774796833.80541 650 d9d9d03d1274c86fb964ed6ddb476f16 ""
-  "sectionsNotes/ddca/combinational_logic.tex" 1774795684.82874 1972 8620bac81a9d25d36bb335e0ea1cbc67 ""
-  "sectionsNotes/ddca/fundamentals.tex" 1774795684.82908 4118 c9f1ae369ed7a8819068e5e57957e264 ""
+  "sectionsNotes/ddca/combinational_logic.tex" 1774798734.68836 2074 d45cf739f5c614a271d4c2fba0acec5e ""
+  "sectionsNotes/ddca/fundamentals.tex" 1774798543.79368 4294 de1e0ab5c270552c3949085f500e3c63 ""
   "sectionsNotes/ddca/instruction_set_architecture.tex" 1774795684.82947 6758 c8b5235e58a3cf75cdf5db78adb41829 ""
   "sectionsNotes/ddca/microarchitecture.tex" 1774796279.98088 5213 3a05c9a84480f79a8a3b74488ae4fc5c ""
   "sectionsNotes/ddca/pipelining.tex" 1774797615.61638 6249 a1ff6e3c62573d6557dffabd2e7773be ""
-  "sectionsNotes/ddca/sequential_logic.tex" 1774795684.82826 4880 065132b9bed82aec5fd3509125972147 ""
+  "sectionsNotes/ddca/sequential_logic.tex" 1774799337.10464 4930 d97c5244a05c2a608b18472163e54810 ""
   "sectionsNotes/ddca/timing.tex" 1774795774.26202 3560 92a141c421b1848105606f0fba0bf656 ""
   "templateNotes/commands.tex" 1774795684.82424 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
   "templateNotes/packages.tex" 1774795684.82409 493 dd01896e8ca6d5605bcdf6aeec6f0cbe ""

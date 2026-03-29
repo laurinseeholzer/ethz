@@ -8,11 +8,11 @@ Combinational Logic is a circuit where the output is a pure function of the curr
 \subsection{Combinational Building Blocks}
 
 \begin{definition}
-An $n$-to-$2^n$ decoder interprets an $n$-bit binary input and sets exactly one of its $2^n$ outputs to $1$. It is primarily used for memory addressing and instruction decoding.
+An $n$-to-$2^n$ \textbf{decoder} interprets an $n$-bit binary input and sets exactly one of its $2^n$ outputs to $1$. It is primarily used for memory addressing and instruction decoding.
 \end{definition}
 
 \begin{definition}
-A Multiplexer uses select lines ($S$) to choose which data input ($D$) is routed to the single output ($Y$). For $N$ inputs, $log_2 N$ select lines are required.
+A \textbf{Multiplexer} uses select lines ($S$) to choose which data input ($D$) is routed to the single output ($Y$). For $N$ inputs, $log_2 N$ select lines are required.
 \end{definition}
 
 \begin{example}
@@ -20,19 +20,19 @@ A MUX can implement any logic function by treating its inputs as a \textbf{Looku
 \end{example}
 
 \begin{definition}
-A Full Adder is the building block of arithmetic units. It takes inputs $A, B$, and a carry-in $C_{in}$, producing:
+A \textbf{Full Adder} is the building block of arithmetic units. It takes inputs $A, B$, and a carry-in $C_{in}$, producing:
 $$\text{Sum: } S = A \oplus B \oplus C_{in}$$
 $$\text{Carry-out: } C_{out} = (A \cdot B) + (C_{in} \cdot (A \oplus B))$$
 \end{definition}
 
 \begin{important}
-An $n$-bit RCA is constructed by chaining $n$ Full Adders. The $C_{out}$ of one stage becomes the $C_{in}$ of the next. The critical path (speed bottleneck) is the "ripple" effect as the carry bit travels from the LSB to the MSB.
+An $n$-bit \textbf{Ripple Carry Adder (RCA)} is constructed by chaining $n$ Full Adders. The $C_{out}$ of one stage becomes the $C_{in}$ of the next. The critical path (speed bottleneck) is the "ripple" effect as the carry bit travels from the LSB to the MSB.
 \end{important}
 
 \begin{lemma}
-A Tri-state buffer has three possible output states: $0, 1$, and \textbf{High-Z} (High Impedance). When the enable signal is $0$, the buffer is electrically disconnected. This allows multiple components to share a single \textbf{Bus} wire.
+A \textbf{Tri-state buffer} has three possible output states: $0, 1$, and \textbf{High-Z} (High Impedance). When the enable signal is $0$, the buffer is electrically disconnected. This allows multiple components to share a single \textbf{Bus} wire.
 \end{lemma}
 
 \begin{example}
-A PLA is a structured logic device consisting of a programmable \textbf{AND-plane} (creating minterms) and a programmable \textbf{OR-plane} (summing the minterms). It is a physical implementation of the Sum-of-Products (SOP) form.
+A \textbf{Programmable Logic Array (PLA)} is a structured logic device consisting of a programmable \textbf{AND-plane} (creating minterms) and a programmable \textbf{OR-plane} (summing the minterms). It is a physical implementation of the Sum-of-Products (SOP) form.
 \end{example}

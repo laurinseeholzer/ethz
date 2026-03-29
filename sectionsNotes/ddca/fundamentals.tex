@@ -1,16 +1,16 @@
 \section{Fundamentals}
 
-\subsection{Complementary MOS (CMOS)}
+\subsection{Metal-Oxide-Semiconductor Transistors}
 \begin{definition}
-An n-type MOS transistor acts as a switch that is \textbf{closed (ON)} when the Gate voltage is High ($1$) and \textbf{open (OFF)} when the Gate voltage is Low ($0$). It is efficient at passing a logic $0$ (strong 0) but inefficient at passing a logic $1$ (weak 1).
+An \textbf{n-type} MOS transistor acts as a switch that is \textbf{closed (ON)} when the Gate voltage is High ($1$) and \textbf{open (OFF)} when the Gate voltage is Low ($0$). It is efficient at passing a logic $0$ (strong 0) but inefficient at passing a logic $1$ (weak 1).
 \end{definition}
 
 \begin{definition}
-A p-type MOS transistor is the dual of nMOS. It is \textbf{closed (ON)} when the Gate voltage is Low ($0$) and \textbf{open (OFF)} when the Gate voltage is High ($1$). It is efficient at passing a logic $1$ (strong 1) but inefficient at passing a logic $0$ (weak 0).
+A \textbf{p-type} MOS transistor is the dual of nMOS. It is \textbf{closed (ON)} when the Gate voltage is Low ($0$) and \textbf{open (OFF)} when the Gate voltage is High ($1$). It is efficient at passing a logic $1$ (strong 1) but inefficient at passing a logic $0$ (weak 0).
 \end{definition}
 
 \begin{definition}
-In CMOS logic, transistors are organized into two networks:
+In \textbf{Complementary MOS (CMOS)} logic, transistors are organized into two networks:
 \begin{itemize}
     \item \textbf{Pull-Up Network (PUN):} Built with pMOS to connect the output to $V_{DD}$ (1).
     \item \textbf{Pull-Down Network (PDN):} Built with nMOS to connect the output to Ground (0).
@@ -26,7 +26,7 @@ $$Y = \overline{A}$$
 \subsection{Logic Gates}
 
 \begin{definition}
-The simplest gate; it flips the input.
+\textbf{NOT:} The simplest gate; it flips the input.
 \begin{itemize}
     \item \textbf{Logic:} $Y = \overline{A}$
     \item \textbf{Transistors:} 2 (1 pMOS, 1 nMOS)
@@ -34,7 +34,7 @@ The simplest gate; it flips the input.
 \end{definition}
 
 \begin{definition}
-Outputs 0 only if both inputs are 1.
+\textbf{NAND:} Outputs 0 only if both inputs are 1.
 \begin{itemize}
     \item \textbf{Logic:} $Y = \overline{A \cdot B}$
     \item \textbf{Transistors:} 4 (2 pMOS parallel, 2 nMOS series)
@@ -42,7 +42,7 @@ Outputs 0 only if both inputs are 1.
 \end{definition}
 
 \begin{definition}
-Outputs 1 only if both inputs are 0.
+\textbf{NOR:} Outputs 1 only if both inputs are 0.
 \begin{itemize}
     \item \textbf{Logic:} $Y = \overline{A + B}$
     \item \textbf{Transistors:} 4 (2 pMOS series, 2 nMOS parallel)
@@ -54,7 +54,7 @@ Outputs 1 only if both inputs are 0.
 \end{remark}
 
 \begin{remark}
-Used for comparisons and parity.
+\textbf{XOR/XNOR:} Used for comparisons and parity.
 \begin{itemize}
     \item \textbf{XOR:} $Y = A \oplus B$ (1 if inputs are \textbf{different})
     \item \textbf{XNOR:} $Y = \overline{A \oplus B}$ (1 if inputs are the \textbf{same})
@@ -62,13 +62,13 @@ Used for comparisons and parity.
 \end{remark}
 
 \begin{definition}
-The output equals the input ($Y = A$). It is used for signal amplification or delay and is physically implemented as two NOT gates in series.
+\textbf{Buffer:} The output equals the input ($Y = A$). It is used for signal amplification or delay and is physically implemented as two NOT gates in series.
 \end{definition}
 
 \subsection{Boolean Algebra}
 
 \begin{definition}
-Logic circuits follow specific mathematical rules:
+Boolean algebra (and therfore logic gates) follow specific mathematical rules:
 \begin{itemize}
     \item \textbf{Identity:} $A \cdot 1 = A$ and $A + 0 = A$
     \item \textbf{Complement:} $A \cdot \overline{A} = 0$ and $A + \overline{A} = 1$
@@ -77,7 +77,7 @@ Logic circuits follow specific mathematical rules:
 \end{definition}
 
 \begin{theorem}
-DeMorgan's theorems allow for the conversion between AND/OR and inverted logic:
+\textbf{DeMorgan's theorems} allow for the conversion between AND/OR and inverted logic:
 $$\text{Law 1: } \overline{A \cdot B} = \overline{A} + \overline{B}$$
 $$\text{Law 2: } \overline{A + B} = \overline{A} \cdot \overline{B}$$
 \end{theorem}
