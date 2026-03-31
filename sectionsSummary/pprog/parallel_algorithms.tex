@@ -1,0 +1,73 @@
+\section{Parallel Algorithms}
+
+\subsection{Parallel Patterns}
+
+\begin{definition}
+A \textbf{reduction} produces a single answer from a collection via an associative operator.
+\end{definition}
+
+\begin{example}
+Max, Min, Sum, Product of an array.
+\end{example}
+
+\begin{definition}
+A \textbf{map} applies a function to each elements of a collection producing an output of the same size.
+\end{definition}
+
+\begin{example}
+Vector addition: $v_i = u_i + w_i \forall i \in [1, n]$
+\end{example}
+
+\begin{definition}
+A \textbf{stencil} extends the map pattern by using the element itself and its neighbours.  
+\end{definition}
+
+\begin{example}
+A smoothing kernel (ex. 3x3) that calculates the average value is sled over an image to smooth/blur the image.
+\end{example}
+
+\subsection{Parallel Algorithms}
+
+\subsubsection{Prefix-Sum}
+
+Prefix-Sum: calculating $input[1] + input[2] + ... + input[n]$.
+
+\begin{algorithm}
+upTask(); //divide problem and build tree with sums of subproblems
+downTask(); //fill in the correction values (left_sum + parent_correction)
+\end{algorithm}
+
+\begin{theorem}
+The span of the prefix sum optimization is $O(\log n)$, therefore parallelism of $\frac{n}{\log n}$.
+\end{theorem}
+
+\subsubsection{Pack}
+
+\textbf{Pack} pack all elements from an array that satisfy a certain condition into a seperate output. (by using prefix sum)
+
+\begin{algorithm}
+applyMap(); //applies a map to the input
+//results in a binary vector [1, 0, 1, 1, 0, ...]\\
+parallelPrefixSum(); //calculates the prefix sum of the binary vector\\
+//results in [1, 1, 2, 3, 3, ...]\\
+applyPackMap(); //applies another map to the result of the prefix sum\\
+//results in [0, 2, 3, ...] (indices of elements to write to output)
+\end{algorithm}
+
+\subsubsection{Quicksort}
+
+We can reduce the \textbf{limiting factor of the problem division} from a span of $O(n)$ to a span of $O(\log n)$
+using the pack-pattern.
+
+\begin{algorithm}
+applyMaps(); //apply maps for greater and smaller than pivot
+parallelPrefixSum(); //count how many smallerthan/greatherthan elements come bofore
+applyMap(); //index = numLessThan || numTotalLessThan + numGreaterThan
+\end{algorithm}
+
+We can do this by using two pack-patterns to partition the data. This leads to a partitioning of $O(\log n)$
+levels times $O(\log n)$ for prefixSum hence $O(\log^2 n)$ total span. 
+
+This means a parallelism of $\frac{n\log n}{\log^2 n} = \frac{n}{\log n}$.
+
+        

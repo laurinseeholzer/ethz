@@ -1,0 +1,59 @@
+\section{Shared Resources}
+
+\subsection{Race Conditions}
+
+\begin{definition}
+\textbf{Race condition: } correctness depends on specific interleaving.
+\end{definition}
+
+\begin{definition}
+\textbf{Low-level race condition: } insufficient synchronization of memory access (Data Races).
+\textbf{High-level race condition: } wrong decomposition/algorithm.
+\end{definition}
+
+Generally we want one of three things when it comes to shared ressources:
+\begin{itemize}
+    \item \textbf{Thread local (Isolated Mutability):} We dont use the ressource of other threads.
+    \item \textbf{Read only (Immutable):} We only read and do not change the ressource
+    \item \textbf{Mutual exclusion (Synchronization):} We use the ressource of other threads but we ensure that only one thread accesses it at a time.
+\end{itemize}
+
+\subsection{Guidelines for Concurrent programming}
+
+\begin{important}
+\textbf{Thread-Locality:} Only share ressources if needed.
+\end{important}
+
+\begin{important}
+\textbf{Immutability:} Use immutable data structures whenever possible.
+\end{important}
+
+\begin{important}
+\textbf{Consitent locking:} Use locks to ensure mutual exclusion.
+\end{important}
+
+\begin{definition}
+\textbf{Lock granularity } refers to the amount of code that is proteted by a lock in ways:
+\begin{itemize}
+        \item Size of synchronized blocks
+        \item Number of objects a lock is used for
+\end{itemize}
+\end{definition}
+
+\begin{theorem}
+\textbf{Coarse-grained locking} is easier to implement but leads to less concurrency. \textbf{Fine-grained locking} is harder to implement without creating bugs but leads to more concurrency.
+\end{theorem}
+
+\begin{important}
+Start with coarse-grained (simpler) and move to fine-
+grained (performance) only if contention on the coarser locks becomes an issue.
+\end{important}
+
+\begin{definition}
+\textbf{Atomicity: } An operation is atomic if it is performed as a single, indivisible unit. 
+\end{definition}
+
+\begin{important}
+    Do not do expensive computations or I/O in critical
+    sections, but also don’t introduce race conditions
+\end{important}

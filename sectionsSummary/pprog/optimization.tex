@@ -1,0 +1,83 @@
+\section{Optimization}
+
+\subsection{Caching}
+Faster CPU's does not mean faster execution. Writing and loading data forms a bottleneck.
+
+\begin{definition}
+\textbf{Cache} is a fast memory that preloads and stores frequently used data form the memory to reduce
+latency.
+\end{definition}
+
+The usage of cache reduces stalls (times in which the CPU can not execute as the data is not yet present).
+
+\subsection{Vectorization}
+
+\begin{definition}
+\textbf{SIMD} (Single Instruction Multiple Data) same instruction is applied to multiple data points simultaneously by using multiple ALUs inside the CPU.
+\end{definition}
+
+\subsection{Superscalar and Speculative Execution (ILP)}
+
+\begin{definition}
+\textbf{Superscalar execution} refers to out of order execution of independent instructions in parallel using multiple ALUs.
+\end{definition}
+
+\begin{definition}
+\textbf{Speculative execution} refers to the execution of instructions before the actual need for them is known.
+\end{definition}
+
+\subsection{Pipelining}
+
+Pipelining increases throughput by overlapping the execution of multiple instructions in diffrent stages.
+
+
+\begin{definition}
+\textbf{Throughput } 
+is the amout of work that can be done by a system in a given period of time. 
+$$tp = \frac{1}{max(compTime(stages))}$$
+\end{definition}
+
+\begin{definition}
+\textbf{Latency } is the time needed to perform a given computation.
+$$L = numStages * max(compTime(stages))$$
+\end{definition}
+
+\begin{definition}
+A pipeline is \textbf{balanced } if all stages take the same amount of time.            
+\end{definition}
+
+\begin{important}
+Balancing a pipeline can increase throughput.
+\end{important}
+
+\subsection{Parallel Performance}
+
+\begin{definition}
+\textbf{Scalability } describes how performance improves with additional resources (cores, memory, etc.).
+\end{definition}
+
+\begin{definition}
+\textbf{Speedup } is the ratio of the execution time of the sequential algorithm to the execution time of the parallel algorithm.
+$$S_p = \frac{T_1}{T_p}$$
+\end{definition}
+
+\begin{definition}
+\textbf{Efficiency } is the ratio of speedup to the number of processors.
+$$E_p = \frac{S_p}{p}$$
+\end{definition}
+
+\begin{remark}
+Speedup depends on the definition of $T_1$ (execution time of the optimized sequential algorithm vs. the unoptimized one).
+\end{remark}
+
+\begin{theorem}
+Amdahl's Law sets a limit on speedup, as the sequential part of the algorithm can not be parallelized.
+$$S(p) = \frac{1}{1-f + \frac{f}{p}}$$
+\end{theorem}
+
+
+\begin{theorem}
+Gustafson's Law shows that we can perform more operations in the same execution time.
+$$S_p = f + P(1 - f)$$
+\end{theorem}
+

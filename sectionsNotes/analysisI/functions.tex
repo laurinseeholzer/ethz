@@ -79,7 +79,7 @@ $f^{-1}$ is called the \textbf{inverse function} of $f$.
 \begin{definition}
     Let $f: \mathbb{D} \to \mathbb{R}$ be a function satisfying $\mathbb{D} \cap (x_0 - \delta, x_0 + \delta) \neq \emptyset$ for all $\delta > 0$ and $x_0 \in \mathbb{R}$. We say that $\lim_{x \to x_0} f(x) = L$ iff 
     $$\forall \varepsilon > 0 \exists \delta > 0  \text{s.t.}$$
-    $$x \in \mathbb{D} \cup (x_0 - \delta, x_0 + \delta) \implies |f(x) - L| < \varepsilon$$
+    $$x \in \mathbb{D} \cap (x_0 - \delta, x_0 + \delta) \implies |f(x) - L| < \varepsilon$$
     The limit $L$ is unique.
 \end{definition}
 

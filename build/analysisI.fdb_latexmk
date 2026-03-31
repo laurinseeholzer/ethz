@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1774817343.25432 "/home/laurin/dev/ethz/analysisI.tex" "build/analysisI.pdf" "analysisI" 1774817344.08949 0
+["pdflatex"] 1774873138.98419 "/home/laurin/dev/ethz/analysisI.tex" "build/analysisI.pdf" "analysisI" 1774873139.95865 0
   "/home/laurin/dev/ethz/analysisI.tex" 1774795684.82261 458 111078a0eb81054090b74f61433bc30b ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -116,9 +116,9 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1774398240.84368 4602601 5d02a5c5d52d7237566d144856366042 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1774397783 7753788 a0020c5830dd8c877264576b28708675 ""
   "analysisI.tex" 1774795684.82261 458 111078a0eb81054090b74f61433bc30b ""
-  "build/analysisI.aux" 1774817343.97016 1248 5a42fad1a906454750f318501dc16f13 "pdflatex"
-  "build/analysisI.toc" 1774817343.97016 729 43f028e8745ae59d81facdd508fd9abe "pdflatex"
-  "sectionsNotes/analysisI/functions.tex" 1774817342.14717 6905 f23299bf5d9ff0d915e5cdfdfa218b35 ""
+  "build/analysisI.aux" 1774873139.7713 1248 5a42fad1a906454750f318501dc16f13 "pdflatex"
+  "build/analysisI.toc" 1774873139.7723 729 43f028e8745ae59d81facdd508fd9abe "pdflatex"
+  "sectionsNotes/analysisI/functions.tex" 1774873138.70131 6905 d746b9c9483112d91541c22d0b206756 ""
   "sectionsNotes/analysisI/logic_sets_numbers.tex" 1774795684.82584 10628 e40119cea0baa9ce9c608d2f61d1cd64 ""
   "sectionsNotes/analysisI/sequences_series.tex" 1774795684.82624 6146 f9f9a1818c7a79b5431a5ee9786b0db6 ""
   "templateNotes/commands.tex" 1774795684.82424 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""

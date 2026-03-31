@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1774862071.60066 "/home/laurin/dev/ethz/pprog.tex" "build/pprog.pdf" "pprog" 1774862072.45667 0
+["pdflatex"] 1774949813.2877 "/home/laurin/dev/ethz/pprog.tex" "build/pprog.pdf" "pprog" 1774949814.22351 0
   "/home/laurin/dev/ethz/pprog.tex" 1774795684.82354 588 804ba5194b4249aafd12f901f4bfda2d ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.enc" 1561323594 2496 4d35740f3a177992ff7b134746c0a1db ""
@@ -112,11 +112,11 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1770681600 40900 887e0dc8cac988a9e9c574af364cf837 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1774398240.84368 4602601 5d02a5c5d52d7237566d144856366042 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1774397783 7753788 a0020c5830dd8c877264576b28708675 ""
-  "build/pprog.aux" 1774862072.35385 2908 64567d85daf2eb06af64452b3352938e "pdflatex"
-  "build/pprog.toc" 1774862072.35485 1774 90ddbeda98618e778c13b4f60b063b40 "pdflatex"
+  "build/pprog.aux" 1774949814.11656 2908 64567d85daf2eb06af64452b3352938e "pdflatex"
+  "build/pprog.toc" 1774949814.11656 1774 90ddbeda98618e778c13b4f60b063b40 "pdflatex"
   "pprog.tex" 1774795684.82354 588 804ba5194b4249aafd12f901f4bfda2d ""
   "sectionsNotes/pprog/divide_and_conquer.tex" 1774795684.8308 3459 3f196b226e50ab5cde4ac056ef3c88e8 ""
-  "sectionsNotes/pprog/optimization.tex" 1774795684.83061 4394 38665afdacc280f5c263d66463bb6a55 ""
+  "sectionsNotes/pprog/optimization.tex" 1774948015.41605 4395 fa8efdfbc03ab1a897c918d97ddd4e1d ""
   "sectionsNotes/pprog/parallel_algorithms.tex" 1774795684.83092 3654 2e4ab293c980f154cc42c78df0ecdc14 ""
   "sectionsNotes/pprog/shared_resources.tex" 1774862070.46886 2784 f06fa5ad4b73974d246232df391164e5 ""
   "sectionsNotes/pprog/synchronization.tex" 1774795684.83037 6687 aa6c8dbccea87dcdd2aa169c1f6cd14b ""
