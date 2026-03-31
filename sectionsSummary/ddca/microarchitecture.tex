@@ -1,0 +1,36 @@
+\section{Microarchitecture}
+
+\begin{definition}
+\textbf{Microarchitecture} implements an ISA. One ISA can have many microarchitectures (single-cycle, multi-cycle, pipelined) optimized for performance, cost, or power.
+\end{definition}
+
+\subsection{Single-Cycle Microarchitecture}
+
+\begin{definition}
+Every instruction takes exactly one clock cycle.
+\begin{itemize}
+    \item \textbf{CPI}: Always 1.
+    \item \textbf{Clock Cycle Time ($T_c$)}: Bounded by the slowest instruction (usually \texttt{lw}).
+\end{itemize}
+\end{definition}
+
+\subsection{Multi-Cycle Microarchitecture}
+
+\begin{definition}
+Breaks instruction execution into multiple shorter cycles. Cycles take variable steps.
+Allows \textbf{hardware reuse} (e.g. ALU) and requires internal microarchitectural registers (IR, MDR, ALUOut).
+\end{definition}
+
+\begin{example}
+Phases: 1. Fetch, 2. Decode, 3. Execute, 4. Memory, 5. Write-back.
+\end{example}
+
+\begin{theorem}
+$$Time = \#instr \times Average\_CPI \times T_c$$
+Multi-cycle has higher CPI but shorter $T_c$, improving performance over single-cycle.
+Downside: \textbf{Sequencing overhead} added at each cycle transition.
+\end{theorem}
+
+\begin{remark}
+Multi-cycle control unit is implemented as an FSM to track instruction steps.
+\end{remark}

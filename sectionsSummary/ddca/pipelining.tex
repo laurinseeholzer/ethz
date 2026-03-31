@@ -1,0 +1,54 @@
+\section{Pipelining}
+
+\begin{definition}
+\textbf{Pipelining} overlaps multiple instructions in execution (assembly line logic). Increases \textbf{instruction throughput} but does not decrease latency.
+\end{definition}
+
+\begin{theorem}
+A $k$-stage pipeline ideal speedup is $k$-fold, but limited by unbalanced stages, sequencing overhead, and hazards.
+\end{theorem}
+
+\subsection{The 5-Stage Pipeline}
+
+\begin{definition}
+Stages (MIPS): 1. Fetch (IF), 2. Decode (ID), 3. Execute (EX), 4. Memory (MEM), 5. Write-Back (WB).
+\textbf{Pipeline Registers} (e.g. IF/ID) pass data and control signals forward between stages.
+\end{definition}
+
+\subsection{Hazards}
+
+\begin{definition}
+A hazard prevents the next instruction from executing normally:
+\begin{itemize}
+    \item \textbf{Structural}: Conflict for hardware resources.
+    \item \textbf{Data}: Instruction depends on data from a non-completed instruction.
+    \item \textbf{Control}: Branch outcome delays fetching correct next instruction.
+\end{itemize}
+\end{definition}
+
+\begin{definition}
+Data dependencies:
+\textbf{Read-After-Write (RAW)}: Instruction needs data about to be written. (Only hazard needing hardware fix in 5-stage pipeline).
+\end{definition}
+
+\subsection{Resolving Hazards}
+
+\begin{lemma}
+\textbf{Forwarding (Bypassing)} routes result from EX or MEM directly to ALU input.
+\end{lemma}
+
+\begin{important}
+\textbf{Load-Use Hazard} cannot be forwarded. Requires a \textbf{Stall} (freeze PC, insert pipeline bubble).
+\end{important}
+
+\begin{remark}
+\textbf{Control Hazards} force a pipeline flush on misprediction. Strategies: Static prediction, Dynamic prediction (Branch History Table), Early Resolution (moving compare to Decode).
+\end{remark}
+
+\subsection{Advanced Issues}
+
+\begin{definition}
+\textbf{Precise Exceptions}: Must stop execution on exception instruction while ensuring prior instructions finish correctly.
+\textbf{Out-of-Order}: Multi-cycle functional units cause out-of-order completion.
+\textbf{Fine-Grained Multithreading}: Switches thread every clock to hide hazards.
+\end{definition}

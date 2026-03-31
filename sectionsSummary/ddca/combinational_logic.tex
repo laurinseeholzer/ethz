@@ -1,0 +1,33 @@
+\section{Combinational Logic}
+
+\begin{definition}
+Combinational Logic output is a pure function of current inputs (no memory).
+\end{definition}
+
+\subsection{Building Blocks}
+
+\begin{definition}
+An $n$-to-$2^n$ \textbf{decoder} sets exactly one of its $2^n$ outputs to $1$ based on its $n$-bit input.
+\end{definition}
+
+\begin{definition}
+A \textbf{Multiplexer (MUX)} uses $log_2 N$ select lines to route one of $N$ data inputs to the output.
+\end{definition}
+
+\begin{definition}
+A \textbf{Full Adder}:
+$$\text{Sum: } S = A \oplus B \oplus C_{in}$$
+$$\text{Carry: } C_{out} = (A \cdot B) + (C_{in} \cdot (A \oplus B))$$
+\end{definition}
+
+\begin{important}
+An $n$-bit \textbf{Ripple Carry Adder (RCA)} chains $n$ Full Adders. The critical path is the carry "ripple" from LSB to MSB.
+\end{important}
+
+\begin{lemma}
+A \textbf{Tri-state buffer} has states: $0, 1$, and \textbf{High-Z} (disconnected, allowing multiple components to share a bus).
+\end{lemma}
+
+\begin{example}
+\textbf{Programmable Logic Array (PLA)}: Programmable AND-plane and OR-plane representing a Sum-of-Products.
+\end{example}

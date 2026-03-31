@@ -1,0 +1,44 @@
+\section{Hamiltonian Cycles}
+
+\begin{definition}
+A \textbf{Hamiltonian Cycle} is a cycle containing every vertex exactly once.
+\end{definition}
+
+\begin{theorem}
+For $m, n \ge 2$, an $n \times m$ grid has a Hamiltonian cycle iff $n \cdot m$ is even.
+\end{theorem}
+
+\begin{theorem}
+A bipartite graph $G = (A \cup B, E)$ with $|A| \neq |B|$ cannot contain a Hamiltonian cycle.
+\end{theorem}
+
+\begin{theorem}
+\textbf{Dirac's Theorem}: Every graph $G$ with $|V| \ge 3$ and minimum degree $\delta(G) \ge |V|/2$ contains a Hamiltonian cycle.
+\end{theorem}
+
+\begin{algorithm}
+#DP for Hamiltonian Cycle O(n^2 * 2^n)
+#P[S, x] = 1 if exists 1-x path containing exactly vertices in S.
+P[S, x] = max { P[S \setminus \{x\}, y] | y \in N(x) \cap S, y \neq 1 }
+\end{algorithm}
+
+\subsection{Travelling Salesman Problem (TSP)}
+
+The TSP finds a Hamiltonian cycle in $K_n$ with minimal weight (shortest roundtrip).
+
+\begin{theorem}
+The TSP is NP-Complete (reducible from Hamiltonian Cycle).
+\end{theorem}
+
+\subsubsection{Metric TSP}
+For graphs where triangle inequality holds:
+$$w(u,v) \le w(u,w) + w(w,v)$$
+There is a 2-approximation algorithm.
+
+\begin{algorithm}
+#2-Approximation for Metric TSP
+#Length at most 2 * |E(T)| = 2 * (|V|-1).
+1. Determine minimal-spanning tree T
+2. Double edges of T to get Eulerian multigraph T'
+3. Traverse Eulertour, skip already visited vertices
+\end{algorithm}

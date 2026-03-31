@@ -1,0 +1,52 @@
+\section{Fundamentals}
+
+\subsection{MOS Transistors}
+\begin{definition}
+\textbf{n-type}: Closed (ON) when Gate is High (1). Excellent at passing 0 (strong 0).
+\end{definition}
+
+\begin{definition}
+\textbf{p-type}: Closed (ON) when Gate is Low (0). Excellent at passing 1 (strong 1).
+\end{definition}
+
+\begin{definition}
+\textbf{CMOS}: Organized into two networks to prevent static power draw:
+\begin{itemize}
+    \item \textbf{Pull-Up (PUN)}: Built with pMOS to connect output to $V_{DD}$ (1).
+    \item \textbf{Pull-Down (PDN)}: Built with nMOS to connect output to Ground (0).
+\end{itemize}
+\end{definition}
+
+\subsection{Logic Gates}
+
+\begin{definition}
+\textbf{NOT}: 2 transistors (1 pMOS, 1 nMOS). $$Y = \overline{A}$$
+\textbf{NAND}: 4 transistors. $$Y = \overline{A \cdot B}$$
+\textbf{NOR}: 4 transistors. $$Y = \overline{A + B}$$
+\textbf{XOR}: (1 if different) $$Y = A \oplus B$$
+\textbf{Buffer}:  (two NOT gates) $$Y = A$$
+\end{definition}
+
+\begin{important}
+A set of gates is \textbf{logically complete} if any Boolean function can be realized using only those gates (e.g. $\{NAND\}$, $\{NOR\}$).
+\end{important}
+
+\subsection{Boolean Algebra}
+
+\begin{theorem}
+\textbf{DeMorgan's theorems}:
+$$\overline{A \cdot B} = \overline{A} + \overline{B}$$
+$$\overline{A + B} = \overline{A} \cdot \overline{B}$$
+\end{theorem}
+
+\begin{definition}
+\textbf{Minterm}: AND term containing all input variables.
+\textbf{Sum of Products (SOP)}: OR of minterms for which output is 1.
+\end{definition}
+
+\begin{algorithm}
+#Karnaugh Map (K-Map) format
+1. Map truth table into grid where adjacent cells differ by 1 bit (Gray code).
+2. Circle groups of 2^n adjacent 1s.
+3. Eliminate variables that change within the circle.
+\end{algorithm}

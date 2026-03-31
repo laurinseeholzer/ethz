@@ -1,0 +1,28 @@
+\section{Distributions}
+
+\begin{definition}
+\textbf{Bernoulli($p$)}: $X \in \{0,1\}$
+$$P[X=1] = p \quad \text{and} \quad P[X=0] = 1-p$$
+\end{definition}
+
+\begin{definition}
+\textbf{Binomial($n, p$)}: $X \in \{0,\dots,n\}$
+$$P[X=k] = \binom{n}{k} p^k (1-p)^{n-k}$$
+\end{definition}
+
+\begin{definition}
+\textbf{Poisson($\lambda$)}:
+$$P[X=k] = \frac{e^{-\lambda} \lambda^k}{k!}$$
+\end{definition}
+
+\begin{definition}
+\textbf{Geometric($p$)}:
+$$P[X=k] = p(1-p)^{k-1}$$
+(Number of throws until first success).
+\end{definition}
+
+\begin{definition}
+\textbf{Negative Binomial of order $n$}:
+$$P[X=k] = \binom{k-1}{n-1} p^n (1-p)^{k-n}$$
+(Number of throws until $n$-th success).
+\end{definition}

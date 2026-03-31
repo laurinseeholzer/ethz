@@ -1,0 +1,54 @@
+\section{Random Variables}
+
+\begin{definition}
+A \textbf{random variable} is a map $X: \Omega \to \mathbb{R}$.
+Event $X \leq x \coloneqq \{\omega \in \Omega \mid X(\omega) \leq x\}$.
+\end{definition}
+
+\subsection{Expectation}
+
+\begin{definition}
+The expectation of $X$ is defined as:
+$$\mathbb{E}[X] \coloneqq \sum_{\alpha \in W_x} \alpha P(X=\alpha)$$
+\end{definition}
+
+\begin{theorem}
+For a random variable $X$ with values in $\mathbb{N}_0$:
+$$\mathbb{E}[X] = \sum_{k=1}^\infty P(X \geq k)$$
+\end{theorem}
+
+\begin{definition}
+Indicator-variable $X_E$ for $E \subseteq \Omega$:
+$X_E(\omega) = 1$ if $\omega \in E$, else $0$.
+$$\mathbb{E}[X_E] = P(E)$$
+\end{definition}
+
+\begin{theorem}
+\textbf{Linearity of Expectation}:
+For random variables $X_1, \dots, X_n$ and $a_1, \dots, a_n \in \mathbb{R}$:
+$$\mathbb{E}[\sum_{i=1}^n a_i X_i] = \sum_{i=1}^n a_i \mathbb{E}[X_i]$$
+\end{theorem}
+
+\begin{algorithm}
+#Maximal Stable Set Algorithm
+S[v] = 1/0 with probability p
+For all {u,v} in E:
+  if S[u] == 1 and S[v] == 1: S[v] = 0
+Expected size: $\mathbb{E}[\mid S \mid] \geq n*p - m*p^2$
+\end{algorithm}
+
+\subsection{Variance}
+
+\begin{definition}
+For $X$ with $\mathbb{E}[X] = \mu$, the \textbf{variance} is:
+$$Var[X] \coloneqq \mathbb{E}[(X-\mu)^2]$$
+Standard deviation $\sigma \coloneqq \sqrt{Var[X]}$.
+\end{definition}
+
+\begin{theorem}
+$$Var[X] = \mathbb{E}[X^2] - (\mathbb{E}[X])^2$$
+\end{theorem}
+
+\begin{lemma}
+For $a, b \in \mathbb{R}$: $Var[aX+b] = a^2 Var[X]$
+\end{lemma}

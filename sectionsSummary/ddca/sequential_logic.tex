@@ -1,0 +1,51 @@
+\section{Sequential Logic}
+
+\begin{definition}
+Sequential logic incorporates storage elements to maintain "state", producing outputs based on both current and past inputs.
+\end{definition}
+
+\subsection{Fundamental Blocks}
+
+\begin{definition}
+\textbf{Reset-Set (R-S) latch} (built from cross-coupled NAND gates):
+Set ($S=0$): $Q=1$, Reset ($R=0$): $Q=0$.
+$S=0, R=0$ is forbidden (metastability).
+\end{definition}
+
+\begin{definition}
+\textbf{Gated D Latch} adds Write Enable ($WE$). Transparent when $WE=1$ (output $Q$ follows $D$), holds value otherwise.
+\end{definition}
+
+\begin{definition}
+\textbf{D Flip-Flop} uses two D latches (master-slave) to be \textbf{edge-triggered}. Captures $D$ value exactly at rising edge of clock ($0 \to 1$).
+\end{definition}
+
+\subsection{Timing and Finite State Machines}
+
+\begin{definition}
+\textbf{Clock (CLK)}: Periodic signal coordinating synchronous state transitions. Period must exceed the worst-case combinational delay.
+\end{definition}
+
+\begin{definition}
+\textbf{Finite State Machine (FSM)} has:
+\begin{itemize}
+    \item \textbf{Moore FSM}: Outputs depend \textbf{only} on current state.
+    \item \textbf{Mealy FSM}: Outputs depend on current state \textbf{and} current inputs.
+\end{itemize}
+\end{definition}
+
+\begin{remark}
+FSM Implementation:
+1. State Register (sequential)
+2. Next State Logic (combinational)
+3. Output Logic (combinational)
+\end{remark}
+
+\begin{example}
+State Encodings: \textbf{Binary} (min bits), \textbf{One-Hot} (1 bit/state, simple logic), \textbf{Output} (state bits = output bits).
+\end{example}
+
+\begin{definition}
+\textbf{Register}: Group of D flip-flops with common clock/enable.
+\textbf{Memory}: Storage locations indexed by address.
+\end{definition}

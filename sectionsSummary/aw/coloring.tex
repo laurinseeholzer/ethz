@@ -1,0 +1,21 @@
+\section{Coloring}
+
+\begin{definition}
+A \textbf{$k$-coloring} of $G = (V, E)$ is a mapping $c: V \to [k]$ such that $c(u) \neq c(v)$ for all $\{u,v\} \in E$.
+The \textbf{chromatic number} $\chi(G)$ is the minimum number of colors.
+$\chi(G) \le 2 \iff G$ is bipartite.
+\end{definition}
+
+\begin{theorem}
+For $k \ge 3$, the problem "Is $\chi(G) \le k$?" is NP-complete.
+\end{theorem}
+
+\begin{algorithm}
+#Greedy Coloring (Requires <= max degree + 1 colors)
+Delete vertices in order of minimum degree (heuristic).
+\end{algorithm}
+
+\begin{theorem}
+\textbf{Brooks' Theorem}: For a connected graph $G$ that is neither a complete graph $K_n$ nor an odd cycle $C_{2n+1}$:
+$$\chi(G) \le \Delta(G)$$
+\end{theorem}

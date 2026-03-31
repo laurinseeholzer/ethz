@@ -1,0 +1,46 @@
+\section{Von Neumann Model and ISA}
+
+\begin{definition}
+The \textbf{Von Neumann model} consists of memory (stores program and data), processing unit (ALU, registers), control unit (PC, IR), input, and output.
+Key properties: \textbf{Stored Program} and \textbf{Sequential Processing}.
+\end{definition}
+
+\begin{remark}
+Instruction Cycle: Fetch $\to$ Decode $\to$ Evaluate Address $\to$ Fetch Operands $\to$ Execute $\to$ Store Result.
+\end{remark}
+
+\begin{definition}
+\textbf{Address Space}: Total unique memory locations.
+\textbf{Addressability}: Bits stored per address.
+\textbf{Endianness}: Order of bytes (Big Endian stores MSB at lowest address).
+\end{definition}
+
+\subsection{Instruction Set Architecture (ISA)}
+
+\begin{definition}
+The \textbf{ISA} is the interface between software and hardware. Defines memory organization, register set, and instructions (Opcode + Operands).
+\end{definition}
+
+\begin{lemma}
+\textbf{CISC}: Complex instructions, small semantic gap.
+\textbf{RISC}: Simple instructions, large semantic gap (e.g. MIPS, LC-3).
+\end{lemma}
+
+\begin{definition}
+\textbf{Addressing Modes}: Immediate, Register, PC-Relative ($PC + offset$), Indirect, Base + Offset.
+\end{definition}
+
+\subsection{Assembly}
+
+\begin{definition}
+Assembly is human-readable machine code.
+In RISC, operands must be in registers for ALUs:
+\begin{itemize}
+    \item \textbf{Load}: Reads data from memory into a register.
+    \item \textbf{Store}: Writes data from a register into memory.
+\end{itemize}
+\end{definition}
+
+\begin{remark}
+Execution order altered by \textbf{Conditional Branches} (uses condition codes or register comparisons) and \textbf{Unconditional Jumps}.
+\end{remark}

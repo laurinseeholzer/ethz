@@ -1,0 +1,70 @@
+\section{Intro: Probability}
+
+\begin{definition}
+A \textbf{discrete probability space} is a set of elementary events $\Omega = \{\omega_1, \dots, \omega_n \}$.
+Every event $\omega_i$ has a probability $P[\omega_i] \in [0,1]$ such that
+$$\sum_{\omega_i \in \Omega} P[\omega_i] = 1$$
+\end{definition}
+
+\begin{remark}
+A finite space where every event has equal probability is a \textbf{Laplace-Space}. For any event $E$:
+$$P[E] = \frac{\vert E \vert}{\vert \Omega \vert}$$
+\end{remark}
+
+\begin{definition}
+An \textbf{Event} $E \subseteq \Omega$ has probability $P[E] = \sum_{\omega_i \in E} P[\omega_i]$.
+The complementary event $\bar{E} = \Omega \setminus E$ has probability $P[\bar{E}] = 1 - P[E]$.
+\end{definition}
+
+\begin{theorem}
+For two events $A, B \subseteq \Omega$:
+$P[\emptyset] = 0$, $P[\Omega] = 1$, $P[A] \in [0,1]$.
+If $A \subset B$ then $P[A] \le P[B]$.
+\end{theorem}
+
+\begin{theorem}
+\textbf{Union Bound}: For events $A_1, \dots, A_n$:
+$$P[\bigcup_{i=1}^n A_i] \leq \sum_{i=1}^n P[A_i]$$
+(Equality iff $A_i$ are pairwise disjoint).
+\end{theorem}
+
+\begin{theorem}
+\textbf{Inclusion-Exclusion Principle}: For $n \geq 2$:
+$$P[\bigcup_{i=1}^n A_i] = \sum_{i=1}^n (-1)^{i+1} P[\bigcap_{j=1}^i A_j]$$
+\end{theorem}
+
+\subsection{Conditional Probability}
+
+\begin{definition}
+For $P[B] > 0$, the \textbf{conditional probability} of $A$ given $B$ is:
+$$P[A \mid B] = \frac{P[A \cap B]}{P[B]}$$
+\end{definition}
+
+\begin{theorem}
+\textbf{Multiplication-Theorem}: If $P[\bigcap_{i=1}^{n-1} A_i] > 0$:
+$$P[\bigcap_{i=1}^n A_i] = P[A_1] \cdot P[A_2 \mid A_1]$$
+$$\cdot \dots \cdot P[A_n \mid \bigcap_{i=1}^{n-1} A_i]$$
+\end{theorem}
+
+\begin{theorem}
+\textbf{Theorem of total probability}: For pairwise disjoint $A_i$ and $B \subseteq \bigcup_{i=1}^n A_i$:
+$$P[B] = \sum_{i=1}^n P[B \mid A_i] P[A_i]$$
+\end{theorem}
+
+\begin{theorem}
+\textbf{Bayes' Theorem}: For exactly defined disjoint $A_i$, $B \subseteq \bigcup A_i$, and $P[B] > 0$:
+$$P[A_i \mid B] = \frac{P[B \mid A_i] P[A_i]}{\sum_{j=1}^n P[B \mid A_j] P[A_j]}$$
+\end{theorem}
+
+\subsection{Independence}
+
+\begin{definition}
+Two events $A, B$ are \textbf{independent} if:
+$$P[A \cap B] = P[A] P[B] \text{ or } P[A \mid B] = P[A]$$
+Events $A_1, \dots, A_n$ are independent if for all $I \subseteq \{1, \dots, n\}$:
+$$P[\bigcap_{i \in I} A_i] = \prod_{i \in I} P[A_i]$$
+\end{definition}
+
+\begin{lemma}
+If $A, B, C$ are independent, then so are $A \cap B$ and $C$, and $A \cup B$ and $C$.
+\end{lemma}
