@@ -11,4 +11,6 @@
 \contentsline {section}{\numberline {7}Random Variables}{15}{}%
 \contentsline {subsection}{\numberline {7.1}Expectation}{15}{}%
 \contentsline {subsection}{\numberline {7.2}Variance}{17}{}%
-\contentsline {section}{\numberline {8}Distributions}{18}{}%
+\contentsline {subsection}{\numberline {7.3}Multiple Random Variables}{17}{}%
+\contentsline {subsection}{\numberline {7.4}Combined Random Variables}{18}{}%
+\contentsline {section}{\numberline {8}Distributions}{19}{}%

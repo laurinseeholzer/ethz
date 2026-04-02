@@ -140,5 +140,56 @@ this results in a stable set but what is the expected size of S?
     For a random variable $X$ and $a, b \in \mathbb{R}$ we have $Var[aX+b] = a^2 Var[X]$
 \end{lemma}
 
+\subsection{Multiple Random Variables}
 
+\begin{example}
+    Throw a coin and a dice. Let $X$ be the outcome of the coin and $Y$ be the outcome of the dice. What is the expectation of $X+Y$?
+\end{example}
 
+\begin{definition}
+    Random variables $X_1, X_2, \dots, X_n$ are called independent iff for all $a_1, \dots, a_n \in W_{X_1} \times \dots \times W_{X_n}$ we have:
+    $$P[X_1=a_1, \dots, X_n=a_n] = P[X_1=a_1] \dots P[X_n=a_n]$$
+\end{definition}
+
+Observe that events $A_1, \dots, A_n$ are independent iff their indicator variables $X_{A_1}, \dots, X_{A_n}$ are independent.
+
+\begin{lemma}
+    Let $X_1, \dots, X_n$ be independent random variables and $S_1, \dots, S_n \subseteq \mathbb{R}$ be arbitrary sets then:
+    $$P[X_1 \in S_1, \dots, X_n \in S_n] = P[X_1 \in S_1] \dots P[X_n \in S_n]$$
+    Hence for $X_1, \dots, X_n$ independent random variables and $I \subseteq \{1, \dots, n\}$ we have $(X_i)_{i \in I}$ are independent.
+\end{lemma}
+
+\begin{proof}
+    
+\end{proof}
+
+\begin{theorem}
+    Let $f_1, \dots, f_n: \mathbb{R} \to \mathbb{R}$ be functions in $\mathbb{R}$ and $X_1, \dots, X_n$ be independent random variables. Then $f_1(X_1), \dots, f_n(X_n)$ are independent too.
+\end{theorem}
+
+\begin{proof}
+\end{proof}
+    
+\subsection{Combined Random Variables}
+
+\begin{theorem}
+    For two independent random variable $X, Y$ and $Z = X+Y$ we have:
+    $$f_Z(\alpha) = \sum_{\beta \in W_X} f_X(\beta) f_Y(\alpha-\beta)$$
+\end{theorem}
+
+    This can intuitivaly be seen by looking at every possibility for $X = \beta$: for $X+Y = \alpha$ to hold we need $Y = \alpha - \beta$. Since $X$ and $Y$ are independent we can multiply their probabilities and sum that over all $\beta$
+    
+\begin{theorem}
+    For random variables $X_1, \dots , X_n$ we have:
+    $$\mathbb{E}[X_1 + \dots + X_n] = \mathbb{E}[X_1] + \dots + \mathbb{E}[X_n]$$
+\end{theorem}
+
+\begin{theorem}
+    For independent random variablex $X_1, \dots , X_n$ we have:
+    $$\mathbb{E}[X_1 \dots X_n] = \mathbb{E}[X_1] \dots \mathbb{E}[X_n]$$
+    $$Var[X_1 + \dots + X_n] = Var[X_1] + \dots + Var[X_n]$$
+\end{theorem}
+
+\begin{important}
+    Note that $Var[X \cdot Y] = Var[X] \cdot Var[Y]$ does not hold in general.
+\end{important}

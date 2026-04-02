@@ -9,3 +9,4 @@
 \contentsline {subsection}{\numberline {2.2}Series}{11}{}%
 \contentsline {section}{\numberline {3}Functions}{14}{}%
 \contentsline {subsection}{\numberline {3.1}Limits in the context of functions}{15}{}%
+\contentsline {section}{\numberline {4}Continuity of functions}{18}{}%

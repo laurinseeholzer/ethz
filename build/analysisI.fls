@@ -704,6 +704,13 @@ INPUT sectionsNotes/analysisI/functions.tex
 INPUT ./sectionsNotes/analysisI/functions.tex
 INPUT ./sectionsNotes/analysisI/functions.tex
 INPUT sectionsNotes/analysisI/functions.tex
+INPUT ./sectionsNotes/analysisI/continuity.tex
+INPUT ./sectionsNotes/analysisI/continuity.tex
+INPUT ./sectionsNotes/analysisI/continuity.tex
+INPUT sectionsNotes/analysisI/continuity.tex
+INPUT ./sectionsNotes/analysisI/continuity.tex
+INPUT ./sectionsNotes/analysisI/continuity.tex
+INPUT sectionsNotes/analysisI/continuity.tex
 INPUT build/analysisI.aux
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
