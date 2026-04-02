@@ -3,30 +3,60 @@
 \subsection{Sequences}
 
 \begin{definition}
-A \textbf{sequence} (Folge) $(a_n)_{n \in \mathbb{N}_0}$ is a list of numbers, mathematically a mapping $f: \mathbb{N}_0 \to X$. It can be given explicitly ($a_n = f(n)$) or recursively ($a_n = g(a_{n-1}, a_{n-2}, \dots)$).
+    A \textbf{sequence} (Folge) $(a_n)_{n \in \mathbb{N}_0}$ is an infinite list of numbers, mathematically a mapping $f: \mathbb{N}_0 \to X$. It can be given explicitly or recursively  as
+    $$a_n = f(n) \quad \text{or} \quad a_n = g(a_{n-1}, a_{n-2}, \dots)$$
 \end{definition}
 
+\begin{example}
+    A famous example is the Fibonacci sequence defined by $a_0 = 0, a_1 = 1$ and $a_n = a_{n-1} + a_{n-2}$ for $n \ge 2$.
+    The first few terms are $0, 1, 1, 2, 3, 5, 8, 13, 21, 34, \dots$
+\end{example}
+
 \begin{definition}
-A sequence $(a_n)$ is called \textbf{convergent} with limit $L \in \mathbb{R}$ if:
-$$\forall \epsilon \gt 0 \exists N \gt 0 \text{ s.t. } \forall n \gt N : |a_n - L| \lt \epsilon$$
-Written as $\lim_{n \to \infty} a_n = L$.
-\\ \\
-If no such $L$ exists, the sequence is \textbf{divergent}. Sequences that diverge to $\pm \infty$ are a special case of divergent sequences.
+    A sequence $(a_n)$ is called \textbf{convergent} with limit $L \in \mathbb{R}$ if:
+    $$\forall \epsilon \gt 0 \exists N \gt 0 \quad \text{ s.t. } \quad \forall n \gt N : |a_n - L| \lt \epsilon$$
+    Written as $\lim_{n \to \infty} a_n = L$.If no such $L$ exists, the sequence is \textbf{divergent}. Sequences that diverge to $\pm \infty$ are a special case of divergent sequences.
 \end{definition}
 
 \begin{theorem}
-The limit of a sequence is unique aslong as it exists.
+    The limit of a sequence is unique aslong as it exists.
 \end{theorem}
 
+\begin{proof}
+    Assume $(a_n)$ converges to $L_1$ and $L_2$.
+    Then for any $\epsilon > 0$ there exists $N_1$ and $N_2$ such that:
+    $$|a_n - L_1| < \epsilon \quad \forall n > N_1$$
+    $$|a_n - L_2| < \epsilon \quad \forall n > N_2$$
+    Then for any $n > \max(N_1, N_2)$:
+    $$|L_1 - L_2| = |L_1 - a_n + a_n - L_2| \le |L_1 - a_n| + |a_n - L_2| < 2\epsilon$$
+    Since this holds for any $\epsilon > 0$, we must have $L_1 = L_2$.
+\end{proof}
+
 \begin{theorem}
-A subsequence $(a_{n_k})_{k \in \mathbb{N}_0}$ of a convergent sequence converges to the same limit $L$.
+    A subsequence $(a_{n_k})_{k \in \mathbb{N}_0}$ of a convergent sequence converges to the same limit $L$.
 \end{theorem}
 
 \begin{definition}
-An \textbf{accumulation point} (Häufungspunkt) $A \in \mathbb{R}$ of a sequence fulfills:
-$$\forall \epsilon \gt 0 \forall N \in \mathbb{N}_0 \exists n \ge N \text{ such that } |a_n - A| \lt \epsilon$$
-$A$ is an accumulation point iff there exists a convergent subsequence with limit $A$. Every convergent sequence has exactly one accumulation point (its limit).
+    An \textbf{accumulation point} (Häufungspunkt) $A \in \mathbb{R}$ of a sequence fulfills:
+    $$\forall \epsilon \gt 0 \forall N \in \mathbb{N}_0 \exists n \ge N \text{ such that } |a_n - A| \lt \epsilon$$
 \end{definition}
+
+\begin{theorem}
+    $A$ is an accumulation point iff there exists a convergent subsequence with limit $A$.
+\end{theorem}
+
+\begin{proof}
+    Let $(a_n)$ be a sequence and $A$ an accumulation point. We can easily construct a subsequence $(a_{n_k})$ that converges to $A$ by selecting $n_k$ such that $|a_{n_k} - A| < 1/k$ this is given to exist by the definition of an accumulation point.
+    Now let $(a_{n_k})$ be a convergent subsequence with limit $A$ then for any $\epsilon > 0$ there exists $K$ such that $|a_{n_k} - A| < \epsilon$ for all $k > K$ and since $n_k \to \infty$ as $k \to \infty$ by definition it follows that $A$ is an accumulation point.
+\end{proof}
+
+\begin{theorem}
+    Every convergent sequence has exactly one accumulation point (its limit).
+\end{theorem}
+
+\begin{proof}
+
+\end{proof}
 
 \begin{theorem}
 Limit arithmetic: For $\lim a_n = K$ and $\lim b_n = L$:

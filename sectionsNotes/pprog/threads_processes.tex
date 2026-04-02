@@ -1,25 +1,21 @@
-\section{Threads \& Processes}
+\section{Threads and Processes}
 
+\subsection{Processes}
 \begin{definition}
-
-                A process is a program executing inside an OS (operating-system). Processes share CPU but have seperate
-                memory space.
-            
+    A process is a program executing inside an OS (operating-system). Processes share CPU but have seperate memory space.
 \end{definition}
 
 \begin{definition}
-
-                The \textbf{context} of a process is the set of utilities it uses and or operates on. That is:
-                \begin{itemize}
-    \item \textbf{Hardware context: }Instruction counter, Registers, Execution State, Flags ...
-    \item \textbf{Memory context: }Virtual Memory, Heap-Space, Stack ...
-    \item \textbf{OS-level context:} Process ID, open files ...
-\end{itemize}
-
+    The \textbf{context} of a process is the set of utilities it uses and or operates on. That is:
+    \begin{itemize}
+        \item \textbf{Hardware context: }Instruction counter, Registers, Execution State, Flags ...
+        \item \textbf{Memory context: }Virtual Memory, Heap-Space, Stack ...
+        \item \textbf{OS-level context:} Process ID, open files ...
+    \end{itemize}
 \end{definition}
 
-            The lifecylce of a process is managed by the OS and can be described by the following states:
-            \begin{itemize}
+The lifecylce of a process is managed by the OS and can be described by the following states:
+\begin{itemize}
     \item \textbf{CREATED: }The process is loaded from the disc
     \item \textbf{WAITING: }The process is waiting in the main-memory for execution.
     \item \textbf{RUNNING: }The process is executed
@@ -28,97 +24,77 @@
 \end{itemize}
 
 \begin{definition}
-
-\textbf{Context Switch:}\\
-
-                The process of saving the context of a process and loading the context of another process. This happens
-                for example when a process recives the RUNNING state and another process gets BLOCKED.
-            
+    \textbf{Context Switch:} The process of saving the context of a process and loading the context of another process. This happens for example when a process recives the RUNNING state and another process gets BLOCKED.
 \end{definition}
 
-            All processes are managed by the OS, which schedules, synchronizes, starts and terminates processes, allows
-            comminication and manages ressources. The OS uses so called Process control blocks (PCB).
+All processes are managed by the OS, which schedules, synchronizes, starts and terminates processes, allows comminication and manages ressources. The OS uses so called Process control blocks (PCB).
 
-            \begin{definition}
-
-                A \textbf{process-control-block (PSB)} is a table-entry storing relevant process information such as
-                Program counter, Registers, Adress Space, Open files ...
-            
+\begin{definition}
+    A \textbf{process-control-block (PSB)} is a table-entry storing relevant process information such as Program counter, Registers, Adress Space, Open files ...
 \end{definition}
 
 \subsection{Parallelism}
 
 \begin{definition}
-
-\textbf{Parallelism } is when multiple processes execute simultaneously on diffrent CPU-Cores.
-            
+    \textbf{Parallelism } is when multiple processes execute simultaneously on diffrent CPU-Cores.
 \end{definition}
 
 \begin{definition}
-
-\textbf{Concurrency } is when multiple processes execute interleaved on a single CPU-Core.
-            
-\end{definition}
-
-            Observe that parallelism implies concurrency, but concurrency does not imply parallelism.
-
-            \subsection{Multithreading}
-
-\begin{definition}
-
-                A thread is an independent sequence of exection running in the same OS-process.
-            
+    \textbf{Concurrency } is when multiple processes execute interleaved on a single CPU-Core.
 \end{definition}
 
 \begin{remark}
-
-                While processes can only communicate through main-memory and have diffrent memory spaces, threads share
-                the same adress space. This leads to faster and more efficient context-switches as adressspace and PCB
-                loading is not necessary.
-            
+    Observe that parallelism implies concurrency, but concurrency does not imply parallelism.
 \end{remark}
 
-            There are diffrent levels of threads:
-            \begin{itemize}
-    \item \textbf{User-Level Threads: } Threads managed by the application using a thread library, ex.
-                    Java-Threads managed by JVM
+\subsection{Multithreading}
+
+\begin{definition}
+    A thread is an independent sequence of exection running in the same OS-process.
+\end{definition}
+
+\begin{remark}
+    While \textbf{processes can only communicate through main-memory} and have diffrent memory spaces, \textbf{threads share
+    the same adress space}. This leads to faster and more efficient context-switches as adressspace and PCB
+    loading is not necessary.
+\end{remark}
+
+There are diffrent levels of threads:
+\begin{itemize}
+    \item \textbf{User-Level Threads: } Threads managed by the application using a thread library, ex. Java-Threads managed by JVM
     \item \textbf{Kernel-Level Threads: }Threads managed by to OS, which can schedule them on diffrent cores.
-                
-    \item \textbf{CPU-Level Threads:} Threads managed by the CPU, which can schedule them on the physical cores.
-                    Ex. A CPU might have 4 physical cores, which apear to the OS as 8 logical cores.
+    \item \textbf{CPU-Level Threads:} Threads managed by the CPU, which can schedule them on the physical cores. Ex. A CPU might have 4 physical cores, which apear to the OS as 8 logical cores.
 \end{itemize}
 
-            There are two ways to create a thread in java.
+There are two ways to create a thread in java. We can directly extend the Thread class and implement our run method in the Thread.
 
-            \begin{codeexample}
-
-                class MyThread extends Thread { ...
-                public void run() {
-                ...
-                }
-                }
-                MyThread thread = new MyThread();
-                thread.start(); // calls MyThread.run()
-            
+\begin{codeexample}
+class MyThread extends Thread { 
+    ...
+    public void run() {
+        ...
+    }
+}
+MyThread thread = new MyThread();
+thread.start(); // calls MyThread.run()
 \end{codeexample}
 
-            or using a runnable, which is recomended to do:
+Or we can use the Runnable Interface to create a runnable object which we pass to the Thread.
 
-            \begin{codeexample}
-
-                class MyRunnable implements Runnable { ...
-                public void run() {
-                ...
-                }
-                }
-                MyRunnable runnable = new MyRunnable();
-                Thread thread = new Thread(runnable);
-                thread.start(); // calls MyRunnable.run()
-            
+\begin{codeexample}
+class MyRunnable implements Runnable { 
+    ...
+    public void run() {
+        ...
+    }
+}
+MyRunnable runnable = new MyRunnable();
+Thread thread = new Thread(runnable);
+thread.start(); // calls MyRunnable.run()
 \end{codeexample}
 
-            In its lifecylce a thread can have the follwoing states:
-            \begin{itemize}
+In its lifecylce a thread can have the follwoing states:
+\begin{itemize}
     \item \textbf{NEW: }The thread has been created but not yet started.
     \item \textbf{RUNNABLE: }The thread is ready to run and waiting for the OS to schedule it.
     \item \textbf{RUNNING: }The thread is currently executing.
@@ -128,61 +104,49 @@
 \end{itemize}
 
 \begin{remark}
-
-                Every Thread has an \textbf{ID, Name, Priority and State} which might be usfull for certain tasks.
-            
+    Every Thread has an \textbf{ID, Name, Priority and State} which might be usfull for certain tasks.
 \end{remark}
 
-            To wait for a thread to finish, we can use the .join() method on the thread we want to wait on. This lets
-            the main-thread sleep until the joined thread terminates and wakes it up again.
+To wait for a thread to finish, we can use the .join() method on the thread we want to wait on. This lets the main-thread sleep until the joined thread terminates and wakes it up again.
 
-            \begin{codeexample}
-
-                Thread t = new MyThread();
-                t.start(); //start t
-                t.join(); //sleep until t is finished
-                continueWork(); // this is only called after t finishes
-            
+\begin{codeexample}
+Thread t = new MyThread();
+t.start(); //start t
+t.join(); //sleep until t is finished
+continueWork(); // this is only called after t finishes
 \end{codeexample}
 
 \begin{remark}
-
-                Using the .join() method might not always be the best option, as it produceses a significant overhead.
-                If the execution time of a thread is short, it might be better to let the main-thread busy wait in a
-                while loop.
-            
+    Using the \textbf{.join() method might not always be the best option}, as it produceses a \textbf{significant overhead}.
+    If the execution time of a thread is short, it might be better to let the main-thread busy wait in a while loop.
 \end{remark}
 
 \begin{important}
-
-                If a worker-thread throws an exception the main-thread will be woken up, but it will not know of the
-                error,
-                which might lead to false results. To make sure we don't produce false results we have to set an
-                UncaughtExeptionHandler using a try-catch block when joining threads. The same holds for threads that
-                run indefinetly we need to make sure to have a timer task that interupts threads or manually interupt
-                them.
-            
+    If a worker-thread throws an exception the main-thread will be woken up, but it \textbf{will not know of the error}, which might lead to false results. To make sure we don't produce false results we have to \textbf{set an UncaughtExeptionHandler} using a try-catch block when joining threads. The same holds for \textbf{threads that run indefinetly} we need to make sure to \textbf{have a timer task} that interupts threads or manually interupt them.
 \end{important}
 
 \begin{codeexample}
+Thread t = new MyThread(); //worker thread
+Thread timer = new MyTimerThread(); //timer thread
 
-                Thread t = new MyThread();
-                Thread timer = new MyTimerThread();
-                t.start();
-                timer.start(t, 1000);
-                try {
-                t.join();
-                } catch (UncaughtExeptionHandler) {
-                System.out.println("Error in thread t");
-                }
-                continueWork();
+t.start();
+timer.start(t, 1000);
 
-                MyTimerThread extends Thread {
-                run(Thread thread, int time) {
-                timer.sleep(time);
-                thread.interupt();
-                }
-                }
-            
+try {
+    t.join();
+} catch (UncaughtExeptionHandler) {
+    System.out.println("Error in thread t"); //handle the error
+}
+continueWork();
+
+MyTimerThread extends Thread {
+    run(Thread thread, int time) {
+        timer.sleep(time);
+        thread.interupt(); //interrupt indefinetly running thread
+    }
+}    
 \end{codeexample}
 
+\begin{important}
+    \textbf{Thread scheduling is not deterministic.} This means that we can't rely on the order (interleaving) in which threads are executed.
+\end{important}

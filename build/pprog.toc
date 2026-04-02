@@ -1,6 +1,7 @@
-\contentsline {section}{\numberline {1}Threads \& Processes}{3}{}%
-\contentsline {subsection}{\numberline {1.1}Parallelism}{3}{}%
-\contentsline {subsection}{\numberline {1.2}Multithreading}{4}{}%
+\contentsline {section}{\numberline {1}Threads and Processes}{3}{}%
+\contentsline {subsection}{\numberline {1.1}Processes}{3}{}%
+\contentsline {subsection}{\numberline {1.2}Parallelism}{3}{}%
+\contentsline {subsection}{\numberline {1.3}Multithreading}{4}{}%
 \contentsline {section}{\numberline {2}Synchronization}{7}{}%
 \contentsline {subsection}{\numberline {2.1}Locks and Synchronized}{7}{}%
 \contentsline {subsection}{\numberline {2.2}Wait, notify, notifyAll}{8}{}%
@@ -8,19 +9,19 @@
 \contentsline {section}{\numberline {3}Optimization}{11}{}%
 \contentsline {subsection}{\numberline {3.1}Caching}{11}{}%
 \contentsline {subsection}{\numberline {3.2}Vectorization}{11}{}%
-\contentsline {subsection}{\numberline {3.3}Superscalar and Speculative Execution (ILP)}{11}{}%
-\contentsline {subsection}{\numberline {3.4}Pipelining}{11}{}%
+\contentsline {subsection}{\numberline {3.3}Instruction Level Parallelism (ILP)}{11}{}%
+\contentsline {subsection}{\numberline {3.4}Pipelining}{12}{}%
 \contentsline {subsection}{\numberline {3.5}Parallel Performance}{12}{}%
 \contentsline {section}{\numberline {4}Divide and Conquer}{14}{}%
 \contentsline {subsection}{\numberline {4.1}Executor Service}{14}{}%
-\contentsline {subsection}{\numberline {4.2}Fork-Join}{14}{}%
-\contentsline {subsection}{\numberline {4.3}Task graphs}{15}{}%
-\contentsline {section}{\numberline {5}Parallel Algorithms}{16}{}%
-\contentsline {subsection}{\numberline {5.1}Parallel Patterns}{16}{}%
-\contentsline {subsection}{\numberline {5.2}Parallel Algorithms}{16}{}%
-\contentsline {subsubsection}{\numberline {5.2.1}Prefix-Sum}{16}{}%
-\contentsline {subsubsection}{\numberline {5.2.2}Pack}{16}{}%
-\contentsline {subsubsection}{\numberline {5.2.3}Quicksort}{17}{}%
-\contentsline {section}{\numberline {6}Shared Resources}{18}{}%
-\contentsline {subsection}{\numberline {6.1}Race Conditions}{18}{}%
-\contentsline {subsection}{\numberline {6.2}Guidelines for Concurrent programming}{18}{}%
+\contentsline {subsection}{\numberline {4.2}Fork-Join}{15}{}%
+\contentsline {subsection}{\numberline {4.3}Task graphs}{16}{}%
+\contentsline {section}{\numberline {5}Parallel Algorithms}{17}{}%
+\contentsline {subsection}{\numberline {5.1}Parallel Patterns}{17}{}%
+\contentsline {subsection}{\numberline {5.2}Parallel Algorithms}{17}{}%
+\contentsline {subsubsection}{\numberline {5.2.1}Prefix-Sum}{17}{}%
+\contentsline {subsubsection}{\numberline {5.2.2}Pack}{18}{}%
+\contentsline {subsubsection}{\numberline {5.2.3}Quicksort}{18}{}%
+\contentsline {section}{\numberline {6}Shared Resources}{19}{}%
+\contentsline {subsection}{\numberline {6.1}Race Conditions}{19}{}%
+\contentsline {subsection}{\numberline {6.2}Guidelines for Concurrent programming}{19}{}%

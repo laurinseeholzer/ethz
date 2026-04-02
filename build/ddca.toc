@@ -27,3 +27,5 @@
 \contentsline {subsection}{\numberline {7.4}Resolving Data Hazards}{19}{}%
 \contentsline {subsection}{\numberline {7.5}Control Hazards and Branching}{20}{}%
 \contentsline {subsection}{\numberline {7.6}Advanced Pipeline Issues}{20}{}%
+\contentsline {subsection}{\numberline {7.7}Precise Exceptions and Interrupts}{20}{}%
+\contentsline {subsubsection}{\numberline {7.7.1}Reorder-Buffer}{21}{}%

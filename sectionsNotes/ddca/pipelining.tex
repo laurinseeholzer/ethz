@@ -101,3 +101,51 @@ In systems with multi-cycle functional units (e.g., a fast integer ALU and a slo
 \begin{definition}
 \textbf{Fine-Grained Multithreading:} A technique where the processor switches to a different thread every clock cycle. This hides the latency of data and control hazards by ensuring that instructions currently in the pipeline are independent of one another.
 \end{definition}
+
+
+\subsection{Precise Exceptions and Interrupts}
+
+In a pipelined Architecture, not all instructions take the same amount of time in the execution stage. 
+So what happens if a previous instruction causes an exception and the next instruction has already been written back to the register file? 
+We need to make sure that the state of the processor is consistent with the ISA. 
+
+\begin{definition}
+    Unplanned changes in program exection due to internal problems are called \textbf{exceptions} while due to external events they are called \textbf{interrupts}.
+\end{definition}
+
+\begin{important}
+    When an exception/interrupt occurs all previous instructions should be retired whil no later instructions should be allowed to proceed nor be retired.
+\end{important}
+
+Hence when the oldest instruction ready to be retired is detected to have caused an exception we have to:
+\begin{itemize}
+    \item Ensure architectural state is consistent (REG-File, PC, Memory)
+    \item Flush all younger instructions in the pipeline
+    \item Save PC and REG
+    \item Redirect to exception handler
+\end{itemize}
+
+\begin{remark}
+    In Single-Cycle machines this is easy to handle as we only have one instruction in the pipeline at a time which ensures sequential execution semantics.
+\end{remark}
+
+\begin{remark}
+    Note that we could make every operation take the same amount of time in the pipeline, this would ensure sequential execution semantics but would be very inefficient.
+\end{remark}
+
+\subsubsection{Reorder-Buffer}
+
+The idea behind a \textbf{reorder-buffer} is that we complete instructions out of order but reorder them before making the results visible to the architectural state.
+
+\begin{definition}
+    A \textbf{Reorder-Buffer (ROB)} is a hardware structure that stores the results of instructions as they complete. It allows instructions to be retired in-order, even if they complete out-of-order.
+\end{definition}
+
+\begin{lemma}
+    Reordering-Buffer uses a valid bit in the REG to indicate whether the result is valid, if not the REG stores a pointer to the ROB entry where the result will be stored once the instruction completes (ROB also uses a valid bit to indicate readiness).
+\end{lemma}
+
+This allows us to write out of order to the REG and ensure in order retirement where we can check in-order for any exceptions.
+
+
+

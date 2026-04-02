@@ -3,8 +3,12 @@
 \subsection{Logic}
 
 \begin{definition}
-A \textbf{mathematical Statement} is a well-formulated assertion that is either strictly true or false.
+    A \textbf{mathematical Statement} is a well-formulated assertion that is either strictly true or false.
 \end{definition}
+
+\begin{example}
+    "Every prime number is odd." is a false statement.
+\end{example}
 
 \begin{definition}
 A \textbf{Statement} that depends on one or multiple variables is called a \textbf{predicate}.
@@ -15,59 +19,78 @@ $$P(x) \coloneqq x > 2$$
 \end{example}
 
 \begin{definition}
-The negation of a mathematical Statement $A$ is defined as $\neg A \coloneqq A \text{ is false}$.
+    The negation of a mathematical Statement $A$ is defined as $\neg A \coloneqq A \text{ is false}$.
 \end{definition}
 
+\begin{example}
+    $A \coloneqq \forall x \in \mathbb{R}: x > 2$
+    $\neg A \coloneqq \exists x \in \mathbb{R}: x \leq 2$
+\end{example}
+
 \begin{definition}
-Quantifiers are short hand notation for making statements about predicates.
-$$\forall x \in \mathbb{R}: P(x)$$
-$$\exists x \in \mathbb{R}: P(x)$$
-$$\exists ! x \in \mathbb{R}: P(x)$$
-$$\nexists x \in \mathbb{R}: P(x)$$
-Expresses that for all / for at least one / for exactly one or for none x in $\mathbb{R}$ satisfies the predicate.
+    Quantifiers are short hand notation for making statements about predicates.
+    $$\forall x \in \mathbb{R}: P(x)$$
+    $$\exists x \in \mathbb{R}: P(x)$$
+    $$\exists ! x \in \mathbb{R}: P(x)$$
+    $$\nexists x \in \mathbb{R}: P(x)$$
+    Expresses that for all / for at least one / for exactly one or for none x in $\mathbb{R}$ satisfies the predicate.
 \end{definition}
 
 \begin{important}
-The oderder of quantifiers matters. $\forall x \exists y$ is not equivalent to $\exists y \forall x$.
+    The oderder of quantifiers matters. $\forall x \exists y$ is not equivalent to $\exists y \forall x$.
 \end{important}
 
 \begin{definition}
-Basic logical connectives are defined as:
-$$A \land B \coloneqq A \text{ and } B \text{ are true}$$
-$$A \lor B \coloneqq A \text{ or } B \text{ is true}$$
-$$A \implies B \coloneqq A \text{ implies } B \text{ is true}$$
-$$A \iff B \coloneqq A \text{ is equivalent to } B \text{ is true}$$
-
-observe that equivalence holds iff. $A \implies B \land B \implies A$
+    Basic logical connectives are defined as:
+    $$A \land B \coloneqq A \text{ and } B \text{ are true}$$
+    $$A \lor B \coloneqq A \text{ or } B \text{ is true}$$
+    $$A \implies B \coloneqq A \text{ implies } B \text{ is true}$$
+    $$A \iff B \coloneqq A \text{ is equivalent to } B \text{ is true}$$
 \end{definition}
 
+\begin{remark}
+    Observe that equivalence holds iff. $A \implies B \land B \implies A$
+\end{remark}
+
+\begin{lemma}
+    From the above definition it follows that:
+    $$ \neg A \lor B \iff A \implies B$$
+    This can be shown by evaluating the truth table for both statements.
+\end{lemma}
+
 \begin{theorem}
-The following equivalences hold:
-$$\neg (\forall x P(x)) \iff \exists x \neg P(x)$$
-$$\neg (\exists x P(x)) \iff \forall x \neg P(x)$$
-aswell as
-$$\forall x (P(x) \land Q(x)) \iff (\forall x P(x)) \land (\forall x Q(x))$$
-$$\exists x (P(x) \lor Q(x)) \iff (\exists x P(x)) \lor (\exists x Q(x))$$
+    The following equivalences hold:
+    $$\neg (\forall x P(x)) \iff \exists x \neg P(x)$$
+    $$\neg (\exists x P(x)) \iff \forall x \neg P(x)$$
+    aswell as
+    $$\forall x (P(x) \land Q(x)) \iff (\forall x P(x)) \land (\forall x Q(x))$$
+    $$\exists x (P(x) \lor Q(x)) \iff (\exists x P(x)) \lor (\exists x Q(x))$$
 \end{theorem}
 
 \subsection{Sets}
 
 \begin{definition}
-A \textbf{set} is a collection of elements, that are listed or characterized by a certain property. 
-The empty set is denoted by $\emptyset$ and is the only set that contains no elements.
-\\ \\
-An element $x$ is contained in a set $A$ iff. $x \in A$ else it is not contained in $A$ denoted by $x \notin A$.
+    A \textbf{set} is a collection of elements, that are listed or characterized by a certain property. 
+    The empty set is denoted by $\emptyset$ and is the only set that contains no elements.
 \end{definition}
 
 \begin{definition}
-Let $A$ and $B$ be sets. $A$ is a subset of $B$ denoted by $A \subseteq B$ iff. $\forall x (x \in A \implies x \in B)$.
-\\ \\
-$A$ is a proper subset of $B$ denoted by $A \subset B$ iff. $A \subseteq B \land A \neq B$.
+    An element $x$ is contained in a set $A$ iff. $x \in A$ else it is not contained in $A$ denoted by $x \notin A$.
 \end{definition}
 
 \begin{definition}
-Let $A$ and $B$ be sets.
-\begin{itemize}
+    Let $A$ and $B$ be sets. $A$ is a \textbf{subset} of $B$ denoted by $A \subseteq B$ iff. 
+    $$\forall x (x \in A \implies x \in B)$$
+\end{definition}
+
+\begin{definition}
+    $A$ is a \textbf{proper subset} of $B$ denoted by $A \subset B$ iff. 
+    $$A \subseteq B \land A \neq B$$
+\end{definition}
+
+\begin{definition}
+    Let $A$ and $B$ be sets.
+    \begin{itemize}
     \item The \textbf{union} of $A$ and $B$ is defined as $A \cup B \coloneqq \{x \mid x \in A \lor x \in B\}$.
     \item The \textbf{intersection} of $A$ and $B$ is defined as $A \cap B \coloneqq \{x \mid x \in A \land x \in B\}$.
     \item The \textbf{difference} of $A$ and $B$ is defined as $A \setminus B \coloneqq \{x \mid x \in A \land x \notin B\}$.
@@ -87,55 +110,64 @@ The basic and often used sets of numbers are:
 \end{itemize}
 
 \begin{remark}
-Some extensions of the real numbers are $\mathbb{R}^{+}_{0} / \mathbb{R}^{+}$ and $\mathbb{R}^{-}_{0} / \mathbb{R}^{-}$ which define the intervalls $[0, \infty) / (0, \infty)$ and $(-\infty, 0] / (-\infty, 0)$.
+    Some extensions of the real numbers are $\mathbb{R}^{+}_{0} / \mathbb{R}^{+}$ and $\mathbb{R}^{-}_{0} / \mathbb{R}^{-}$ which define the intervalls $[0, \infty) / (0, \infty)$ and $(-\infty, 0] / (-\infty, 0)$.
 \end{remark}
 
 \begin{definition}
-Continuous subsets are called \textbf{intervalls.} An intervall is called
-\begin{itemize}
-    \item \textbf{open} if it does not contain its endpoints $I = (a, b) \coloneqq \{x \mid a \lt x \lt b\}$
-    \item \textbf{closed} if it contains its endpoints $I = [a, b] \coloneqq \{x \mid a \leq x \leq b\}$
-    \item \textbf{half open} if it contains one endpoint and not the other $I = [a, b) \coloneqq \{x \mid a \leq x \lt b\}$
-\end{itemize}
-An intervall is bounded if it is bounded from above and below hence $a$ and $b$ are finite.
+    Continuous subsets are called \textbf{intervalls.} An intervall is called
+    \begin{itemize}
+        \item \textbf{open} if it does not contain its endpoints $I = (a, b) \coloneqq \{x \mid a \lt x \lt b\}$
+        \item \textbf{closed} if it contains its endpoints $I = [a, b] \coloneqq \{x \mid a \leq x \leq b\}$
+        \item \textbf{half open} if it contains one endpoint and not the other $I = [a, b) \coloneqq \{x \mid a \leq x \lt b\}$
+    \end{itemize}
 \end{definition}
 
 \begin{definition}
-An upper (lower) bound of a subset $X \subset \mathbb{R}$ is an element $y \in \mathbb{R}$ such that:
-$$\forall x \in X: x \leq (\geq) y$$
+    An intervall is \textbf{bounded} if it is bounded from above and below hence $a$ and $b$ are finite.
+\end{definition}
 
-The maximum (minimum) of a subset $X \subset \mathbb{R}$ is the element $x_{0} \in X$ such that:
-$$\forall x \in X: x \leq (\geq) x_{0}$$
+\begin{remark}
+    A bounded and closed intervall is often refered to as \textbf{compact}.
+\end{remark}
+
+\begin{definition}
+    An upper (lower) bound of a subset $X \subset \mathbb{R}$ is an element $y \in \mathbb{R}$ such that:
+    $$\forall x \in X: x \leq (\geq) y$$
+    The maximum (minimum) of a subset $X \subset \mathbb{R}$ is the element $x_{0} \in X$ such that:
+    $$\forall x \in X: x \leq (\geq) x_{0}$$
 \end{definition}
 
 \begin{definition}
-Least upper bound and greatest lower bound are also called Supremum and Infimum.
-\\ \\
-The \textbf{Supremum} $sup(X)$ of a subset $X \subset \mathbb{R}$ is the least upper bound of $X$. and can be characterized by:
-$$\forall x \in X: x \leq sup(X) \land \\ \forall \epsilon \gt 0: \exists x \in X: x \gt sup(X) - \epsilon$$
+    The \textbf{Supremum} $sup(X)$ of a subset $X \subset \mathbb{R}$ is the least upper bound of $X$. and can be characterized by:
+    $$\forall x \in X: x \leq sup(X) \land \\ \forall \epsilon \gt 0: \exists x \in X: x \gt sup(X) - \epsilon$$
+\end{definition}
 
-The \textbf{Infimum} $inf(X)$ of a subset $X \subset \mathbb{R}$ is the greatest lower bound of $X$. and can be characterized by:
-$$\forall x \in X: x \geq inf(X) \land \\ \forall \epsilon \gt 0: \exists x \in X: x \lt inf(X) + \epsilon$$
+\begin{definition}
+    The \textbf{Infimum} $inf(X)$ of a subset $X \subset \mathbb{R}$ is the greatest lower bound of $X$. and can be characterized by:
+    $$\forall x \in X: x \geq inf(X) \land \\ \forall \epsilon \gt 0: \exists x \in X: x \lt inf(X) + \epsilon$$
 \end{definition}
 
 \begin{example}
-Let $X = [-2, 1)$ we have a minimum of $x_0 = -1$ but no maximum. Observe that it is bounded from above by $1$ and $2$ or any number larger than $1$ but only $1$ is the least upper bound (Supremum).
+    Let $X = [-2, 1)$ we have a minimum of $x_0 = -1$ but no maximum. Observe that it is bounded from above by $1$ and $2$ or any number larger than $1$ but only $1$ is the least upper bound (Supremum).
 \end{example}
 
 \begin{theorem}
-The following holds:
-\begin{itemize}
-    \item The \textbf{maximum and minimum are unique} aslong as they exist.
-    \item Every \textbf{non empty, bounded from above (below)} subset of $\mathbb{R}$ has a \textbf{maximum (minimum)}.
-\end{itemize}
+    The following holds:
+    \begin{itemize}
+        \item The \textbf{maximum and minimum are unique} aslong as they exist.
+        \item Every \textbf{non empty, bounded from above (below)} subset of $\mathbb{R}$ has a \textbf{maximum (minimum)}.
+    \end{itemize}
 \end{theorem}
 
 \begin{definition}
-A set $X$ is said to be (order)complete if for every non empty subsets $A, B \subseteq X$
-$$\forall a \in A \forall b \in B: a \leq b$$
-then there there exists an element $c \in X$ such that:
-$$\forall a \in A: a \leq c \land \forall b \in B: c \leq b$$
+    A set $X$ is said to be (order)complete iff for every non empty subsets $A, B \subseteq X$
+    $$\forall a \in A \forall b \in B: a \leq b$$
+    $$\implies \exists c \in X \quad \text{s.t.} \quad \forall a \in A: a \leq c \land \forall b \in B: c \leq b$$
 \end{definition}
+
+\begin{example}
+    $\mathbb{Q}$ is not order complete. Let $A = \{x \in \mathbb{Q} \mid x^2 \leq 2\}$ and $B = \{x \in \mathbb{Q} \mid x^2 \geq 2\}$. Then $\forall a \in A \forall b \in B: a \leq b$ but there is no $c \in \mathbb{Q}$ such that $c^2 = 2$.
+\end{example}
 
 \begin{theorem}
 The Archimedian Principle says that
@@ -143,12 +175,17 @@ The Archimedian Principle says that
     \item For $x \in \mathbb{R}$ and $y \gt 0$ there exists an element $n \in \mathbb{N}$ such that $n * y \gt x$.
     \item For every $\epsilon \gt 0$ there exists an element $n \in \mathbb{N}$ such that $\frac{1}{n} \lt \epsilon$.
 \end{itemize}
+(This follows from the order completenes of $\mathbb{R}$.)
 \end{theorem}
 
 \begin{theorem}
 The Young Inequality states that for all $\epsilon \gt 0$ and all $x, y \in \mathbb{R}$:
 $$2\lvert xy \rvert \leq \epsilon x^2 + \frac{1}{\epsilon} y^2$$
 \end{theorem}
+
+\begin{proof}
+    $$\left( \sqrt{\epsilon}x - \frac{1}{\sqrt{\epsilon}}y \right)^2 \geq 0 \implies \epsilon x^2 - 2xy + \frac{1}{\epsilon} y^2 \geq 0 \implies \epsilon x^2 + \frac{1}{\epsilon} y^2 \geq 2xy$$
+\end{proof}
 
 \begin{theorem}
 The real numbers $\mathbb{R}$ satisfy axiomatic properties for addition and multiplication (forming a field):
@@ -165,66 +202,83 @@ $\mathbb{R}$ has order axioms: reflexivity, transitivity, antisymmetry, totality
 \subsubsection{Vectors and Vector Spaces}
 
 \begin{definition}
-For $x, y \in \mathbb{R}^n$, the standard scalar product is defined as:
-$$x \cdot y = \langle x, y \rangle \coloneqq \sum_{i=1}^n x_i y_i$$
-The Euclidean norm is defined as:
-$$||x|| \coloneqq \sqrt{\sum_{i=1}^n x_i^2}$$
-The Euclidean distance between $x$ and $y$ is:
-$$d(x, y) \coloneqq \sqrt{\sum_{i=1}^n (x_i - y_i)^2}$$
+    For $x, y \in \mathbb{R}^n$, the standard scalar product is defined as:
+    $$x \cdot y = \langle x, y \rangle \coloneqq \sum_{i=1}^n x_i y_i$$
+    The Euclidean norm is defined as:
+    $$||x|| \coloneqq \sqrt{\sum_{i=1}^n x_i^2}$$
+    The Euclidean distance between $x$ and $y$ is:
+    $$d(x, y) \coloneqq \sqrt{\sum_{i=1}^n (x_i - y_i)^2}$$
 \end{definition}
 
 \begin{theorem}
-The triangle inequality holds for all $x, y, z \in \mathbb{R}^n$:
-$$||x - z|| \leq ||x - y|| + ||y - z||$$
+    The triangle inequality holds for all $x, y, z \in \mathbb{R}^n$:
+    $$||x - z|| \leq ||x - y|| + ||y - z||$$
 \end{theorem}
 
 \subsubsection{Complex Numbers}
 
 \begin{definition}
-The \textbf{complex numbers} $\mathbb{C}$ are numbers of the form:
-$$z = a + ib \quad \text{where } a, b \in \mathbb{R}$$
-$a$ is the real part $\text{Re}(z)$, and $b$ is the imaginary part $\text{Im}(z)$. The imaginary unit $i$ has the property $i^2 = -1$.
+    The \textbf{complex numbers} $\mathbb{C}$ are numbers of the form:
+    $$z = a + ib \quad \text{where } a, b \in \mathbb{R}$$
+    $a$ is the real part $\text{Re}(z)$, and $b$ is the imaginary part $\text{Im}(z)$. The imaginary unit $i$ has the property $i^2 = -1$.
 \end{definition}
 
 \begin{definition}
-Arithmetic of complex numbers $z_1 = x_1 + i y_1$ and $z_2 = x_2 + i y_2$:
-\begin{itemize}
-    \item Addition: $z_1 + z_2 = (x_1 + x_2) + i(y_1 + y_2)$
-    \item Multiplication: $z_1 \cdot z_2 = (x_1 x_2 - y_1 y_2) + i(x_1 y_2 + y_1 x_2)$
-\end{itemize}
-The complex conjugate of $z = x + iy$ is $\bar{z} = x - iy$. Division is calculated by expanding with the conjugate of the denominator: $\frac{z}{w} = \frac{z \cdot \bar{w}}{w \cdot \bar{w}} = \frac{z \cdot \bar{w}}{|w|^2}$.
+    Arithmetic of complex numbers $z_1 = x_1 + i y_1$ and $z_2 = x_2 + i y_2$:
+    \begin{itemize}
+        \item Addition: $z_1 + z_2 = (x_1 + x_2) + i(y_1 + y_2)$
+        \item Multiplication: $z_1 \cdot z_2 = (x_1 x_2 - y_1 y_2) + i(x_1 y_2 + y_1 x_2)$
+    \end{itemize}
 \end{definition}
 
+\begin{definition}
+    The \textbf{complex conjugate} of $z = x + iy$ is $\bar{z} = x - iy$.
+\end{definition}
+
+\begin{important}
+    Division is calculated by expanding with the conjugate of the denominator:
+    $$\frac{z}{w} = \frac{z \cdot \bar{w}}{w \cdot \bar{w}} = \frac{z \cdot \bar{w}}{|w|^2}$$
+\end{important}
+
 \begin{remark}
-Some usfull properties of the conjugate:
-\begin{itemize}
-    \item $z \cdot \bar{z} = |z|^2$
-    \item $z + \bar{z} = 2\text{Re}(z)$ and $z - \bar{z} = 2i\text{Im}(z)$
-    \item $\overline{z+w} = \bar{z} + \bar{w}$ and $\overline{z \cdot w} = \bar{z} \cdot \bar{w}$
-\end{itemize}
+    Some usfull properties of the conjugate:
+    \begin{itemize}
+        \item $z \cdot \bar{z} = |z|^2$
+        \item $z + \bar{z} = 2\text{Re}(z)$ and $z - \bar{z} = 2i\text{Im}(z)$
+        \item $\overline{z+w} = \bar{z} + \bar{w}$ and $\overline{z \cdot w} = \bar{z} \cdot \bar{w}$
+    \end{itemize}
 \end{remark}
 
 \begin{definition}
-Geometrically, complex numbers can be represented in the Gaussian plane.
-The \textbf{absolute value} of $z = a + ib$ is its \textbf{distance from the origin}:
-$$|z| = \sqrt{a^2 + b^2}$$
-The distance between $z_1$ and $z_2$ is $d = |z_1 - z_2|$.
-The triangle inequality holds in $\mathbb{C}$: $|z + w| \leq |z| + |w|$.
+    Geometrically, complex numbers can be represented in the Gaussian plane. The \textbf{absolute value} of $z = a + ib$ is its \textbf{distance from the origin}:
+    $$|z| = \sqrt{a^2 + b^2}$$
+    The distance between $z_1$ and $z_2$ is $d = |z_1 - z_2|$. 
 \end{definition}
 
+\begin{remark}
+    Observe that the triangle inequality holds in $\mathbb{C}$: $|z + w| \leq |z| + |w|$.
+\end{remark}
+
 \begin{theorem}
-The Euler's formula states that for $t \in \mathbb{R}$:
-$$e^{it} = \cos(t) + i\sin(t)$$
-This allows writing trigonometric functions using complex exponentials:
-$$\cos(t) = \frac{e^{it} + e^{-it}}{2}, \quad \sin(t) = \frac{e^{it} - e^{-it}}{2i}$$
+    The Euler's formula states that for $t \in \mathbb{R}$:
+    $$e^{it} = \cos(t) + i\sin(t)$$
+    This allows writing trigonometric functions using complex exponentials:
+    $$\cos(t) = \frac{e^{it} + e^{-it}}{2}, \quad \sin(t) = \frac{e^{it} - e^{-it}}{2i}$$
 \end{theorem}
 
-Eulers formula leads us to a new representation of complex numbers: the polar-coordinates.
+\begin{remark}
+    The \textbf{Intuition} behind eulers formula is we can use Taylor series to show that:
+    $$e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \dots = \sum_{n=0}^\infty \frac{x^n}{n!}$$
+    Using $x=it$ we get:
+    $$e^{it} = \sum_{n=0}^\infty \frac{(it)^n}{n!} = \dots = \cos(t) + i\sin(t)$$
+\end{remark}
+
+Eulers formula leads us to a new representation of complex numbers: the polarcoordinates.
 
 \begin{definition}
-For $z \in \mathbb{C}$, the polar-coordinates are defined as:
-$$z = r(\cos(t) + i\sin(t)) = r e^{it}$$
-where $r = |z|$ is the absolute value and $t = \arg(z)$ is the argument.
+    For $z \in \mathbb{C}$, the polar-coordinates are defined as:
+    $$z = r(\cos(t) + i\sin(t)) = r e^{it}$$
+    where $r = |z|$ is the absolute value and $t = \arg(z)$ is the argument.
 \end{definition}
 
 Multiplication and division in polar-coordinates is much easier than in cartesian coordinates:
@@ -236,15 +290,15 @@ $$z^n = (r e^{it})^n = r^n e^{int}$$
 $$\sqrt[n]{z} = \sqrt[n]{r} e^{i\frac{t+2\pi k}{n}}, \quad k \in \{0, 1, \dots, n-1\}$$
 
 \begin{definition}
-The $n$-th roots of unity are the solutions to $z^n = 1$, which are given by:
-$$z_k = e^{i\frac{2\pi k}{n}}, \quad k \in \{0, 1, \dots, n-1\}$$
+    The $n$-th roots of unity are the solutions to $z^n = 1$, which are given by:
+    $$z_k = e^{i\frac{2\pi k}{n}}, \quad k \in \{0, 1, \dots, n-1\}$$
 \end{definition}
 
 \begin{theorem}
-The sum of the roots of unity is always zero.
-$$\sum_{k=0}^{n-1} e^{i\frac{2\pi k}{n}} = 0$$
+    The sum of the roots of unit is always zero.
+    $$\sum_{k=0}^{n-1} e^{i\frac{2\pi k}{n}} = 0$$
 \end{theorem}
 
 \begin{theorem}
-The fundamental theorem of algebra states that every polynomial of degree $n \geq 1$ has exactly $n$ roots in $\mathbb{C}$ (counting multiplicity). These roots appear in konplex-conjugate pairs.
+    The fundamental theorem of algebra states that every polynomial of degree $n \geq 1$ has exactly $n$ roots in $\mathbb{C}$ (counting multiplicity). These roots appear in konplex-conjugate pairs.
 \end{theorem}

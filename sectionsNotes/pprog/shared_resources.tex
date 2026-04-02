@@ -3,15 +3,19 @@
 \subsection{Race Conditions}
 
 \begin{definition}
-A \textbf{Race condition} occurs in concurent programming when the correctness of the system depends on
-the specific interleaving or ordering of execution of operations.
+    A \textbf{Race condition} occurs in concurent programming when the correctness of the system depends on
+    the specific interleaving or ordering of execution of operations.
 \end{definition}
 
 \begin{definition}
-A \textbf{Low-level race condition} is a race condition that occurs because of insufficient
-synchronization of memory access (Data Races). While the \textbf{High-level race condition} is a race condition that
-occurs because of a wrong decomposition/algorithm. The program might ensure mutual exclusion on the
-shared resources but bad interleavings still lead to wrong results.
+    A \textbf{Low-level race condition} is a race condition that occurs because of insufficient
+    synchronization of memory access (Data Races).
+\end{definition}
+
+\begin{definition}
+    A \textbf{High-level race condition} is a race condition that
+    occurs because of a wrong decomposition/algorithm. The program might ensure mutual exclusion on the
+    shared resources but the program might still produce wrong results due to \textbf{bad interleavings}.
 \end{definition}
 
 Generally we want one of three things when it comes to shared ressources:
@@ -24,44 +28,37 @@ Generally we want one of three things when it comes to shared ressources:
 \subsection{Guidelines for Concurrent programming}
 
 \begin{important}
-\textbf{Thread-Locality:} Minimize the sharing of mutable state between threads. Only share ressources if needed.
+    \textbf{Thread-Locality:} Minimize the sharing of mutable state between threads. Only share ressources if needed.
 \end{important}
 
 \begin{important}
-\textbf{Immutability:} Use immutable data structures whenever possible. They are inherently thread-safe.
+    \textbf{Immutability:} Use immutable data structures whenever possible. They are inherently thread-safe.
 \end{important}
 
 \begin{important}
-\textbf{Consitent locking:} If you need to share mutable state, use locks to ensure mutual exclusion.
+    \textbf{Consitent locking:} If you need to share mutable state, use locks to ensure mutual exclusion.
 \end{important}
 
 \begin{definition}
-\textbf{Lock granularity } refers to the amount of code that is proteted by a lock in ways:
-\begin{itemize}
+    \textbf{Lock granularity } refers to the amount of code that is proteted by a lock in ways:
+    \begin{itemize}
         \item Size of synchronized blocks
         \item Number of objects a lock is used for
-\end{itemize}
+    \end{itemize}
 \end{definition}
 
 \begin{theorem}
-\textbf{Coarse-grained locking} is easier to implement but leads to less concurrency and therfore performance loss. \textbf{Fine-grained locking} is harder to implement without creating bugs but leads to more concurrency and therfore performance gain.
+    \textbf{Coarse-grained locking} is easier to implement but leads to less concurrency and therfore performance loss. \textbf{Fine-grained locking} is harder to implement without creating bugs but leads to more concurrency and therfore performance gain.
 \end{theorem}
 
 \begin{important}
-Start with coarse-grained (simpler) and move to fine-
-grained (performance) only if contention on the coarser locks becomes an issue.
+    \textbf{Start with coarse-grained (simpler)} and move to fine-grained (performance) only if contention on the coarser locks becomes an issue.
 \end{important}
 
 \begin{important}
-Do not do expensive computations or I/O in critical
-sections, but also don’t introduce race conditions
+    Do not do expensive computations or I/O in critical sections, but also don’t introduce race conditions
 \end{important}
 
 \begin{definition}
-\textbf{Atomicity: } An operation is atomic if it is performed as a single, indivisible unit. In other words, it either completes entirely or not at all, without any intermediate states being visible to other threads.
+    \textbf{Atomicity: } An operation is atomic if it is performed as a single, indivisible unit. In other words, it either completes entirely or not at all, without any intermediate states being visible to other threads.
 \end{definition}
-
-
-\begin{important}
-Think in terms of what operations need to be atomic
-\end{important}
