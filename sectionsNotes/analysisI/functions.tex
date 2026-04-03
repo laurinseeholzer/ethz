@@ -1,48 +1,52 @@
 \section{Functions}
 
 \begin{definition}
-A \textbf{function} $f: D \to C$ is a map from a domian $D$ to a codomain $C$ s.t. for each $x \in D$ there is exactly one $y \in C$ st. $f(x) = y$.
+    A \textbf{function} $f: D \to C$ is a map from a domian $D$ to a codomain $C$ s.t. for each $x \in D$ there is exactly one $y \in C$ st. $f(x) = y$.
 \end{definition}
 
 \begin{remark}
-The input is called the \textbf{independent variable} (argument) while the output is called the \textbf{dependent variable}.
+    The input is called the \textbf{independent variable} (argument) while the output is called the \textbf{dependent variable}.
 \end{remark}
 
 \begin{definition}
-A function $f$ is called
-\begin{itemize}
-    \item \textbf{injective} iff $\forall x_1, x_2 \in A : f(x_1) = f(x_2) \implies x_1 = x_2$.
-    \item \textbf{surjective} iff $\forall y \in B \exists x \in A : f(x) = y$.
-    \item \textbf{bijective} iff $f$ is injective and surjective.
-\end{itemize}
+    A function $f$ is called
+    \begin{itemize}
+        \item \textbf{injective} iff $\forall x_1, x_2 \in A : f(x_1) = f(x_2) \implies x_1 = x_2$.
+        \item \textbf{surjective} iff $\forall y \in B \exists x \in A : f(x) = y$.
+        \item \textbf{bijective} iff $f$ is injective and surjective.
+    \end{itemize}
 \end{definition}
 
 \begin{example}
-Let $f: \mathbb{R} \to \mathbb{R}$ with $f(x) = x^2$. Observe that $f$ is not surjective as no output is negative, nor is it injective as for ex. $f(1) = f(-1) = 1$.\\\\
-But $g: \mathbb{R}_{0}^+ \to \mathbb{R}_{0}^+$ with $g(x) = x^2$ is both injective and surjective.
+    Let $f: \mathbb{R} \to \mathbb{R}$ with $f(x) = x^2$. Observe that $f$ is not surjective as no output is negative, nor is it injective as for ex. $f(1) = f(-1) = 1$. But $g: \mathbb{R}_{0}^+ \to \mathbb{R}_{0}^+$ with $g(x) = x^2$ is both injective and surjective.
 \end{example}
 
 \begin{definition}
-The \textbf{restriction} of $f$ under $D' \subset \mathbb{D}$ is defined as $f\upharpoonleft_{D'}: D' \to C, x \mapsto f(x) \quad \forall x \in \mathbb{D}$.
+    The \textbf{restriction} of $f$ under $D' \subset \mathbb{D}$ is defined as $f\upharpoonleft_{D'}: D' \to C, x \mapsto f(x) \quad \forall x \in \mathbb{D}$.
 \end{definition}
 
 \begin{remark}
-Note that $f\upharpoonleft_{D'}$ and $f$ are two diffrent functions.
+    Note that $f\upharpoonleft_{D'}$ and $f$ are two diffrent functions.
 \end{remark}
 
 \begin{definition}
-Let $f: D \to C$ and $g: C \to B$ be functions then $$ g \circ f: D \to B \quad \text{with} \quad g \circ f(x) = g(f(x)) \quad \forall x \in D $$
-is called the \textbf{composition} of $f$ and $g$.
+    Let $f: D \to C$ and $g: C \to B$ be functions then $$ g \circ f: D \to B \quad \text{with} \quad g \circ f(x) = g(f(x)) \quad \forall x \in D $$ is called the \textbf{composition} of $f$ and $g$.
 \end{definition}
 
 \begin{definition}
-The \textbf{identity function} $id_D: D \to D$ is defined as $id_D(x) = x \quad \forall x \in D$.
+    The \textbf{identity function} $id_D: D \to D$ is defined as $id_D(x) = x \quad \forall x \in D$.
 \end{definition}
 
 \begin{definition}
-If a function $f: D \to C$ is bijective then there exists a unique function $f^{-1}: C \to D$ such that
-$$f(f^{-1}(y)) = id_C = y \quad \forall y \in C \quad \text{and} \quad f^{-1}(f(x)) = id_D = x \quad \forall x \in D$$
-$f^{-1}$ is called the \textbf{inverse function} of $f$.
+    If a function $f: D \to C$ is bijective then there exists a unique function $f^{-1}: C \to D$ such that
+    $$f(f^{-1}(y)) = id_C = y \quad \forall y \in C$$
+    and
+    $$f^{-1}(f(x)) = id_D = x \quad \forall x \in D$$
+    $f^{-1}$ is called the \textbf{inverse function} of $f$.
+\end{definition}
+
+\begin{definition}
+    A function $f$ is called \textbf{bouned} if there exists $M \in \mathbb{R}$ such that $|f(x)| \leq(\geq) M$ for all $x \in D$.
 \end{definition}
 
 \begin{definition}
@@ -53,6 +57,14 @@ $f^{-1}$ is called the \textbf{inverse function} of $f$.
         \item \textbf{(strictly) monotonic} iff $f$ is either (strictly) monotonically increasing or (strictly) monotonically decreasing
     \end{itemize}
 \end{definition}
+
+\begin{theorem}
+    Every strictly monotonic function is injective.
+\end{theorem}
+
+\begin{proof}
+    Let $f$ be strictly monotonic (wlog increasing) and assume it is not injective then there exists $x_1 \neq x_2$ such tat $f(x_1) = f(x_2)$. Wlog assume $x_1 < x_2$ then $f(x_1) < f(x_2)$ which contradicts the assumption that $f(x_1) = f(x_2)$.
+\end{proof}
 
 \begin{definition}
     A function $f: \mathbb{R} \to \mathbb{R}$ is called 
@@ -84,22 +96,19 @@ $f^{-1}$ is called the \textbf{inverse function} of $f$.
 \end{definition}
 
 \begin{remark}
-The intuition behind the definition of the limit is that for any given distance $\varepsilon > 0$ around $L$, 
-we can find a $\delta > 0$ such that for all $x \in \mathbb{D}$ that are at least $\delta$ close to $x_0$, we have $|f(x) - L| < \varepsilon$. 
-\\
-So for any boound on the output ($\varepsilon$) there exists a bound on the input ($\delta$) such that all elements in the input bound $(x_0 - \delta, x_0 + \delta)$ are mapped to the output bound $(L - \varepsilon, L + \varepsilon)$.
+    The intuition behind the definition of the limit is that for any given distance $\varepsilon > 0$ around $L$, 
+    we can find a $\delta > 0$ such that for all $x \in \mathbb{D}$ that are at least $\delta$ close to $x_0$, we have $|f(x) - L| < \varepsilon$. 
+    So for any boound on the output ($\varepsilon$) there exists a bound on the input ($\delta$) such that all elements in the input bound $(x_0 - \delta, x_0 + \delta)$ are mapped to the output bound $(L - \varepsilon, L + \varepsilon)$.
 \end{remark}
 
 \begin{definition}
     A function $f: \mathbb{D} \to \mathbb{R}$ has in $x_0$ a
-
     \begin{itemize}
         \item \textbf{right-sided limit} $\quad \lim_{x \searrow x_0} f(x) = \lim_{x \to x_0^+} f(x) = L$ iff 
         $$\forall \varepsilon > 0 \exists \delta > 0  \quad \text{s.t.} \quad \forall x \in \mathbb{D} (x_0 < x < x_0 + \delta \implies |f(x) - L| < \varepsilon)$$
         \item \textbf{left-sided limit} $\lim_{x \nearrow x_0} f(x) = L$ iff 
         $$\forall \varepsilon > 0 \exists \delta > 0  \quad \text{s.t.} \quad \forall x \in \mathbb{D} (x_0 - \delta < x < x_0 \implies |f(x) - L| < \varepsilon)$$
     \end{itemize}
-    
 \end{definition}
 
 \begin{definition}

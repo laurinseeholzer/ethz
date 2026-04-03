@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1775165970.6124 "/home/laurin/dev/ethz/analysisI.tex" "build/analysisI.pdf" "analysisI" 1775165971.47969 0
+["pdflatex"] 1775210609.15872 "/home/laurin/dev/ethz/analysisI.tex" "build/analysisI.pdf" "analysisI" 1775210610.00154 0
   "/home/laurin/dev/ethz/analysisI.tex" 1775152872.31401 581 315c8660728ada451d700fa1bd12b530 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -116,12 +116,12 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1774398240.84368 4602601 5d02a5c5d52d7237566d144856366042 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1774397783 7753788 a0020c5830dd8c877264576b28708675 ""
   "analysisI.tex" 1775152872.31401 581 315c8660728ada451d700fa1bd12b530 ""
-  "build/analysisI.aux" 1775165971.35638 1360 41a08f21d01ee73fe54eaa432231ec6e "pdflatex"
-  "build/analysisI.toc" 1775165971.35738 800 ab935cb58c55d2e015b59e410cafbfcd "pdflatex"
+  "build/analysisI.aux" 1775210609.88253 1360 90cecc07712cbe6e8cd66f74a1bec688 "pdflatex"
+  "build/analysisI.toc" 1775210609.88353 800 78edc2ce0964a03075a7607c73f7fed8 "pdflatex"
   "sectionsNotes/analysisI/continuity.tex" 1775122530.4742 4759 e74961bf8c1bf399eb0fa69a6580e2ea ""
-  "sectionsNotes/analysisI/functions.tex" 1774873138.70131 6905 d746b9c9483112d91541c22d0b206756 ""
+  "sectionsNotes/analysisI/functions.tex" 1775210608.94222 7487 10fce1ced186079d1e88056a5dda7f76 ""
   "sectionsNotes/analysisI/logic_sets_numbers.tex" 1775165166.52386 12628 7c5ed6a8b70e1974226d3455654c39f5 ""
-  "sectionsNotes/analysisI/sequences_series.tex" 1775165970.42438 7538 6f31c1e4e0022e232f50a8b9561038cd ""
+  "sectionsNotes/analysisI/sequences_series.tex" 1775210188.22584 11759 2c339e98aa89fc1be0feb9a9a37ad765 ""
   "templateNotes/commands.tex" 1774795684.82424 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
   "templateNotes/packages.tex" 1774795684.82409 493 dd01896e8ca6d5605bcdf6aeec6f0cbe ""
   "templateNotes/theorem_styles.tex" 1774795684.82464 2530 5415b1d3cc1c5ce9df9c2be1dad76ee8 ""
