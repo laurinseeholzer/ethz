@@ -15,6 +15,10 @@
     Let $f: D \subset \mathbb{D}(f) \subset \mathbb{R}$ be a function and $x_0 \in D$. $f$ is continuous at $x_0$ iff for every sequence $(x_n)_{n\in\mathbb{N}} \subset D$ with $\lim_{n\to\infty} x_n = x_0$ it holds that $\lim_{n\to\infty} f(x_n) = f(x_0)$.
 \end{theorem}
 
+\begin{remark}
+    Continuity can also be viewed in terms of intervals, where a function $f$ is continuous iff for every open interval $I \subset \mathbb{R}$ it holds that $f^{-1}(I)$ is open.
+\end{remark}
+
 \begin{lemma}
     Let $f, g$ be continuous functions, the follwing holds:
     \begin{itemize}
@@ -26,6 +30,25 @@
         \item $f \circ g$ is continuous
     \end{itemize}
 \end{lemma}
+
+\begin{proof}
+    We prove that $f \circ g$ is continuous if $f$ and $g$ are.
+    Let $g$ be continuous at a point $c$, and let $f$ be continuous at the point $g(c)$. 
+
+    By the limit definition of continuity, since $g$ is continuous at $c$, we know:
+    $$ \lim_{x \to c} g(x) = g(c) $$
+
+    Similarly, since $f$ is continuous at $g(c)$, for any variable $y$ approaching $g(c)$, we know:
+    $$ \lim_{y \to g(c)} f(y) = f(g(c)) $$
+
+    To find the limit of the composite function $f(g(x))$ as $x \to c$, we substitute $g(x)$ for our input $y$. Because $f$ is continuous, we are allowed to pass the limit directly inside the function $f$:
+    $$ \lim_{x \to c} f(g(x)) = f\left( \lim_{x \to c} g(x) \right) $$
+
+    Now, we just substitute the known limit of $g(x)$:
+    $$ f\left( \lim_{x \to c} g(x) \right) = f(g(c)) $$
+
+    Therefore, $\lim_{x \to c} (f \circ g)(x) = (f \circ g)(c)$. This perfectly satisfies the definition of continuity, proving that $f \circ g$ is continuous at $c$
+\end{proof}
 
 \begin{theorem}
     Let $I$ be an interval and let $f: I \to J$ be a continuous and bijective function. Then $J$ is an interval too and the inverse function $f^{-1}: J \to I$ is continuous.
