@@ -1,62 +1,116 @@
 \section{Matchings}
 
 \begin{definition}
-
-    An edge set $M \subseteq E$ is called a \textbf{matching} in $G = (V, E)$ if no vertex is incident to
-    more than one edge from $M$.
-    \begin{itemize}
-    \item A vertex $v$ is \textbf{covered} by $M$ if it is incident to an edge in $M$.
-    \item A matching is \textbf{perfect} if every vertex is covered ($|M| = |V|/2$).
-    \item A matching is \textbf{maximal} if it cannot be extended by adding edges.
-    \item A matching is \textbf{maximum} if there is no matching with more edges.
-\end{itemize}
-
+    An edge set $M \subseteq E$ is called a \textbf{matching} in $G = (V, E)$ if no vertex is incident to more than one edge from $M$.
 \end{definition}
 
+\begin{definition}
+    A vertex $v$ is \textbf{covered} by $M$ if it is incident to an edge in $M$.
+\end{definition}
+
+\begin{definition}
+    A matching $M$ is
+    \begin{itemize}
+        \item \textbf{perfect} if every vertex is covered ($|M| = |V|/2$).
+        \item \textbf{maximal} if it cannot be extended by adding edges.
+        \item \textbf{maximum} if there is no matching with more edges.
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}
+    The geedy algorithm leads to a maximal matching $M_{greedy}$ with $\mid M_{greedy} \mid \geq \frac{1}{2} \mid M_{max} \mid$.
+\end{theorem}
+
+\begin{proof}
+    Observe that every edge in $M_{max}$ covers at least one edge of $M_{greedy}$ else we would be able to add it to $M_{greedy}$. Further more every edge in $M_{greedy}$ covers at most two edges of $M_{max}$.
+\end{proof}
+
 \begin{algorithm}
-
-#Greedy Algorithm
-#This leads to a maximal matching M. 
-#The size of M is at least half the size of a maximum matching.
-
 M = empty set
 while E is not empty:
     choose an arbitrary edge e from E
     add e to M
     remove all edges incident to the endpoints of e from E
-    
 \end{algorithm}
 
-\begin{theorem}
-
-\textbf{Hall's Marriage Theorem}:\\
-
-    A bipartite graph $G = (A \cup B, E)$ contains a matching of cardinality $|M|=|A|$ iff:
-    $$\forall X \subseteq A : |X| \le |N(X)|$$
-    
-\end{theorem}
-
-\begin{theorem}
-
-\textbf{Frobenius Corollary}:\\
-
-    Every $k$-regular bipartite graph contains a perfect matching.
-    
-\end{theorem}
-
 \begin{definition}
-
-    An \textbf{$M$-augmenting path} is a path that alternates between edges in $M$ and not in $M$,
-    starting
-    and ending in uncovered vertices.
-    
+    An \textbf{$M$-augmenting path} is a path that alternates between edges in $M$ and not in $M$, starting and ending in uncovered vertices.
 \end{definition}
 
+\begin{remark}
+    If we fing an $M_{greedy}$-augmenting path we can switch the edges along that path to increase the size of the matching by 1.
+\end{remark}
+
 \begin{theorem}
-
-\textbf{Berge's Theorem (1957)}:\\
-
-    A matching $M$ is maximum iff there is no $M$-augmenting path.
-    
+    \textbf{Hall's Marriage Theorem}: A bipartite graph $G = (A \cup B, E)$ contains a matching of cardinality $|M|=|A|$ iff:
+    $$\forall X \subseteq A : |X| \le |N(X)|$$
 \end{theorem}
+
+\begin{proof}
+    $\\\implies$
+    This is trivial as if such a matchin exists then of course for every subset $X \subseteq A$ we have $|X| \le |N(X)|$ as we can  match every vertex in $X$ with a distinct vertex in $N(X)$.
+    $\\\impliedby$
+    We show this using induction over the size of $A$. The BC is $\mid A \mid = 1$ is trivially true. 
+    If $\forall |X| \le |N(X)|$ holds then we chose a random edge $(u, v)$  and delete all incident edges and show that the theorem still holds. 
+    If $\exists |X_0| = |N(X_0)|$ then we show that the graphs $G_1 = (A\setminus X_0 \cup B\setminus N(X_0))$ and $G_2 = (X_0 \cup N(X_0))$ the theorem still holds.
+\end{proof}
+
+\begin{theorem}
+    \textbf{Frobenius Corollary}: Every $k$-regular bipartite graph contains a perfect matching.
+\end{theorem}
+
+\begin{remark}
+    It even holds that every $k$-regular bipartite graph is a union of perfect matchings.
+\end{remark}
+
+\begin{theorem}
+    In a $k$- and $2^k$-regular bipartite graph we can find a perfect matching in $O(|E|)$ time.
+\end{theorem}
+
+\begin{theorem}
+    In bipartite grapahs we can find a perfect mathcin in time $O(|V| |E|)$.
+\end{theorem}
+
+\begin{remark}
+    Important \textbf{matching-algorithms}:
+    \begin{itemize}
+        \item $O({|V|}^{\frac{1}{2}}|E|)$ Hopcroft-Karp (bipartite unweighted)
+        \item $O({|E|}^{1+O(1)})$ Hpcroft-Karp (bipartite polynomial-weighted)
+        \item $O({|V|}^{\frac{1}{2}}|E|)$ Micali-Vazirani (general unweighted)
+        \item $O({|V|}^{\frac{1}{2}}|E|)$ Gabow-Tarjan (general polynomial-weighted)
+        \item $O({|V|}^{2.373})$ Mucha-Sankowski (general unweighted)
+    \end{itemize}
+\end{remark}
+
+\begin{theorem}
+    \textbf{Berge's Theorem (1957)}: A matching $M$ is maximum iff there is no $M$-augmenting path.
+\end{theorem}
+
+\begin{proof}
+    Else we change the edges along the augmenting path to increase the size of the matching by 1 which contradicts that it was a maximum matching.
+\end{proof}
+
+\begin{algorithm}
+#BFS to find augmenting paths in bipartite graphs
+
+L(0) = {uncovered vertices in A} (mark all as visited)
+
+for i: 1 - n:
+    if i odd:
+        L(i) = {unvisited neighbours of L(i-1) via edges in E \ M}
+    else:
+        L(i) = {unvisited partners of L(i-1) via edges in M}
+    Mark L(i) as visited
+    
+    if vertex v in L(i) not covered 
+        return path to v
+\end{algorithm}
+
+\begin{algorithm}
+#Hopcroft-Karp Algorithm
+
+while there exists an augmenting path P:
+    find a maximal set of vertex-disjoint shortest augmenting paths
+    augment M along all these paths
+\end{algorithm}
 

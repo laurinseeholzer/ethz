@@ -1,16 +1,18 @@
 \contentsline {section}{\numberline {1}Connectivness of Graphs}{3}{}%
-\contentsline {section}{\numberline {2}Eulertours}{6}{}%
-\contentsline {section}{\numberline {3}Hamiltonian Cycles}{7}{}%
-\contentsline {subsection}{\numberline {3.1}Travelling Salesman Problem (TSP)}{7}{}%
-\contentsline {subsubsection}{\numberline {3.1.1}Metric TSP}{8}{}%
-\contentsline {section}{\numberline {4}Matchings}{9}{}%
-\contentsline {section}{\numberline {5}Coloring}{10}{}%
-\contentsline {section}{\numberline {6}Intro: Probability}{11}{}%
-\contentsline {subsection}{\numberline {6.1}Conditional Probability}{12}{}%
-\contentsline {subsection}{\numberline {6.2}Independence}{14}{}%
-\contentsline {section}{\numberline {7}Random Variables}{15}{}%
-\contentsline {subsection}{\numberline {7.1}Expectation}{15}{}%
-\contentsline {subsection}{\numberline {7.2}Variance}{17}{}%
-\contentsline {subsection}{\numberline {7.3}Multiple Random Variables}{17}{}%
-\contentsline {subsection}{\numberline {7.4}Combined Random Variables}{18}{}%
-\contentsline {section}{\numberline {8}Distributions}{19}{}%
+\contentsline {subsection}{\numberline {1.1}Specialcase $k=1$}{4}{}%
+\contentsline {section}{\numberline {2}Hamiltonian Cycles and Eulertours}{6}{}%
+\contentsline {subsection}{\numberline {2.1}Eulertours}{6}{}%
+\contentsline {subsection}{\numberline {2.2}Hamiltonian Cycles}{6}{}%
+\contentsline {subsection}{\numberline {2.3}Travelling Salesman Problem (TSP)}{7}{}%
+\contentsline {subsubsection}{\numberline {2.3.1}Metric TSP}{7}{}%
+\contentsline {section}{\numberline {3}Matchings}{9}{}%
+\contentsline {section}{\numberline {4}Coloring}{12}{}%
+\contentsline {section}{\numberline {5}Intro: Probability}{13}{}%
+\contentsline {subsection}{\numberline {5.1}Conditional Probability}{14}{}%
+\contentsline {subsection}{\numberline {5.2}Independence}{16}{}%
+\contentsline {section}{\numberline {6}Random Variables}{17}{}%
+\contentsline {subsection}{\numberline {6.1}Expectation}{17}{}%
+\contentsline {subsection}{\numberline {6.2}Variance}{19}{}%
+\contentsline {subsection}{\numberline {6.3}Multiple Random Variables}{19}{}%
+\contentsline {subsection}{\numberline {6.4}Combined Random Variables}{20}{}%
+\contentsline {section}{\numberline {7}Distributions}{21}{}%

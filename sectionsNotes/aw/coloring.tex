@@ -1,41 +1,42 @@
 \section{Coloring}
 
 \begin{definition}
+    A \textbf{$k$-coloring} of $G = (V, E)$ is a mapping $c: V \to [k]$ such that $c(u) \neq c(v)$ for all $\{u,v\} \in E$.
+\end{definition}
 
-    A \textbf{$k$-coloring} of $G = (V, E)$ is a mapping $c: V \to [k]$ such that $c(u) \neq c(v)$ for all
-    $\{u,v\} \in E$.
-    \\
-
+\begin{definition}
     The \textbf{chromatic number} $\chi(G)$ is the minimum number of colors.
-    \\
+\end{definition}
 
-    $\chi(G) \le 2 \iff G$ is bipartite.
-    
+\begin{definition}
+    A \textbf{stable set} is a set of vertices where no two vertices are adjacent.
 \end{definition}
 
 \begin{theorem}
-
-    For $k \ge 3$, the problem "Is $\chi(G) \le k$?" is NP-complete.
-    
+    $\chi(G) \le 2 \iff G$ is bipartite.
 \end{theorem}
 
-\begin{algorithm}
+\begin{theorem}
+    For $k \ge 3$, the problem "Is $\chi(G) \le k$?" is NP-complete.
+\end{theorem}
 
+\begin{remark}
+    For general graphs all $\epsilon$-approximations are NP-hard.
+\end{remark}
+
+\begin{algorithm}
 #Greedy Coloring
 #Requires at most maximum degree + 1 colors.
 
-Heuristic: 
-delete vertices in order of minimum degree
-#Gives <= k+1 colors if all subgraphs have a vertex with degree <= k.
-    
+choose an arbitrary order of vertices v1...vn
+
+c[v1] = 1
+for i = 2 to n:
+    c[vi] = min { j in [k] | j != c[vj] for all j < i and (vi, vj) in E }
 \end{algorithm}
 
 \begin{theorem}
-
-\textbf{Brooks' Theorem}:\\
-
-    For a connected graph $G$ that is neither a complete graph $K_n$ nor an odd cycle $C_{2n+1}$:
+    \textbf{Brooks' Theorem}: For a connected graph $G$ that is neither a complete graph $K_n$ nor an odd cycle $C_{2n+1}$:
     $$\chi(G) \le \Delta(G)$$
-    
 \end{theorem}
 

@@ -1,0 +1,116 @@
+\section{Hamiltonian Cycles and Eulertours}
+
+\subsection{Eulertours}
+
+\begin{definition}
+    An \textbf{Eulertour} is a closed walk in a graph $G$ that contains every edge exactly once.
+\end{definition}
+
+\begin{theorem}
+    A connected graph $G = (V, E)$ contains an Eulertour iff the degree of every vertex is even.
+\end{theorem}
+
+\begin{remark}
+    We can find an Eulertour in time $O(|E|)$. Using an algorithm illustrated by a Runner and a Turtle. The
+    Runner is set lose and traverses the graph until he reaches a vertex he has already visited (we found a
+    cycle). Then the Turtle
+    is set lose and traverses the graph along that path until it reaches a vertex that has unvisited neighbours,
+    from where on the Runner is set lose again (we expand the cycle by findin a new one adjacent to it). This
+    process expands the tour by a cycle at a time until all
+    edges have been traversed.
+\end{remark}
+
+\subsection{Hamiltonian Cycles}
+
+\begin{definition}
+    A \textbf{Hamiltonian Cycle} is a cycle in $G = (V, E)$ that contains every vertex exactly once.
+\end{definition}
+
+\begin{theorem}
+    Let $m, n \ge 2$. An $n \times m$ grid contains a Hamiltonian cycle iff $n \cdot m$ is even.
+\end{theorem}
+
+\begin{theorem}
+    A bipartite graph $G = (A \cup B, E)$ with $|A| \neq |B|$ cannot contain a Hamiltonian cycle.
+\end{theorem}
+
+\begin{example}
+    \textbf{hamiltonian cycles in Hypercubes} Let $Q_n$ be the $n$-dimensional hypercube. $Q_n$ has $2^n$ vertices and $n \cdot 2^{n-1}$ edges.
+    $Q_n$ is bipartite and has a Hamiltonian cycle iff $n \ge 2$ therfore we can find a Hamiltonian cycle in $Q_n$ for all $n \ge 2$.
+\end{example}
+
+\begin{theorem}
+    \textbf{Dirac's Theorem (1952)}: Every graph $G = (V, E)$ with $|V| \ge 3$ and minimum degree $\delta(G) \ge |V|/2$ contains a Hamiltonian cycle.
+\end{theorem}
+
+\begin{proof}
+    We proof by induction on the number of vertices in a cycle.
+    \begin{enumerate}
+        \item Lemma: $\quad$ Observe that because $\delta(G) \ge |V|/2$ we have that the neighbour-hoods of any two vertices intersect and therfore there is a $u-v$ path for every $u,v \in V$.
+        \item $k$-cycle $\implies$ $k+1$-path: $\quad$ Let $C$ be a cycle of length $k \le |V|$. As $G$ is connected there exists some edge $(u,v) \in E$ with $u \in C$ and $v \notin C$. Hence there exists a path of length $k+1$
+        \item $k$-path $\implies$ $k+1$-path or $k$-cycle: $\quad$ Let $P = \{v_1, \dots v_k\}$ be a path in $G$. If $N(v_1) \text{or} N(v_k) \not \subsetneq \{v_1, \dots, v_k\}$, then we can extend $P$ to a cycle of length $k+1$. If $N(v_1) \text{and} N(v_k) \subseteqq \{v_1, \dots v_k\}$, then we define $N_k^+ \coloneqq \{v_{i+1} \mid v_i \in N(v_k)\} \subseteqq \{v_2, \dots, v_k\}$. By the lemma we know that $N(v_1) \cap N_k^+ \neq \emptyset$ and therfore there exists some $v_j \in N(v_1) \cap N_k^+$. This means that $v_j$ is adjacent to $v_1$ and $v_{j-1}$ is adjacent to $v_k$. Hence we can extend $P$ to a cycle of length $k+1$ by taking the path $v_1, v_{j-1}, v_{j-2}, \dots, v_2, v_k, v_{k-1}, \dots, v_j, v_1$.
+    \end{enumerate}
+    Via induction on the length of the longest path in $G$ we can show that for $k=\mid V \mid$ there has to be a $k+1$ path or a $k$-cycle and as a $k$ cylce is not possible there must exist a $k$-cycle.
+\end{proof}
+
+\begin{algorithm}
+#Dynamic Programming for Hamiltonian Cycle
+#Time complexity O(n^2 * 2^n).
+#Define P[S, x] = 1 if there is a 1-x path containing exactly the vertices in S.
+
+P[S, x] = max { P[S \ {x}, y] | y in N(x) intersect S, y != 1 }
+\end{algorithm}
+
+\begin{theorem}
+    Hamiltionian decision is NP-Complete. (Karp 1972)
+\end{theorem}
+
+\subsection{Travelling Salesman Problem (TSP)}
+
+The travelling salesman problem is the problem of finding a Hamiltonian cycle in a complete graph $K_n$ with
+minimal weight. In other words, the shortes roundtrip/roundtour.
+
+\begin{theorem}
+    The travelling salesman problem is NP-Complete. 
+\end{theorem}
+
+\begin{proof}
+    This is easy to prove by reduction from Hamiltonian Cycle. Assume we have a
+    Graph $G$ and want to check if it is Hamiltionian. Now lets extend the graph to be complete and set the
+    weight $w_e$ of every edge $e = (u,v) \in G$ to 0 and the weight of all the newly added edges to 1. Now we
+    can check if the TSP has a solution with weight 0. If it does, then $G$ has a Hamiltonian cycle, otherwise
+    it does not. Therfore TSP has to be NP-Complete as Hamiltionian decision is to.
+\end{proof}
+
+\subsubsection{Metric TSP}
+
+Assume we have a graph $G$ for which the triangle inequality holds, i.e.:
+$$w(u,v) \le w(u,w) + w(w,v) \quad \forall u,v,w \in V$$
+
+\begin{theorem}
+    For Metric TSP there is a 2 and even a 1.5 approximation algorithm in polynomial time.
+\end{theorem}
+
+\begin{algorithm}
+#2-Approximation for Metric TSP
+#This Hamiltonian cycle has length at most 2 * |E(T)| = 2 * (|V|-1).
+
+1. Determine a minimal-spanning tree T
+2. Double all the edges of T to get an Eulerian multigraph T'
+3. Go along that Eulertour and skip every vertex that has already been visited
+\end{algorithm}
+
+\begin{theorem}
+    \textbf{Christofides Algorithm}: Using MST, Matchings and Eulertours we can find a 1.5 approximation algorithm for Metric TSP in polynomial time.
+\end{theorem}
+
+\begin{algorithm}
+ #Christofides 1.5-Approximation for Metric TSP
+    
+1.  Determine a minimal-spanning tree T
+    Observe that |E(T)| <= |E(H)| for any Hamiltonian cycle H.
+2.  Find a minimal matching for the odd-degree vertices of T
+    Observe that |M| <= |E(H)|/2.
+3.  Determine Eulertour W in T with the edges of M added
+    Observe that |W| <= |E(T)| + |M| <= |E(H)| + |E(H)|/2 = 1.5 * |E(H)|.
+\end{algorithm}
