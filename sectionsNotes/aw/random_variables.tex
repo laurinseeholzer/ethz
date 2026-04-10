@@ -1,16 +1,23 @@
 \section{Random Variables}
 
 \begin{definition}
-    A \textbf{random variable } is a map $X: \Omega \to \mathbb{R}$ where $\Omega$ is the set of all events of
-    a probability space.
+    A \textbf{random variable } is a map $X: \Omega \to \mathbb{R}$ where $\Omega$ is the set of all events of a probability space.
 \end{definition}
 
 \begin{example}
     The event that the random variable X takes a value less than or equal to 5 is denoted as:
-    $$
-        X \leq 5 \coloneqq \{\omega \in \Omega \mid X(\omega) \leq 5\}
-    $$
+    $$X \leq 5 \coloneqq \{\omega \in \Omega \mid X(\omega) \leq 5\}$$
 \end{example}
+
+\begin{definition}
+    The \textbf{probability mass function} of a discrete random variable $X$ is defined as:
+    $$f_X(x) = P(X=x)$$
+\end{definition}
+
+\begin{definition}
+    The \textbf{distribution function} of a discrete random variable $X$ is defined as:
+    $$F_X(x) = P(X \leq x)$$
+\end{definition}
 
 \subsection{Expectation}
 
@@ -22,78 +29,68 @@
     aslong as the sum is absolutely convergent, else we say the expectation is undefined.
 \end{definition}
 
+\begin{lemma}
+    For any random variable $X$ we have:
+    $$ \mathbb{E}[X] = \sum_{\omega \in \Omega} X(\omega) P(\omega) = \sum_{k=1}^\infty P(X \geq k) - \sum_{k=1}^\infty P(X \leq -k) $$
+\end{lemma}
+
+\begin{proof}
+    $$\mathbb{E}[X] = \sum_{\alpha \in W_X}\alpha P[X=\alpha] = \sum_{\alpha \in W_X}\alpha\sum_{\omega \in \Omega, X(\omega)=\alpha} P[\omega] = \sum_{\omega \in \Omega} X(\omega) P[\omega]$$
+\end{proof}
+
 \begin{theorem}
-    Let $X$ be a random variable with values in $\mathbb{N}_0$. Then:
-    $$
-        \mathbb{E}[X] = \sum_{k=1}^\infty P(X \geq k)
-    $$
+    Let $X$ be a random variable with values in $W_X \subseteq \mathbb{N}_0$. Then:
+    $$\mathbb{E}[X] = \sum_{k=1}^\infty P[X \geq k]$$
 \end{theorem}
 
 \begin{proof}
-    $$
-        \mathbb{E}[X] = \sum_{k=1}^\infty k P(X=k) = \sum_{k=1}^\infty \sum_{j=1}^k P(X=k) = \sum_{j=1}^\infty \sum_{k=j}^\infty P(X=k) = \sum_{j=1}^\infty P(X \geq j)
-    $$
+    $$\mathbb{E}[X] = \sum_{k=0}^\infty k P[X=k] = \sum_{k=0}^\infty \sum_{j=1}^k P[X=k] = \sum_{j=1}^\infty \sum_{k=j}^\infty P[X=k] = \sum_{j=1}^\infty P[X \geq j]$$
 \end{proof}
 
 \begin{example}
     We throw a coin and we know $P[\text{head}] = p$. We want to know $\mathbb{E}[X]$ with $X \coloneqq \text{number of throws until we get head}$. Using the above theorem we get:
-    $$
-        \mathbb{E}[X] = \sum_{k=1}^\infty P(X \geq k) = \sum_{k=1}^\infty (1-p)^{k-1} = \frac{1}{1-(1-p)} = \frac{1}{p}
-    $$
+    $$\mathbb{E}[X] = \sum_{k=1}^\infty P[X \geq k] = \sum_{k=1}^\infty (1-p)^{k-1} = \frac{1}{1-(1-p)} = \frac{1}{p}$$
 \end{example}
 
 \begin{definition}
     For an event $E \subseteq \Omega$ the corresponding indicator-variable $X_E$ is defined as:
-    $$
-        X_E(\omega) = \begin{cases} 1 & \text{if } \omega \in E \\ 0 & \text{if } \omega \notin E \end{cases}
-    $$
+    $$ X_E(\omega) \coloneqq \begin{cases} 1 & \text{if } \omega \in E \\ 0 & \text{if } \omega \notin E \end{cases}$$
 \end{definition}
 
 \begin{remark}
     For an indicator variable $X_E$ we have:
-    $$
-        \mathbb{E}[X_E] = P(E)
-    $$
+    $$\mathbb{E}[X_E] = P[E]$$
 \end{remark}
 
 \begin{theorem}
-    For random variables $X_1, \dots, X_n$ we have:
-    $$
-        X \coloneqq \sum_{i=1}^n a_i X_i \mid a_1, \dots, a_n \in \mathbb{R}
-    $$
-    $$
-        \mathbb{E}[X] = \sum_{i=1}^n a_i \mathbb{E}[X_i]
-    $$
-    This is called the linearity of expectation.
+    The linearity of expectation says that for random variables $X_1, \dots, X_n$  and $a_1, \dots a_n, b \in \mathbb{R}$ we have:
+    $$X \coloneqq \sum_{i=1}^n a_i X_i + b$$
+    $$\mathbb{E}[X] = \sum_{i=1}^n a_i \mathbb{E}[X_i] + b$$
 \end{theorem}
 
+\begin{remark}
+    We can intuitively describe this as "the expectation of a sum is the sum of the expectations".
+\end{remark}
+
 \begin{proof}
-    $$
-        \mathbb{E}[X] = \sum_{\omega \in \Omega} X(\omega) P(\omega) = \sum_{\omega \in \Omega} (a_1 X_1(\omega) + \dots + a_n X_n(\omega)) P(\omega)
-    $$
-    $$
-        = a_1 \sum_{\omega \in \Omega} X_1(\omega) P(\omega) + \dots + a_n \sum_{\omega \in \Omega} X_n(\omega) P(\omega) = a_1 \mathbb{E}[X_1] + \dots + a_n \mathbb{E}[X_n]
-    $$
+    $$\mathbb{E}[X] = \sum_{\omega \in \Omega} X(\omega) P[\omega] = \sum_{\omega \in \Omega} (a_1 X_1(\omega) + \dots + a_n X_n(\omega)) P[\omega]$$
+    $$ = a_1 \sum_{\omega \in \Omega} X_1(\omega) P[\omega] + \dots + a_n \sum_{\omega \in \Omega} X_n(\omega) P[\omega] = a_1 \mathbb{E}[X_1] + \dots + a_n \mathbb{E}[X_n]$$
 \end{proof}
 
 \begin{example}
     We throw a coin $m$ times. Let $X \coloneqq$ number of partial sequences with threetimes heads. What is the expectation of $X$?
-    $$
-        X = X_1 + X_2 + \dots + X_{m-2}
-    $$
+    $$X = X_1 + X_2 + \dots + X_{m-2}$$
     where $X_i$ is the indicator variable for the event that the $i$-th partial sequence is three heads.
-    $$
-        \mathbb{E}[X_i] = \frac{1}{8}
-    $$
+    $$\mathbb{E}[X_i] = \frac{1}{8}$$
     By the linearity of the expectation we get:
-    $$
-        \mathbb{E}[X] = \sum_{i=1}^{m-2} \mathbb{E}[X_i] = \frac{m-2}{8}
-    $$
+    $$\mathbb{E}[X] = \sum_{i=1}^{m-2} \mathbb{E}[X_i] = \frac{m-2}{8}$$
 \end{example}
 
-\begin{algorithm}
-#Recall Stable sets in a graph is a set of vertices that are not adjacent to each other. We will now use a randomized algorithm to determin a maximal stable set.
+\begin{remark}
+    Recall Stable sets in a graph is a set of vertices that are not adjacent to each other. We will now use a randomized algorithm to determin a maximal stable set.
+\end{remark}
 
+\begin{algorithm}
 S[v] = 1/0 with probability p
 for all u,v in E:
     if S[u] = 1 and S[v] = 1:
@@ -109,36 +106,51 @@ this results in a stable set but what is the expected size of S?
 
 \begin{proof}
     Let $X$ be the random variable for the size of the stable set $S$ after the first step. Further let $Y$ be the random variable for the amount of edges we looked at in step 2. Observe
-    $$
-\mid S \mid  \geq X - Y
-    $$
+    $$\mid S \mid  \geq X - Y$$
     By the linearity of expectation we get:
-    $$
-        \mathbb{E}[\mid S \mid] \geq \mathbb{E}[X] - \mathbb{E}[Y]
-    $$
+    $$\mathbb{E}[\mid S \mid] \geq \mathbb{E}[X] - \mathbb{E}[Y]$$
     We know that $\mathbb{E}[X] = nP$. Further we know that $\mathbb{E}[Y] = mP^2$. Thus we get:
-    $$
-        \mathbb{E}[\mid S \mid] \geq nP - mP^2
-    $$
+    $$\mathbb{E}[\mid S \mid] \geq nP - mP^2$$
 \end{proof}
 
 \subsection{Variance}
 
 \begin{definition}
     For a random variable $X$ with $\mathbb{E}[X] = \mu$ the variance is defined as:
-    $$
-        Var[X] \coloneqq \mathbb{E}[(X-\mu)^2]
-    $$
-    The standard deviation is defined as $\sigma \coloneqq \sqrt{Var[X]}$.
+    $$Var[X] \coloneqq \mathbb{E}[(X-\mu)^2]$$
+    The standard deviation of $X$ is defined as $\sigma \coloneqq \sqrt{Var[X]}$.
 \end{definition}
+
+\begin{example}
+    Let $P[X=-10^{10}] = 1/2$ and $P[X=10^{10}] = 1/2$. Then $\mathbb{E}[X] = 0$ and $Var[X] = 10^{20}$ and $\sigma = 10^{10}$.
+\end{example}
 
 \begin{theorem}
     For a random variable $X$ we have $Var[X] = \mathbb{E}[X^2] - \mathbb{E}[X]^2$
 \end{theorem}
 
+\begin{proof}
+    $$Var[X] = \mathbb{E}[(X-\mu)^2] = \mathbb{E}[X^2 - 2\mu X + \mu^2] = \mathbb{E}[X^2] - 2\mu \mathbb{E}[X] + \mu^2 = \mathbb{E}[X^2] - \mathbb{E}[X]^2 $$
+\end{proof}
+
 \begin{lemma}
     For a random variable $X$ and $a, b \in \mathbb{R}$ we have $Var[aX+b] = a^2 Var[X]$
 \end{lemma}
+
+\begin{proof}
+    \begin{enumerate}
+        \item $Var[X+b] = \mathbb{E}[(X+b-\mathbb{E}[X+b])^2] = \mathbb{E}[(X+b-(\mathbb{E}[X]+b))^2] = \mathbb{E}[(X-\mathbb{E}[X])^2] = Var[X]$
+        \item $Var[aX] = \mathbb{E}[(aX-\mathbb{E}[aX])^2] = \mathbb{E}[(aX-a\mathbb{E}[X])^2] = \mathbb{E}[a^2(X-\mathbb{E}[X])^2] = a^2 \mathbb{E}[(X-\mathbb{E}[X])^2] = a^2 Var[X]$
+    \end{enumerate}
+\end{proof}
+
+\begin{definition}
+    For a random variable $X$ we call $\mathbb{E}[X^k]$ the $k$-th moment of $X$ and $\mathbb{E}[(X-\mathbb{E}[X])^k]$ the $k$-th central moment of $X$.
+\end{definition}
+
+\begin{remark}
+    Observe that the first moment is the expectation itself. Further observe that the second central moment is the variance.
+\end{remark}
 
 \subsection{Multiple Random Variables}
 
@@ -151,16 +163,29 @@ this results in a stable set but what is the expected size of S?
     $$P[X_1=a_1, \dots, X_n=a_n] = P[X_1=a_1] \dots P[X_n=a_n]$$
 \end{definition}
 
-Observe that events $A_1, \dots, A_n$ are independent iff their indicator variables $X_{A_1}, \dots, X_{A_n}$ are independent.
+\begin{lemma}
+    Observe that events $A_1, \dots, A_n$ are independent iff their indicator variables $X_{A_1}, \dots, X_{A_n}$ are independent.
+\end{lemma}
+
+\begin{proof}
+    Note that the event "$I_{A_j} = \alpha_j$" is equivalent to the event "$A_j$" if $\alpha_j = 1$ and to the event $\bar{A_j}$ if $\alpha_j = 0$. Same for $A_j^{\alpha_j}$.
+    If now $A_1, \dots, A_n$ are independent then for all $\alpha_1, \dots, \alpha_n \in \{0,1\}$ we have:
+    $$P[I_{A_1} = \alpha_1, \dots, I_{A_n} = \alpha_n] = P[I_{A_1} = \alpha_1] \dots P[I_{A_n} = \alpha_n]$$
+    Using the above note we get:
+    $$P[A_1^{\alpha_1} \cap \dots \cap A_n^{\alpha_n}] = P[A_1^{\alpha_1}] \dots P[A_n^{\alpha_n}]$$
+\end{proof}
 
 \begin{lemma}
     Let $X_1, \dots, X_n$ be independent random variables and $S_1, \dots, S_n \subseteq \mathbb{R}$ be arbitrary sets then:
     $$P[X_1 \in S_1, \dots, X_n \in S_n] = P[X_1 \in S_1] \dots P[X_n \in S_n]$$
-    Hence for $X_1, \dots, X_n$ independent random variables and $I \subseteq \{1, \dots, n\}$ we have $(X_i)_{i \in I}$ are independent.
+    (Further this implies that for $X_1, \dots, X_n$ independent random variables and $I \subseteq \{1, \dots, n\}$ we have $(X_i)_{i \in I}$ are independent.)
 \end{lemma}
 
 \begin{proof}
-    
+    $$P[X_1\in S_1, \dots , X_n\in S_n] = \sum_{\alpha_1 \in S_1} \dots \sum_{\alpha_n \in S_n} P[X_1=\alpha_1, \dots, X_n=\alpha_n]$$
+    by indepencence of $X_i$ we get:
+    $$= \sum_{\alpha_1 \in S_1} \dots \sum_{\alpha_n \in S_n} P[X_1=\alpha_1] \dots P[X_n=\alpha_n]$$
+    $$= (\sum_{\alpha_1 \in S_1} P[X_1=\alpha_1]) \dots (\sum_{\alpha_n \in S_n} P[X_n=\alpha_n]) = P[X_1\in S_1] \dots P[X_n\in S_n]$$
 \end{proof}
 
 \begin{theorem}
@@ -168,6 +193,10 @@ Observe that events $A_1, \dots, A_n$ are independent iff their indicator variab
 \end{theorem}
 
 \begin{proof}
+    Let $S_i = \{\beta \mid f_i(\beta) = \alpha_i\}$. Then we have:
+    $$P[f_1(X_1) = \alpha_1, \dots, f_n(X_n) = \alpha_n] = P[X_1 \in S_1, \dots, X_n \in S_n]$$
+    by the previous lemma we get:
+    $$= P[X_1 \in S_1] \dots P[X_n \in S_n] = P[f_1(X_1) = \alpha_1] \dots P[f_n(X_n) = \alpha_n]$$
 \end{proof}
     
 \subsection{Combined Random Variables}
@@ -177,18 +206,38 @@ Observe that events $A_1, \dots, A_n$ are independent iff their indicator variab
     $$f_Z(\alpha) = \sum_{\beta \in W_X} f_X(\beta) f_Y(\alpha-\beta)$$
 \end{theorem}
 
+\begin{remark}
     This can intuitivaly be seen by looking at every possibility for $X = \beta$: for $X+Y = \alpha$ to hold we need $Y = \alpha - \beta$. Since $X$ and $Y$ are independent we can multiply their probabilities and sum that over all $\beta$
-    
+\end{remark}
+
 \begin{theorem}
     For random variables $X_1, \dots , X_n$ we have:
     $$\mathbb{E}[X_1 + \dots + X_n] = \mathbb{E}[X_1] + \dots + \mathbb{E}[X_n]$$
 \end{theorem}
+
+\begin{remark}
+    \textbf{Calculation Rules} for combined random variables
+    \begin{enumerate}
+        \item $\mathbb{E}[X+Y] = \mathbb{E}[X] + \mathbb{E}[Y]$
+        \item $\mathbb{E}[XY] = \mathbb{E}[X] \mathbb{E}[Y]$ if $X, Y$ are independent
+        \item $Var[X+Y] = Var[X] + Var[Y]$ if $X, Y$ are independent
+    \end{enumerate}
+\end{remark}
 
 \begin{theorem}
     For independent random variablex $X_1, \dots , X_n$ we have:
     $$\mathbb{E}[X_1 \dots X_n] = \mathbb{E}[X_1] \dots \mathbb{E}[X_n]$$
     $$Var[X_1 + \dots + X_n] = Var[X_1] + \dots + Var[X_n]$$
 \end{theorem}
+
+\begin{proof}
+    We prove for $n = 2$ general case can be proved inductively.
+    $$\mathbb{E}[(X+Y)^2] = \mathbb{E}[X^2 + 2XY + Y^2] = \mathbb{E}[X^2] + 2\mathbb{E}[XY] + \mathbb{E}[Y^2]$$
+    $$(\mathbb{E}[X+Y])^2 = (\mathbb{E}[X] + \mathbb{E}[Y])^2 = \mathbb{E}[X]^2 + 2\mathbb{E}[X]\mathbb{E}[Y] + \mathbb{E}[Y]^2$$
+    By subtracting both equations we get:
+    $$\mathbb{E}[(X+Y)^2] - (\mathbb{E}[X+Y])^2 = \mathbb{E}[X^2] - \mathbb{E}[X]^2 + \mathbb{E}[Y^2] - \mathbb{E}[Y]^2$$
+    Which is equivalent to $Var[X+Y] = Var[X] + Var[Y]$.
+\end{proof}
 
 \begin{important}
     Note that $Var[X \cdot Y] = Var[X] \cdot Var[Y]$ does not hold in general.

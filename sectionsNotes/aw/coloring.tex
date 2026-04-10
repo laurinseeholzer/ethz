@@ -35,8 +35,59 @@ for i = 2 to n:
     c[vi] = min { j in [k] | j != c[vj] for all j < i and (vi, vj) in E }
 \end{algorithm}
 
+\begin{lemma}
+    For any graph $G$ with maximum degree $\Delta(G)$, the greedy algorithm yields a coloring with at most $\Delta(G) + 1$ colors.
+\end{lemma}
+
+\begin{proof}
+    Let $v$ be a vertex in $G$. The greedy algorithm assigns to $v$ the smallest color that is not used by any of its neighbors. Since $v$ has at most $\Delta(G)$ neighbors, there are at most $\Delta(G)$ colors that are used by its neighbors. Therefore, there is always a color available for $v$ in the set $[\Delta(G) + 1]$.
+\end{proof}
+
+\begin{lemma}
+    There is an order of vertices $v_1, \dots, v_n$ such that the greedy algorithm yields a coloring with $\chi(G)$ colors.
+\end{lemma}
+
+\begin{proof}
+    \textbf{Intuition}: Let $c$ be an optimal coloring of $G$. We can order the vertices such that $c(v_1) \le c(v_2) \le \dots \le c(v_n)$. Therfore each color (stable set) is processed at once and the greedy algorithm assigns the smallest color to each vertex.
+\end{proof}
+
+\begin{lemma}
+    If for the coloring order we have $|N(v_i) \cap \{v_1, \dots, v_{i-1}\} | \leq k \forall 2 \leq i \leq n$ then the greedy algorithm uses at most $k+1$ colors.
+\end{lemma}
+
+\begin{remark}
+    \textbf{Heuristik}: $v_n$ has the smallest degree, $v_{n-1}$ has the smallest degree after removing $v_n$, etc.
+\end{remark}
+
+\begin{remark}
+    If every subgraph has a vertex of degree at most $k$, then the greedy algorithm including the Heuristik yields a coloring with at most $k+1$ colors.
+\end{remark}
+
+\begin{example}
+    For trees the greedy algorithm with Heuristik achieves a $2$-coloring.
+\end{example}
+
+\begin{lemma}
+    If every block of a block-graph can be colored in $k$ colors so can the block-graph itself.
+\end{lemma}
+
+\begin{proof}
+    \textbf{Intuition}: We can rotate the colors in each block such that the colors of the cut vertices match.
+\end{proof}
+
 \begin{theorem}
-    \textbf{Brooks' Theorem}: For a connected graph $G$ that is neither a complete graph $K_n$ nor an odd cycle $C_{2n+1}$:
-    $$\chi(G) \le \Delta(G)$$
+    \textbf{Brooks' Theorem}: For a connected graph $G$ that is neither a complete graph $K_n$ nor an odd cycle $C_{2n+1}$ we can find a $\Delta(G)$-coloring in $O(|E|)$ time.
 \end{theorem}
+
+\begin{algorithm}
+#Algorithm for Brooks' Theorem
+
+if (maxDeg == 2) color in two colors
+else if (exists v with deg(v) < maxDeg) 
+    color with greedy and Heuristik
+else if (exists cut vertex) 
+    color all blocks with heuristik and color changing
+else (find v,x,y, with x,y in N(v) and x,y not adjacent) 
+    remove x,y and color recursively
+\end{algorithm}
 

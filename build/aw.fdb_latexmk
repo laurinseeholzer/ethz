@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1775345076.70791 "/home/laurin/dev/ethz/aw.tex" "build/aw.pdf" "aw" 1775345077.72856 0
+["pdflatex"] 1775862026.89776 "/home/laurin/dev/ethz/aw.tex" "build/aw.pdf" "aw" 1775862027.95004 0
   "/home/laurin/dev/ethz/aw.tex" 1775222981.06137 717 0aa5204f0bf0419419fd4b6ed9d61005 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.enc" 1561323594 2496 4d35740f3a177992ff7b134746c0a1db ""
@@ -123,15 +123,15 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1774398240.84368 4602601 5d02a5c5d52d7237566d144856366042 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1774397783 7753788 a0020c5830dd8c877264576b28708675 ""
   "aw.tex" 1775222981.06137 717 0aa5204f0bf0419419fd4b6ed9d61005 ""
-  "build/aw.aux" 1775345077.59579 2034 f7fdc5249be37f01580ffbb75f81d472 "pdflatex"
-  "build/aw.toc" 1775345077.59579 1228 22e3e692a82e50466062795f1d97f57b "pdflatex"
-  "sectionsNotes/aw/coloring.tex" 1775345076.48979 1112 b96fd5ea0fdebc3995ed2f78907fe18f ""
+  "build/aw.aux" 1775862027.82035 2034 5303aa807f4adeaf44919ad762f62acf "pdflatex"
+  "build/aw.toc" 1775862027.82035 1228 fe620fc34ae1f071ad86276489bfbc1b "pdflatex"
+  "sectionsNotes/aw/coloring.tex" 1775498240.26484 3330 955395be61c4052cd84a6f5ef27ebacd ""
   "sectionsNotes/aw/connectivness_of_graphs.tex" 1775222779.38498 4210 7b718065d115232ffe9e2d25b58926ce ""
-  "sectionsNotes/aw/distributions.tex" 1774966404.08112 1671 05e5c39dfc6be230542ddc4427a5a8d7 ""
+  "sectionsNotes/aw/distributions.tex" 1775857008.87573 2700 2867477f95225def1ce99a0530cbcacb ""
   "sectionsNotes/aw/hamiltonian_cycles_eulertours.tex" 1775344495.86813 5687 ecaec159173704ddf247b47c68e599cd ""
-  "sectionsNotes/aw/intro_probability.tex" 1774795684.82742 7434 726266b20d6611b03bd73016fb1b92a8 ""
+  "sectionsNotes/aw/intro_probability.tex" 1775518855.30557 9496 37bf54fc3eef976e8b6045515d5a5ebb ""
   "sectionsNotes/aw/matchings.tex" 1775344497.62426 4317 36109e7eb755f2c029c7c0eeee702726 ""
-  "sectionsNotes/aw/random_variables.tex" 1775124954.35757 6726 febb4da5dc63ec7b4c4202850c5246fa ""
+  "sectionsNotes/aw/random_variables.tex" 1775862026.6597 10740 d8c4441624f9f26ea027ccf4caf08788 ""
   "templateNotes/commands.tex" 1774795684.82424 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
   "templateNotes/packages.tex" 1774795684.82409 493 dd01896e8ca6d5605bcdf6aeec6f0cbe ""
   "templateNotes/theorem_styles.tex" 1774795684.82464 2530 5415b1d3cc1c5ce9df9c2be1dad76ee8 ""
