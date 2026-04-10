@@ -3,7 +3,8 @@
 \subsection{Logic}
 
 \begin{definition}
-A \textbf{Statement} that depends on one or multiple variables is called a \textbf{predicate}.
+A \textbf{mathematical statement} is an assertion that is strictly true or false. Its negation is $\neg A \coloneqq A \text{ is false}$.
+A statement depending on variables is a \textbf{predicate}.
 \end{definition}
 
 \begin{example}
@@ -27,7 +28,8 @@ Basic logical connectives are defined as:
 $$A \land B \coloneqq A \text{ and } B \text{ are true}$$
 $$A \lor B \coloneqq A \text{ or } B \text{ is true}$$
 $$A \implies B \coloneqq A \text{ implies } B \text{ is true}$$
-$$A \iff B \coloneqq A \text{ is equivalent to } B \text{ is true}$$
+$$A \iff B \coloneqq A \implies B \land B \implies A$$
+Observe that $\neg A \lor B \iff A \implies B$.
 \end{definition}
 
 \begin{theorem}
@@ -43,6 +45,7 @@ $$\exists x (P(x) \lor Q(x)) \iff (\exists x P(x)) \lor (\exists x Q(x))$$
 
 
 \begin{definition}
+A \textbf{set} is a collection of elements. The empty set $\emptyset$ contains no elements. $x \in A$ ($x \notin A$) means $x$ is (not) in $A$.
 $A$ is a subset of $B$ denoted by $A \subseteq B$ iff. $$\forall x (x \in A \implies x \in B)$$
 $A$ is a proper subset of $B$ denoted by $A \subset B$ iff. $$A \subseteq B \land A \neq B$$
 \end{definition}
@@ -96,7 +99,7 @@ $$I = [a, b] \coloneqq \{x \mid a \leq x \leq b\}$$
 $$I = [a, b) \coloneqq \{x \mid a \leq x \lt b\}$$
 \end{definition}
 \begin{definition}
-An intervall is \textbf{bounded} if it is bounded from above and below hence $a$ and $b$ are finite.
+An intervall is \textbf{bounded} if it is bounded from above and below hence $a$ and $b$ are finite. A bounded and closed intervall is \textbf{compact}.
 \end{definition}
 
 \begin{definition}

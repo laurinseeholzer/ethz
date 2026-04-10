@@ -30,7 +30,7 @@ $$P[\bigcup_{i=1}^n A_i] \leq \sum_{i=1}^n P[A_i]$$
 
 \begin{theorem}
 \textbf{Inclusion-Exclusion Principle}: For $n \geq 2$:
-$$P[\bigcup_{i=1}^n A_i] = \sum_{i=1}^n (-1)^{i+1} P[\bigcap_{j=1}^i A_j]$$
+$$P[\bigcup_{i=1}^n A_i] = \sum_{k=1}^n (-1)^{k+1} \sum_{I \subset [n], |I|=k} P[\bigcap_{j \in I} A_j]$$
 \end{theorem}
 
 \subsection{Conditional Probability}
@@ -39,6 +39,10 @@ $$P[\bigcup_{i=1}^n A_i] = \sum_{i=1}^n (-1)^{i+1} P[\bigcap_{j=1}^i A_j]$$
 For $P[B] > 0$, the \textbf{conditional probability} of $A$ given $B$ is:
 $$P[A \mid B] = \frac{P[A \cap B]}{P[B]}$$
 \end{definition}
+
+\begin{remark}
+Always holds: $P[A \mid \Omega] = P[A]$, $P[A \mid A] = 1$, $P[A \mid \bar{A}] = 0$, $P[A \cap B] = P[A \mid B] P[B]$.
+\end{remark}
 
 \begin{theorem}
 \textbf{Multiplication-Theorem}: If $P[\bigcap_{i=1}^{n-1} A_i] > 0$:
@@ -64,6 +68,11 @@ $$P[A \cap B] = P[A] P[B] \text{ or } P[A \mid B] = P[A]$$
 Events $A_1, \dots, A_n$ are independent if for all $I \subseteq \{1, \dots, n\}$:
 $$P[\bigcap_{i \in I} A_i] = \prod_{i \in I} P[A_i]$$
 \end{definition}
+
+\begin{lemma}
+Let $A_1, \dots, A_n$ be events, $A_i^0 = \bar{A}_i$, $A_i^1 = A_i$. They are independent iff $\forall (s_1,\dots,s_n) \in \{0,1\}^n$:
+$$P[\bigcap_{i=1}^n A_i^{s_i}] = \prod_{i=1}^n P[A_i^{s_i}]$$
+\end{lemma}
 
 \begin{lemma}
 If $A, B, C$ are independent, then so are $A \cap B$ and $C$, and $A \cup B$ and $C$.

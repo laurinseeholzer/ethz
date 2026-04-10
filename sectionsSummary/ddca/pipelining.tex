@@ -48,7 +48,14 @@ Data dependencies:
 \subsection{Advanced Issues}
 
 \begin{definition}
-\textbf{Precise Exceptions}: Must stop execution on exception instruction while ensuring prior instructions finish correctly.
-\textbf{Out-of-Order}: Multi-cycle functional units cause out-of-order completion.
+\textbf{Precise Exceptions}: Must stop execution on exception instruction while ensuring prior instructions finish correctly. Unplanned internal changes are \textbf{exceptions}, external are \textbf{interrupts}. Hardware must flush younger instructions and save PC/REG.
+\end{definition}
+
+\begin{definition}
+\textbf{Out-of-Order Completion}: Multi-cycle units cause instructions to finish out of order, complicating exceptions.
+\textbf{Reorder-Buffer (ROB)}: Stores results of instructions as they complete. Allows out-of-order completion but \textbf{in-order retirement} to maintain precise exceptions. Uses a valid bit in REG to point to ROB if not ready.
+\end{definition}
+
+\begin{definition}
 \textbf{Fine-Grained Multithreading}: Switches thread every clock to hide hazards.
 \end{definition}

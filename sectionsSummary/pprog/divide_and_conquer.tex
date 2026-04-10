@@ -24,8 +24,13 @@ subproblem on the thread itself, instad of creating two new threads.
 
 The Executor Service framework provides the way to schedule and run tasks on a thread-pool automatically.
 
+\begin{definition}
+\textbf{Runnable}: Task without return value. (Passed to \texttt{execute()} or \texttt{submit()}).
+\textbf{Callable}: Task returning \texttt{Future<T>}. (Passed to \texttt{submit()}).
+\end{definition}
+
 \begin{remark}
-Executor service can handle Runnables as well as Callables (Callables return a result).
+\textbf{Pool Types}: \texttt{newFixedThreadPool(n)} (keeps $n$ threads), \texttt{newCachedThreadPool()} (scales dynamically).
 \end{remark}
 
 Pros and Cons of Executor service:
@@ -39,22 +44,33 @@ Pros and Cons of Executor service:
 Manages a pool of threads to solve recursive tasks using a work-stealing strategy, where threads have local task-queues
 which they work on and if empty steal from other threads.
 
+\begin{definition}
+\textbf{RecursiveTask}: Returns a result (like Callable).
+\textbf{RecursiveAction}: Does not return a result (like Runnable).
+\textbf{Key Methods}: \texttt{fork()} (async push), \texttt{join()} (wait, but steals work while waiting), \texttt{compute()} (main logic).
+\end{definition}
+
 \begin{codeexample}
-class myTask extends RecursiveTask {
-    myTask(int start, int end) {
-        //doWork
+class MyTask extends RecursiveTask<Integer> {
+    int start, end;
+    MyTask(int start, int end) { this.start = start; this.end = end; }
+    
+    protected Integer compute() {
+        if (end - start <= SEQUENTIAL_CUTOFF) { 
+            return baseCase(); 
+        } else {
+            int mid = (start + end) / 2;
+            MyTask left = new MyTask(start, mid);
+            MyTask right = new MyTask(mid, end);
+            
+            left.fork(); // Async execute left half
+            int rightRes = right.compute(); // Optimize: compute right half now
+            int leftRes = left.join();      // Wait for left half
+            
+            return leftRes + rightRes;
+        } 
     }
-    protected compute() {
-        if (end-start == 1) { 
-            return baseCase();
-        } 
-        else { 
-            left=new myTask(start, (start+end)/2);
-            right=new myTask((start+end)/2, end); 
-            left.fork(); right.fork(); 
-            return (left.join() + right.join());
-        } 
-    }            
+}
 \end{codeexample}
 
 \begin{important}
@@ -68,7 +84,8 @@ Make sure that every task has enough work to do (aprox. 100-10'000 ops.) (else t
 The execution of parallel programs using Fork-Join can be represented as a Task-Graph (DAG).
 
 \begin{definition}
-\textbf{Span} $T_{\infty}$:  execution time with unlimited hardware. (Sum of longest path in DAG)
+\textbf{Span} $T_{\infty}$: execution time with unlimited hardware (Sum of longest dependent path in DAG).
+Max speedup is limited by $T_1 / T_{\infty}$ (Amdahl's Law).
 \end{definition}
 
         

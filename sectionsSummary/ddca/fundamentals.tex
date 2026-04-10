@@ -24,7 +24,9 @@
 \textbf{NAND}: 4 transistors. $$Y = \overline{A \cdot B}$$
 \textbf{NOR}: 4 transistors. $$Y = \overline{A + B}$$
 \textbf{XOR}: (1 if different) $$Y = A \oplus B$$
+\textbf{XNOR}: (1 if same) $$Y = \overline{A \oplus B}$$
 \textbf{Buffer}:  (two NOT gates) $$Y = A$$
+AND/OR are usually implemented as NAND/NOR followed by an inverter.
 \end{definition}
 
 \begin{important}
@@ -32,6 +34,10 @@ A set of gates is \textbf{logically complete} if any Boolean function can be rea
 \end{important}
 
 \subsection{Boolean Algebra}
+
+\begin{theorem}
+\textbf{Basic Rules}: Identity ($A \cdot 1 = A, A + 0 = A$), Complement ($A \cdot \overline{A} = 0, A + \overline{A} = 1$), Distributive ($A \cdot (B + C) = A \cdot B + A \cdot C$).
+\end{theorem}
 
 \begin{theorem}
 \textbf{DeMorgan's theorems}:

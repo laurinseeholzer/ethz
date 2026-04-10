@@ -862,8 +862,8 @@ INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/lm/ts1-lmri8.tfm
 OUTPUT build/analysisISummary.pdf
 INPUT /var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map
 INPUT /usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc
-INPUT /usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc
 INPUT /usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc
+INPUT /usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc
 INPUT /usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc
 INPUT /usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc
 INPUT ./sectionsSummary/analysisI/sequences_series.tex
@@ -880,6 +880,13 @@ INPUT sectionsSummary/analysisI/functions.tex
 INPUT ./sectionsSummary/analysisI/functions.tex
 INPUT ./sectionsSummary/analysisI/functions.tex
 INPUT sectionsSummary/analysisI/functions.tex
+INPUT ./sectionsSummary/analysisI/continuity.tex
+INPUT ./sectionsSummary/analysisI/continuity.tex
+INPUT ./sectionsSummary/analysisI/continuity.tex
+INPUT sectionsSummary/analysisI/continuity.tex
+INPUT ./sectionsSummary/analysisI/continuity.tex
+INPUT ./sectionsSummary/analysisI/continuity.tex
+INPUT sectionsSummary/analysisI/continuity.tex
 INPUT build/analysisISummary.aux
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx8.pfb

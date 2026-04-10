@@ -1,5 +1,10 @@
 \section{Optimization}
 
+\begin{theorem}
+\textbf{Moore's Law}: Number of transistors on a microchip doubles every two years.
+Hitting the \textbf{Power-Consumption} (cooling limits) and \textbf{Memory} walls necessitated parallelism.
+\end{theorem}
+
 \subsection{Caching}
 Faster CPU's does not mean faster execution. Writing and loading data forms a bottleneck.
 
@@ -9,6 +14,9 @@ latency.
 \end{definition}
 
 The usage of cache reduces stalls (times in which the CPU can not execute as the data is not yet present).
+\begin{remark}
+Programmers improve cache usage by organizing data to increase \textbf{locality}, enabling efficient prefetching.
+\end{remark}
 
 \subsection{Vectorization}
 

@@ -13,6 +13,7 @@ Instruction Cycle: Fetch $\to$ Decode $\to$ Evaluate Address $\to$ Fetch Operand
 \textbf{Address Space}: Total unique memory locations.
 \textbf{Addressability}: Bits stored per address.
 \textbf{Endianness}: Order of bytes (Big Endian stores MSB at lowest address).
+To access memory, the \textbf{Memory Address Register (MAR)} holds the target address, and the \textbf{Memory Data Register (MDR)} receives/holds the data.
 \end{definition}
 
 \subsection{Instruction Set Architecture (ISA)}
@@ -42,5 +43,5 @@ In RISC, operands must be in registers for ALUs:
 \end{definition}
 
 \begin{remark}
-Execution order altered by \textbf{Conditional Branches} (uses condition codes or register comparisons) and \textbf{Unconditional Jumps}.
+Execution order altered by \textbf{Conditional Branches} (uses condition codes like N, Z, P or direct register comparisons) and \textbf{Unconditional Jumps}.
 \end{remark}

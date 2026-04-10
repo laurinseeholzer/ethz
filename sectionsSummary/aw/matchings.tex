@@ -25,7 +25,7 @@ $$\forall X \subseteq A : |X| \le |N(X)|$$
 \end{theorem}
 
 \begin{theorem}
-\textbf{Frobenius Corollary}: Every $k$-regular bipartite graph contains a perfect matching.
+\textbf{Frobenius Corollary}: Every $k$-regular bipartite graph contains a perfect matching. In fact, it is a union of perfect matchings. A perfect matching can be found in $O(|E|)$ time if the graph is $k$- or $2^k$-regular.
 \end{theorem}
 
 \begin{definition}
@@ -35,3 +35,7 @@ An \textbf{$M$-augmenting path} alternates between edges in $M$ and not in $M$, 
 \begin{theorem}
 \textbf{Berge's Theorem (1957)}: A matching $M$ is maximum iff there is no $M$-augmenting path.
 \end{theorem}
+
+\begin{algorithm}
+\textbf{Hopcroft-Karp} ($O(|V|^{1/2}|E|)$ time for bipartite graphs): While there is an augmenting path, find a maximal set of vertex-disjoint shortest augmenting paths using BFS, and augment $M$ along all of them.
+\end{algorithm}

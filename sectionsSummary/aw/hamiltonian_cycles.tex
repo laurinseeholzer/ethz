@@ -12,6 +12,10 @@ For $m, n \ge 2$, an $n \times m$ grid has a Hamiltonian cycle iff $n \cdot m$ i
 A bipartite graph $G = (A \cup B, E)$ with $|A| \neq |B|$ cannot contain a Hamiltonian cycle.
 \end{theorem}
 
+\begin{example}
+The $n$-dimensional hypercube $Q_n$ is bipartite and has a Hamiltonian cycle iff $n \ge 2$.
+\end{example}
+
 \begin{theorem}
 \textbf{Dirac's Theorem}: Every graph $G$ with $|V| \ge 3$ and minimum degree $\delta(G) \ge |V|/2$ contains a Hamiltonian cycle.
 \end{theorem}
@@ -36,9 +40,12 @@ $$w(u,v) \le w(u,w) + w(w,v)$$
 There is a 2-approximation algorithm.
 
 \begin{algorithm}
-#2-Approximation for Metric TSP
-#Length at most 2 * |E(T)| = 2 * (|V|-1).
-1. Determine minimal-spanning tree T
-2. Double edges of T to get Eulerian multigraph T'
-3. Traverse Eulertour, skip already visited vertices
+\textbf{2-Approximation for Metric TSP}: 1. Determine MST T. 2. Double edges of T to get Eulerian multigraph T'. 3. Traverse Eulertour, skip already visited vertices.
 \end{algorithm}
+
+\begin{theorem}
+\textbf{Christofides 1.5-Approximation} for Metric TSP:
+1. Determine MST T.
+2. Find minimal matching M for the odd-degree vertices of T.
+3. Determine Eulertour in T with edges of M added.
+\end{theorem}

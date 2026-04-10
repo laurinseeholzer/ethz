@@ -2,20 +2,26 @@
 
 \begin{definition}
 A \textbf{$k$-coloring} of $G = (V, E)$ is a mapping $c: V \to [k]$ such that $c(u) \neq c(v)$ for all $\{u,v\} \in E$.
+A \textbf{stable set} is a set of vertices where no two are adjacent.
 The \textbf{chromatic number} $\chi(G)$ is the minimum number of colors.
 $\chi(G) \le 2 \iff G$ is bipartite.
 \end{definition}
 
 \begin{theorem}
-For $k \ge 3$, the problem "Is $\chi(G) \le k$?" is NP-complete.
+For $k \ge 3$, the problem "Is $\chi(G) \le k$?" is NP-complete. For general graphs all $\epsilon$-approximations are NP-hard.
 \end{theorem}
 
 \begin{algorithm}
-#Greedy Coloring (Requires <= max degree + 1 colors)
-Delete vertices in order of minimum degree (heuristic).
+\textbf{Greedy Coloring} ($\le \Delta(G) + 1$ colors):
+\begin{itemize}
+    \item There exists an optimal vertex order yielding exactly $\chi(G)$ colors.
+    \item \textbf{Heuristic}: Delete vertices in order of minimum degree. If every subgraph has a vertex of degree $\le k$, this yields $\le k+1$ colors (e.g. trees are $2$-colorable).
+\end{itemize}
+\textbf{Block-graphs}: If every block can be $k$-colored, the graph can be $k$-colored.
 \end{algorithm}
 
 \begin{theorem}
 \textbf{Brooks' Theorem}: For a connected graph $G$ that is neither a complete graph $K_n$ nor an odd cycle $C_{2n+1}$:
 $$\chi(G) \le \Delta(G)$$
+Can be found in $O(|E|)$ time by: 1) If $\Delta(G)=2$, $2$-color. 2) If $\exists v, \text{deg}(v) < \Delta(G)$ use greedy heuristic. 3) If $\exists$ cut vertex, color blocks. 4) Else remove non-adj. $x,y \in N(v)$ and color recursively.
 \end{theorem}

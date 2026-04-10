@@ -892,13 +892,6 @@ INPUT sectionsSummary/ddca/instruction_set_architecture.tex
 INPUT ./sectionsSummary/ddca/instruction_set_architecture.tex
 INPUT ./sectionsSummary/ddca/instruction_set_architecture.tex
 INPUT sectionsSummary/ddca/instruction_set_architecture.tex
-INPUT ./sectionsSummary/ddca/microarchitecture.tex
-INPUT ./sectionsSummary/ddca/microarchitecture.tex
-INPUT ./sectionsSummary/ddca/microarchitecture.tex
-INPUT sectionsSummary/ddca/microarchitecture.tex
-INPUT ./sectionsSummary/ddca/microarchitecture.tex
-INPUT ./sectionsSummary/ddca/microarchitecture.tex
-INPUT sectionsSummary/ddca/microarchitecture.tex
 OUTPUT build/ddcaSummary.pdf
 INPUT /var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map
 INPUT /usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc
@@ -906,6 +899,13 @@ INPUT /usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc
 INPUT /usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc
 INPUT /usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc
 INPUT /usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rmtt.enc
+INPUT ./sectionsSummary/ddca/microarchitecture.tex
+INPUT ./sectionsSummary/ddca/microarchitecture.tex
+INPUT ./sectionsSummary/ddca/microarchitecture.tex
+INPUT sectionsSummary/ddca/microarchitecture.tex
+INPUT ./sectionsSummary/ddca/microarchitecture.tex
+INPUT ./sectionsSummary/ddca/microarchitecture.tex
+INPUT sectionsSummary/ddca/microarchitecture.tex
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/lm/rm-lmtti10.tfm
 INPUT ./sectionsSummary/ddca/pipelining.tex
 INPUT ./sectionsSummary/ddca/pipelining.tex

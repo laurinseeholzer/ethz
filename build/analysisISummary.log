@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2026.3.25)  31 MAR 2026 16:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2026.3.25)  11 APR 2026 01:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -724,57 +724,57 @@ Package microtype Info: No adjustment of character kerning.
  (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
 ) (./sectionsSummary/analysisI/logic_sets_numbers.tex
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 10.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 6.
  (/usr/share/texlive/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 10.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 6.
  (/usr/share/texlive/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 10.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 6.
  (/usr/share/texlive/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 10.
+(Font)              <8> on input line 6.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 10.
+(Font)              <6> on input line 6.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 10.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 10.
+(Font)              <5> on input line 6.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 6.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 10.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 6.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 71.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 74.
  (/usr/share/texlive/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-Underfull \hbox (badness 10000) in paragraph at lines 84--85
+Underfull \hbox (badness 10000) in paragraph at lines 87--88
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 112--115
+Underfull \hbox (badness 10000) in paragraph at lines 115--118
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 124--128
+Underfull \hbox (badness 10000) in paragraph at lines 127--131
 
  []
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]) (./sectionsSummary/analysisI/sequences_series.tex
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]) (./sectionsSummary/analysisI/sequences_series.tex
 Underfull \hbox (badness 10000) in paragraph at lines 13--17
 
  []
@@ -785,44 +785,48 @@ Underfull \hbox (badness 10000) in paragraph at lines 28--29
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 106--111
+Underfull \hbox (badness 10000) in paragraph at lines 110--115
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 106--111
+Underfull \hbox (badness 10000) in paragraph at lines 110--115
 
  []
 
 
-Underfull \hbox (badness 7504) in paragraph at lines 106--111
+Underfull \hbox (badness 7504) in paragraph at lines 110--115
 \OT1/lmr/m/it/8 (+20) If $[] \OML/lmm/m/it/8 c[]$ \OT1/lmr/m/it/8 (+20) di-verges, then $[] \OML/lmm/m/it/8 b[]$ \OT1/lmr/m/it/8 (+20) di-verges
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 114--117
+Underfull \hbox (badness 10000) in paragraph at lines 118--121
 
  []
 
 ) (./sectionsSummary/analysisI/functions.tex [2]
-Underfull \hbox (badness 6157) in paragraph at lines 109--110
-[]\OT1/lmr/bx/n/8 (+20) Thm. 82. []\OT1/lmr/m/it/8 (+20) Let $\OML/lmm/m/it/8 A \OMS/lmsy/m/n/8 2 \U/msb/m/n/8 R$ \OT1/lmr/m/it/8 (+20) and as-
+
+Package tcolorbox Warning: Using nobreak failed. Try to enlarge `lines before break' or set page breaks manually on input line 84.
+
+
+Underfull \hbox (badness 6157) in paragraph at lines 117--118
+[]\OT1/lmr/bx/n/8 (+20) Thm. 85. []\OT1/lmr/m/it/8 (+20) Let $\OML/lmm/m/it/8 A \OMS/lmsy/m/n/8 2 \U/msb/m/n/8 R$ \OT1/lmr/m/it/8 (+20) and as-
  []
 
-) [3] (build/analysisISummary.aux) ) 
+) (./sectionsSummary/analysisI/continuity.tex) [3] [4] (build/analysisISummary.aux) ) 
 Here is how much of TeX's memory you used:
- 23936 strings out of 476041
- 497009 string characters out of 5793174
- 1945388 words of memory out of 6000000
- 43784 multiletter control sequences out of 15000+600000
- 561551 words of font info for 151 fonts, out of 8000000 for 9000
+ 23975 strings out of 476041
+ 497643 string characters out of 5793174
+ 1943388 words of memory out of 6000000
+ 43794 multiletter control sequences out of 15000+600000
+ 563054 words of font info for 164 fonts, out of 8000000 for 9000
  1137 hyphenation exceptions out of 8191
  106i,9n,107p,1035b,1193s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmri8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on build/analysisISummary.pdf (3 pages, 272324 bytes).
+Output written on build/analysisISummary.pdf (4 pages, 277391 bytes).
 PDF statistics:
- 113 PDF objects out of 1000 (max. 8388607)
- 71 compressed objects within 1 object stream
+ 116 PDF objects out of 1000 (max. 8388607)
+ 73 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  24589 words of extra memory for PDF output out of 24883 (max. 10000000)
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2026.3.25)  31 MAR 2026 23:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2026.3.25)  11 APR 2026 01:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -758,27 +758,35 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-LaTeX Font Info:    Trying to load font information for OT1+lmtt on input line 47.
- (/usr/share/texlive/texmf-dist/tex/latex/lm/ot1lmtt.fd
+Underfull \hbox (badness 10000) in paragraph at lines 28--30
+\OT1/lmr/m/it/8 (+20) AND/OR are usu-ally im-ple-mented as
+ []
+
+LaTeX Font Info:    Trying to load font information for OT1+lmtt on input line 53.
+(/usr/share/texlive/texmf-dist/tex/latex/lm/ot1lmtt.fd
 File: ot1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-) (./sectionsSummary/ddca/combinational_logic.tex) (./sectionsSummary/ddca/sequential_logic.tex) (./sectionsSummary/ddca/timing.tex) (./sectionsSummary/ddca/instruction_set_architecture.tex) (./sectionsSummary/ddca/microarchitecture.tex [1
+) (./sectionsSummary/ddca/combinational_logic.tex) (./sectionsSummary/ddca/sequential_logic.tex
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rmtt.enc}]) (./sectionsSummary/ddca/pipelining.tex) [2] (build/ddcaSummary.aux) ) 
+Package tcolorbox Warning: Using nobreak failed. Try to enlarge `lines before break' or set page breaks manually on input line 11.
+
+) (./sectionsSummary/ddca/timing.tex) (./sectionsSummary/ddca/instruction_set_architecture.tex [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rmtt.enc}]) (./sectionsSummary/ddca/microarchitecture.tex) (./sectionsSummary/ddca/pipelining.tex) [2] (build/ddcaSummary.aux) ) 
 Here is how much of TeX's memory you used:
- 24187 strings out of 476041
- 499611 string characters out of 5793174
- 1978388 words of memory out of 6000000
- 44064 multiletter control sequences out of 15000+600000
- 559999 words of font info for 130 fonts, out of 8000000 for 9000
+ 24206 strings out of 476041
+ 499852 string characters out of 5793174
+ 1970388 words of memory out of 6000000
+ 44069 multiletter control sequences out of 15000+600000
+ 560896 words of font info for 137 fonts, out of 8000000 for 9000
  1137 hyphenation exceptions out of 8191
  106i,7n,107p,1030b,1325s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmri8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmtt8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on build/ddcaSummary.pdf (2 pages, 250399 bytes).
+Output written on build/ddcaSummary.pdf (2 pages, 252801 bytes).
 PDF statistics:
  82 PDF objects out of 1000 (max. 8388607)
  52 compressed objects within 1 object stream

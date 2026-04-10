@@ -80,23 +80,27 @@ $$\liminf_{n \to \infty} a_n = \lim_{n \to \infty} \inf_{k \ge n} a_k$$
 A sequence is a \textbf{Cauchy sequence} if 
 $$\forall \epsilon \gt 0 \exists N \in \mathbb{N} \text{ such that }$$
 $$\forall m, n \ge N : |a_n - a_m| \lt \epsilon$$
-A real sequence converges iff it is a Cauchy sequence.
 \end{definition}
 
 \begin{theorem}
-A sequence of real numbers converges iff it is a cauchy sequence.
+A sequence of real numbers converges iff it is a Cauchy sequence.
 \end{theorem}
 
 \subsection{Series}
 
 \begin{definition}
-A \textbf{series} (Reihe) is an infinite sum $\sum_{i=0}^\infty a_i$ of the terms of a sequence $(a_n)$.
+A \textbf{series} (Reihe) is an infinite sum $\sum_{i=0}^\infty a_i$. It converges iff its sequence of partial sums converges.
 \end{definition}
 
 \begin{theorem}
 \textbf{Necessary condition for convergence}
 $$\lim_{n \to \infty} a_n = 0$$
 \end{theorem}
+
+\begin{remark}
+\textbf{Geometric series}: $\sum_{n=0}^\infty x^n = \frac{1}{1-x}$ iff $|x| \lt 1$.
+\textbf{Harmonic series}: $\sum_{n=1}^\infty \frac{1}{n^s}$ converges for $s \gt 1$.
+\end{remark}
 
 \begin{theorem}
 For \textbf{series with non-negative terms} $a_n \ge 0$, the sequence of partial sums is monotonically increasing. \textbf{It converges iff it is bounded.}

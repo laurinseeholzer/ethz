@@ -892,6 +892,7 @@ INPUT sectionsSummary/pprog/divide_and_conquer.tex
 INPUT ./sectionsSummary/pprog/divide_and_conquer.tex
 INPUT ./sectionsSummary/pprog/divide_and_conquer.tex
 INPUT sectionsSummary/pprog/divide_and_conquer.tex
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/lm/rm-lmtti10.tfm
 INPUT ./sectionsSummary/pprog/parallel_algorithms.tex
 INPUT ./sectionsSummary/pprog/parallel_algorithms.tex
 INPUT ./sectionsSummary/pprog/parallel_algorithms.tex
@@ -913,3 +914,4 @@ INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmri8.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy6.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy8.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmtt8.pfb
+INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmtti10.pfb

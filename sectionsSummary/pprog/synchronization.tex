@@ -2,6 +2,7 @@
 
 
 \begin{definition}
+\textbf{Bad Interleaving:} Interleaving of operations from multiple threads that leads to incorrect program state.
 \textbf{Critical Section:} Codeblocks that might lead to bad interleavings.
 \end{definition}
 
@@ -29,7 +30,7 @@ Synchronized can also be used as a keyword on a method to sync. the whole method
 \end{remark}
 
 \begin{remark}
-    By default synchronized uses "this" as the lock-object.
+By default synchronized uses "this" as the lock-object and unlocks when an exception occurs.
 \end{remark}
 
 \begin{remark}

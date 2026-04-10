@@ -2,7 +2,8 @@
 
 \begin{definition}
 A \textbf{random variable} is a map $X: \Omega \to \mathbb{R}$.
-Event $X \leq x \coloneqq \{\omega \in \Omega \mid X(\omega) \leq x\}$.
+The \textbf{probability mass function (PMF)} is $f_X(x) = P(X=x)$.
+The \textbf{distribution function (CDF)} is $F_X(x) = P(X \leq x)$.
 \end{definition}
 
 \subsection{Expectation}
@@ -25,8 +26,8 @@ $$\mathbb{E}[X_E] = P(E)$$
 
 \begin{theorem}
 \textbf{Linearity of Expectation}:
-For random variables $X_1, \dots, X_n$ and $a_1, \dots, a_n \in \mathbb{R}$:
-$$\mathbb{E}[\sum_{i=1}^n a_i X_i] = \sum_{i=1}^n a_i \mathbb{E}[X_i]$$
+For random variables $X_1, \dots, X_n$ and $a_1, \dots, a_n, b \in \mathbb{R}$:
+$$\mathbb{E}[\sum_{i=1}^n a_i X_i + b] = \sum_{i=1}^n a_i \mathbb{E}[X_i] + b$$
 \end{theorem}
 
 \begin{algorithm}
@@ -52,3 +53,28 @@ $$Var[X] = \mathbb{E}[X^2] - (\mathbb{E}[X])^2$$
 \begin{lemma}
 For $a, b \in \mathbb{R}$: $Var[aX+b] = a^2 Var[X]$
 \end{lemma}
+
+\begin{definition}
+$\mathbb{E}[X^k]$ is the $k$-th \textbf{moment}. $\mathbb{E}[(X-\mathbb{E}[X])^k]$ is the $k$-th \textbf{central moment}.
+\end{definition}
+
+\subsection{Multiple \& Combined Variables}
+
+\begin{definition}
+RVs $X_1, \dots, X_n$ are \textbf{independent} iff $\forall a_i \in W_{X_i}$:
+$$P[X_1=a_1, \dots, X_n=a_n] = \prod_{i=1}^n P[X_i=a_i]$$
+\end{definition}
+
+\begin{theorem}
+If $X, Y$ are independent, $f_{X+Y}(\alpha) = \sum_{\beta} f_X(\beta) f_Y(\alpha-\beta)$.
+\end{theorem}
+
+\begin{remark}
+\textbf{Calculation Rules}:
+\begin{itemize}
+    \item $\mathbb{E}[X+Y] = \mathbb{E}[X] + \mathbb{E}[Y]$
+    \item If $X, Y$ independent: $\mathbb{E}[XY] = \mathbb{E}[X] \mathbb{E}[Y]$
+    \item If $X, Y$ independent: $Var[X+Y] = Var[X] + Var[Y]$
+\end{itemize}
+Note $Var[XY] \neq Var[X]Var[Y]$ in general.
+\end{remark}

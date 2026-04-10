@@ -1,0 +1,28 @@
+\section{Continuity}
+
+\begin{definition}
+A function $f: D \to \mathbb{R}$ is \textbf{continous} at $x_0$ if
+$$\forall \epsilon \gt 0 \exists \delta \gt 0 \text{ s.t. } \forall x \in D $$
+$$| x - x_0 | \lt \delta \implies | f(x) - f(x_0) | \lt \epsilon$$
+$f$ is continuous iff for every sequence $x_n \to x_0$, $f(x_n) \to f(x_0)$.
+\end{definition}
+
+\begin{theorem}
+If $f, g$ are continuous, then $f \pm g$, $f \cdot g$, $c \cdot f$, $f/g$ (if $g \neq 0$), and $f \circ g$ are also continuous.
+\end{theorem}
+
+\begin{theorem}
+If $f: I \to J$ is continuous and bijective, $J$ is an interval and $f^{-1}: J \to I$ is continuous.
+\end{theorem}
+
+\begin{theorem}
+\textbf{Intermediate value theorem}: Let $f: [a, b] \to \mathbb{R}$ be continuous. For any $c \in [f(a), f(b)]$, there is an $x_0 \in [a, b]$ with $f(x_0) = c$.
+\end{theorem}
+
+\begin{definition}
+$f$ has a \textbf{local maximum (minimum)} at $x_0$ if $f(x_0) \geq (\leq) f(x) \forall x \in D$. Both are called \textbf{extrema}.
+\end{definition}
+
+\begin{theorem}
+A continuous function on a \textbf{compact interval} is bounded and attains its maximum and minimum value.
+\end{theorem}

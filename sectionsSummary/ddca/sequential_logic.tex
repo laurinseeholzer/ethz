@@ -7,6 +7,10 @@ Sequential logic incorporates storage elements to maintain "state", producing ou
 \subsection{Fundamental Blocks}
 
 \begin{definition}
+Basic storage element: two inverters connected in a feedback loop.
+\end{definition}
+
+\begin{definition}
 \textbf{Reset-Set (R-S) latch} (built from cross-coupled NAND gates):
 Set ($S=0$): $Q=1$, Reset ($R=0$): $Q=0$.
 $S=0, R=0$ is forbidden (metastability).
@@ -47,5 +51,5 @@ State Encodings: \textbf{Binary} (min bits), \textbf{One-Hot} (1 bit/state, simp
 
 \begin{definition}
 \textbf{Register}: Group of D flip-flops with common clock/enable.
-\textbf{Memory}: Storage locations indexed by address.
+\textbf{Memory}: Storage locations indexed by address. Hardware uses an \textbf{Address Decoder} to select a location and a \textbf{Multiplexer} to route data to the output.
 \end{definition}
