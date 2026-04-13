@@ -25,3 +25,11 @@
 \contentsline {section}{\numberline {6}Shared Resources}{19}{}%
 \contentsline {subsection}{\numberline {6.1}Race Conditions}{19}{}%
 \contentsline {subsection}{\numberline {6.2}Guidelines for Concurrent programming}{19}{}%
+\contentsline {section}{\numberline {7}Memory Models and Atomic Registers}{21}{}%
+\contentsline {subsection}{\numberline {7.1}Memory Reordering and Hierarchy}{21}{}%
+\contentsline {subsection}{\numberline {7.2}The Java Memory Model (JMM)}{22}{}%
+\contentsline {subsection}{\numberline {7.3}Registers and Concurrent Executions}{23}{}%
+\contentsline {subsection}{\numberline {7.4}Solving Mutual Exclusion}{23}{}%
+\contentsline {subsection}{\numberline {7.5}Historical "Failed" Attempts}{24}{}%
+\contentsline {subsection}{\numberline {7.6}Dekker's Algorithm}{25}{}%
+\contentsline {subsection}{\numberline {7.7}Peterson's Algorithm (The Modern Standard)}{25}{}%
