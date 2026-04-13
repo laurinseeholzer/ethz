@@ -1,0 +1,111 @@
+\section{Differential calculus}
+
+\begin{definition}
+    The \textbf{average rate of change} of a function $f$ in the domain between $a$ and $a + h$ is defined as
+    $$ \frac{\Delta y}{\Delta x} = \frac{f(a+h)-f(a)}{h}$$
+    and also called the differential quotient.
+\end{definition}
+
+\begin{definition}
+    The \textbf{derivative} $f'$ of a function $f$ at the coordinate $a$ is defined as
+    $$\lim_{h \to 0}\frac{f(a+h)-f(a)}{h} = lim_{b \to a}\frac{f(b)-f(a)}{b-a} = \frac{df}{dx}\vert_{x=a} = f'(a)$$
+\end{definition}
+
+\begin{remark}
+    The derivative $f'(a)$ can geometrically interpreted as the incline/decline of the graph of $f$ at the point $(a, f(a))$.
+\end{remark}
+
+\begin{definition}
+    If for a function $f$ at the cooridnate $a$ the derivative $\exists f'(a)$ then f is called \textbf{differentiable} at $a$. If $f$ is differentiable for every $a \in \mathbb{D}$ then $f$ is called differentiable.
+\end{definition}
+
+\begin{example}
+    let $f(x) = |x|$ we can see that for $a=0$ there is no derivative (we have a sharp change in "direction")
+\end{example}
+
+\begin{remark}
+    We can generally expect that there are no derivatives at undefined points $a \notin \mathbb{D}$.
+\end{remark}
+
+\begin{lemma}
+    If $f$ is differentiable at $x_0$ then $f$ is continous at $x_0$.
+\end{lemma}
+
+\begin{proof}
+    Assume $f$ differentiable then
+    $$\lim_{x \to x_0}f(x) = \lim_{h \to 0} f(x_0+h) = \lim_{h \to 0} f(x_0 + h) - f(x_0) + f(x_0)$$
+    $$ = f(x_0) + \lim_{h \to 0} f(x_0+h)-f(x_0) = f(x_0) + \lim_{h \to 0} \frac{f(x_0+h)-f(x_0)}{h} \cdot h$$
+    $$ = f(x_0) + \lim_{h \to 0} h \cdot \lim_{h \to 0} \frac{f(x_0+h)-f(x_0)}{h}$$
+    Observe that the last term exists by the assumption hence
+    $$ = f(x_0) + 0 \cdot f'(x_0) = f(x_0)$$
+\end{proof}
+
+\begin{definition}
+    If the limit 
+    $$\lim_{h>0 \to 0}\frac{f(a+h)-f(a)}{h}$$
+    existst then we call it the \textbf{right-sided derivative} (or the left-sided derivative analogue)
+\end{definition}
+
+\begin{definition}
+    For a function $f$ we can iteratively define higher derivatives for $n \in \mathbb{N}_0$
+    $$ f^(0) = f, f^(1) = f', f^(2) = f'', \dots f^(n+1) = (f^(n))'$$
+    if $f^(n)$ exists we call it $n$-times differentiable.
+\end{definition}
+
+\begin{definition}
+    if $f^(n)$ is continous we call $f$ $n$-times continous differentiable. The set of all $n$-times continous differentiable functions on $D$ is denoted as $C^n(D)$
+\end{definition}
+
+\begin{definition}
+    We call $C^{\infty}(D) \coloneqq \cap_{n=0}^{\infty} C^n(D)$ the set of smooth functions.
+\end{definition}
+
+\subsection{Derivation rules}
+
+\begin{theorem}
+    For functions $f(x)$ we have
+    \begin{itemize}
+        \item $f(x) = a x^p \quad \implies \quad f'(x) = a p x^{p-1}$
+        \item $f(x) = a^x \quad \implies \quad f'(x) = ln(a) \cdot a^x$
+        \item $f(x) = sin(x) \quad \implies \quad f'(x) = cos(x)$
+        \item $f(x) = cos(x) \quad \implies \quad f'(x) = -sin(x)$
+        \item $f(x) = tan(x) \quad \implies \quad f'(x) = \frac{1}{cos^2(x)} = 1 + tan^2(x)$
+        \item $f(x) = sinh(x) \quad \implies \quad f'(x) = cosh(x)$
+        \item $f(x) = cosh(x) \quad \implies \quad f'(x) = sinh(x)$
+        \item $f(x) = ln(x) f'(x) = \frac{1}{x}$
+        \item $f(x) = arcsin(x) f'(x) = \frac{1}{\sqrt{1-x^2}}$
+        \item $f(x) = arccos(x) f'(x) = \frac{-1}{\sqrt{1-x^2}}$
+        \item $f(x) = arctan(x) f'(x) = \frac{1}{1+x^2}$
+    \end{itemize}
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Sum Rule:} For the $n$-th derivative of a sum:
+    $$(f + g)^{(n)} = f^{(n)} + g^{(n)} $$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{General Leibniz Rule (Product):} The $n$-th derivative of a product is given by:
+    $$(f \cdot g)^{(n)} = \sum_{k=0}^{n} \binom{n}{k} f^{(n-k)} g^{(k)} $$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Chain Rule:} For the composition of functions:
+    $$(f \circ g)'(x) = f'(g(x)) \cdot g'(x) $$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Quotient Rule:} For $g(x) \neq 0$:
+    $$\left(\frac{f}{g}\right)' = \frac{f'g - fg'}{g^2} $$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Inverse Functions:} If $f$ is differentiable and injective:
+    $$(f^{-1})'(x) = \frac{1}{f'(f^{-1}(x))} $$
+\end{theorem}
+
+\subsection{Local extrema}
+
+\begin{theorem}
+    
+\end{theorem}

@@ -1,0 +1,35 @@
+\section{Atomic registers}
+
+\begin{remark}
+    Compiler and hardware are allowed to make changes that do not affect the semantics of a sequentially executed program. Modern compilers do not give guarantees that a global ordering of memory accesses is provided some memory accesses may be optimized away completelty!
+\end{remark}
+
+Memory reordering offers a huge potential for optimization, and for errors when when one makes wrong assumptions (ex. Dead code elimination, register hoisting, locality optimization ...)
+
+\begin{codeexample}
+int x;
+void wait() {
+    x = 1;
+    while (x==1);
+}
+void arrive() {
+    x = 2;
+}
+\end{codeexample}
+
+The above example
+
+\begin{definition}
+    \textbf{Memory-Hirarchy (single core)}:
+    \begin{itemize}
+        \item System Memory (slow, high latency, low cost, high capacity)
+        \item L2 Cache
+        \item L1 Cache
+        \item Registers (fast, low latency, high cost, low capacity)
+        \item (ALUs)
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    With multiple cores we have shared System Memory and L2 Cache and seperate L1, Registers and ALUs for each core.
+\end{remark}
