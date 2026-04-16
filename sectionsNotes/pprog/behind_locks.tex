@@ -1,0 +1,149 @@
+\section{Behind Locks}
+
+To implement a Lock (Mutex) correctly using only basic memory reads/writes, three conditions must be met:
+\begin{enumerate}
+    \item \textbf{Mutual Exclusion:} No two processes can be in the critical section (CS) simultaneously.
+    \item \textbf{Freedom from Deadlock:} If processes try to enter the CS, at least one must eventually succeed.
+    \item \textbf{Freedom from Starvation:} Every process that attempts to enter must eventually succeed.
+\end{enumerate}
+
+\subsection{State Space Diagrams}
+
+\begin{definition}
+    A \textbf{State Space Diagram} is a formal tool used to track every possible configuration of a concurrent program.
+    \textbf{States} are typically represented as a tuple, e.g., $[p, q, \text{wantp}, \text{wantq}]$, where $p$ and $q$ are the current program counters (line numbers) of the threads.
+\end{definition}
+
+\begin{remark}
+    We can use state space diagrams to prove the correctness of lock implementations and understand the follwoing algorithms and idenfy failures
+    \begin{itemize}
+        \item \textbf{No Mutex:} Reachable state where both processes are in the CS.
+        \item \textbf{Deadlock:} A state with no outgoing transitions where threads are stuck in the protocol.
+        \item \textbf{Starvation:} An execution path where one thread never reaches the CS despite trying.
+    \end{itemize}
+\end{remark}
+
+\subsection{Attempts to mutual exclusion}
+
+\begin{algorithm}
+volatile int flag[2] = {0, 0};
+
+// Thread 0
+while (flag[1] != 1) {}
+flag[0] = 1;
+// Critical section
+flag[0] = 0;
+\end{algorithm}
+
+Observe that this algorithm fails, as both thread might check the others flag and see that it is 0, and then both enter the critical section.
+
+\begin{algorithm}
+volatile int flag[2] = {0, 0};
+
+// Thread 0
+flag[0] = 1;
+while (flag[1] != 1) {}
+// Critical section
+flag[0] = 0;
+\end{algorithm}
+
+Observe that this algorithm also fails, as both thread might set their flag to 1 and then check the others flag and see that it is 1 and therefore deadlock.
+
+\begin{algorithm}
+volatile int turn = 1;
+
+// Thread 0
+while (turn == 1) {}
+// Critical section
+turn = 0;
+\end{algorithm}
+
+Observe that this algorithm also fails as we do not guarantee that a thread resets the turn variable if it crahses or does not use the critical section. Furthermore this algorithm would ensure strict alternation (round-robin) between the threads.
+
+
+\subsection{Successful Algorithms}
+
+The first correct solution to the mutual exclusion problem for two processes. It combines the flag system with a \textbf{turn} variable to break ties. If both want to enter, the \textbf{turn} variable decides who must temporarily retract their interest.
+
+\begin{codeexample}
+// Process P
+wantp = true;
+while (wantq) {
+    if (turn == 2) {
+        wantp = false;
+        while (turn == 2); // wait for turn
+        wantp = true;
+    }
+}
+// Critical Section
+turn = 2;
+wantp = false;
+\end{codeexample}
+
+Peterson's algorithm is a more concise version of Dekker's. Instead of retracting interest, a process simply "gives way" by setting a \textbf{victim} variable to itself.
+
+\begin{codeexample}
+// Process P
+wantp = true;
+victim = 1; // P is process 1
+while (wantq && victim == 1);
+// Critical Section
+wantp = false;
+\end{codeexample}
+
+\begin{theorem}
+    Peterson's Algorithm provides Mutual Exclusion, Deadlock Freedom, and Starvation Freedom, and works elegantly using only atomic registers.
+\end{theorem}
+
+\begin{definition}
+    An event $A$ is said to precede $B$ denoted as $A \prec B$ if the execution interval of $A$ does not overlap with the execution interval of $B$. If they do not overlap, then $A$ and $B$ are called concurrent.
+\end{definition}
+
+\begin{definition}
+    An \textbf{atomic register} is a register that performs operations at a single point in time hence two operations on the same register always have diffrent effect times.
+\end{definition}
+
+\begin{proof}
+    \textbf{Mutual Exclusion of Peterson's Algorithm:} By contradiction: assume concurrent $CS_P$ and $CS_Q$. Assume wlog: 
+    $$W_Q(\text{victim}=Q) \rightarrow W_P(\text{victim}=P)$$
+
+    From the program code:
+    \begin{itemize}
+        \item $W_P(\text{flag}[P]=\text{true}) \rightarrow W_P(\text{victim}=P) \rightarrow R_P(\text{flag}[Q]) \rightarrow R_P(\text{victim}) \rightarrow CS_P$
+        \item $W_Q(\text{flag}[Q]=\text{true}) \rightarrow W_Q(\text{victim}=Q) \rightarrow R_Q(\text{flag}[P]) \rightarrow R_Q(\text{victim}) \rightarrow CS_Q$
+    \end{itemize}
+
+    Since $W_Q(\text{victim}=Q) \rightarrow W_P(\text{victim}=P)$, thread $P$ must read $P$ for victim.
+    For thread $P$ to enter its critical section ($CS_P$), the condition while condition must be false.
+
+    Because $victim == P$ is true, it follows that $R_P(\text{flag}[Q])$ must have read \textbf{false}.
+    However, we have the sequence: 
+    $$W_Q(\text{flag}[Q]=\text{true}) \rightarrow W_Q(\text{victim}=Q) \rightarrow W_P(\text{victim}=P) \rightarrow R_P(\text{flag}[Q])$$
+    By the transitivity of the precedence relation $\rightarrow$, $R_P(\text{flag}[Q])$ must read \textbf{true}.
+    This is a contradiction. Therefore, mutual exclusion is satisfied.
+\end{proof}
+
+\begin{proof}
+\textbf{Proof: Freedom from Starvation:} Assume wlogthat thread $P$ runs forever in its lock loop, waiting until flag[Q] is flase or victim is not P.
+
+There are three possibilities for thread $Q$:
+\begin{enumerate}
+    \item \textbf{$Q$ is stuck in its non-critical section:} 
+    Then flag[Q] = false, and $P$ can continue. $\implies$ Contradiction.
+    
+    \item \textbf{$Q$ repeatedly enters and leaves its critical section:} 
+    Each time $Q$ enters, it sets $victim = Q$. Since $P$ does not change victim again, victim remains $Q$, allowing $P$ to continue. $\implies$ Contradiction.
+    
+    \item \textbf{$Q$ is also stuck in its lock loop:} 
+    $Q$ would be waiting until flag[P] is false or victim is not Q. However, the conditions victim == P and victim == Q cannot hold at the same time. $\implies$ Contradiction.
+\end{enumerate}
+In all cases, we reach a contradiction, proving the algorithm is starvation-free.
+\end{proof}
+
+\begin{remark}
+    The Peterson's algorithm is correct, but it is not scalable. It is only proven for 2 processes. We can use the so called \textbf{Filter Lock} where every process has a level and in order to enter the critical section a process has to go trough all lower levels where on each level we use peterson's algorithm to eliminate one victim and let the others pass. This ensures mutual exclusion.
+\end{remark}
+
+\begin{remark}
+    Another algorithm for mutual exclusion of $n$ processes is the \textbf{Bakery Algorithm}. Every process has to take a numbered ticket with a number greater than all outstanding tickets and waits until it has the lowest number.
+\end{remark}

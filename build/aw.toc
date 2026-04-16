@@ -15,4 +15,7 @@
 \contentsline {subsection}{\numberline {6.2}Variance}{22}{}%
 \contentsline {subsection}{\numberline {6.3}Multiple Random Variables}{22}{}%
 \contentsline {subsection}{\numberline {6.4}Combined Random Variables}{24}{}%
-\contentsline {section}{\numberline {7}Distributions}{25}{}%
+\contentsline {section}{\numberline {7}Distributions}{27}{}%
+\contentsline {section}{\numberline {8}Bounding Probability}{29}{}%
+\contentsline {subsection}{\numberline {8.1}Chernoff Bounds}{30}{}%
+\contentsline {subsection}{\numberline {8.2}Target Shooting}{31}{}%

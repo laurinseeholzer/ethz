@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1776106605.80032 "/home/laurin/dev/ethz/analysisI.tex" "build/analysisI.pdf" "analysisI" 1776106606.70964 0
+["pdflatex"] 1776359520.18372 "/home/laurin/dev/ethz/analysisI.tex" "build/analysisI.pdf" "analysisI" 1776359521.40519 0
   "/home/laurin/dev/ethz/analysisI.tex" 1776083138.5317 639 000548853f9174bf06750b06e57002ca ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -116,12 +116,12 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1774398240.84368 4602601 5d02a5c5d52d7237566d144856366042 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1774397783 7753788 a0020c5830dd8c877264576b28708675 ""
   "analysisI.tex" 1776083138.5317 639 000548853f9174bf06750b06e57002ca ""
-  "build/analysisI.aux" 1776106606.58424 1687 e1b98f6448cd8e95506891d3f1780b39 "pdflatex"
-  "build/analysisI.toc" 1776106606.58524 1004 9106a30d56186926a442122a16556232 "pdflatex"
+  "build/analysisI.aux" 1776359521.2355 1687 009d3b61b70b3d9fd25b697dc8f9784e "pdflatex"
+  "build/analysisI.toc" 1776359521.2355 1004 fed9f5cb6e1dbb92f10d4924ca4c1d6b "pdflatex"
   "sectionsNotes/analysisI/continuity.tex" 1775211328.55414 5970 72489c14bf6833779d142053ba74a4e5 ""
-  "sectionsNotes/analysisI/differential_calculus.tex" 1776106605.59425 4259 c86d33468f66b15219be04777cb659ae ""
+  "sectionsNotes/analysisI/differential_calculus.tex" 1776359518.7915 6438 c2a4108b1664f8721e124e9e41ad69d3 ""
   "sectionsNotes/analysisI/functions.tex" 1775210608.94222 7487 10fce1ced186079d1e88056a5dda7f76 ""
-  "sectionsNotes/analysisI/logic_sets_numbers.tex" 1775165166.52386 12628 7c5ed6a8b70e1974226d3455654c39f5 ""
+  "sectionsNotes/analysisI/logic_sets_numbers.tex" 1776106717.446 12628 7c5ed6a8b70e1974226d3455654c39f5 ""
   "sectionsNotes/analysisI/sequences_series.tex" 1775210188.22584 11759 2c339e98aa89fc1be0feb9a9a37ad765 ""
   "templateNotes/commands.tex" 1774795684.82424 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
   "templateNotes/packages.tex" 1774795684.82409 493 dd01896e8ca6d5605bcdf6aeec6f0cbe ""

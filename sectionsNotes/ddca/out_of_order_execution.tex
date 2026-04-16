@@ -1,0 +1,73 @@
+\section{Out of Order Execution}
+
+\begin{remark}
+    An instruction that uses operands of a previous instruction is called a \textbf{dependent instruction}. If such a preceding instructions result are not yet available, the dependent instruction must wait for the result to be computed, which stalls an \textbf{in-order pipeline}.
+\end{remark}
+
+\begin{definition}
+    \textbf{Out-of-order execution (OoO)} is a technique that allows a processor to execute instructions in a different order than they appear in the program. This is done to improve performance.
+\end{definition}
+
+\begin{remark}
+    OoO tolerates longer latencies by executing other independent instructions between dependent ones that would otherwise stall the pipeline. This improves instructions per cycle (IPC).
+\end{remark}
+
+\begin{definition}
+    The \textbf{dataflow principle} states that the execution order of instructions should be determined by the availability of their operands rather than their program order.
+\end{definition}
+
+\begin{remark}
+    Typically OoO is only done in the core. Hence instructions are \textbf{fetched and decoded in order} then they are \textbf{executed out of order} and the results are \textbf{written back in order}.
+\end{remark}
+
+\subsection{Mechanisms for OoO}
+
+\begin{definition}
+    \textbf{Register-Renaming} eliminates false dependencies (WAW and WAR), which occure because of the reuse of registernames, by decoupling the register names from the actual physical storage locations.
+\end{definition}
+
+\begin{definition}
+    \textbf{Reservation Stations (RS)} are buffers that store instructions that are waiting for their operands to become available.
+\end{definition}
+
+\begin{definition}
+    \textbf{Tag Broadcast} is a mechanism that allows the results of instructions to be broadcast to all reservation stations that are waiting for those operands by broadcasting identification tags of available results via a bus.
+\end{definition}
+
+\subsection{Tomasulo's Algorithm}
+
+\begin{definition}
+    \textbf{Tomasulo's Algorithm} is an algorithm for out-of-order execution that uses reservation stations and tag broadcasting to eliminate false dependencies and improve performance.
+\end{definition}
+
+\begin{algorithm}
+decode(instruction)
+
+if (free reservation station) {
+
+    reservation station = instruction
+    replace registers with tags from Register-Alias Table (RAT)
+
+    if (operands ready) {
+
+        execute to functional unit
+        broadcast result and update RAT
+
+    } else {
+        observe common data bus for tags of operands
+    }
+
+} else {
+    wait
+}
+\end{algorithm}
+
+\begin{remark}
+    Moder processors use the already discussed reorder buffer (ROB) to ensure in order commitment of results.
+\end{remark}
+
+\begin{remark}
+    The usage of a \textbf{Scheduler} with reservation stations and a \textbf{reorder buffer} can be visualized as a camel with two humps.
+\end{remark}
+
+\subsection{Memory Dependencies}

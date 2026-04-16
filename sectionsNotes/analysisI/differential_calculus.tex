@@ -72,10 +72,10 @@
         \item $f(x) = tan(x) \quad \implies \quad f'(x) = \frac{1}{cos^2(x)} = 1 + tan^2(x)$
         \item $f(x) = sinh(x) \quad \implies \quad f'(x) = cosh(x)$
         \item $f(x) = cosh(x) \quad \implies \quad f'(x) = sinh(x)$
-        \item $f(x) = ln(x) f'(x) = \frac{1}{x}$
-        \item $f(x) = arcsin(x) f'(x) = \frac{1}{\sqrt{1-x^2}}$
-        \item $f(x) = arccos(x) f'(x) = \frac{-1}{\sqrt{1-x^2}}$
-        \item $f(x) = arctan(x) f'(x) = \frac{1}{1+x^2}$
+        \item $f(x) = ln(x) \quad \implies \quad f'(x) = \frac{1}{x}$
+        \item $f(x) = arcsin(x) \quad \implies \quad f'(x) = \frac{1}{\sqrt{1-x^2}}$
+        \item $f(x) = arccos(x) \quad \implies \quad f'(x) = \frac{-1}{\sqrt{1-x^2}}$
+        \item $f(x) = arctan(x) \quad \implies \quad f'(x) = \frac{1}{1+x^2}$
     \end{itemize}
 \end{theorem}
 
@@ -84,20 +84,58 @@
     $$(f + g)^{(n)} = f^{(n)} + g^{(n)} $$
 \end{theorem}
 
+\begin{proof}
+    This can be proved inductively by applying the definition of the derivative $n$ times.
+    $$(f+g)' (x) = lim_{h \to 0} \frac{f(x+h)+g(x+h)-f(x)-g(x)}{h}$$
+    $$ = lim_{h \to 0} \frac{f(x+h)-f(x)}{h} + lim_{h \to 0} \frac{g(x+h)-g(x)}{h}$$
+    $$ = f'(x) + g'(x)$$
+    For $n=2$ we have
+    $$(f+g)'' (x) = (f'+g')' (x) = f''(x) + g''(x)$$
+    and so on.
+\end{proof}
+
 \begin{theorem}
     \textbf{General Leibniz Rule (Product):} The $n$-th derivative of a product is given by:
     $$(f \cdot g)^{(n)} = \sum_{k=0}^{n} \binom{n}{k} f^{(n-k)} g^{(k)} $$
 \end{theorem}
+
+\begin{proof}
+    This is proved analogously to the sum rule.
+    $$(f \cdot g)'(x) = lim_{h \to 0} \frac{f(x+h)g(x+h)-f(x)g(x)}{h}$$
+    $$ = lim_{h \to 0} \frac{f(x+h)g(x+h)-f(x)g(x+h)+f(x)g(x+h)-f(x)g(x)}{h}$$
+    $$ = lim_{h \to 0} \frac{g(x+h)(f(x+h)-f(x))}{h} + lim_{h \to 0} \frac{f(x)(g(x+h)-g(x))}{h}$$
+    $$ = g(x)f'(x) + f(x)g'(x)$$
+    For $n=2$ we have
+    $$(f \cdot g)''(x) = (f'g+fg')'(x) = f''g+f'g'+f'g'+fg'' = f''g+2f'g'+fg''$$
+    and so on.
+\end{proof}
 
 \begin{theorem}
     \textbf{Chain Rule:} For the composition of functions:
     $$(f \circ g)'(x) = f'(g(x)) \cdot g'(x) $$
 \end{theorem}
 
+\begin{proof}
+    Observe that 
+    $$g(y) = g(y_0) + g'(y_0)(y-y_0) + g(y)-g(y_0)-g'(y_0)(y-y_0)$$
+    with the first two summands being a linear (tangential) approximation of $g(y)$ near $y_0$
+    $$ g(y) \approx g(y_0) + g'(y_0)(y-y_0)$$ 
+    By taking out $(y - y_0)$ of the last two summands in the original equation we get:
+    $$g(y) = g(y_0) + g'(y_0)(y-y_0) + \left[\frac{g(y)-g(y_0)}{y-y_0}-g'(y_0)\right](y-y_0)$$
+    We define $\epsilon = \frac{g(y)-g(y_0)}{y-y_0}-g'(y_0)$ and get
+    $$\lim_{x \to x_0} \frac{g(f(x))-g(f(x_0))}{x-x_0}$$
+    $$ = \lim_{x \to x_0} \left(f(f(x_0)) + g'(f(x_0))[f(x)-f(x_0)]+\epsilon f(x)[f(x)-f(x_0)] - g(f(x_0))\right) \frac{1}{x-x_0}$$
+    $$ = g'(y_0)f'(x_0)$$
+\end{proof}
+
 \begin{theorem}
     \textbf{Quotient Rule:} For $g(x) \neq 0$:
     $$\left(\frac{f}{g}\right)' = \frac{f'g - fg'}{g^2} $$
 \end{theorem}
+
+\begin{remark}
+    This follows directly from the product rule.
+\end{remark}
 
 \begin{theorem}
     \textbf{Inverse Functions:} If $f$ is differentiable and injective:
@@ -107,5 +145,14 @@
 \subsection{Local extrema}
 
 \begin{theorem}
-    
+    Let $I \subset \mathbb{R}$ be a an intervall, $f: I \to \mathbb{R}$, and let $x_0$ be a local Extrema of $f$. Then one of the following holds:
+    \begin{itemize}
+        \item $x_0$ is an endpoint of $I$
+        \item $f$ is not differentiable at $x_0$
+        \item $f$ is differentiable at $x_0$ and $f'(x_0) = 0$
+    \end{itemize}
 \end{theorem}
+
+\begin{remark}
+    From $f'(x_0) = 0$ we can not conclude that $x_0$ is an extremum.
+\end{remark}

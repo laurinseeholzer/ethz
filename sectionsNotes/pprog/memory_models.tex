@@ -1,0 +1,85 @@
+\section{Memory Models}
+
+\subsection{Memory Reordering and Hierarchy}
+
+\begin{remark}
+    In a concurrent environment, programs often fail even if they appear logically sound in a sequential context. This is primarily due to memory reordering.
+\end{remark}
+
+\begin{definition}
+    \textbf{Memory Reordering: } Compilers and hardware are permitted to change the order of memory operations as long as the semantics of a \textbf{sequentially executed program} remain unaffected.
+\end{definition}
+
+\begin{remark}
+    Memory reordering offers significant performance benefits through optimizations like dead code elimination, register hoisting, and locality optimization, but it introduces errors when multi-threaded consistency is assumed.
+\end{remark}
+
+\begin{codeexample}
+int x;
+// Thread A: Waiting for a signal
+void wait() { 
+    x = 1; 
+    while (x == 1); 
+}
+// Thread B: Providing the signal
+void arrive() { 
+    x = 2; 
+}
+\end{codeexample}
+
+Consider how the \textbf{wait()} function might be compiled:
+\textbf{Naive Assembly (Standard):} The value of \textbf{x} is re-read from memory in every iteration.
+
+\begin{codeexample}
+movl 0x1, x  
+test:
+mov x, %eax    // Load x from memory
+cmp 0x1, %eax // Compare x to 1
+je test        // Jump back if equal
+\end{codeexample}
+
+\textbf{Optimized Assembly (The "Failure" Case):} The compiler assumes \textbf{x} cannot change within the loop (since Thread A doesn't modify it there) and hoists the value into a register once or replaces the check with an infinite jump.
+
+\begin{codeexample}
+movl 0x1, x
+test:
+jmp test       // Infinite loop: Thread A never sees Thread B's update!
+\end{codeexample}
+
+\begin{remark}
+    Because L1 caches and registers are \textbf{private to each core}, a \textbf{store} operation to memory on Core 1 might be buffered locally and only become visible to Core 2 at a later, unpredictable time.
+\end{remark}
+
+\begin{remark}
+   Almost all common architectures allow the reordering of \textbf{Stores after Loads} to maximize performance, unless explicitly prevented by memory barriers.
+\end{remark}
+
+\subsection{The Java Memory Model (JMM)}
+
+\begin{definition} 
+    A \textbf{Memory Model} is a contract between the programmer and the system. It provides the minimal guarantees for memory operation effects while allowing hardware/compiler optimizations.
+\end{definition}
+
+\begin{remark}
+    Java has synchronization primitives like \textbf{synchronized} and \textbf{volatile} that provide stronger memory guarantees than basic reads/writes.
+\end{remark}
+
+\begin{definition} 
+    \textbf{Program Order (PO):} A total order of actions within a \textbf{single} thread as defined by the execution trace. Crucially, PO does \textbf{not} provide a global ordering guarantee across threads.
+\end{definition}
+
+\begin{definition} 
+    \textbf{Synchronization Actions (SA):} Actions like reading/writing \textbf{volatile} variables or acquiring/releasing locks.
+\end{definition}
+
+\begin{definition} 
+    \textbf{Synchronization Order (SO):} A total order of all SA. All threads see these actions in the same global order.
+\end{definition}
+
+\begin{definition} 
+    \textbf{Happens-Before (HB):} The transitive closure of PO and \textbf{Synchronizes-With} (SW). If action $A$ happens-before $B$, $B$ is guaranteed to see the results of $A$.
+\end{definition}
+
+\begin{remark}
+    \textbf{HB-Consistency:} The JMM explicitly allows "Data Races" (when two threads access the same variable without HB-ordering and at least one is a write). In an \textbf{HB-consistent execution}, a read operation is allowed to see either the temporally last write ordered before it via the HB-relation, or any other write that is not strictly ordered by HB. This is why unsynchronized reads can observe stale or surprising values.
+\end{remark}

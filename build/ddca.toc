@@ -29,3 +29,7 @@
 \contentsline {subsection}{\numberline {7.6}Advanced Pipeline Issues}{20}{}%
 \contentsline {subsection}{\numberline {7.7}Precise Exceptions and Interrupts}{20}{}%
 \contentsline {subsubsection}{\numberline {7.7.1}Reorder-Buffer}{21}{}%
+\contentsline {section}{\numberline {8}Out of Order Execution}{22}{}%
+\contentsline {subsection}{\numberline {8.1}Mechanisms for OoO}{22}{}%
+\contentsline {subsection}{\numberline {8.2}Tomasulo's Algorithm}{23}{}%
+\contentsline {subsection}{\numberline {8.3}Memory Dependencies}{23}{}%

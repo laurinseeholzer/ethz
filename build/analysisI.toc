@@ -12,4 +12,4 @@
 \contentsline {section}{\numberline {4}Continuity of functions}{21}{}%
 \contentsline {section}{\numberline {5}Differential calculus}{24}{}%
 \contentsline {subsection}{\numberline {5.1}Derivation rules}{25}{}%
-\contentsline {subsection}{\numberline {5.2}Local extrema}{26}{}%
+\contentsline {subsection}{\numberline {5.2}Local extrema}{27}{}%

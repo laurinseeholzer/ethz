@@ -242,3 +242,42 @@ this results in a stable set but what is the expected size of S?
 \begin{important}
     Note that $Var[X \cdot Y] = Var[X] \cdot Var[Y]$ does not hold in general.
 \end{important}
+
+\begin{theorem}
+    Let $X$ be a random variable. For pariwise disjoint events $A_1, \dots, A_n$ with $A_1 \cup \dots \cup A_n = \Omega$  and $P[A_i] > 0 \forall i$ we have:
+    $$\mathbb{E}[X] = \sum_{i=1}^n \mathbb{E}[X \mid A_i] P[A_i]$$
+\end{theorem}
+
+\begin{proof}
+    $$\mathbb{E}[X] = \sum_{\omega \in \Omega} P[X=\omega] \omega = \sum_{i=1}^n \omega \sum_{\omega \in A_i} P[X=\omega | A_i] P[A_i]$$
+    $$ = \sum_{i=1}^n A_i \sum_{\omega \in W_X } \omega P[X=\omega | A_i] = \sum_{i=1}^n \mathbb{E}[X \mid A_i] P[A_i]$$
+\end{proof}
+
+\begin{theorem}
+    \textbf{The waldsche identity}
+    Let $N$ and $X$ be independent random variabeles further let
+    $$Z \coloneqq \sum_{i=1}^N X_i$$
+    where $X_i$ are independent copies of $X$ then:
+    $$\mathbb{E}[Z] = \mathbb{E}[N] \mathbb{E}[X]$$
+\end{theorem}
+
+\begin{proof}
+    $$\mathbb{E}[Z] = \sum_{k=1}^n \mathbb{E}[Z \mid N=k] P[N=k] = \sum_{k=1}^n \mathbb{E}[X_1 + \dots + X_k] P[N=k]$$
+    $$= \sum_{k=1}^n k \mathbb{E}[X] P[N=k] = \mathbb{E}[X] \sum_{k=1}^n k P[N=k] = \mathbb{E}[X] \mathbb{E}[N]$$
+\end{proof}
+
+\begin{example}
+    Throw a dice where $N$ is the face of the dice we get. Afterwards throw a coin $N$-times and let $Z$ be the number of heads. What is the expectation of $Z$?
+    $$\mathbb{E}[Z] = \sum_{k=1}^6 P[N=k] \mathbb{E}[Z \mid N=k] = \sum_{k=1}^6 \frac{1}{6} \frac{k}{2} = \frac{1}{12} \sum_{k=1}^6 k = \frac{1}{12} \frac{6 \cdot 7}{2} = \frac{7}{4}$$
+\end{example}
+
+\begin{example}
+    Throw a coin until we get heads. Let $N$ be the number of throws. Then throw a coin $N$-times and let $Z$ be the number of heads. What is the expectation of $Z$?
+    $$\mathbb{E}[N] = 2 (\text{geometric distribution } p = 1/2)$$
+    $$Z = \sum_{i=1}^N X_i \quad \text{where Xi are bernulli distributed with} \quad p = 1/2 \text{ hence } \mathbb{E}[X] = 1/2$$
+    $$\mathbb{E}[Z] = \mathbb{E}[N] \mathbb{E}[X] = 2 \cdot \frac{1}{2} = 1$$
+\end{example}
+
+\begin{remark}
+    The Waldsche identity can be used to analyse the expected runtime of randomized algorithms. Where $N$ is the number of calls of the subroutine and $X$ the runtime of a single call. We can caluclate the total expected runtime using $Z$.
+\end{remark}

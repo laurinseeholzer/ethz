@@ -1,0 +1,109 @@
+\section{Bounding Probability}
+
+\begin{theorem}
+    \textbf{Markov's Inequality}: Let $X$ be a \textbf{non-negative} random variable. For any $t \geq 0$:
+    $$P[X \geq t] \leq \frac{\mathbb{E}[X]}{t}$$
+    or equivalently:
+    $$P[X \geq t \mathbb{E}[X]] \leq \frac{1}{t}$$
+\end{theorem}
+
+\begin{proof}
+    $$\mathbb{E}[X] = \sum_{\alpha \in W_X} \alpha P[X=\alpha] = \sum_{\alpha \le t} \alpha P[X=\alpha] + \sum_{\alpha > t} \alpha P[X=\alpha]$$
+    $$\geq \sum_{\alpha > t} \alpha P[X=\alpha] > \sum_{\alpha > t} t P[X=\alpha] = t P[X > t]$$
+    $$\implies P[X > t] < \frac{\mathbb{E}[X]}{t}$$
+\end{proof}
+
+\begin{theorem}
+    \textbf{Chebyshev's Inequality}: Let $X$ be a random variable. For any $t \geq 0$:
+    $$P[|X-\mathbb{E}[X]| \geq t] \leq \frac{Var[X]}{t^2}$$
+\end{theorem}
+
+\begin{proof}
+We want to show $P[|X-\mathbb{E}[X]| \geq t] \leq \frac{Var[X]}{t^2}$.
+Let $Y = (X-\mathbb{E}[X])^2$. By Markov's inequality:
+$$P[Y \geq t^2] \leq \frac{\mathbb{E}[Y]}{t^2}  \implies  P[(X-\mathbb{E}[X])^2 \geq t^2] \leq \frac{\mathbb{E}[(X-\mathbb{E}[X])^2]}{t^2}$$
+$$\implies P[|X-\mathbb{E}[X]| \geq t] \leq \frac{Var[X]}{t^2}$$
+\end{proof}
+
+\begin{example}
+    Let there be $n$ diffrent collectable items. We buy items $X$ times until we have a full set. We have already shown that $\mathbb{E}[X] = n H_n$. Now what is the variance of $X$?
+    We know:
+    $$X = \sum_{i=1}^n X_i \text{independent, geometric distributed with } p_i = \frac{n-i+1}{n}$$
+    Hence
+    $$Var[X_i] = \frac{1-p_i}{p_i^2} \leq \frac{1}{p_i^2} = \frac{n^2}{(n-i+1)^2}$$
+    Further we show
+    $$Var[X] = \sum_{i=1}^n Var[X_i] \leq \sum_{i=1}^n \frac{n^2}{(n-i+1)^2} = n^2 \sum_{i=1}^n \frac{1}{i^2} \leq n^2 \frac{\pi^2}{6}$$
+    Using chebyshev's inequality we can bound the probability of $X$ being far from its mean. Let $t = n  \sqrt{\ln n}$:
+    $$P[|X-\mathbb{E}[X]| \geq n \sqrt{\ln n}] \leq \frac{Var[X]}{t^2} \leq \frac{n^2 \frac{\pi^2}{6}}{n^2 \ln n} = \frac{\pi^2}{6 \ln n}$$
+    
+\end{example}
+
+\begin{example}
+    \textbf{Special case Binomial distribution: } Let $X \sim Bin(n, 1/2)$. Then $\mathbb{E}[X] = n/2$ and $Var[X] = n/4$.
+    Using Markov's inequality:
+    $$P[X \geq n] \leq \frac{\mathbb{E}[X]}{n} = \frac{n/2}{n} = 1/2$$
+    Using Chebyshev's inequality:
+    $$P[X \geq n] = P[|X-\mathbb{E}[X]| \geq n/2] \leq \frac{Var[X]}{(n/2)^2} = \frac{n/4}{n^2/4} = 1/n$$
+\end{example}
+
+\subsection{Chernoff Bounds}
+
+\begin{remark}
+    Chernoff Bounds can be used for binomial distribution $X \sim Bin(n, p)$.
+\end{remark}
+
+\begin{theorem}
+    Let $X_1, \dots, X_n$ be independent Bernoulli random variables with $P[X_i=1] = p_i$. Let $X = \sum_{i=1}^n X_i$.
+    $$P[X \geq (1+\delta)\mathbb{E}[X]] \leq e^{-\frac{1}{3}\delta^2\mathbb{E}[X]} \quad \forall 0 \leq \delta \leq 1$$
+    $$P[X \leq (1-\delta)\mathbb{E}[X]] \leq e^{-\frac{1}{2}\delta^2\mathbb{E}[X]} \quad \forall 0 \leq \delta \leq 1$$
+    $$P[X \geq t] \leq 2^{-t} \quad \forall t \geq 2 e \mathbb{E}[X]$$
+\end{theorem}
+
+\begin{proof}
+    We prove the third inequality. We use Markov's inequality on $Y = 4^X$.
+    We have 
+    $$X \geq t \iff 4^X \geq 4^t$$
+    Therfore it holds that
+    $$P[X \geq t] = P[4^X \geq 4^t] \leq \frac{\mathbb{E}[4^X]}{4^t}$$
+    Now what is $\mathbb{E}[4^X]$? Observe that as $X_1, X_2, \dots, X_n$ are independent, $4^{X_1}, 4^{X_2}, \dots, 4^{X_n}$ are also independent. Hence
+    $$\mathbb{E}[4^X] = \mathbb{E}[4^{\sum X_i}] = \mathbb{E}[\prod_{i=1}^n 4^{X_i}] = \prod_{i=1}^n \mathbb{E}[4^{X_i}]$$
+    Further
+    $$\mathbb{E}[4^{X_i}] = \sum_{x=0}^n 4^x P[X_i=x] = (1-p_i) 4^0 + p_i 4^1 = 1 + 3p_i \leq e^{3p_i} \leq 2^t$$
+    $$\implies \mathbb{E}[4^X] \leq \prod_{i=1}^n e^{3p_i} = e^{3\sum p_i} = e^{3\mathbb{E}[X]}$$
+    $$\implies P[X \geq t] \leq \frac{\mathbb{E}[4^X]}{4^t} \leq \frac{2^t}{4^t} = \frac{1}{2^t}$$
+\end{proof}
+
+\begin{remark}
+    To prove the other bounds we use the same technique on $Y = (1+\delta)^X$ and $Y = (1-\delta)^X$.
+\end{remark}
+
+\subsection{Target Shooting}
+
+Given finite sets $S, U$ with $S \subseteq U$ we want to know $\frac{|S|}{|U|}$.
+\begin{example}
+    Let $U$ be the population of Switzerland and $S$ the set of people that have the flu.
+\end{example}
+
+We can't compute this directly, so we sample $k$ elements from $U$ and count how many of them are in $S$.
+
+\begin{algorithm}
+Choose u_1 ... u_n independently and uniformly at random from U
+Return 1/n * |{u_i in S}| 
+\end{algorithm}
+
+Let $Y$ be the number of elements in $S$. We want to bound the approximation error $|Y - \frac{|S|}{|U|}|$. Observe that for every element $u_i$ we have an indipendent bernoulli variable $Y_i \in \{0,1\}$ such that $Y = \frac{1}{n} \sum_{i=1}^n Y_i$ and $P[Y_i=1] = \frac{|S|}{|U|}$.
+
+\begin{theorem}
+    Let $\delta, \epsilon \ge 0$ be given. If we choose $n \geq 3 \frac{|U|}{|S|} \frac{1}{\epsilon^2} \ln \frac{2}{\delta}$, then with probability at least $1-\delta$ we have that $Y$ is in 
+    $$[(1-\epsilon)\frac{|S|}{|U|}, (1+\epsilon)\frac{|S|}{|U|}]$$
+\end{theorem}
+
+\begin{proof}
+    We show that the probability of being outside that intervall is less than $\delta$.
+    $$P\left[\left|Y - \frac{|S|}{|U|}\right| \geq \epsilon \frac{|S|}{|U|}\right] = P\left[\left|Y - \mathbb{E}[Y]\right| \geq \epsilon \mathbb{E}[Y]\right]$$
+    $$ = P[|NY - \mathbb{E}[NY]| \geq n \epsilon \mathbb{E}[NY]]$$
+    Now observe that $NY = Y_1 + \dots + Y_n$ where $Y_i$ are independent bernoulli variables with $P[Y_i=1] = \frac{|S|}{|U|}$. Hence we can use chernoff bounds.
+    $$P[|NY - \mathbb{E}[NY]| \geq n \epsilon \mathbb{E}[NY]] \leq 2 e^{-\frac{1}{3} \epsilon^2 \mathbb{E}[NY]} =  2 e^{-\frac{1}{3} \epsilon^2 N \frac{|S|}{|U|}}$$
+    With our assumption of $N \geq 3 \frac{|U|}{|S|} \frac{1}{\epsilon^2} \ln \frac{2}{\delta}$ we get exactly:
+    $$P\left[\left|Y - \frac{|S|}{|U|}\right| \geq \epsilon \frac{|S|}{|U|}\right] \leq \delta$$
+\end{proof}
