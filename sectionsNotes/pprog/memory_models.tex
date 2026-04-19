@@ -51,6 +51,10 @@ jmp test       // Infinite loop: Thread A never sees Thread B's update!
 \end{remark}
 
 \begin{remark}
+    Use \textbf{volatile} in Java to prevent memory reordering/update local cache/buffer everytime the variable changes.
+\end{remark}
+
+\begin{remark}
    Almost all common architectures allow the reordering of \textbf{Stores after Loads} to maximize performance, unless explicitly prevented by memory barriers.
 \end{remark}
 

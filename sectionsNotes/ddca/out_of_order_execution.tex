@@ -62,6 +62,10 @@ if (free reservation station) {
 }
 \end{algorithm}
 
+\begin{important}
+    The instruction window size (how many instr. can be fetched/decoded and not yet retired) limits the scalability of Tomasulo's algorithm.
+\end{important}
+
 \begin{remark}
     Moder processors use the already discussed reorder buffer (ROB) to ensure in order commitment of results.
 \end{remark}
@@ -70,4 +74,38 @@ if (free reservation station) {
     The usage of a \textbf{Scheduler} with reservation stations and a \textbf{reorder buffer} can be visualized as a camel with two humps.
 \end{remark}
 
+\begin{remark}
+    OoO allows for larger latency tolerance and exploitation of Irregular parallelism but comes at the cost of increased complexity and power consumption.
+\end{remark}
+
 \subsection{Memory Dependencies}
+
+\begin{example}
+    Instruction $i$ writes to memory adress $x$ while the instruction $i+1$ reads from $x$. In out of order execution it can happen that $i+1$ finishes before $i$ which invalidates its result. Hence we need to handle memory dependencies.
+\end{example}
+
+\begin{definition}
+    \textbf{Memory Disambiguation} is the process of determining whether a load/store is dependent on a previous load/store.
+\end{definition}
+
+\begin{definition}
+    \textbf{Solutions to memory dependencies:}
+    \begin{itemize}
+        \item \textbf{Conservative: } Assume all load/stores are dependend and stall the pipeline to ensure correctness.
+        \item \textbf{Agressive: } Assume no load/stores are dependent and pay the extra time/work when a false result is generated.
+        \item \textbf{Intelligent: } Try and predict whether a load/store is dependent or not in order to minimize the penalty of false results.
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    Observe that the intelligent approach is a trade-off between the conservative and aggressive approaches and ensures the best performance.
+\end{remark}
+
+\begin{definition}
+    \textbf{Load/Store Queue (LSQ)} is a queue that stores load/store results that have not yet been committed to the reorder buffer.
+\end{definition}
+
+\begin{definition}
+    \textbf{Store-to-Load Forwarding} is a mechanism that allows the result of a store instruction to be forwarded directly to a load instruction that is waiting for that result. This works by searching the LSQ for a matching address and directly copying the data from there.
+\end{definition}
+

@@ -1,0 +1,35 @@
+\section{Branch Prediction}
+
+\begin{remark}
+    Branch prediction is all about handling control dependencies: How do we exploit parallelism in control flow?
+\end{remark}
+
+\begin{definition}
+    There are multiple diffrent \textbf{Branch-Types}:
+    \begin{itemize}
+        \item Conditional branches (if, while, for, ...)
+        \item Unconditional branches (goto, jmp, ...)
+        \item Indirect branches (jump to address stored in register)
+        \item Function calls (call)
+        \item Function returns (ret)
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    Observe that conditional and indirect branches are the most challenging to predict.
+\end{remark}
+
+\begin{remark}
+    Control dependences can be handled by:
+    \begin{itemize}
+        \item stalling the pipeline
+        \item predicting the branch outcome (branch prediction)
+        \item Execute independent instruction (fine-grained multi-threading)
+        \item Convert Control-Dependence to Data-Dependence (predicated execution)
+        \item Fetch all branches (multi-path execution)
+    \end{itemize}
+\end{remark}
+
+\begin{remark}
+    The simplest branch prediction is to always predict the same outcome (always taken or always not taken). This can be enhanced by getting rid of unnessary branches (predicate combining) and converting control into data dependencies.
+\end{remark}

@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1776354698.21788 "/home/laurin/dev/ethz/pprog.tex" "build/pprog.pdf" "pprog" 1776354699.39953 0
+["pdflatex"] 1776415969.47762 "/home/laurin/dev/ethz/pprog.tex" "build/pprog.pdf" "pprog" 1776415970.69826 0
   "/home/laurin/dev/ethz/pprog.tex" 1776352430.66328 810 2d427500c7800a120de0fbd0c900d7d4 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.enc" 1561323594 2496 4d35740f3a177992ff7b134746c0a1db ""
@@ -115,13 +115,13 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1770681600 40900 887e0dc8cac988a9e9c574af364cf837 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1774398240.84368 4602601 5d02a5c5d52d7237566d144856366042 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1774397783 7753788 a0020c5830dd8c877264576b28708675 ""
-  "build/pprog.aux" 1776354699.26474 4170 09eb08bd436f184173fd8d00be327a02 "pdflatex"
-  "build/pprog.toc" 1776354699.26574 2585 f4e7a9204c2671360dbcc787be0e28db "pdflatex"
+  "build/pprog.aux" 1776415970.49146 4170 09eb08bd436f184173fd8d00be327a02 "pdflatex"
+  "build/pprog.toc" 1776415970.49246 2585 f4e7a9204c2671360dbcc787be0e28db "pdflatex"
   "pprog.tex" 1776352430.66328 810 2d427500c7800a120de0fbd0c900d7d4 ""
   "sectionsNotes/pprog/behind_locks.tex" 1776352310.42928 6805 24562dc993f7a5c91b7445524a70d2f7 ""
   "sectionsNotes/pprog/divide_and_conquer.tex" 1775151888.43337 4980 0fe316beca3eee9e261ea32d54526014 ""
-  "sectionsNotes/pprog/hardware_support.tex" 1776354697.98815 2702 556783692236f85bd254e778dbc9f046 ""
-  "sectionsNotes/pprog/memory_models.tex" 1776352338.97926 3784 5d64b64d1332bb1432e444debc181be1 ""
+  "sectionsNotes/pprog/hardware_support.tex" 1776354713.46573 2702 556783692236f85bd254e778dbc9f046 ""
+  "sectionsNotes/pprog/memory_models.tex" 1776415969.181 3934 b3471f24e6ce8de96937ffdbb1bdd913 ""
   "sectionsNotes/pprog/optimization.tex" 1775150114.40727 4649 f4443af69d07eb8b8ea7abad808f95d0 ""
   "sectionsNotes/pprog/parallel_algorithms.tex" 1775152140.74 3012 3d6792c6ac055485d0c25dcbb23db601 ""
   "sectionsNotes/pprog/shared_resources.tex" 1775152536.05707 2835 1650a9763e884d8edc501070e3d8ad2f ""
