@@ -887,6 +887,13 @@ INPUT sectionsSummary/analysisI/continuity.tex
 INPUT ./sectionsSummary/analysisI/continuity.tex
 INPUT ./sectionsSummary/analysisI/continuity.tex
 INPUT sectionsSummary/analysisI/continuity.tex
+INPUT ./sectionsSummary/analysisI/differential_calculus.tex
+INPUT ./sectionsSummary/analysisI/differential_calculus.tex
+INPUT ./sectionsSummary/analysisI/differential_calculus.tex
+INPUT sectionsSummary/analysisI/differential_calculus.tex
+INPUT ./sectionsSummary/analysisI/differential_calculus.tex
+INPUT ./sectionsSummary/analysisI/differential_calculus.tex
+INPUT sectionsSummary/analysisI/differential_calculus.tex
 INPUT build/analysisISummary.aux
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx8.pfb

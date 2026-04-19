@@ -1,0 +1,32 @@
+\section{Bounding Probability}
+
+\begin{theorem}
+    \textbf{Markov's Inequality:} For non-negative RV $X$ and $t \ge 0$:
+    $$P[X \geq t] \leq \frac{\mathbb{E}[X]}{t} \quad \text{or} \quad P[X \geq t \mathbb{E}[X]] \leq \frac{1}{t}$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Chebyshev's Inequality:} For any RV $X$ and $t \ge 0$:
+    $$P[|X-\mathbb{E}[X]| \geq t] \leq \frac{Var[X]}{t^2}$$
+\end{theorem}
+
+\subsection{Chernoff Bounds}
+
+Applies to sums of independent Bernoulli RVs $X = \sum X_i$ with $P[X_i=1]=p_i$.
+\begin{theorem}
+    For $0 \leq \delta \leq 1$:
+    \begin{align*}
+        P[X \geq (1+\delta)\mathbb{E}[X]] &\leq e^{-\frac{1}{3}\delta^2\mathbb{E}[X]} \\
+        P[X \leq (1-\delta)\mathbb{E}[X]] &\leq e^{-\frac{1}{2}\delta^2\mathbb{E}[X]}
+    \end{align*}
+    For larger deviations ($t \geq 2 e \mathbb{E}[X]$):
+    $$P[X \geq t] \leq 2^{-t}$$
+\end{theorem}
+
+\subsection{Target Shooting (Sampling)}
+To estimate $|S|/|U|$, sample $n$ elements uniformly. Let $Y = \frac{1}{n} \sum Y_i$ be the fraction of samples in $S$.
+\begin{theorem}
+    With given $\delta, \epsilon \ge 0$, if $n \geq \frac{3 |U|}{|S| \epsilon^2} \ln \frac{2}{\delta}$, then 
+    $$Y \in \left[(1-\epsilon)\frac{|S|}{|U|}, (1+\epsilon)\frac{|S|}{|U|}\right]$$
+    with probability $\ge 1-\delta$.
+\end{theorem}

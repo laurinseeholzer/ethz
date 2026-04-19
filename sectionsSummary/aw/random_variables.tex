@@ -78,3 +78,13 @@ If $X, Y$ are independent, $f_{X+Y}(\alpha) = \sum_{\beta} f_X(\beta) f_Y(\alpha
 \end{itemize}
 Note $Var[XY] \neq Var[X]Var[Y]$ in general.
 \end{remark}
+
+\begin{theorem}
+\textbf{Total Expectation}: For pairwise disjoint events $A_1, \dots, A_n$ covering $\Omega$:
+$$\mathbb{E}[X] = \sum_{i=1}^n \mathbb{E}[X \mid A_i] P[A_i]$$
+\end{theorem}
+
+\begin{theorem}
+\textbf{Wald's Equation}: If $N$ and $X$ are independent RVs and $Z \coloneqq \sum_{i=1}^N X_i$ (where $X_i$ are independent copies of $X$):
+$$\mathbb{E}[Z] = \mathbb{E}[N] \mathbb{E}[X]$$
+\end{theorem}

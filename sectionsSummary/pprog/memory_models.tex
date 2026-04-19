@@ -1,0 +1,25 @@
+\section{Memory Models}
+
+\begin{definition}
+    \textbf{Memory Reordering:} Compilers/hardware may reorder memory operations as long as \textit{sequential} semantics hold (optimizes registries, caching, dead code). May break concurrency (e.g., hoisted checks $\implies$ infinite loops). L1 caches are private, writes may not immediately publish.
+\end{definition}
+
+\begin{remark}
+    \textbf{\texttt{volatile}:} Prevents local caching/reordering skips; ensures immediate visibility across threads. Memory barriers strictly enforce ordering.
+\end{remark}
+
+\subsection{Java Memory Model (JMM)}
+Contract providing minimal memory operation guarantees.
+
+\begin{definition} 
+    \begin{itemize}
+        \item \textbf{Program Order (PO):} Total intra-thread execution trace order (no global sync).
+        \item \textbf{Sync Actions (SA):} E.g., Read/Write \texttt{volatile}, lock acquire/release.
+        \item \textbf{Sync Order (SO):} Total global order of all SA across all threads.
+        \item \textbf{Happens-Before (HB):} Transitive closure of PO \& SA (Synchronizes-With). $A \xrightarrow{HB} B \implies$ $B$ sees results of $A$.
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    \textbf{HB-Consistency \& Data Races:} JMM permits data races (unsynchronized concurrent access where $\ge 1$ is a write). Unsynchronized reads may observe stale values or non-HB ordered writes.
+\end{remark}

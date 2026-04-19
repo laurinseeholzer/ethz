@@ -19,8 +19,15 @@
         outer arc=0pt,
         top=3pt, bottom=3pt, left=4pt, right=4pt,
         boxsep=0pt,
-        before skip=4pt, after skip=4pt
-    }
+        before skip=4pt, after skip=4pt,
+        lines before break=1,
+    },
+    breakable,
+    lines before break=1,
+    before skip=0pt,        % Remove space before the box
+    after skip=0pt,         % Remove space after the box
+    boxsep=1pt,             % Shrink internal padding
+    top=1pt, bottom=1pt,    % Shrink internal padding
 }
 \tcolorboxenvironment{definition}{grayBlock}
 \tcolorboxenvironment{theorem}{grayBlock}
@@ -87,6 +94,7 @@
         rulecolor=\color{black!30},
         backgroundcolor=\color{black!2},
         aboveskip=2pt, belowskip=4pt,   
+        breakatwhitespace=true,
         #1
     }
 }

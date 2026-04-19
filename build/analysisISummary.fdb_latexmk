@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1775863362.6211 "/home/laurin/dev/ethz/analysisISummary.tex" "build/analysisISummary.pdf" "analysisISummary" 1775863364.62597 0
-  "/home/laurin/dev/ethz/analysisISummary.tex" 1775863360.29383 515 4a11d35d661fda42bd189d79a3e0ff42 ""
+["pdflatex"] 1776619583.34168 "/home/laurin/dev/ethz/analysisISummary.tex" "build/analysisISummary.pdf" "analysisISummary" 1776619585.53732 0
+  "/home/laurin/dev/ethz/analysisISummary.tex" 1776605677.66906 571 8c2f12c28bf1d754fe6c1f39efc76f41 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc" 1202520719 3486 c7eadf5dcc57b3b2d11736679f6636ba ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1202520719 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc" 1202520719 2840 216e6e45ad352e2456e1149f28885bee ""
@@ -188,16 +188,17 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1770681600 40900 887e0dc8cac988a9e9c574af364cf837 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1774398240.84368 4602601 5d02a5c5d52d7237566d144856366042 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1774397783 7753788 a0020c5830dd8c877264576b28708675 ""
-  "analysisISummary.tex" 1775863360.29383 515 4a11d35d661fda42bd189d79a3e0ff42 ""
-  "build/analysisISummary.aux" 1775863364.49779 907 4c7e932f6852d1649f8475a6229d1b2e "pdflatex"
+  "analysisISummary.tex" 1776605677.66906 571 8c2f12c28bf1d754fe6c1f39efc76f41 ""
+  "build/analysisISummary.aux" 1776619585.40215 1182 323dbd3e99eca1c3e84f257495669a91 "pdflatex"
   "sectionsSummary/analysisI/continuity.tex" 1775862779.06563 1138 9f3d115b01b87542148f7180ccd00bdd ""
+  "sectionsSummary/analysisI/differential_calculus.tex" 1776605816.13535 3824 75549eea95553c83775d0bffff455b11 ""
   "sectionsSummary/analysisI/functions.tex" 1775862699.54275 5500 7a0963bf6049c0e958fc59d26042fe0b ""
   "sectionsSummary/analysisI/logic_sets_numbers.tex" 1775862730.34316 9349 09a766b848bfedccac8a9df08ad366e3 ""
   "sectionsSummary/analysisI/sequences_series.tex" 1775862753.93949 5686 aee320891d4a386d3ac0dea4da17ee44 ""
   "templateSummary/commands.tex" 1774817475.45663 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
   "templateSummary/layout.tex" 1774991981.89833 1169 03c73133ebdfd8baf5c10de5fbe15db7 ""
   "templateSummary/packages.tex" 1774991981.89785 465 54e6a8bd988b290d0d6f00cb16920c92 ""
-  "templateSummary/theorem_styles.tex" 1774818024.41092 3303 6b5cfe8996e44fcc7ff3b74ae3dd008c ""
+  "templateSummary/theorem_styles.tex" 1776619582.96913 3631 193b14b914dc5f4395f0dd4fa2328777 ""
   (generated)
   "build/analysisISummary.aux"
   "build/analysisISummary.log"
