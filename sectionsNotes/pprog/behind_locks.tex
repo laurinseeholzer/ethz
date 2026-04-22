@@ -147,3 +147,11 @@ In all cases, we reach a contradiction, proving the algorithm is starvation-free
 \begin{remark}
     Another algorithm for mutual exclusion of $n$ processes is the \textbf{Bakery Algorithm}. Every process has to take a numbered ticket with a number greater than all outstanding tickets and waits until it has the lowest number.
 \end{remark}
+
+\begin{theorem}
+    If $S$ is a [atomic] read/write system with at least two processes and $S$ solves mutual exclusion with global progress [Deadlock freedom], then $S$ must have at leas as many variables as processes.
+\end{theorem}
+
+\begin{remark}
+    But how can there exist computers with thousands to millions of threads? (Solution: Mutex is not implemented as we thought)
+\end{remark}

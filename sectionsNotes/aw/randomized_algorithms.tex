@@ -1,0 +1,78 @@
+\section{Randomized Algorithms}
+
+\begin{definition}
+    A \textbf{Randomized Algorithm} is an algorithm that instead of being a function $A(I)$ with input $I$ is a function $A(I, R)$ With a source of randomness $R$.
+\end{definition}
+
+\begin{remark}
+    Sources of randomness $R$ can be random bits, random integers, etc. obtained from physical phenomena or pseudo-random number generators.
+\end{remark}
+
+\begin{definition}
+    A \textbf{Monte Carlo Algorithm} is a randomized algorithm that is always fast, but the result is not always correct (with a certain probability).
+\end{definition}
+
+\begin{definition}
+    A \textbf{Las Vegas Algorithm} is a randomized algorithm that always returns the correct result, but the running time might be large (with a certain probability).
+\end{definition}
+\begin{example}
+    \textbf{}
+\end{example}
+
+\begin{remark}
+    If we consider the las vegas algorithm that returns $???$ after a certain time limit $T$ then we have a version of Las Vegas algorithm that always terminates with a bounded runtime $T$ and can be convertet to both standard Las Vegas or Monte Carlo algorithms.
+\end{remark}
+
+\begin{remark}
+    Observe that if we run the above algorithm until we get an actual result and not $???$, we have a standard Las Vegas Algorithm. Further note that if we just return a random result when we get $???$, we have a Monte Carlo Algorithm.
+\end{remark}
+
+\subsection{Reduction of Error probability}
+
+\begin{theorem}
+    Let $A$ be a randomized algorithm which never returns a false result but might return $???$ where
+    $$P[A(I) \, \text{is correct}] \geq \epsilon$$
+    Then $\forall \delta \gt 0$ the algorithm $A_\delta$, which calls $A$ until we get a correct value or until we get $N = {\epsilon}^{-1} \ln(\delta^{-1})$ times $???$, offers
+    $$P[A_\delta(I) \, \text{is correct}] \geq 1 - \delta$$
+\end{theorem}
+
+\begin{remark}
+    To reduce the probability of error to a constant factor we only need a constant amount of extra iterations.
+\end{remark}
+
+\begin{theorem}
+    Generally it is \textbf{not possible to reduce the probability of error for monte-carlo} algorithm, except for algorithms that only have \textbf{one sided error} or an \textbf{error probability of $\lt \frac{1}{2}$}.
+\end{theorem}
+
+\begin{theorem}
+    Let $A$ be a randomized algorithm which always returns $true$ or $false$ where
+    $$P[A(I) \, true] = 1, \text{if I is a true-instance}$$ 
+    $$P[A(I) \, false] \geq \epsilon, \text{if I is a false-instance}$$ 
+    Then $\forall \delta \gt 0$ the algorithm $A_\delta$, which calls $A$ until we $false$ or until we get $N = {\epsilon}^{-1} \ln(\delta^{-1})$ times $true$, offers
+    $$P[A_\delta(I) \, \text{is correct}] \geq 1 - \delta$$
+\end{theorem}
+
+\begin{theorem}
+    Let $\epsilon \gt 0$ and $A$ a randomized algorithm, which always returns $true$ or $false$ with
+    $$P[A(I) \, \text{is correct}] \geq \frac{1}{2} + \epsilon$$
+    Then $\forall \delta \gt 0$ the algorithm $A_\delta$, which calls $A$ $N = 4{\epsilon}^{-2} \ln(\delta^{-1})$ times and returns the majority answer, offers
+    $$P[A_\delta(I) \, \text{is correct}] \geq 1 - \delta$$
+\end{theorem}
+
+\subsection{Optimization problems}
+
+\begin{remark}
+    We assume we have an algorithm that always returns a valid solution but not necessarily an optimal one.
+\end{remark}
+
+\begin{example}
+    We want to find an algorithm that finds a solution which is at least as good as the expected value of the solution of the given algorithm.
+\end{example}
+
+\begin{theorem}
+    Let $\epsilon \gt 0$ and $A$ be a randomized algorithm for an optimization problem where 
+    $$P[A(I) \geq f(I)] \geq  \epsilon$$
+    then $\forall \delta \gt 0$ the algorithm $A_\delta$, which calls $A$ $N = \frac{1}{\epsilon^2} \ln(\delta^{-1})$ times and returns the best solution found, offers
+    $$P[A_\delta(I) \geq f(I)] \geq 1 - \delta$$
+\end{theorem}
+

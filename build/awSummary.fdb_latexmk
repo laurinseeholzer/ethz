@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1776619610.75816 "/home/laurin/dev/ethz/awSummary.tex" "build/awSummary.pdf" "awSummary" 1776619612.5553 0
-  "/home/laurin/dev/ethz/awSummary.tex" 1776619610.49795 684 723b0b40fd1dc1748a1bd47f338018bb ""
+["pdflatex"] 1776842412.79981 "/home/laurin/dev/ethz/awSummary.tex" "build/awSummary.pdf" "awSummary" 1776842414.66236 0
+  "/home/laurin/dev/ethz/awSummary.tex" 1776620426.3848 731 9d47a659f6d921b3d67029465e9a62f1 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc" 1202520719 3486 c7eadf5dcc57b3b2d11736679f6636ba ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1202520719 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc" 1202520719 2840 216e6e45ad352e2456e1149f28885bee ""
@@ -35,6 +35,7 @@
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/lm/ts1-lmri8.tfm" 1254269338 1776 4f020207c9b0e06c047148f8ccf0fb3e ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/lm/ts1-lmtt8.tfm" 1254269338 1320 73ec22b35fea352b761e2a3baa7af759 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1248133631 34694 ad62b13721ee8eda1dcc8993c8bd7041 ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb" 1248133631 35309 940e81a5b9e04201a07e8b33a3ae6e64 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx10.pfb" 1255129361 121021 1bf809ce4a594679006bd72263eba59b ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx8.pfb" 1255129361 125241 1d6de6a4ab0d08571b46009b6426dace ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb" 1255129361 112766 bdd4fa8b13a0d7dd137624085bd31d40 ""
@@ -190,8 +191,9 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1770681600 40900 887e0dc8cac988a9e9c574af364cf837 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1774398240.84368 4602601 5d02a5c5d52d7237566d144856366042 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1774397783 7753788 a0020c5830dd8c877264576b28708675 ""
-  "awSummary.tex" 1776619610.49795 684 723b0b40fd1dc1748a1bd47f338018bb ""
-  "build/awSummary.aux" 1776619612.38837 1393 2cf8995178281e0f4504ba7e33525fd1 "pdflatex"
+  "awSummary.tex" 1776620426.3848 731 9d47a659f6d921b3d67029465e9a62f1 ""
+  "build/awSummary.aux" 1776842414.52752 1679 b6a1eac06a019dd94841d79327b63eb7 "pdflatex"
+  "sectionsSummary/aw/bounding_probability.tex" 1776620406.03964 1302 9af8455df4636f9fce66ef5ee56891d9 ""
   "sectionsSummary/aw/coloring.tex" 1775862812.2216 1403 d5d1dcd6abb8e7af81c8a96eefb56946 ""
   "sectionsSummary/aw/connectivness_of_graphs.tex" 1775862826.04129 3382 e8476aaf941947c3485ca979c07a5800 ""
   "sectionsSummary/aw/distributions.tex" 1775862848.02679 874 22268462108c974762ff0cf0a160e4e9 ""
@@ -199,7 +201,7 @@
   "sectionsSummary/aw/hamiltonian_cycles.tex" 1775862949.29622 1670 475798710da82b28e0f93af693a16be1 ""
   "sectionsSummary/aw/intro_probability.tex" 1775862872.61327 2853 2f6449046f4af918e0c35ed0f9846e8f ""
   "sectionsSummary/aw/matchings.tex" 1775862892.27899 1724 85e93dfc69274b582eb3f51f7bffac90 ""
-  "sectionsSummary/aw/random_variables.tex" 1775862928.02948 2380 fcfab17cc69dfcb3bb1b7fdb5e1c4481 ""
+  "sectionsSummary/aw/random_variables.tex" 1776620415.08071 2788 1aff0fedaec6da223e534c22d65f3cf3 ""
   "templateSummary/commands.tex" 1774817475.45663 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
   "templateSummary/layout.tex" 1774991981.89833 1169 03c73133ebdfd8baf5c10de5fbe15db7 ""
   "templateSummary/packages.tex" 1774991981.89785 465 54e6a8bd988b290d0d6f00cb16920c92 ""

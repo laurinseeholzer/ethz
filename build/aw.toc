@@ -19,3 +19,6 @@
 \contentsline {section}{\numberline {8}Bounding Probability}{29}{}%
 \contentsline {subsection}{\numberline {8.1}Chernoff Bounds}{30}{}%
 \contentsline {subsection}{\numberline {8.2}Target Shooting}{31}{}%
+\contentsline {section}{\numberline {9}Randomized Algorithms}{32}{}%
+\contentsline {subsection}{\numberline {9.1}Reduction of Error probability}{32}{}%
+\contentsline {subsection}{\numberline {9.2}Optimization problems}{33}{}%

@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1776356199.95653 "/home/laurin/dev/ethz/aw.tex" "build/aw.pdf" "aw" 1776356201.20467 0
-  "/home/laurin/dev/ethz/aw.tex" 1776171233.0424 763 acfecc12cd1fdfd801d73ceb67a9fb62 ""
+["pdflatex"] 1776844781.66791 "/home/laurin/dev/ethz/aw.tex" "build/aw.pdf" "aw" 1776844782.73022 0
+  "/home/laurin/dev/ethz/aw.tex" 1776842762.14898 810 c3bd3fcb25e0bdaff5f790d91198bdde ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.enc" 1561323594 2496 4d35740f3a177992ff7b134746c0a1db ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc" 1455745497 9446 fe5580ca6042a44427f18d450942e7d0 ""
@@ -124,10 +124,10 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1770681600 40900 887e0dc8cac988a9e9c574af364cf837 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1774398240.84368 4602601 5d02a5c5d52d7237566d144856366042 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1774397783 7753788 a0020c5830dd8c877264576b28708675 ""
-  "aw.tex" 1776171233.0424 763 acfecc12cd1fdfd801d73ceb67a9fb62 ""
-  "build/aw.aux" 1776356201.05909 2361 e904b51275953c0b2a9c7cf58354095f "pdflatex"
-  "build/aw.toc" 1776356201.06009 1432 f1afcb7a6ee87a807d042e59cf3a4673 "pdflatex"
-  "sectionsNotes/aw/bounding_probability.tex" 1776356198.49909 5882 35361791af4a39ae60ebb299a55a5adf ""
+  "aw.tex" 1776842762.14898 810 c3bd3fcb25e0bdaff5f790d91198bdde ""
+  "build/aw.aux" 1776844782.59018 2710 a1feae5afdbe7d78ff03c07660fa0195 "pdflatex"
+  "build/aw.toc" 1776844782.59118 1658 63bc64e4da756af4152c8d79705c9c07 "pdflatex"
+  "sectionsNotes/aw/bounding_probability.tex" 1776356211.47537 5882 35361791af4a39ae60ebb299a55a5adf ""
   "sectionsNotes/aw/coloring.tex" 1775498240.26484 3330 955395be61c4052cd84a6f5ef27ebacd ""
   "sectionsNotes/aw/connectivness_of_graphs.tex" 1775222779.38498 4210 7b718065d115232ffe9e2d25b58926ce ""
   "sectionsNotes/aw/distributions.tex" 1775862088.81705 2700 2867477f95225def1ce99a0530cbcacb ""
@@ -135,6 +135,7 @@
   "sectionsNotes/aw/intro_probability.tex" 1775518855.30557 9496 37bf54fc3eef976e8b6045515d5a5ebb ""
   "sectionsNotes/aw/matchings.tex" 1775344497.62426 4317 36109e7eb755f2c029c7c0eeee702726 ""
   "sectionsNotes/aw/random_variables.tex" 1776355241.39053 12931 0b506bdfcdb986c902d231f1319bd840 ""
+  "sectionsNotes/aw/randomized_algorithms.tex" 1776844781.46115 3880 8152cc2a8dfdabb2d37b7b083e38ce13 ""
   "templateNotes/commands.tex" 1774795684.82424 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
   "templateNotes/packages.tex" 1774795684.82409 493 dd01896e8ca6d5605bcdf6aeec6f0cbe ""
   "templateNotes/theorem_styles.tex" 1774795684.82464 2530 5415b1d3cc1c5ce9df9c2be1dad76ee8 ""

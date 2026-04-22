@@ -142,7 +142,7 @@
     $$(f^{-1})'(x) = \frac{1}{f'(f^{-1}(x))} $$
 \end{theorem}
 
-\subsection{Local extrema}
+\subsection{Bernoulli-L'Hopital}
 
 \begin{theorem}
     Let $I \subset \mathbb{R}$ be a an intervall, $f: I \to \mathbb{R}$, and let $x_0$ be a local Extrema of $f$. Then one of the following holds:
@@ -156,3 +156,63 @@
 \begin{remark}
     From $f'(x_0) = 0$ we can not conclude that $x_0$ is an extremum.
 \end{remark}
+
+\begin{theorem}
+    \textbf{Rolle's Theorem}: Let $a \lt b$ with $f(a) = f(b)$ and $f:[a, b] \to \mathbb{R}$ a completely continous function on $[a, b]$ and differentiable on $(a, b)$ then $\exists \xi \in (a, b)$ with $f'(\xi) = 0$
+\end{theorem}
+
+\begin{proof}
+    As $[a,b]$ is compact we can conclud that there exists $\xi$ such that $f(\xi)$ is max or min hence $f'(\xi)=0$. If $\xi \in (a,b)$ we found our $\xi$ else the max and min is at $a$ therfore also at $b$ hence the function is constant which implies that $f'(x) = 0 \forall x \in [a,b]$.
+\end{proof}
+
+\begin{theorem}
+    \textbf{Mean-Value-Theorem}: Let $a \lt b, f:[a, b] \to \mathbb{R}$ a completely continous function on $[a, b]$ and differentiable on $(a, b)$ then $\exists \xi \in (a, b)$ with
+    $$f'(\xi) = \frac{f(b)-f(a)}{b-a}$$
+\end{theorem}
+
+\begin{proof}
+    We define a function $g$ with 
+    $$g(x) \coloneqq f(x) - \frac{f(b)-f(a)}{b-a} (x-a)$$
+    and observe that $g$ fulfilles the prequisites to apply rolles theorem. Hence 
+    $$\exists \xi g'(\xi) = 0$$
+    $$\implies \exists \xi f'(\xi) - \frac{f(b)-f(a)}{b-a}\xi  = 0$$
+    $$\implies \exists \xi f'(\xi) = \frac{f(b)-f(a)}{b-a}$$
+\end{proof}
+
+\begin{theorem}
+    \textbf{Bernoulli-L'Hopital's Rule:} Let $f, g: I \to \mathbb{R}$ be differentiable functions on $(a, b)$ and let $x_0 \in (a, b)$. If $g(x) \neq 0$ and $g'(x) \neq 0$ for all $x \in (a, b)$. If 
+    $$\lim_{x \to x_0} |f(x)| = \lim_{x \to x_0} |g(x)| = 0 \text{or} \infty \quad  \text{and} \quad \exists L = \lim_{x \to x_0} \frac{f'(x)}{g'(x)}$$
+    $$\lim_{x \to x_0} \frac{f(x)}{g(x)} = \lim_{x \to x_0} \frac{f'(x)}{g'(x)} = L$$
+\end{theorem}
+
+\begin{example}
+    Let $f(x) = sin(x)$ and $g(x) = x$ we have $sin(0) = 0$ and $g(0) = 0$ further we have $f'(x) = cos(x)$ and $g'(x) = 1 \neq 0$ hence 
+    $$\lim_{x \to 0} \frac{sin(x)}{x} = \lim_{x \to 0} \frac{cos(x)}{1} = 1$$
+\end{example}
+
+\begin{remark}
+    This example can also be solved via the definition of the derivative.
+    $$\lim_{x \to 0} \frac{sin(x)}{x} = \lim_{x \to 0} \frac{sin(x)-sin(0)}{x-0} = sin'(0) = cos(0) = 1$$
+\end{remark}
+
+\subsection{Convex and Concave graphs}
+
+\begin{theorem}
+    Let $(a, b) \subset \mathbb{R}$ and $f: (a, b) \to \mathbb{R}$ be differentiable. Then 
+    $$\forall x: f'(x) \geq 0 \quad \iff \quad f \text{ is increasing}$$
+\end{theorem}
+
+\begin{remark}
+    If $f'(x) = 0$ for all $x$ then $f$ is constant.
+\end{remark}
+
+\begin{theorem}
+    Let $(a, b) \subset \mathbb{R}$ and $f: (a, b) \to \mathbb{R}$ be differentiable. Then 
+    $$f \text{ is convex} \quad \iff \quad f' \text{ is increasing}$$
+\end{theorem}
+
+\begin{theorem}
+    Let $(a, b) \subset \mathbb{R}$ and $f: (a, b) \to \mathbb{R}$ be twice differentiable. Then 
+    $$f \text{ is convex} \quad \iff \quad f'' \geq 0$$
+\end{theorem}
+
