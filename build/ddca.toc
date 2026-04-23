@@ -1,37 +1,41 @@
-\contentsline {section}{\numberline {1}Fundamentals}{3}{}%
-\contentsline {subsection}{\numberline {1.1}Metal-Oxide-Semiconductor Transistors}{3}{}%
-\contentsline {subsection}{\numberline {1.2}Logic Gates}{3}{}%
-\contentsline {subsection}{\numberline {1.3}Boolean Algebra}{4}{}%
-\contentsline {section}{\numberline {2}Combinational Logic}{6}{}%
-\contentsline {subsection}{\numberline {2.1}Combinational Building Blocks}{6}{}%
-\contentsline {section}{\numberline {3}Sequential Logic}{7}{}%
-\contentsline {subsection}{\numberline {3.1}Fundamental Building Blocks}{7}{}%
-\contentsline {subsection}{\numberline {3.2}Timing and the Clock}{7}{}%
-\contentsline {subsection}{\numberline {3.3}Finite State Machines (FSM)}{8}{}%
-\contentsline {subsection}{\numberline {3.4}Memory and Registers}{9}{}%
-\contentsline {section}{\numberline {4}Timing}{10}{}%
-\contentsline {subsection}{\numberline {4.1}Combinational Circuit Timing}{10}{}%
-\contentsline {subsection}{\numberline {4.2}Sequential Circuit Timing}{10}{}%
-\contentsline {subsection}{\numberline {4.3}Clock Skew and Performance}{11}{}%
-\contentsline {section}{\numberline {5}Von Neumann Model and ISA}{12}{}%
-\contentsline {subsection}{\numberline {5.1}Instruction Set Architecture (ISA)}{13}{}%
-\contentsline {subsection}{\numberline {5.2}Assembly}{14}{}%
-\contentsline {section}{\numberline {6}Microarchitecture and Processor Design}{15}{}%
-\contentsline {subsection}{\numberline {6.1}Fundamentals}{15}{}%
-\contentsline {subsection}{\numberline {6.2}Single-Cycle Microarchitecture}{15}{}%
-\contentsline {subsection}{\numberline {6.3}Multi-Cycle Microarchitecture}{16}{}%
-\contentsline {section}{\numberline {7}Pipelining}{18}{}%
-\contentsline {subsection}{\numberline {7.1}Principles of Pipelining}{18}{}%
-\contentsline {subsection}{\numberline {7.2}The 5-Stage Instruction Pipeline}{18}{}%
-\contentsline {subsection}{\numberline {7.3}Pipeline Hazards and Dependencies}{19}{}%
-\contentsline {subsection}{\numberline {7.4}Resolving Data Hazards}{19}{}%
-\contentsline {subsection}{\numberline {7.5}Control Hazards and Branching}{20}{}%
-\contentsline {subsection}{\numberline {7.6}Advanced Pipeline Issues}{20}{}%
-\contentsline {subsection}{\numberline {7.7}Precise Exceptions and Interrupts}{20}{}%
-\contentsline {subsubsection}{\numberline {7.7.1}Reorder-Buffer}{21}{}%
-\contentsline {section}{\numberline {8}Out of Order Execution}{22}{}%
-\contentsline {subsection}{\numberline {8.1}Mechanisms for OoO}{22}{}%
-\contentsline {subsection}{\numberline {8.2}Tomasulo's Algorithm}{23}{}%
-\contentsline {subsection}{\numberline {8.3}Memory Dependencies}{23}{}%
-\contentsline {section}{\numberline {9}Superscalar Execution}{25}{}%
-\contentsline {section}{\numberline {10}Branch Prediction}{26}{}%
+\contentsline {section}{\numberline {1}Fundamentals}{4}{}%
+\contentsline {subsection}{\numberline {1.1}Metal-Oxide-Semiconductor Transistors}{4}{}%
+\contentsline {subsection}{\numberline {1.2}Logic Gates}{4}{}%
+\contentsline {subsection}{\numberline {1.3}Boolean Algebra}{5}{}%
+\contentsline {section}{\numberline {2}Combinational Logic}{7}{}%
+\contentsline {subsection}{\numberline {2.1}Combinational Building Blocks}{7}{}%
+\contentsline {section}{\numberline {3}Sequential Logic}{8}{}%
+\contentsline {subsection}{\numberline {3.1}Fundamental Building Blocks}{8}{}%
+\contentsline {subsection}{\numberline {3.2}Timing and the Clock}{8}{}%
+\contentsline {subsection}{\numberline {3.3}Finite State Machines (FSM)}{9}{}%
+\contentsline {subsection}{\numberline {3.4}Memory and Registers}{10}{}%
+\contentsline {section}{\numberline {4}Timing}{11}{}%
+\contentsline {subsection}{\numberline {4.1}Combinational Circuit Timing}{11}{}%
+\contentsline {subsection}{\numberline {4.2}Sequential Circuit Timing}{11}{}%
+\contentsline {subsection}{\numberline {4.3}Clock Skew and Performance}{12}{}%
+\contentsline {section}{\numberline {5}Von Neumann Model and ISA}{13}{}%
+\contentsline {subsection}{\numberline {5.1}Instruction Set Architecture (ISA)}{14}{}%
+\contentsline {subsection}{\numberline {5.2}Assembly}{15}{}%
+\contentsline {section}{\numberline {6}Microarchitecture and Processor Design}{16}{}%
+\contentsline {subsection}{\numberline {6.1}Fundamentals}{16}{}%
+\contentsline {subsection}{\numberline {6.2}Single-Cycle Microarchitecture}{16}{}%
+\contentsline {subsection}{\numberline {6.3}Multi-Cycle Microarchitecture}{17}{}%
+\contentsline {section}{\numberline {7}Pipelining}{19}{}%
+\contentsline {subsection}{\numberline {7.1}Principles of Pipelining}{19}{}%
+\contentsline {subsection}{\numberline {7.2}The 5-Stage Instruction Pipeline}{19}{}%
+\contentsline {subsection}{\numberline {7.3}Pipeline Hazards and Dependencies}{20}{}%
+\contentsline {subsection}{\numberline {7.4}Resolving Data Hazards}{20}{}%
+\contentsline {subsection}{\numberline {7.5}Control Hazards and Branching}{21}{}%
+\contentsline {subsection}{\numberline {7.6}Advanced Pipeline Issues}{21}{}%
+\contentsline {subsection}{\numberline {7.7}Precise Exceptions and Interrupts}{21}{}%
+\contentsline {subsubsection}{\numberline {7.7.1}Reorder-Buffer}{22}{}%
+\contentsline {section}{\numberline {8}Out of Order Execution}{23}{}%
+\contentsline {subsection}{\numberline {8.1}Mechanisms for OoO}{23}{}%
+\contentsline {subsection}{\numberline {8.2}Tomasulo's Algorithm}{24}{}%
+\contentsline {subsection}{\numberline {8.3}Memory Dependencies}{24}{}%
+\contentsline {section}{\numberline {9}Superscalar Execution}{26}{}%
+\contentsline {section}{\numberline {10}Branch Prediction}{27}{}%
+\contentsline {subsection}{\numberline {10.1}Static Branch Prediction}{27}{}%
+\contentsline {subsection}{\numberline {10.2}Dynamic Branch Prediction}{28}{}%
+\contentsline {subsection}{\numberline {10.3}Advanced Predictors}{30}{}%
+\contentsline {subsection}{\numberline {10.4}Alternative Control Flow Handling}{31}{}%

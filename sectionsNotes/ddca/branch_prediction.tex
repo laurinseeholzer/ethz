@@ -1,35 +1,162 @@
 \section{Branch Prediction}
 
 \begin{remark}
-    Branch prediction is all about handling control dependencies: How do we exploit parallelism in control flow?
+    \textbf{The Goal:} Branch prediction handles control dependencies. It attempts to answer the fundamental question: How do we exploit instruction-level parallelism in the presence of control flow?
+\end{remark}
+
+\begin{remark}
+    \textbf{The Cost of Misprediction:} Branch mispredictions drastically reduce IPC in deep pipelines. Modern processors therefore target 95\%+ accuracy.
 \end{remark}
 
 \begin{definition}
-    There are multiple diffrent \textbf{Branch-Types}:
-    \begin{itemize}
-        \item Conditional branches (if, while, for, ...)
-        \item Unconditional branches (goto, jmp, ...)
-        \item Indirect branches (jump to address stored in register)
-        \item Function calls (call)
-        \item Function returns (ret)
-    \end{itemize}
+    There are multiple different \textbf{Branch Types}: Conditional (if, while), Unconditional (goto), Indirect (register targets), \& Function calls/returns. \textit{Conditional} and \textit{indirect} are the hardest to predict.
 \end{definition}
 
 \begin{remark}
-    Observe that conditional and indirect branches are the most challenging to predict.
-\end{remark}
-
-\begin{remark}
-    Control dependences can be handled by:
+    Control dependencies are handled by:
     \begin{itemize}
-        \item stalling the pipeline
-        \item predicting the branch outcome (branch prediction)
-        \item Execute independent instruction (fine-grained multi-threading)
-        \item Convert Control-Dependence to Data-Dependence (predicated execution)
-        \item Fetch all branches (multi-path execution)
+        \item \textbf{Stalling} or \textbf{Predicting} the pipeline.
+        \item \textbf{Delayed Branching:} Executing adjacent instructions unconditionally.
+        \item \textbf{Multi-threading:} Executing other threads.
+        \item \textbf{Predicated Execution:} Converting control to data-dependence.
+        \item \textbf{Multi-path Execution:} Fetching all branches simultaneously.
     \end{itemize}
 \end{remark}
 
+\subsection{Static Branch Prediction}
+
+\begin{definition}
+    \textbf{Static Branch Prediction}: The branch outcome is predicted strictly at compile time. Because it is static, it cannot adapt to dynamic changes in branch behavior during runtime.
+\end{definition}
+
+\subsubsection*{Basic Static Strategies}
 \begin{remark}
-    The simplest branch prediction is to always predict the same outcome (always taken or always not taken). This can be enhanced by getting rid of unnessary branches (predicate combining) and converting control into data dependencies.
+    The simplest strategy is to always predict the same outcome (\textbf{Always Taken} or \textbf{Always Not-Taken}). This logic requires minimal hardware but yields low accuracy.
 \end{remark}
+
+\begin{definition}
+    \textbf{BTFN (Backward Taken, Forward Not-Taken)}: Predicts backward branches as taken and forward branches as not-taken.
+\end{definition}
+\begin{remark}
+    BTFN significantly improves prediction success by intelligently exploiting loop structures. Backward branches are typically loop iterations, which are statistically taken much more often than not.
+\end{remark}
+
+\subsubsection*{Advanced Static Strategies}
+
+\begin{definition}
+    \textbf{Profile-based Prediction}: Predicts the outcome based on branch behavior statistics gathered from a previous profiling run of the program.
+\end{definition}
+
+\begin{definition}
+    \textbf{Program-based Prediction}: Uses compiler heuristics (e.g., assuming a check for a negative integer is an error path, hence not-taken).
+\end{definition}
+
+\begin{definition}
+    \textbf{Programmer-based Prediction}: Relies on explicit pragmas or hints provided by the programmer directly in the source code.
+\end{definition}
+
+\begin{codeexample}
+    // Pragmas as hints for the branch predictor
+    if (likely(x)) {...}
+    if (unlikely(error)) {...}
+\end{codeexample}
+
+\subsection{Dynamic Branch Prediction}
+
+\begin{definition}
+    \textbf{Dynamic Branch Prediction}: The branch outcome is predicted at runtime based on the execution history.
+\end{definition}
+
+\subsubsection*{Target vs. Direction Prediction}
+\begin{definition}
+    \textbf{Branch Target Buffer (BTB)}: A hardware cache that specifically stores the \textit{target addresses} of recently executed branches. When a branch instruction is fetched, the BTB is accessed to provide the target address immediately, avoiding pipeline stalls while waiting for the ALU to compute the target.
+\end{definition}
+
+\begin{definition}
+    \textbf{Return Address Stack (RAS)}: Dedicated hardware for predicting function returns. It pushes the return address on a \texttt{call} instruction and pops it on a \texttt{ret}. It is highly accurate (>95\% with just an 8-entry stack) for predicting indirect returns.
+\end{definition}
+
+\begin{definition}
+    \textbf{Indirect Branch Predictor}: Indirect branches map to multiple targets, making standard BTBs inaccurate. These are typically predicted using a dedicated history-based target predictor (e.g., indexing the BTB with the GHR XORed with the PC).
+\end{definition}
+
+\subsubsection*{Local History Predictors}
+\begin{definition}
+    \textbf{Last-Time Predictor}: Predicts the outcome of a branch to be exactly the same as the outcome of the last time that specific branch was executed.
+\end{definition}
+\begin{remark}
+    Last-Time predictors are simple (one bit per branch). They exploit long loops (e.g. 1000 iterations) with high accuracy but perform extremely poorly on short loops (e.g. 2 iterations) or on branches that alternate heavily.
+\end{remark}
+
+\begin{definition}
+    \textbf{Two-Bit Counter (Bimodal Predictor)}: Prediction only changes after two consecutive mistakes. This introduces \textbf{hysteresis} (via cyclic Strong/Weak states), preventing the prediction from arbitrarily flipping due to a single anomalous outcome.
+\end{definition}
+\begin{remark}
+    Two-Bit Counters significantly improve prediction accuracy compared to Last-Time predictors (yielding around 0.85-0.90 accuracy).
+\end{remark}
+
+\subsubsection*{Correlated (Two-Level) Predictors}
+\begin{definition}
+    \textbf{Two-Level Prediction}: Attempts to correlate the outcome of a branch using history tracking:
+    \begin{itemize}
+        \item \textbf{Global History Register (GHR)}: Tracks the outcome of \textit{recent different branches} (global context).
+        \item \textbf{Local History Register (LHR)}: Tracks the outcome of \textit{the same branch} in its previous iterations.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Gshare Predictor}: XORs the Global History Register (GHR) with the Program Counter (PC) to index the Pattern History Table (PHT), providing branch-specific context and drastically reducing interference.
+\end{definition}
+
+\begin{definition}
+    \textbf{Agree Predictor} \& \textbf{Gskew Predictor}: Advanced techniques beyond Gshare to reduce interference. The \textbf{Agree Predictor} predicts whether the outcome will \textit{agree} or \textit{disagree} with a statically determined bias bit. The \textbf{Gskew Predictor} uses multiple PHTs with different hash indexing functions and resolves predictions via a majority vote.
+\end{definition}
+
+\subsubsection*{Ensemble Predictors}
+\begin{important}
+    \textbf{Biased Branches \& Branch Filtering}: Filtering heavily biased branches (e.g., 99\% taken) to simpler predictors saves space in history tables for hard-to-predict branches.
+\end{important}
+
+\begin{important}
+    \textbf{Tournament Predictor}: In many systems, branch prediction is not done using a single predictor. Instead, multiple different predictors run simultaneously, and a meta-predictor chooses whichever predictor has been the most accurate recently. 
+\end{important}
+
+\begin{remark}
+    \textbf{Notable Historical \& Modern Implementations:}
+    \begin{itemize}
+        \item \textbf{Intel Pentium Pro}: First commercially successful out-of-order processor, utilizing two-level global prediction.
+        \item \textbf{Alpha 21264}: Famously utilized a highly accurate Tournament Predictor.
+        \item \textbf{Intel Pentium M}: Introduced specialized Loop and Jump predictors alongside traditional predictors.
+        \item \textbf{AMD Zen 2 (and newer)}: Employs a highly accurate hybrid \textbf{Perceptron + TAGE} multi-level branch predictor.
+    \end{itemize}
+\end{remark}
+
+\subsection{Advanced Predictors}
+
+\begin{definition}
+    \textbf{Perceptron Predictor}: Uses a single-layer neural network to predict the outcome of a branch.
+\end{definition}
+
+\begin{remark}
+    Efficiently implemented as an \textit{adder tree} followed by a sign check. Achieves top-tier accuracy (0.95+) but \textbf{only learns linearly separable functions} (cannot learn XOR-type correlations).
+\end{remark}
+
+\begin{definition}
+    \textbf{TAGE (TAgged GEometric history length)}: Uses multiple global history registers of varying, geometric lengths to predict the outcome of a branch.
+\end{definition}
+
+\begin{remark}
+    TAGE predictors represent state-of-the-art branch prediction. They are more complex to implement than perceptron predictors but achieve the highest structural prediction accuracy available (0.97+).
+\end{remark}
+
+\subsection{Alternative Control Flow Handling}
+
+\begin{definition}
+    \textbf{Delayed Branching}: The $N$ instructions fetched after the branch (delay slots) execute unconditionally. \\
+    \textit{Advantage}: Keeps pipeline full. \textit{Disadvantage}: Ties ISA to pipeline depth; hard to fill slots with useful independent instructions.
+\end{definition}
+
+\begin{definition}
+    \textbf{Predicated Execution (e.g., CMOV)}: Eliminates branches via condition codes. An operation executes but only commits if the predicate is true.\\
+    \textit{Advantage}: Eliminates mispredictions, allows larger basic blocks. \textit{Disadvantage}: Wastes energy fetching/executing paths that are discarded.
+\end{definition}

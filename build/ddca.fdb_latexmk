@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1776604005.03471 "/home/laurin/dev/ethz/ddca.tex" "build/ddca.pdf" "ddca" 1776604005.98376 0
+["pdflatex"] 1776966341.002 "/home/laurin/dev/ethz/ddca.tex" "build/ddca.pdf" "ddca" 1776966342.02818 0
   "/home/laurin/dev/ethz/ddca.tex" 1776592857.62815 784 0b48d53257bc6318359a43c809b6043b ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.enc" 1561323594 2496 4d35740f3a177992ff7b134746c0a1db ""
@@ -116,10 +116,10 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1770681600 40900 887e0dc8cac988a9e9c574af364cf837 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1774398240.84368 4602601 5d02a5c5d52d7237566d144856366042 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1774397783 7753788 a0020c5830dd8c877264576b28708675 ""
-  "build/ddca.aux" 1776604005.85813 4323 77159008e837e87be7ef2b9d4de7f360 "pdflatex"
-  "build/ddca.toc" 1776604005.85913 2738 f02aa526466e63c5b0d23dc8c70f488c "pdflatex"
+  "build/ddca.aux" 1776966341.8937 4805 53d69b8589c50535c49852fbf87bd915 "pdflatex"
+  "build/ddca.toc" 1776966341.8937 3056 5023bbe7379eb182a1eb554d55c1ccb3 "pdflatex"
   "ddca.tex" 1776592857.62815 784 0b48d53257bc6318359a43c809b6043b ""
-  "sectionsNotes/ddca/branch_prediction.tex" 1776604004.82717 1360 4c45f3bc96cb3c28e2f00ffbf1968502 ""
+  "sectionsNotes/ddca/branch_prediction.tex" 1776966339.6927 8869 9b9e695b42334f85d8491ddbae4f18dd ""
   "sectionsNotes/ddca/combinational_logic.tex" 1774798734.68836 2074 d45cf739f5c614a271d4c2fba0acec5e ""
   "sectionsNotes/ddca/fundamentals.tex" 1774798543.79368 4294 de1e0ab5c270552c3949085f500e3c63 ""
   "sectionsNotes/ddca/instruction_set_architecture.tex" 1774811399.05921 6198 bd9e08b042d0e915b2faed01e5f9ac84 ""
