@@ -15,8 +15,12 @@
 \begin{definition}
     A sequence $(a_n)$ is called \textbf{convergent} with limit $L \in \mathbb{R}$ if:
     $$\forall \epsilon \gt 0 \exists N \gt 0 \quad \text{ s.t. } \quad \forall n \gt N : |a_n - L| \lt \epsilon$$
-    Written as $\lim_{n \to \infty} a_n = L$.If no such $L$ exists, the sequence is \textbf{divergent}. Sequences that diverge to $\pm \infty$ are a special case of divergent sequences.
+    Written as $\lim_{n \to \infty} a_n = L$.If no such $L$ exists, the sequence is \textbf{divergent}. 
 \end{definition}
+
+\begin{remark}
+    A special case of divergent sequences are sequences which diverge to $\pm \infty$. Their limits are called \textbf{improper limits}.
+\end{remark}
 
 \begin{theorem}
     The limit of a sequence is unique aslong as it exists.
@@ -33,13 +37,17 @@
 \end{proof}
 
 \begin{theorem}
-    A subsequence $(a_{n_k})_{k \in \mathbb{N}_0}$ of a convergent sequence converges to the same limit $L$.
+    Any subsequence $(a_{n_k})_{k \in \mathbb{N}_0}$ of a convergent sequence converges to the same limit $L$.
 \end{theorem}
 
 \begin{definition}
     An \textbf{accumulation point} (Häufungspunkt) $A \in \mathbb{R}$ of a sequence fulfills:
     $$\forall \epsilon \gt 0 \forall N \in \mathbb{N}_0 \exists n \ge N \text{ such that } |a_n - A| \lt \epsilon$$
 \end{definition}
+
+\begin{example}
+    The sequence $a_n = \frac{1}{2} (-1)^n$ has the accumulation points $A_1 = \frac{1}{2}$ and $A_2 = -\frac{1}{2}$.
+\end{example}
 
 \begin{theorem}
     $A$ is an accumulation point iff there exists a convergent subsequence with limit $A$.
@@ -59,6 +67,24 @@
     If $a_n$ converges to $L$ then we can intuitively say that that $A$ has to be $L$.
 \end{proof}
 
+\begin{definition}
+    A sequence is \textbf{upper (lower) bounded} if there exists $M$such that $|a_n| \le (\geq) M \quad \forall n \in \mathbb{N}_0$.
+\end{definition}
+
+\begin{theorem}
+    Every convergent sequence is bounded.
+\end{theorem}
+
+\begin{proof}
+    By the definition of convergence there exists $N$ sucht that for all $n \ge N$ we have $|a_n - L| < 1$. Thus $|a_n| < |L| + 1$ for all $n \ge N$. 
+    Further we have a finite number of terms $a_0, \dots, a_{N-1}$ which are also bounded. 
+    Therefore the sequence is bounded by $M = \max(|a_0|, \dots, |a_{N-1}|, |L| + 1)$.
+\end{proof}
+
+\begin{theorem}
+    \textbf{Bolzano-Weierstrass Theorem:} Every bounded sequence has an accumulation point.
+\end{theorem}
+
 \begin{theorem}
 Limit arithmetic: For $\lim a_n = K$, $\lim b_n = L$ and $C \in \mathbb{R}$:
 \begin{itemize}
@@ -67,18 +93,6 @@ Limit arithmetic: For $\lim a_n = K$, $\lim b_n = L$ and $C \in \mathbb{R}$:
     \item $\lim (a_n / b_n) = K / L$ (if $L \neq 0$ and $b_n \neq 0$)
 \end{itemize}
 \end{theorem}
-
-\begin{theorem}
-    \textbf{Sandwich-Theorem:} If $a_n \le b_n \le c_n$ for $n \ge N_0$, and $\lim a_n = \lim c_n = L$, then $\lim b_n = L$.
-\end{theorem}
-
-\begin{proof}
-    Let $\lim a_n = \lim c_n = L$ and $\lim b_n = M$. From the above arithmetic we can sa that $a_n \leq b_n \leq c_n$ implies $L \leq M \leq L$ so we have that $b_n$ is squeezed between $a_n$ and $c_n$ and thus must converge to $M = L$.
-\end{proof}
-
-\begin{remark}
-    The sandwich theorem is often used to find upper and lower bounds for a sequence that converge to the same limit and therfore conclude that the original sequence does too.
-\end{remark}
 
 \begin{remark}
     Important limits:
@@ -91,21 +105,36 @@ Limit arithmetic: For $\lim a_n = K$, $\lim b_n = L$ and $C \in \mathbb{R}$:
     \end{itemize}
 \end{remark}
 
-\begin{definition}
-    A sequence is
-    \begin{itemize}
-        \item \textbf{monotonically increasing (decreasing)} if $a_n \le (\geq) a_m$ for $m \gt n$.
-        \item \textbf{upper (lower) bounded} if there exists $M$such that $|a_n| \le (\geq) M \quad \forall n \in \mathbb{N}_0$.
-    \end{itemize}
-\end{definition}
-
 \begin{theorem}
-    \textbf{Bolzano-Weierstrass Theorem:} Every bounded sequence has an accumulation point.
+    \textbf{Sandwich-Theorem:} If $a_n \le b_n \le c_n$ for $n \ge N_0$, and $\lim a_n = \lim c_n = L$, then $\lim b_n = L$.
 \end{theorem}
+
+\begin{proof}
+    Let $\lim a_n = \lim c_n = L$ and $\lim b_n = M$. From the above arithmetic we can sa that $a_n \leq b_n \leq c_n$ implies $L \leq M \leq L$ so we have that $b_n$ is squeezed between $a_n$ and $c_n$ and thus must converge to $M = L$.
+\end{proof}
+
+\begin{example}
+    We want to calculat $\lim_{n \to \infty} (2^n + 5^n)^\frac{1}{n}$.
+    We can bound the sequence by $5^n \leq 2^n + 5^n \leq 2 \cdot 5^n$.
+    Taking the $n$-th root we get $5 \leq (2^n + 5^n)^\frac{1}{n} \leq 2^\frac{1}{n} \cdot 5$.
+    As $n \to \infty$ we have $2^\frac{1}{n} \to 1$ so by the sandwich theorem we have $\lim_{n \to \infty} (2^n + 5^n)^\frac{1}{n} = 5$.
+\end{example}
+
+\begin{remark}
+    The sandwich theorem is often used to find upper and lower bounds for a sequence that converge to the same limit and therfore conclude that the original sequence does too.
+\end{remark}
+
+\begin{definition}
+    A sequence is \textbf{monotonically increasing (decreasing)} if $a_n \le (\geq) a_m$ for $m \gt n$.
+\end{definition}
 
 \begin{theorem}
     \textbf{Monotone Convergence Theorem:} Every bounded monotonic sequence converges to its supremum (infimum).
 \end{theorem}
+
+\begin{proof}
+    Wlog let $(a_n)$ be a bounded monotonically increasing sequence. Hence there exists $S = \sup \{a_n : n \in \mathbb{N}_0\}$ such that $a_n \le S$ for all $n$ and for any $\epsilon > 0$ there exists $N$ such that $a_N > S - \epsilon$ and therfore $|a_n - S| < \epsilon$ for all $n \ge N$.
+\end{proof}
 
 \begin{definition}
     The limit of the supremum is called \textbf{limes superior} and denoted as:
@@ -120,6 +149,14 @@ Limit arithmetic: For $\lim a_n = K$, $\lim b_n = L$ and $C \in \mathbb{R}$:
 \end{definition}
 
 \begin{theorem}
+    Every Cauchy sequence is bounded.
+\end{theorem}
+
+\begin{proof}
+    Choose $\epsilon = 1$, then there exists $N$ such that $|a_n - a_{N}| \lt 1$ for all $n \ge N$. Thus $|a_n| \lt |a_N| + 1$ for $n \ge N$, meaning $(a_n)$ is bounded by $M = \max(|a_0|, \dots, |a_{N-1}|, |a_N|+1)$.
+\end{proof}
+
+\begin{theorem}
     A sequence of real numbers converges iff it is a cauchy sequence.
 \end{theorem}
 
@@ -129,8 +166,7 @@ Limit arithmetic: For $\lim a_n = K$, $\lim b_n = L$ and $C \in \mathbb{R}$:
     $$|a_n - a_m| = |a_n - L + L - a_m| \le |a_n - L| + |L - a_m| \lt \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$$
     Thus, $(a_n)$ is a Cauchy sequence.
     
-    $\impliedby$: Let $(a_n)$ be a Cauchy sequence. First, $(a_n)$ is bounded: choose $\epsilon = 1$, then there exists $N$ such that $|a_n - a_{N}| \lt 1$ for all $n \ge N$. Thus $|a_n| \lt |a_N| + 1$ for $n \ge N$, meaning $(a_n)$ is bounded by $M = \max(|a_0|, \dots, |a_{N-1}|, |a_N|+1)$.
-    By the Bolzano-Weierstrass theorem, the bounded sequence $(a_n)$ has an accumulation point $L$, so there exists a subsequence $(a_{n_k})$ converging to $L$.
+    $\impliedby$: Let $(a_n)$ be a Cauchy sequence therfore it is bounded. By the Bolzano-Weierstrass theorem, the bounded sequence $(a_n)$ has an accumulation point $L$, so there exists a subsequence $(a_{n_k})$ converging to $L$.
     For any $\epsilon \gt 0$, since $(a_n)$ is Cauchy, there exists $N'$ such that $\forall m, n \ge N': |a_n - a_m| \lt \epsilon / 2$.
     Since $a_{n_k} \to L$, choose a $k$ such that $n_k \ge N'$ and $|a_{n_k} - L| \lt \epsilon / 2$.
     Then for any $n \ge N'$:
@@ -144,13 +180,10 @@ Limit arithmetic: For $\lim a_n = K$, $\lim b_n = L$ and $C \in \mathbb{R}$:
     A \textbf{series} (Reihe) is an infinite sum $\sum_{i=0}^\infty a_i$ of the terms of a sequence $(a_n)$.
 \end{definition}
 
-\begin{remark}
+\begin{definition}
     A series is said to converge iff the sequence of partialsums converges.
-\end{remark}
-
-\begin{theorem}
-    \textbf{Necessary condition for convergence:} for $\sum_{i=0}^\infty a_i$ to converge we need $\lim_{n \to \infty} a_n = 0$.
-\end{theorem}
+    $$\sum_{i=0}^\infty a_i = \lim_{n \to \infty} \sum_{i=0}^n a_i$$
+\end{definition}
 
 \begin{remark}
     Some examples of series are:
@@ -161,7 +194,24 @@ Limit arithmetic: For $\lim a_n = K$, $\lim b_n = L$ and $C \in \mathbb{R}$:
 \end{remark}
 
 \begin{theorem}
-        For \textbf{series with non-negative terms} $a_n \ge 0$, the sequence of partial sums is monotonically increasing. \textbf{It converges iff it is bounded.}
+    \textbf{Necessary condition for convergence:} for $\sum_{i=0}^\infty a_i$ to converge we need $\lim_{n \to \infty} a_n = 0$ i.e. it is a null sequence.
+\end{theorem}
+
+\begin{theorem}
+    For \textbf{series with non-negative terms} $a_n \ge 0$, the sequence of partial sums is monotonically increasing and \textbf{converges iff it is bounded.}
+\end{theorem}
+
+\begin{definition}
+    A series is \textbf{absolutely convergent} if $\sum |a_n|$ converges. A \textbf{conditionally convergent} series converges, but not absolutely.
+\end{definition}
+
+\begin{remark}
+    Absolute convergence implies normal convergence.
+\end{remark}
+
+\begin{theorem}
+    \textbf{Riemann's rearrangement theorem:}
+    Let $\sum a_n$ be a conditionally convergent series. Then for any $x \in \mathbb{R}$, there exists a rearrangement of the series that converges to $x$.
 \end{theorem}
 
 \begin{theorem}
@@ -179,15 +229,6 @@ Limit arithmetic: For $\lim a_n = K$, $\lim b_n = L$ and $C \in \mathbb{R}$:
     Therfore accordint to the Majorantenkriterium the series $\sum_{n=1}^\infty \frac{1}{n!}$ converges.
 \end{example}
 
-\begin{definition}
-    A series is \textbf{absolutely convergent} if $\sum |a_n|$ converges. Absolute convergence implies normal convergence.
-    A \textbf{conditionally convergent} series converges, but not absolutely.
-\end{definition}
-
-\begin{theorem}
-    \textbf{Riemann's rearrangement theorem:}
-    Let $\sum a_n$ be a conditionally convergent series. Then for any $x \in \mathbb{R}$, there exists a rearrangement of the series that converges to $x$.
-\end{theorem}
 
 \begin{theorem}
     \textbf{Leibniz Criterion}: For an alternating series $\sum (-1)^n a_n$ with a monotonically decreasing null sequence $(a_n)$, the series converges.
@@ -214,11 +255,11 @@ Limit arithmetic: For $\lim a_n = K$, $\lim b_n = L$ and $C \in \mathbb{R}$:
 \end{theorem}
 
 \begin{theorem}
-    More criterions for convergence:
-    \begin{itemize}
-        \item \textbf{Root Criterion} (Wurzelkriterium): Let $\rho = \limsup \sqrt[n]{|a_n|}$. If $\rho \lt 1$, abs conv; if $\rho \gt 1$, div.
-        \item \textbf{Ratio Criterion} (Quotientenkriterium): Let $\rho = \lim \left| \frac{a_{n+1}}{a_n} \right|$. If $\rho \lt 1$, abs conv; if $\rho \gt 1$, div.
-    \end{itemize}
+    \textbf{Root Criterion} (Wurzelkriterium): Let $\rho = \limsup \sqrt[n]{|a_n|}$. If $\rho \lt 1$, abs conv; if $\rho \gt 1$, div.
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Ratio Criterion} (Quotientenkriterium): Let $\rho = \lim \left| \frac{a_{n+1}}{a_n} \right|$. If $\rho \lt 1$, abs conv; if $\rho \gt 1$, div.
 \end{theorem}
 
 \begin{example}

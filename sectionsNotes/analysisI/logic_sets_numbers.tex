@@ -3,7 +3,7 @@
 \subsection{Logic}
 
 \begin{definition}
-    A \textbf{mathematical Statement} is a well-formulated assertion that is either strictly true or false.
+    A \textbf{mathematical Statement} is a well-formulated assertion that is strictly either true or false.
 \end{definition}
 
 \begin{example}
@@ -11,7 +11,7 @@
 \end{example}
 
 \begin{definition}
-A \textbf{Statement} that depends on one or multiple variables is called a \textbf{predicate}.
+A \textbf{Statement} that depends on one or multiple variables is called a \textbf{predicate} and denoted by $P(x), Q(x), \dots$.
 \end{definition}
 
 \begin{example}
@@ -28,20 +28,24 @@ $$P(x) \coloneqq x > 2$$
 \end{example}
 
 \begin{definition}
-    Quantifiers are short hand notation for making statements about predicates.
-    $$\forall x \in \mathbb{R}: P(x)$$
-    $$\exists x \in \mathbb{R}: P(x)$$
-    $$\exists ! x \in \mathbb{R}: P(x)$$
-    $$\nexists x \in \mathbb{R}: P(x)$$
-    Expresses that for all / for at least one / for exactly one or for none x in $\mathbb{R}$ satisfies the predicate.
+    \textbf{Quantifiers} are short hand notation for making statements about predicates.
+    $$\forall x \in \mathbb{R}: P(x) \quad \iff \quad \text{for all} x \in \mathbb{R} \text{ holds } P(x)$$
+    $$\exists x \in \mathbb{R}: P(x) \quad \iff \quad \text{there exists} x \in \mathbb{R} \text{ s.t. } P(x)$$
+    $$\exists ! x \in \mathbb{R}: P(x) \quad \iff \quad \text{there exists exactly one} x \in \mathbb{R} \text{ s.t. } P(x)$$
+    $$\nexists x \in \mathbb{R}: P(x) \quad \iff \quad \text{there exists no} x \in \mathbb{R} \text{ s.t. } P(x)$$
 \end{definition}
+
+\begin{example}
+    $$\forall x \in \mathbb{R}: x^2 \geq 0$$
+    $$\forall x \in \mathbb{R} \exists y \in \mathbb{R}: x = y^2$$
+\end{example}
 
 \begin{important}
     The oderder of quantifiers matters. $\forall x \exists y$ is not equivalent to $\exists y \forall x$.
 \end{important}
 
 \begin{definition}
-    Basic logical connectives are defined as:
+    Basic \textbf{logical connectives} are defined as:
     $$A \land B \coloneqq A \text{ and } B \text{ are true}$$
     $$A \lor B \coloneqq A \text{ or } B \text{ is true}$$
     $$A \implies B \coloneqq A \text{ implies } B \text{ is true}$$
@@ -75,17 +79,14 @@ $$P(x) \coloneqq x > 2$$
 \end{definition}
 
 \begin{definition}
-    An element $x$ is contained in a set $A$ iff. $x \in A$ else it is not contained in $A$ denoted by $x \notin A$.
+    An element $x$ is \textbf{contained in a set} $A$ iff. $x \in A$ else it is not contained in $A$ denoted by $x \notin A$.
 \end{definition}
 
 \begin{definition}
-    Let $A$ and $B$ be sets. $A$ is a \textbf{subset} of $B$ denoted by $A \subseteq B$ iff. 
+    Let $A$ and $B$ be sets. $A$ is a \textbf{subset} of $B$ denoted by $A \subset B$ iff. 
     $$\forall x (x \in A \implies x \in B)$$
-\end{definition}
-
-\begin{definition}
-    $A$ is a \textbf{proper subset} of $B$ denoted by $A \subset B$ iff. 
-    $$A \subseteq B \land A \neq B$$
+    $A$ is a \textbf{proper subset} of $B$ denoted by $A \subsetneq B$ iff. 
+    $$A \subset B \land A \neq B$$
 \end{definition}
 
 \begin{definition}
@@ -97,6 +98,10 @@ $$P(x) \coloneqq x > 2$$
     \item The \textbf{Cartesian product} of $A$ and $B$ is defined as $A \times B \coloneqq \{(a, b) \mid a \in A \land b \in B\}$.
 \end{itemize}
 \end{definition}
+
+\begin{remark}
+    Note that if $B \subset A$ then the diffrence $A \setminus B$ is called the complement of $B$ in $A$ and is denoted by $B^c$.
+\end{remark}
 
 \subsection{Numbers}
 
@@ -110,7 +115,7 @@ The basic and often used sets of numbers are:
 \end{itemize}
 
 \begin{remark}
-    Some extensions of the real numbers are $\mathbb{R}^{+}_{0} / \mathbb{R}^{+}$ and $\mathbb{R}^{-}_{0} / \mathbb{R}^{-}$ which define the intervalls $[0, \infty) / (0, \infty)$ and $(-\infty, 0] / (-\infty, 0)$.
+    Some important subsets of the real numbers are $\mathbb{R}^{+}_{0} / \mathbb{R}^{+}$ and $\mathbb{R}^{-}_{0} / \mathbb{R}^{-}$ which define the intervalls $[0, \infty) / (0, \infty)$ and $(-\infty, 0] / (-\infty, 0)$.
 \end{remark}
 
 \begin{definition}
@@ -118,25 +123,29 @@ The basic and often used sets of numbers are:
     \begin{itemize}
         \item \textbf{open} if it does not contain its endpoints $I = (a, b) \coloneqq \{x \mid a \lt x \lt b\}$
         \item \textbf{closed} if it contains its endpoints $I = [a, b] \coloneqq \{x \mid a \leq x \leq b\}$
-        \item \textbf{half open} if it contains one endpoint and not the other $I = [a, b) \coloneqq \{x \mid a \leq x \lt b\}$
+        \item \textbf{half-open} if it contains one endpoint and not the other $I = [a, b) \coloneqq \{x \mid a \leq x \lt b\}$
     \end{itemize}
 \end{definition}
 
+\begin{remark}
+    An arbitrary subset of $\mathbb{R}$ is called open if it is a union of open intervalls and closed if its complement is open.
+\end{remark}
+
 \begin{definition}
-    An intervall is \textbf{bounded} if it is bounded from above and below hence $a$ and $b$ are finite.
+    An \textbf{upper (lower) bound} of a subset $X \subset \mathbb{R}$ is an element $y \in \mathbb{R}$ such that:
+    $$\forall x \in X: x \leq (\geq) y$$
+    The \textbf{maximum (minimum)} of a subset $X \subset \mathbb{R}$ is the element $x_{0} \in X$ such that:
+    $$\forall x \in X: x \leq (\geq) x_{0}$$
+    Often denoted as \textbf{max(X)} and \textbf{min(X)}.
+\end{definition}
+
+\begin{definition}
+    An intervall $I = (a, b)$ is \textbf{bounded} if there exist upper and lower bounds.
 \end{definition}
 
 \begin{remark}
     A bounded and closed intervall is often refered to as \textbf{compact}.
 \end{remark}
-
-\begin{definition}
-    An upper (lower) bound of a subset $X \subset \mathbb{R}$ is an element $y \in \mathbb{R}$ such that:
-    $$\forall x \in X: x \leq (\geq) y$$
-    The maximum (minimum) of a subset $X \subset \mathbb{R}$ is the element $x_{0} \in X$ such that:
-    $$\forall x \in X: x \leq (\geq) x_{0}$$
-\end{definition}
-
 \begin{definition}
     The \textbf{Supremum} $sup(X)$ of a subset $X \subset \mathbb{R}$ is the least upper bound of $X$. and can be characterized by:
     $$\forall x \in X: x \leq sup(X) \land \\ \forall \epsilon \gt 0: \exists x \in X: x \gt sup(X) - \epsilon$$
@@ -152,31 +161,107 @@ The basic and often used sets of numbers are:
 \end{example}
 
 \begin{theorem}
-    The following holds:
-    \begin{itemize}
-        \item The \textbf{maximum and minimum are unique} aslong as they exist.
-        \item Every \textbf{non empty, bounded from above (below)} subset of $\mathbb{R}$ has a \textbf{maximum (minimum)}.
-    \end{itemize}
+    The \textbf{maximum and minimum are unique} aslong as they exist.
 \end{theorem}
 
+\begin{proof}
+    Assume there exists $x_1, x_2 \in X$ such that $x_1 = max(X)$ and $x_2 = max(X)$. As both $x_1$ and $x_2$ are maximum of $X$ we have
+    $$x_1 \geq x_2 \land x_2 \geq x_1 \implies x_1 = x_2$$
+\end{proof}
+
 \begin{definition}
-    A set $X$ is said to be (order)complete iff for every non empty subsets $A, B \subseteq X$
+    \textbf{Axioms of Addition}
+    \begin{itemize}
+        \item Commutativity: $x + y = y + x$
+        \item Associativity: $x + (y + z) = (x + y) + z$
+        \item Identity element: There exists an element $e \in X$ such that $x + e = x$ for all $x \in X$.
+        \item Inverse element: For every $x \in X$ there exists an element $x^{-1} \in X$ such that $x + x^{-1} = e$.
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    A set $X$ together with an operation $+$ that satisfies the axioms of addition is called a \textbf{abelian group}.
+\end{remark}
+
+\begin{example}
+    $(\mathbb{Z}, +)$ is an abelian group.
+\end{example}
+
+\begin{definition}
+    \textbf{Axioms of Multiplication}
+    \begin{itemize}
+        \item Commutativity: $x \cdot y = y \cdot x$
+        \item Associativity: $x \cdot (y \cdot z) = (x \cdot y) \cdot z$
+        \item Identity element: There exists an element $e \in X$ such that $x \cdot e = x$ for all $x \in X$.
+        \item Inverse element: For every $x \in X$ there exists an element $x^{-1} \in X$ such that $x \cdot x^{-1} = e$.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Distributivity} of multiplication over addition:
+    $$\forall x, y, z \in X: x \cdot (y + z) = x \cdot y + x \cdot z$$
+\end{definition}
+
+\begin{remark}
+    A set $X$ together with operations $+$ and $\cdot$ that satisfies the axioms of addition and multiplication and distributivity is called a \textbf{field}.
+\end{remark}
+
+\begin{definition}
+    \textbf{Order Axioms}
+    \begin{itemize}
+        \item reflexivity: $\forall x \in X: x \leq x$
+        \item antisymmetry: $\forall x, y \in X: x \leq y \land y \leq x \implies x = y$
+        \item transitivity: $\forall x, y, z \in X: x \leq y \land y \leq z \implies x \leq z$
+        \item totality: $\forall x, y \in X: x \leq y \lor y \leq x$
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    A set $X$ is said to be \textbf{(order)complete} iff for every non empty subsets $A, B \subseteq X$
     $$\forall a \in A \forall b \in B: a \leq b$$
     $$\implies \exists c \in X \quad \text{s.t.} \quad \forall a \in A: a \leq c \land \forall b \in B: c \leq b$$
 \end{definition}
+
+\begin{example}
+    The real numbers $\mathbb{R}$ satisfy axiomatic properties for addition, multiplication, distributivity and order. Furthermore $\mathbb{R}$ is an order complete field.
+\end{example}
 
 \begin{example}
     $\mathbb{Q}$ is not order complete. Let $A = \{x \in \mathbb{Q} \mid x^2 \leq 2\}$ and $B = \{x \in \mathbb{Q} \mid x^2 \geq 2\}$. Then $\forall a \in A \forall b \in B: a \leq b$ but there is no $c \in \mathbb{Q}$ such that $c^2 = 2$.
 \end{example}
 
 \begin{theorem}
-The Archimedian Principle says that
+    Every \textbf{non empty, bounded from above (below)} subset $X \subset \mathbb{R}$ has a \textbf{supremum (infimum)}.
+\end{theorem}
+
+\begin{proof}
+    Let $B$ be the set of all upper bounds of $X$. As $X$ is bounded from above and non empty, $B$ is non empty. Therfore
+    $$\forall x \in X: x \leq b \quad \forall b \in B$$
+    By the order completenes of $\mathbb{R}$ there exists a $c \in \mathbb{R}$ such that
+    $$\forall x \in X: x \leq c \land \forall b \in B: c \leq b$$
+    Hence $c$ is the least upper bound of $X$ and therefore $c = sup(X)$. Assume there exists $c' \in \mathbb{R}$ such that $c' = sup(X)$ and $c' \neq c$. Then by definition of $sup(X)$ we have
+    $$c \leq c' \land c' \leq c \implies c = c'$$
+\end{proof}
+
+\begin{theorem}
+The \textbf{Archimedian Principle} says that
 \begin{itemize}
     \item For $x \in \mathbb{R}$ and $y \gt 0$ there exists an element $n \in \mathbb{N}$ such that $n * y \gt x$.
     \item For every $\epsilon \gt 0$ there exists an element $n \in \mathbb{N}$ such that $\frac{1}{n} \lt \epsilon$.
 \end{itemize}
-(This follows from the order completenes of $\mathbb{R}$.)
 \end{theorem}
+
+\begin{proof}
+    We prove the first theorem by contradition. Assume it does not hold hence there exists $x \in \mathbb{R}$ and $y \gt 0$ such that
+    $$\forall n \in \mathbb{N}: n * y \leq x$$
+    This implies that $x$ is an upper bound for the set $X = \{n * y \mid n \in \mathbb{N}\}$. As $X$ is non empty and bounded from above, it has a supremum $c = sup(X)$. As $y \gt 0$ $c - y$ can not be an upper bound of $X$ hence there exists $n_0 \in \mathbb{N}$ such that
+    $$c - y \lt n_0 * y \implies c \lt (n_0 + 1) * y$$
+    This contradicts the assumption that $c$ is the supremum of $X$.
+\end{proof}    
+\begin{proof}
+    The second theorem is a direct consequence of the first theorem. It can be shown by setting $x = 1$ in the first theorem.
+\end{proof}    
+    
 
 \begin{theorem}
 The Young Inequality states that for all $\epsilon \gt 0$ and all $x, y \in \mathbb{R}$:
@@ -187,40 +272,54 @@ $$2\lvert xy \rvert \leq \epsilon x^2 + \frac{1}{\epsilon} y^2$$
     $$\left( \sqrt{\epsilon}x - \frac{1}{\sqrt{\epsilon}}y \right)^2 \geq 0 \implies \epsilon x^2 - 2xy + \frac{1}{\epsilon} y^2 \geq 0 \implies \epsilon x^2 + \frac{1}{\epsilon} y^2 \geq 2xy$$
 \end{proof}
 
-\begin{theorem}
-The real numbers $\mathbb{R}$ satisfy axiomatic properties for addition and multiplication (forming a field):
-\begin{itemize}
-    \item Associativity: $x + (y + z) = (x + y) + z$ and $x \cdot (y \cdot z) = (x \cdot y) \cdot z$
-    \item Commutativity: $x + y = y + x$ and $x \cdot y = y \cdot x$
-    \item Neutral elements: $\exists 0, 1 \in \mathbb{R}$
-    \item Inverse elements: $-x$ and $x^{-1}$ (for $x \neq 0$)
-    \item Distributivity: $x \cdot (y + z) = x \cdot y + x \cdot z$
-\end{itemize}
-$\mathbb{R}$ has order axioms: reflexivity, transitivity, antisymmetry, totality, making it an \textbf{ordered and order-complete field.}
-\end{theorem}
-
 \subsubsection{Vectors and Vector Spaces}
 
 \begin{definition}
-    For $x, y \in \mathbb{R}^n$, the standard scalar product is defined as:
+    The \textbf{euclidian space} $\mathbb{R}^n$ is the set of all vectors $x = (x_1, x_2, \dots, x_n)$ where $x_i \in \mathbb{R}$.
+\end{definition}
+
+\begin{definition}
+    \textbf{Addition} and \textbf{scalar multiplication} are defined as:
+    $$x + y = (x_1 + y_1, x_2 + y_2, \dots, x_n + y_n)$$
+    $$\lambda x = (\lambda x_1, \lambda x_2, \dots, \lambda x_n)$$
+\end{definition}
+
+\begin{definition}
+    A \textbf{vector space} has to satisfy the following axioms:
+    \begin{itemize}
+        \item Commutativity: $x + y = y + x$
+        \item Associativity: $x + (y + z) = (x + y) + z$
+        \item Identity element: There exists an element $e \in X$ such that $x + e = x$ for all $x \in X$.
+        \item Inverse element: For every $x \in X$ there exists an element $x^{-1} \in X$ such that $x + x^{-1} = e$.
+        \item Distributivity: $x \cdot (y + z) = x \cdot y + x \cdot z$
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    For $x, y \in \mathbb{R}^n$, the \textbf{standard scalar product} is defined as:
     $$x \cdot y = \langle x, y \rangle \coloneqq \sum_{i=1}^n x_i y_i$$
-    The Euclidean norm is defined as:
+    The \textbf{euclidean norm} is defined as:
     $$||x|| \coloneqq \sqrt{\sum_{i=1}^n x_i^2}$$
-    The Euclidean distance between $x$ and $y$ is:
+    The \textbf{euclidean distance} between $x$ and $y$ is:
     $$d(x, y) \coloneqq \sqrt{\sum_{i=1}^n (x_i - y_i)^2}$$
 \end{definition}
 
 \begin{theorem}
-    The triangle inequality holds for all $x, y, z \in \mathbb{R}^n$:
+    The triangle- and the cauch-schwarz inequality hold for all $x, y, z \in \mathbb{R}^n$:
     $$||x - z|| \leq ||x - y|| + ||y - z||$$
+    $$|\langle x, y \rangle| \leq ||x|| ||y||$$
 \end{theorem}
 
 \subsubsection{Complex Numbers}
 
 \begin{definition}
-    The \textbf{complex numbers} $\mathbb{C}$ are numbers of the form:
-    $$z = a + ib \quad \text{where } a, b \in \mathbb{R}$$
-    $a$ is the real part $\text{Re}(z)$, and $b$ is the imaginary part $\text{Im}(z)$. The imaginary unit $i$ has the property $i^2 = -1$.
+    The \textbf{imaginary unit} $i$ is defined as $i^2 = -1$.
+\end{definition}
+
+\begin{definition}
+    The \textbf{complex numbers} $\mathbb{C}$ are the set of numbers
+    $$\mathbb{C} = \{a + ib \mid a, b \in \mathbb{R}\}$$
+    where $a$ is the \textbf{real part} $\text{Re}(z)$, and $b$ is the \textbf{imaginary part} $\text{Im}(z)$.
 \end{definition}
 
 \begin{definition}
@@ -273,7 +372,7 @@ $\mathbb{R}$ has order axioms: reflexivity, transitivity, antisymmetry, totality
     $$e^{it} = \sum_{n=0}^\infty \frac{(it)^n}{n!} = \dots = \cos(t) + i\sin(t)$$
 \end{remark}
 
-Eulers formula leads us to a new representation of complex numbers: the polarcoordinates.
+Eulers formula leads us to a new representation of complex numbers: \textbf{the polarcoordinates}.
 
 \begin{definition}
     For $z \in \mathbb{C}$, the polar-coordinates are defined as:
@@ -281,13 +380,23 @@ Eulers formula leads us to a new representation of complex numbers: the polarcoo
     where $r = |z|$ is the absolute value and $t = \arg(z)$ is the argument.
 \end{definition}
 
-Multiplication and division in polar-coordinates is much easier than in cartesian coordinates:
-$$z_1 \cdot z_2 = r_1 e^{it_1} \cdot r_2 e^{it_2} = r_1 r_2 e^{i(t_1 + t_2)}$$
-$$\frac{z_1}{z_2} = \frac{r_1 e^{it_1}}{r_2 e^{it_2}} = \frac{r_1}{r_2} e^{i(t_1 - t_2)} $$
+\begin{remark}
+    To convert from cartesian to polar coordinates:
+    $$r = \sqrt{a^2 + b^2}, \quad t = \arctan\left(\frac{b}{a}\right)$$
+    Note that the arctan function only returns values in $(-\frac{\pi}{2}, \frac{\pi}{2})$, so we have to adjust the angle based on the quadrant of the complex number.
+\end{remark}
 
-So is exponentiation or taking roots:
-$$z^n = (r e^{it})^n = r^n e^{int}$$
-$$\sqrt[n]{z} = \sqrt[n]{r} e^{i\frac{t+2\pi k}{n}}, \quad k \in \{0, 1, \dots, n-1\}$$
+\begin{example}
+    Multiplication and division in polar-coordinates is much easier than in cartesian coordinates:
+    $$z_1 \cdot z_2 = r_1 e^{it_1} \cdot r_2 e^{it_2} = r_1 r_2 e^{i(t_1 + t_2)}$$
+    $$\frac{z_1}{z_2} = \frac{r_1 e^{it_1}}{r_2 e^{it_2}} = \frac{r_1}{r_2} e^{i(t_1 - t_2)} $$
+\end{example}
+
+\begin{example}
+    So is exponentiation or taking roots:
+    $$z^n = (r e^{it})^n = r^n e^{int}$$
+    $$\sqrt[n]{z} = \sqrt[n]{r} e^{i\frac{t+2\pi k}{n}}, \quad k \in \{0, 1, \dots, n-1\}$$
+\end{example}
 
 \begin{definition}
     The $n$-th roots of unity are the solutions to $z^n = 1$, which are given by:
@@ -300,5 +409,5 @@ $$\sqrt[n]{z} = \sqrt[n]{r} e^{i\frac{t+2\pi k}{n}}, \quad k \in \{0, 1, \dots, 
 \end{theorem}
 
 \begin{theorem}
-    The fundamental theorem of algebra states that every polynomial of degree $n \geq 1$ has exactly $n$ roots in $\mathbb{C}$ (counting multiplicity). These roots appear in konplex-conjugate pairs.
+    The \textbf{fundamental theorem of algebra} states that every polynomial of degree $n \geq 1$ has exactly $n$ roots in $\mathbb{C}$ (counting multiplicity). These roots appear in konplex-conjugate pairs.
 \end{theorem}

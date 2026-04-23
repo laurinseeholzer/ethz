@@ -2,15 +2,15 @@
 \contentsline {subsection}{\numberline {1.1}Logic}{3}{}%
 \contentsline {subsection}{\numberline {1.2}Sets}{4}{}%
 \contentsline {subsection}{\numberline {1.3}Numbers}{5}{}%
-\contentsline {subsubsection}{\numberline {1.3.1}Vectors and Vector Spaces}{7}{}%
-\contentsline {subsubsection}{\numberline {1.3.2}Complex Numbers}{7}{}%
-\contentsline {section}{\numberline {2}Sequences and Series}{11}{}%
-\contentsline {subsection}{\numberline {2.1}Sequences}{11}{}%
-\contentsline {subsection}{\numberline {2.2}Series}{14}{}%
-\contentsline {section}{\numberline {3}Functions}{17}{}%
-\contentsline {subsection}{\numberline {3.1}Limits in the context of functions}{19}{}%
-\contentsline {section}{\numberline {4}Continuity of functions}{21}{}%
-\contentsline {section}{\numberline {5}Differential calculus}{24}{}%
-\contentsline {subsection}{\numberline {5.1}Derivation rules}{25}{}%
-\contentsline {subsection}{\numberline {5.2}Bernoulli-L'Hopital}{27}{}%
-\contentsline {subsection}{\numberline {5.3}Convex and Concave graphs}{29}{}%
+\contentsline {subsubsection}{\numberline {1.3.1}Vectors and Vector Spaces}{9}{}%
+\contentsline {subsubsection}{\numberline {1.3.2}Complex Numbers}{10}{}%
+\contentsline {section}{\numberline {2}Sequences and Series}{13}{}%
+\contentsline {subsection}{\numberline {2.1}Sequences}{13}{}%
+\contentsline {subsection}{\numberline {2.2}Series}{16}{}%
+\contentsline {section}{\numberline {3}Functions}{20}{}%
+\contentsline {subsection}{\numberline {3.1}Limits in the context of functions}{22}{}%
+\contentsline {subsection}{\numberline {3.2}Continuity of functions}{23}{}%
+\contentsline {section}{\numberline {4}Differential calculus}{27}{}%
+\contentsline {subsection}{\numberline {4.1}Derivation rules}{28}{}%
+\contentsline {subsection}{\numberline {4.2}Bernoulli-L'Hopital}{30}{}%
+\contentsline {subsection}{\numberline {4.3}Convex and Concave graphs}{32}{}%
