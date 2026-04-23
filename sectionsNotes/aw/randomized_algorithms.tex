@@ -15,9 +15,7 @@
 \begin{definition}
     A \textbf{Las Vegas Algorithm} is a randomized algorithm that always returns the correct result, but the running time might be large (with a certain probability).
 \end{definition}
-\begin{example}
-    \textbf{}
-\end{example}
+
 
 \begin{remark}
     If we consider the las vegas algorithm that returns $???$ after a certain time limit $T$ then we have a version of Las Vegas algorithm that always terminates with a bounded runtime $T$ and can be convertet to both standard Las Vegas or Monte Carlo algorithms.
@@ -40,9 +38,9 @@
     To reduce the probability of error to a constant factor we only need a constant amount of extra iterations.
 \end{remark}
 
-\begin{theorem}
+\begin{important}
     Generally it is \textbf{not possible to reduce the probability of error for monte-carlo} algorithm, except for algorithms that only have \textbf{one sided error} or an \textbf{error probability of $\lt \frac{1}{2}$}.
-\end{theorem}
+\end{important}
 
 \begin{theorem}
     Let $A$ be a randomized algorithm which always returns $true$ or $false$ where
@@ -76,3 +74,118 @@
     $$P[A_\delta(I) \geq f(I)] \geq 1 - \delta$$
 \end{theorem}
 
+\subsection{Primality Testing}
+
+\begin{definition}
+    \textbf{Primality Testing Problem}: Given $n \in \mathbb{N}$, decide if $n$ is prime (i.e., has no divisors in $\{2, \dots, n-1\}$). 
+    This is heavily used in cryptography (e.g. RSA) to generate large random prime numbers securely.
+\end{definition}
+
+\begin{remark}
+    \textbf{History of Primality Tests}:
+    \begin{itemize}
+        \item \textbf{Sieve of Eratosthenes} (200BC): Finds all primes $\leq n$ (not polynomial time).
+        \item \textbf{Miller-Rabin} (1976): Monte-Carlo algorithm with one-sided error (always correct for primes).
+        \item \textbf{Solovay-Strassen} (1977): Alternative Monte-Carlo algorithm.
+        \item \textbf{Adleman-Huang} (1987): Monte-Carlo algorithm, always correct for non-primes.
+        \item \textbf{AKS} (Agrawal-Kayal-Saxena, 2002): First deterministic algorithm in polynomial time.
+    \end{itemize}
+\end{remark}
+
+\begin{algorithm}
+    //Euclid Primality Test
+    Choose a [1...n-1] uniformly at random. 
+    If ggT(a, n) = 1:
+        return ``Prime''
+    else 
+        return ``Not Prime''
+\end{algorithm}
+
+\begin{remark}
+    This is an extremely naive algorithm:
+    \begin{itemize}
+        \item If $n$ is prime: Output is always correct.
+        \item If $n$ is not prime: False output ``Prime'' with probability $\frac{|Z_n^*|}{n-1} \approx 1 - \frac{1}{\sqrt{n}}$, which is unfortunately very high.
+    \end{itemize}
+\end{remark}
+
+\begin{proof}
+    For a composite number $n$, the worst-case scenario (which maximizes the number of coprimes) occurs when $n = p^2$ for some prime $p$.
+    
+    In this case, the number of coprimes is:
+    $$ \varphi(n) = p(p-1) = n - \sqrt{n} $$
+
+    The probability of falsely picking an $a$ that is coprime to $n$ is therefore:
+    $$ P(\text{False ``Prime''}) = \frac{\varphi(n)}{n-1} \approx \frac{n - \sqrt{n}}{n} = 1 - \frac{1}{\sqrt{n}} $$
+\end{proof}
+
+\begin{definition}
+    \textbf{Euler's Totient Function} $\varphi(n) = |Z_n^*|$: Number of integers in $\{1, \dots, n-1\}$ that are coprime to $n$. 
+    If $n$ is prime, $\varphi(n) = n-1$.
+\end{definition}
+
+\begin{theorem}
+    \textbf{Theorem of Lagrange}: If $H$ is a subgroup of $G$, then $|H|$ divides $|G|$. \\
+    \textbf{Fermat's Little Theorem}: If $n$ is prime, then for all $a \in \{1, \dots, n-1\}$, $a^{n-1} \equiv 1 \pmod n$.
+\end{theorem}
+
+
+\begin{algorithm}
+    \textbf{Fermat Test}: Choose $a \in \{1, \dots, n-1\}$ uniformly at random. If $a^{n-1} \bmod n = 1$, return ``Prime'', else ``Not Prime''.
+\end{algorithm}
+
+\begin{remark}
+    \begin{itemize}
+        \item If $n$ is prime: Output is always correct.
+        \item If $n$ is not prime: False output ``Prime'' with probability $\leq \frac{1}{2}$, \textit{unless} $n$ is a \textbf{Carmichael Number}.
+    \end{itemize}
+\end{remark}
+
+\begin{definition}
+    A \textbf{Carmichael Number} is a composite number $n$ where $a^{n-1} \equiv 1 \pmod n$ holds for all $a$ coprime to $n$, causing the Fermat test to almost always improperly return ``Prime'' (e.g. $561 = 3 \times 11 \times 17$).
+\end{definition}
+    
+\begin{proof}
+    Let $PB_n$ be the set of ``false witnesses'' (numbers that incorrectly pass the test):
+    $$ PB_n = \{a \in Z_n^* \mid a^{n-1} \equiv 1 \pmod n\} $$
+
+    This set forms a subgroup of $Z_n^*$ because it is closed under multiplication: 
+    $$ \text{If } a, b \in PB_n, \text{ then } (ab)^{n-1} = a^{n-1} b^{n-1} \equiv 1 \pmod n $$
+    
+    By Lagrange's theorem, if $n$ is not a Carmichael number (meaning $PB_n \neq Z_n^*$), then $PB_n$ is a strict subgroup. The theorem states that its size $|PB_n|$ must cleanly divide the size of the parent group $|Z_n^*|$.
+    
+    Because $PB_n$ is a strict subgroup, the maximum possible size of this subgroup is exactly half the group:
+    $$ |PB_n| \leq \frac{|Z_n^*|}{2} \leq \frac{n-1}{2} $$
+    Meaning at most half of the elements in the test space will incorrectly evaluate to true.
+\end{proof}
+
+\begin{definition}
+    \textbf{Miller-Rabin Certificate}: Let $n>2$ be odd. Write $n-1 = 2^k d$ with $d$ odd. If $n$ is prime and $a \in \{1, \dots, n-1\}$, then either:
+    $$ a^d \equiv 1 \pmod n \quad \text{or} \quad \exists i \in \{0, \dots, k-1\}: a^{2^i d} \equiv n-1 \pmod n $$
+    If this condition \textbf{fails}, $a$ is a \textit{Miller-Rabin Certificate} proving $n$ is strictly not prime.
+\end{definition}
+
+\begin{algorithm}
+    //Miller-Rabin Test
+    Choose a at random. 
+    Check if the certificate condition holds.
+\end{algorithm}
+
+\begin{remark}
+    \begin{itemize}
+        \item If $n$ is prime: Output is always correct.
+        \item If $n$ is not prime: False output ``Prime'' with probability $\leq \frac{1}{4}$ (even for Carmichael numbers). This means repeating the test $k$ times drops error probability to $\leq 4^{-k}$. 
+    \end{itemize}
+\end{remark}
+
+\begin{proof}
+    If $n$ is prime, $\mathbb{Z}_n$ forms a mathematical field. In a field, the equation $x^2 = 1$ has exactly two roots ($1$ and $-1$):
+    $$ x=1 \quad \text{and} \quad x=-1 \equiv (n-1) \pmod n $$
+    
+    By Fermat's little theorem $a^{n-1} \equiv 1 \pmod n$. We can rewrite this exponent using $n-1 = 2^k d$ as:
+    $$ a^{2^k d} \equiv 1 \pmod n $$
+    
+    If we repeatedly take square roots of this value, the sequence must hit $-1$ before it hits $1$, unless it was $1$ from the very beginning ($a^d \equiv 1$). If the sequence does not follow this rule, the field properties are violated, and thus $n$ cannot be prime.
+    
+    While it rigorously holds that the false output probability is tightly bounded at $\leq \frac{1}{4}$, the full mathematical proof leverages the Chinese Remainder Theorem to show the non-witnesses form a strict subgroup bounded to one-quarter the size.
+\end{proof}

@@ -1,0 +1,307 @@
+Vorlesung Algorithmen und Wahrscheinlichkeit, D-INFK, ETH Zürich
+
+Primzahltest
+
+2, 3, 4 , 5, 6 , 7, 8 , 9 , 10 , 11, 12 , 13, 14 , 15 , 16 , 17, 18 , 19, 20 , 21 , 22 , 23, . . .
+
+99131 prim?
+123456789011 prim?
+123452367898764534254345099356471118987513240986543789064354231 prim?
+
+0 / 15
+
+Problemstellung
+Gegeben seien eine Zahl n ∈ N, entscheide, ob n prim ist, d.h.
+keinen Teiler in {2, . . . , n − 1} hat.
+Anwendung: Erzeugen von zufälligen grossen Primzahlen für
+RSA-Kryptographie (z.B. 1000 Bits).
+Dazu erzeugen wir zufällig Zahlen n mit 1000 Bits (d.h. n ≈ 21000 )
+und testen sie auf prim. Der Primzahlensatz garantiert uns eine
+1
+):
+hohe Erfolgsrate (etwa 10001 ln 2 ≈ 693
+Primzahlsatz: π(x) := |{n ∈ N | n ≤ x, n prim}| ∼
+
+x
+ln x
+
+1 / 15
+
+Geschichte von Primzahltests
+
+▶ 200 v.Chr. Sieb des Erathosthenes (findet alle Primzahlen
+≤ n, nicht polynomiell)
+▶ 1976 [Miller, Rabin]: Monte-Carlo Primzahltest mit
+einseitigem Fehler (immer korrekt für Primzahlen)
+▶ 1977 [Solovay, Strassen]: alternativer Monte-Carlo
+Primzahltest
+▶ 1987 [Adleman, Huang]: Monte-Carlo Primzahltest mit
+einseitigem Fehler (immer korrekt für Nicht-Primzahlen)
+▶ 2002 [Agrawal, Kayal, Saxena]: erster deterministischer
+Primzahltest in Polynomialzeit
+
+2 / 15
+
+Einfacher Primzahltest
+
+Naiver Algorithmus: Für alle a ≤
+
+√
+
+Ist zu langsam für n ≈ 21000 , also
+
+n, teste ob a Teiler von n.
+
+√
+
+n ≈ 2500 .
+
+Wir wollen einen Algorithmus mit Laufzeit polynomiell in log n
+(Darstellungsgrösse von n).
+
+3 / 15
+
+Grösster gemeinsamer Teiler
+Für m, n ∈ Z, sei ggT(m, n) der grösste gemeinsame Teiler von m
+und n. Er kann mit Hilfe des Euklid’schen Algorithmus schnell
+berechnet werden (in O((log nm)3 )). Natürlich gilt:
+ggT(a, n) > 1 für a ∈ [n − 1] ⇒ n nicht prim
+
+Euklid-Primzahltest(n)
+1: Wähle a ∈ [n − 1], zufällig gleichverteilt
+2: if ggT(a, n) = 1 then return ‘Primzahl’
+3: else return ‘keine Primzahl’
+▶ Falls n prim: Ausgabe immer korrekt.
+∗
+
+|Zn |
+▶ Falls n nicht prim: Falsche Ausgabe ‘Primzahl’ mit W’keit n−1
+.
+
+ggT(1, 9) = ggT(2, 9) = ggT(4, 9) = ggT(5, 9) = ggT(7, 9) = ggT(8, 9) = 1
+4 / 15
+
+Z∗n (multiplikative Gruppe modn)
+ggT(1, 9) = ggT(2, 9) = ggT(4, 9) = ggT(5, 9) = ggT(7, 9) = ggT(8, 9) = 1
+
+Z∗n = {a ∈ [n − 1] | ggT(a, n) = 1};
+
+φ(n) := |Z∗n |
+|{z}
+
+eulersche Phi-Funktion
+
+Z∗9 = {1, 2, 4, 5, 7, 8}, φ(9) = 6.
+
+Z∗7 = {1, 2, 3, 4, 5, 6}, φ(7) = 6.
+
+n prim: Z∗n = [n − 1] und φ(n) = n − 1.
+n = p 2 , p prim: φ(n) = p(p − 1) = n −
+
+√
+
+∗
+
+|Zn |
+n (⇒ n−1
+≈ 1 − √1n ).
+
+Z∗n mit Multiplikation modn bildet eine Gruppe
+(der Ordnung φ(n)).
+In Z∗9 : 2 · 7 = 5, 2 · 5 = 1, 2−1 = 5, 42 = 7, 43 = 1, . . .
+5 / 15
+
+Erinnerung Gruppentheorie
+▶ Satz von Lagrange ⇒ Ist H ≤ G (H Untergruppe von G ),
+dann ist |H| ein Teiler von |G |.
+▶ ord(a) := min{i ∈ N | ai = 1}, die Ordnung der von a
+erzeugten Untergruppe ⟨a⟩ := {a0 = 1, a1 , a2 , . . .}.
+▶ ord(a) ist Teiler von |G |. Folglich gilt
+a|G | = a
+
+|G |
+
+|G |
+
+ord(a) ord(a)
+
+= 1 ord(a) = 1.
+
+▶ In Z∗n : aφ(n) = 1 für alle a ∈ Z∗n
+
+(weil φ(n) = |Z∗n |)
+
+▶ In Z∗n , n prim: an−1 = 1 für alle a ∈ Z∗n
+
+(weil φ(n) = n − 1).
+
+Satz (Kleiner fermatscher Satz)
+Ist n ∈ N prim, so gilt für alle Zahlen a ∈ [n − 1]
+an−1 ≡n 1
+
+(bzw. an−1 = 1 in Z∗n ).
+6 / 15
+
+Primzahltest nach kleinem Satz von Fermat
+Fermat-Primzahltest(n)
+1: Wähle a ∈ [n − 1], zufällig gleichverteilt
+2: if an−1 mod n = 1 then return ‘Primzahl’
+3: else return ‘keine Primzahl’
+“an−1 mod n” schnell mit binärer Exponentiation.
+
+▶ Falls n prim: Ausgabe immer korrekt.
+▶ Falls n nicht prim: Falsche Ausgabe ‘Primzahl’ mit W’keit ≤ 12 ,
+es sei denn n ist eine Carmichael-Zahl (Def. später).
+Durch k-maliges Wiederholen im Fall ‘Primzahl’ können wir die
+Fehlerwahrscheinlichkeit auf ≤ 21k drücken.
+Wir machen einen Fehler, falls n nicht prim und
+an−1 ≡n 1
+Ein solches a nennen wir Pseudoprimzahlbasis von n.
+7 / 15
+
+Beispiel a = 2
+
+n
+2n−1 mod n
+
+2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 . . .
+0 1 0 1 2 1 0 4 2 1 8 1 2 4 0 1 14 1 8 4 2 1 . . .
+
+Die ersten nicht primen Zahlen mit 2n−1 ≡n 1:
+341, 561, 645, 1105, 1387, 1729, . . .
+
+8 / 15
+
+Pseudoprimzahlbasen und Carmichael-Zahlen
+
+PBn := {a ∈ [n − 1] | an−1 ≡n 1}
+=
+
+{a ∈ Z∗n | an−1 ≡n 1} Pseudoprimzahlbasen
+
+n heisst Carmichael-Zahl, falls n nicht prim ist und PBn = Z∗n .
+kleinste Beispiele: 561 = 3·11·17, 1105 = 5·13·17, 1729 = 7·13·19, . . .
+PBn ist Untergruppe von Z∗n , weil
+an−1 ≡n 1
+
+∧
+
+b n−1 ≡n 1
+
+⇒
+
+(ab)n−1 ≡n 1 .
+
+Folglich, wenn PBn ̸= Z∗n (d.h. n ist nicht Carmichael), dann ist
+n−1
+|PBn | ein echter Teiler von |Z∗n |, und |PBn | ≤ φ(n)
+2 ≤ 2 .
+9 / 15
+
+Primzahltest nach kleinem Satz von Fermat
+
+Fermat-Primzahltest(n)
+1: Wähle a ∈ [n − 1], zufällig gleichverteilt
+2: if an−1 mod n = 1 then return ‘Primzahl’
+3: else return ‘keine Primzahl’
+▶ Falls n prim: Ausgabe immer korrekt.
+▶ Falls n nicht prim: Fehler wenn an−1 ≡n 1,
+n|
+1
+d.h. falsche Ausgabe ‘Primzahl’ mit W’keit |PB
+n−1 ≤ 2 ,
+es sei denn n ist eine Carmichael-Zahl
+
+10 / 15
+
+Zertifikate für ‘nicht prim’
+
+Für “n nicht prim”, ist a ∈ [n − 1]
+▶ triviales Zertifikat, falls a ≥ 2 und a|n (a Teiler von n).
+√
+Anteil > n1 (aber a ∈ [⌊ n⌋] genügt).
+▶ Euklid Zertifikat, falls ggT(a, n) > 1.
+
+Anteil > √1n
+
+▶ Fermat Zertifikat, falls an−1 ̸≡n 1.
+Anteil ≥ 12 , ausser n ist Carmichael.
+▶ Miller-Rabin Zertifikat, falls . . . (folgt).
+Anteil ≥ 34 (n ungerade).
+
+11 / 15
+
+Miller-Rabin Zertifikat
+Zn := {0, 1, . . . n − 1}
+Für n prim, ist (Zn , +, ·), ‘·’ und ‘+’ modn, ein Körper (mit 0
+additives, und 1 multiplikatives neutrales Element).
+In einem Körper hat die Gleichung x 2 = 1 zwei Lösungen:
+x = 1 und x = −1 = n − 1
+Sei n > 2 ungerade. Schreibe n − 1 = 2k d mit k, d ∈ N, d
+ungerade. Ist n prim und a ∈ [n − 1], dann gilt:
+k
+
+▶ a2 d = an−1 ≡n 1,
+▶ a
+
+2k−1 d
+
+≡n 1 oder n − 1,
+
+(kleiner fermatscher Satz)
+(Körpereigenschaft oben)
+
+k−1
+k−2
+▶ falls a2 d ≡n 1, dann a2 d ≡n 1 oder n − 1,
+▶ . . . falls a2d ≡n 1, dann ad ≡n 1 oder n − 1.
+i
+Also: ad ≡n 1 oder ∃i ∈ {0, 1, . . . , k − 1} : a2 d ≡n n − 1.
+12 / 15
+
+Miller-Rabin Zertifikat
+
+Sei n > 2 ungerade. Schreibe n − 1 = 2k d mit k, d ∈ N, d
+ungerade. Ist n prim und a ∈ [n − 1], dann gilt
+i
+ad ≡n 1 oder ∃i ∈ {0, 1, . . . , k − 1} : a2 d ≡n n − 1.
+Beispiel Carmichael-Zahl 561:
+▶ 2560 mod 561 = 1,
+▶ 2280 mod 561 = 1,
+▶ 2140 mod 561 = 67.
+Also: 2 ist ein Miller-Rabin Zertifikat dafür, dass 561 nicht prim ist.
+(Für jedes n < 1 373 653 ist ein a ∈ {2, 3} Miller-Rabin Zertifikat.)
+
+13 / 15
+
+Miller-Rabin Test
+
+Miller-Rabin-Primzahltest(n)
+
+(n > 1, ungerade!)
+
+1: Schreibe n − 1 = 2k d mit d, k ∈ N, d ungerade
+2: Wähle a ∈ [n − 1], zufällig gleichverteilt
+i
+
+3: if ad mod n = 1 oder ∃i ∈ {0, . . . , k − 1} : a2 d mod n = n − 1
+
+then return ‘Primzahl’
+4: else return ‘keine Primzahl’
+▶ Falls n prim: Ausgabe ist immer korrekt.
+▶ Falls n nicht prim: Falsche Ausgabe ‘Primzahl’ mit W’keit ≤ 12
+(tatsächlich sogar ≤ 41 ).
+
+14 / 15
+
+Anmerkungen
+
+Obwohl man schnell feststellen kann, ob eine Zahl nicht prim ist,
+d.h. einen nichtrivialen Teiler hat, ist nicht bekannt, wie man einen
+solchen Teiler effizient findet. Darauf basiert die RSA
+Verschlüsselung.
+(Auf Quantencomputern kann man aber schnell Teiler finden.)
+
+15 / 15
+
+

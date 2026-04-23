@@ -22,3 +22,4 @@
 \contentsline {section}{\numberline {9}Randomized Algorithms}{32}{}%
 \contentsline {subsection}{\numberline {9.1}Reduction of Error probability}{32}{}%
 \contentsline {subsection}{\numberline {9.2}Optimization problems}{33}{}%
+\contentsline {subsection}{\numberline {9.3}Primality Testing}{34}{}%
