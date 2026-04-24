@@ -29,7 +29,6 @@
     \textbf{Static Branch Prediction}: The branch outcome is predicted strictly at compile time. Because it is static, it cannot adapt to dynamic changes in branch behavior during runtime.
 \end{definition}
 
-\subsubsection*{Basic Static Strategies}
 \begin{remark}
     The simplest strategy is to always predict the same outcome (\textbf{Always Taken} or \textbf{Always Not-Taken}). This logic requires minimal hardware but yields low accuracy.
 \end{remark}
@@ -40,8 +39,6 @@
 \begin{remark}
     BTFN significantly improves prediction success by intelligently exploiting loop structures. Backward branches are typically loop iterations, which are statistically taken much more often than not.
 \end{remark}
-
-\subsubsection*{Advanced Static Strategies}
 
 \begin{definition}
     \textbf{Profile-based Prediction}: Predicts the outcome based on branch behavior statistics gathered from a previous profiling run of the program.
@@ -67,7 +64,6 @@
     \textbf{Dynamic Branch Prediction}: The branch outcome is predicted at runtime based on the execution history.
 \end{definition}
 
-\subsubsection*{Target vs. Direction Prediction}
 \begin{definition}
     \textbf{Branch Target Buffer (BTB)}: A hardware cache that specifically stores the \textit{target addresses} of recently executed branches. When a branch instruction is fetched, the BTB is accessed to provide the target address immediately, avoiding pipeline stalls while waiting for the ALU to compute the target.
 \end{definition}
@@ -80,7 +76,6 @@
     \textbf{Indirect Branch Predictor}: Indirect branches map to multiple targets, making standard BTBs inaccurate. These are typically predicted using a dedicated history-based target predictor (e.g., indexing the BTB with the GHR XORed with the PC).
 \end{definition}
 
-\subsubsection*{Local History Predictors}
 \begin{definition}
     \textbf{Last-Time Predictor}: Predicts the outcome of a branch to be exactly the same as the outcome of the last time that specific branch was executed.
 \end{definition}
@@ -112,7 +107,6 @@
     \textbf{Agree Predictor} \& \textbf{Gskew Predictor}: Advanced techniques beyond Gshare to reduce interference. The \textbf{Agree Predictor} predicts whether the outcome will \textit{agree} or \textit{disagree} with a statically determined bias bit. The \textbf{Gskew Predictor} uses multiple PHTs with different hash indexing functions and resolves predictions via a majority vote.
 \end{definition}
 
-\subsubsection*{Ensemble Predictors}
 \begin{important}
     \textbf{Biased Branches \& Branch Filtering}: Filtering heavily biased branches (e.g., 99\% taken) to simpler predictors saves space in history tables for hard-to-predict branches.
 \end{important}
