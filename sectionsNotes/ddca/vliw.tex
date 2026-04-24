@@ -1,0 +1,35 @@
+\section{VLIW Architectures}
+
+\begin{definition}
+    \textbf{VLIW (Very Long Instruction Word)}: A parallel architecture where multiple independent operations are grouped into a single "very long" instruction word and executed simultaneously by multiple \textbf{processing elements (PE)}.
+\end{definition}
+
+\begin{remark}
+    This drops the need for complex dependency checking hardware (like in superscalar processors), as the \textbf{compiler is responsible} for ensuring that all operations in a single VLIW instruction are independent.
+\end{remark}
+
+\begin{important}
+    The compiler needs to \textbf{statically align} the instructions (and insert noops if necessary) for them to be processed by the correct PE. This \textbf{significantly reduces portability}, as the binary code is tied to the very specific hardware architecture.
+\end{important}
+
+\begin{remark}
+    The main advantage of VLIW is its simplicity and potential for high instruction-level parallelism.
+\end{remark}
+
+\subsection{Compiler optimizations for VLIW}
+
+\begin{definition}
+    \textbf{Trace Scheduling} is a compiler optimization technique that attempts to find the \textbf{most frequently executed paths} (the "trace") through a program and schedules instructions along that path to maximize parallelism.
+\end{definition}
+
+\begin{remark}
+    Trace scheduling is particularly effective for VLIW architectures because it allows the compiler to pack as many independent instructions as possible into a single VLIW instruction.
+\end{remark}
+
+\begin{definition}
+    \textbf{Superblocks} expand the trace to have a single entry point, but multiple exit points. 
+\end{definition}
+
+\begin{remark}
+    This is done trough tail duplication which eliminates side-entries to the trace which allows for further more agressive optimization.
+\end{remark}

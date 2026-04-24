@@ -1,0 +1,21 @@
+\section{Systolic Array Architectures}
+
+\begin{remark}
+    Systolic arrays might be hard to understand intuitively. The key idea is to have a \textbf{very specific architecture} of processing elements (PEs) that are connected in a \textbf{grid- or array-like structure} and control the flow of data. This allows us to process large amounts of data in parallel without having to load data entries multiple times.
+\end{remark}
+
+\begin{important}
+    Systolic arrays are \textbf{not a standard pipeline}, they allow for \textbf{non linear and multi-dimensional data flow}.
+\end{important}
+
+\begin{example}
+    To convolve a matrix with a kernel, we can use a systolic array to process the data in parallel. 
+\end{example}
+
+\begin{remark}
+    The main advantage of systolic arrays is their high efficiency in terms of data movement and processing power as well as the regularity of the design. 
+\end{remark}
+
+\begin{remark}
+    The main disadvantage is that they are very specialized and not good at exploiting irregular parallelism.
+\end{remark}
