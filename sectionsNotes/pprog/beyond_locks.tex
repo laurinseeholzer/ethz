@@ -2,6 +2,47 @@
 
 \subsection{Deadlocks}
 
+\begin{remark}
+    \textbf{Deadlock detection} in systems is implemented by finding cycles in the dependency graph.
+\end{remark}
+
+\begin{remark}
+    \textbf{Deadlock avoidance} amounts to techniques to ensure a cylce can never arise in the dependency graph. 
+    \begin{itemize}
+        \item \textbf{imposing an ordering} on the resources and requiring processes to acquire resources in that order
+        \item \textbf{two-phase locking protocol} with retry and release on failure
+    \end{itemize}
+\end{remark}
+
+\begin{codeexample}
+//Programming trick to create a global ordering
+class Resource {
+    private static final AtomicLong counter = new AtomicLong();
+    private final long index = counter.incrementAndGet();
+    ...
+}
+\end{codeexample}
+
 \subsection{Semaphores}
 
+\begin{definition}
+    A \textbf{semaphore} is a synchronization primitive that can be used to control access to a shared resource by multiple processes. It is essentially a counter that is used to keep track of the number of available resources.
+\end{definition}
+
+\begin{remark}
+    Semaphores are a generalization of locks and can be used to implement locks, as well as other synchronization primitives.
+\end{remark}
+
+\begin{definition}
+    A \textbf{binary semaphore} is a semaphore that can only have values 0 and 1 and are therfore equivalent to locks.
+\end{definition}
+
 \subsection{Barriers}
+
+\begin{definition}
+    A \textbf{barrier} is a synchronization primitive that is used to coordinate the execution of multiple threads. It is essentially a counter that is used to keep track of the number of threads that have reached the barrier.
+\end{definition}
+
+\begin{remark}
+    Barriers are used to implement parallel algorithms that require threads to synchronize at certain points in their execution. Wait until all threads have reached the barrier, then release them all at once.
+\end{remark}

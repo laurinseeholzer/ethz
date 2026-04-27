@@ -246,3 +246,70 @@
     $$f \text{ is convex} \quad \iff \quad f'' \geq 0$$
 \end{theorem}
 
+\subsection{Approximation of functions}
+
+\begin{lemma}
+    We can localy approximate the graph of $f$ at $x_0$ with the tangential line $t(x)$
+    $$f(x) \approx t(x) = f(x_0) + f'(x_0)(x-x_0)$$
+\end{lemma}
+
+\begin{example}
+    Let $f(x) = x^2$ and $x_0 = 2$ then 
+    $$f(x) \approx f(x_0) + f'(x_0)(x-x_0) = 2^2 + 2(2)(x-2) = 4 + 4(x-2) = 4x - 4$$
+\end{example}
+
+\begin{lemma}
+    To even more accurately approximate the function $f$ we can add further terms to the tangential line expansion
+    $$f(x) \approx t(x) = f(x_0) + f'(x_0)(x-x_0) + \frac{f''(x_0)}{2}(x-x_0)^2$$
+\end{lemma}
+
+\begin{remark}
+    The \textbf{Intuition} behind this is that we want a function that looks something like this:
+    $$P(x) = A + B(x-x_0) + C(x-x_0)^2$$
+    if $P(x_0) = f(x_0)$ we have $A = f(x_0)$. Further if $P'(x_0) = f'(x_0)$ we have $B = f'(x_0)$ and if $P''(x_0) = f''(x_0)$ we have $C = f''(x_0)/2$.
+\end{remark}
+
+\begin{example}
+    Let $f(x) = x^2$ and $x_0 = 2$ then 
+    $$f(x) \approx f(x_0) + f'(x_0)(x-x_0) + \frac{f''(x_0)}{2}(x-x_0)^2 = 2^2 + 2(2)(x-2) + \frac{2}{2}(x-2)^2 = 4 + 4(x-2) + (x-2)^2$$
+\end{example}
+
+\begin{theorem}
+    \textbf{Taylor's Theorem}: Let $f: (a, b) \to \mathbb{R}$ be $n+1$ times differentiable. Then 
+    $$f(x) = P_n(x) + R(x)$$
+    with  $P_n(x)$ the Taylor Polynomial of degree $n$ and $R(x)$ the remainder term
+    $$P_n(x) = \sum_{k=0}^n \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k$$
+    $$R(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1} \quad \text{for some } \xi \in (x_0, x) \text{ or } (x, x_0)$$
+\end{theorem}
+
+\begin{remark}
+    There are other forms of the remainder term, such as the Lagrange form and the Cauchy form. 
+\end{remark}
+
+\begin{example}
+    Assume we know that the equation
+    $$\sqrt{3x-4} + 2\sin{x} - x = \frac{1}{2}$$
+    has a solution near $x_0 = 2$. We can use Taylor's Theorem to approximate the solution.
+    Let $f(x) = \sqrt{3x-4} + 2\sin{x} - x$. Then 
+    $$f(2) = \sqrt{2} + 2\sin{2} - 2$$
+    $$f'(2) = \frac{3}{2\sqrt{2}} + 2\cos{2} - 1$$
+    Therefore the Taylor Approximation up to degree 2 is
+    $$f(x) \approx f(2) + f'(2)(x-2)$$
+    Setting this to $\frac{1}{2}$ and solving for $x$ gives us the linear approximation of the solution.
+\end{example}
+
+\begin{definition}
+    The \textbf{Taylor series expansion} of an infinitely differentiable function $f: (a, b) \to \mathbb{R}$ at $x_0$ is given by 
+    $$f(x) = \sum_{k=0}^\infty \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k$$
+\end{definition}
+
+\begin{example}
+    The following Taylor series converge for all $x \in \mathbb{R}$:
+    $$e^x = \sum_{k=0}^\infty \frac{x^k}{k!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \dots$$
+    $$\sin{x} = \sum_{k=0}^\infty (-1)^k \frac{x^{2k+1}}{(2k+1)!} = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \dots$$
+    $$\cos{x} = \sum_{k=0}^\infty (-1)^k \frac{x^{2k}}{(2k)!} = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \dots$$
+\end{example}
+
+\begin{important}
+    Not all infinitely differentiable functions have a Taylor series expansion that converges to the function itself. For example $ln(1+x), \frac{1}{1-x}, (1+x)^p$ only converge for $-1 \lt x \lt 1$
+\end{important}

@@ -14,3 +14,4 @@
 \contentsline {subsection}{\numberline {4.1}Derivation rules}{28}{}%
 \contentsline {subsection}{\numberline {4.2}Bernoulli-L'Hopital}{30}{}%
 \contentsline {subsection}{\numberline {4.3}Convex and Concave graphs}{32}{}%
+\contentsline {subsection}{\numberline {4.4}Approximation of functions}{33}{}%
