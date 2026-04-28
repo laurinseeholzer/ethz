@@ -26,16 +26,71 @@ class Resource {
 \subsection{Semaphores}
 
 \begin{definition}
-    A \textbf{semaphore} is a synchronization primitive that can be used to control access to a shared resource by multiple processes. It is essentially a counter that is used to keep track of the number of available resources.
+    A \textbf{semaphore} is a synchronization primitive that acts as a thread-safe counter that can be used to control access to a shared resource by multiple processes.
 \end{definition}
+
+\begin{codeexample}
+public class Semaphore {
+    private int n, S;
+    ...
+    acquire() {
+        wait until S > 0;
+        S--;
+    }
+    
+    release() {
+        S++;
+    }
+}
+\end{codeexample}
+
+\begin{codeexample}
+//initialize with n permits
+Semaphore semaphore = new Semaphore(n);
+
+semaphore.acquire();
+    //no more than n threads can be here at once
+    //the semaphore will block until a thread calls release
+semaphore.release();
+\end{codeexample}
 
 \begin{remark}
     Semaphores are a generalization of locks and can be used to implement locks, as well as other synchronization primitives.
 \end{remark}
 
 \begin{definition}
-    A \textbf{binary semaphore} is a semaphore that can only have values 0 and 1 and are therfore equivalent to locks.
+    A \textbf{binary semaphore} is a semaphore that can only have values 0 and 1 and is therefore equivalent to a lock.
 \end{definition}
+
+\begin{definition}
+    A \textbf{rendezvous} is a location in the code where threads have to wait until all threads have reached that location before they can continue.
+\end{definition}
+
+\begin{remark}
+    For two threads, a rendezvous can be implemented with two binary semaphores.
+\end{remark}
+
+\begin{codeexample}
+void thread1() {
+    A.acquire();
+    B.release();
+
+    B.acquire();
+    A.release();
+}
+
+void thread2() {
+    B.acquire(); 
+    A.release();
+
+    A.acquire();
+    B.release();
+}
+\end{codeexample}
+
+\begin{important}
+    Using Semaphores is often problematic as the programmer has to have deep knowlegde of the algorithm to correctly implement the synchronization.
+\end{important}
 
 \subsection{Barriers}
 
@@ -46,3 +101,88 @@ class Resource {
 \begin{remark}
     Barriers are used to implement parallel algorithms that require threads to synchronize at certain points in their execution. Wait until all threads have reached the barrier, then release them all at once.
 \end{remark}
+
+\begin{definition}
+    A \textbf{two-phase barrier} is a barrier that is implemented with two semaphores and a counter.
+\end{definition}
+
+\begin{codeexample}
+mutex=1, barrier1=0, barrier2=1, count=0;
+
+aquire(mutex);
+    count++; 
+    if (count == n) {
+        accuire(barrier2);
+        release(barrier1);
+    }
+release(mutex);
+
+acuire(barrier1); release(barrier1);
+
+aquire(mutex);
+    count--;
+    if (count == 0) {
+        accurie(barrier1);
+        release(barrier2);
+    }
+release(mutex);
+\end{codeexample}
+
+\subsection{Producer Consumer Pattern}
+
+\begin{definition}
+    The \textbf{producer consumer pattern} is a classic synchronization problem that illustrates the use of semaphores to coordinate the execution of multiple threads.
+\end{definition}
+
+\begin{example}
+    We can prodcuer-consumer patterns ot build data flow parallel programs for example pipelines.
+    $$T_0 \rightarrow T_1 \rightarrow T_2 \dots T_n$$
+    where $T_0$ is a producer, $T_n$ is a consumer, and $T_1, \dots, T_{n-1}$ are consumers of the previous thread and producers of the next thread.
+\end{example}
+
+\begin{remark}
+    Note that in a basic pipeline $T_i$ can only start producing once $T_(i+1)$ is ready to consume, as there is not buffer inbetween them. An \textbf{improvement} would be to have buffer queues between each node where $T_i$ can produce into and $T_(i+1)$ can consume from. We stall $T_i$ iff the queue $Q_i$ is full.
+\end{remark}
+
+\begin{definition}
+    Such a buffer-queue is called \textbf{Producer-Consumer Queue}.
+\end{definition}
+
+\begin{remark}
+    To implement a PC Queue we can use Semaphores that signal the producers when the queue has space and signal the consumers when the queue has data.
+\end{remark}
+
+\begin{codeexample}
+void enqueue(long x) {
+    try {
+        nonFull.acquire();
+        manipulation.acquire();
+        buffer[in] = x;
+        in = (in + 1) % n;
+    } catch (Exception e) {}
+    finally {
+        manipulation.release();
+        nonEmpty.release();
+    }
+}
+\end{codeexample}
+
+\begin{codeexample}
+long dequeue() {
+    long x = 0;
+    try {
+        nonEmpty.acquire();
+        manipulation.acquire();
+        x = buffer[out];
+        out = (out + 1) % n;
+    } catch (Exception e) {}
+    finally {
+        manipulation.release();
+        nonFull.release();
+    }
+    return x;
+}
+\end{codeexample}
+
+\subsection{Monitors}
+

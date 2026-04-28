@@ -753,6 +753,13 @@ INPUT sectionsNotes/pprog/hardware_support.tex
 INPUT ./sectionsNotes/pprog/hardware_support.tex
 INPUT ./sectionsNotes/pprog/hardware_support.tex
 INPUT sectionsNotes/pprog/hardware_support.tex
+INPUT ./sectionsNotes/pprog/beyond_locks.tex
+INPUT ./sectionsNotes/pprog/beyond_locks.tex
+INPUT ./sectionsNotes/pprog/beyond_locks.tex
+INPUT sectionsNotes/pprog/beyond_locks.tex
+INPUT ./sectionsNotes/pprog/beyond_locks.tex
+INPUT ./sectionsNotes/pprog/beyond_locks.tex
+INPUT sectionsNotes/pprog/beyond_locks.tex
 INPUT build/pprog.aux
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb

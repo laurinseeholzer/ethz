@@ -1,37 +1,43 @@
-\contentsline {section}{\numberline {1}Threads and Processes}{3}{}%
-\contentsline {subsection}{\numberline {1.1}Processes}{3}{}%
-\contentsline {subsection}{\numberline {1.2}Parallelism}{3}{}%
-\contentsline {subsection}{\numberline {1.3}Multithreading}{4}{}%
-\contentsline {section}{\numberline {2}Synchronization}{7}{}%
-\contentsline {subsection}{\numberline {2.1}Locks and Synchronized}{7}{}%
-\contentsline {subsection}{\numberline {2.2}Wait, notify, notifyAll}{8}{}%
-\contentsline {subsection}{\numberline {2.3}Lock API}{8}{}%
-\contentsline {section}{\numberline {3}Optimization}{11}{}%
-\contentsline {subsection}{\numberline {3.1}Caching}{11}{}%
-\contentsline {subsection}{\numberline {3.2}Vectorization}{11}{}%
-\contentsline {subsection}{\numberline {3.3}Instruction Level Parallelism (ILP)}{11}{}%
-\contentsline {subsection}{\numberline {3.4}Pipelining}{12}{}%
-\contentsline {subsection}{\numberline {3.5}Parallel Performance}{12}{}%
-\contentsline {section}{\numberline {4}Divide and Conquer}{14}{}%
-\contentsline {subsection}{\numberline {4.1}Executor Service}{14}{}%
-\contentsline {subsection}{\numberline {4.2}Fork-Join}{15}{}%
-\contentsline {subsection}{\numberline {4.3}Task graphs}{16}{}%
-\contentsline {section}{\numberline {5}Parallel Algorithms}{17}{}%
-\contentsline {subsection}{\numberline {5.1}Parallel Patterns}{17}{}%
-\contentsline {subsection}{\numberline {5.2}Parallel Algorithms}{17}{}%
-\contentsline {subsubsection}{\numberline {5.2.1}Prefix-Sum}{17}{}%
-\contentsline {subsubsection}{\numberline {5.2.2}Pack}{18}{}%
-\contentsline {subsubsection}{\numberline {5.2.3}Quicksort}{18}{}%
-\contentsline {section}{\numberline {6}Shared Resources}{19}{}%
-\contentsline {subsection}{\numberline {6.1}Race Conditions}{19}{}%
-\contentsline {subsection}{\numberline {6.2}Guidelines for Concurrent programming}{19}{}%
-\contentsline {section}{\numberline {7}Memory Models}{21}{}%
-\contentsline {subsection}{\numberline {7.1}Memory Reordering and Hierarchy}{21}{}%
-\contentsline {subsection}{\numberline {7.2}The Java Memory Model (JMM)}{22}{}%
-\contentsline {section}{\numberline {8}Behind Locks}{24}{}%
-\contentsline {subsection}{\numberline {8.1}State Space Diagrams}{24}{}%
-\contentsline {subsection}{\numberline {8.2}Attempts to mutual exclusion}{24}{}%
-\contentsline {subsection}{\numberline {8.3}Successful Algorithms}{25}{}%
-\contentsline {section}{\numberline {9}Hardware Support for Parallelism}{28}{}%
-\contentsline {subsection}{\numberline {9.1}Typical Hardware Instructions}{28}{}%
-\contentsline {subsection}{\numberline {9.2}Locks using atomic operations}{28}{}%
+\contentsline {section}{\numberline {1}Threads and Processes}{4}{}%
+\contentsline {subsection}{\numberline {1.1}Processes}{4}{}%
+\contentsline {subsection}{\numberline {1.2}Parallelism}{4}{}%
+\contentsline {subsection}{\numberline {1.3}Multithreading}{5}{}%
+\contentsline {section}{\numberline {2}Synchronization}{8}{}%
+\contentsline {subsection}{\numberline {2.1}Locks and Synchronized}{8}{}%
+\contentsline {subsection}{\numberline {2.2}Wait, notify, notifyAll}{9}{}%
+\contentsline {subsection}{\numberline {2.3}Lock API}{9}{}%
+\contentsline {section}{\numberline {3}Optimization}{12}{}%
+\contentsline {subsection}{\numberline {3.1}Caching}{12}{}%
+\contentsline {subsection}{\numberline {3.2}Vectorization}{12}{}%
+\contentsline {subsection}{\numberline {3.3}Instruction Level Parallelism (ILP)}{12}{}%
+\contentsline {subsection}{\numberline {3.4}Pipelining}{13}{}%
+\contentsline {subsection}{\numberline {3.5}Parallel Performance}{13}{}%
+\contentsline {section}{\numberline {4}Divide and Conquer}{15}{}%
+\contentsline {subsection}{\numberline {4.1}Executor Service}{15}{}%
+\contentsline {subsection}{\numberline {4.2}Fork-Join}{16}{}%
+\contentsline {subsection}{\numberline {4.3}Task graphs}{17}{}%
+\contentsline {section}{\numberline {5}Parallel Algorithms}{18}{}%
+\contentsline {subsection}{\numberline {5.1}Parallel Patterns}{18}{}%
+\contentsline {subsection}{\numberline {5.2}Parallel Algorithms}{18}{}%
+\contentsline {subsubsection}{\numberline {5.2.1}Prefix-Sum}{18}{}%
+\contentsline {subsubsection}{\numberline {5.2.2}Pack}{19}{}%
+\contentsline {subsubsection}{\numberline {5.2.3}Quicksort}{19}{}%
+\contentsline {section}{\numberline {6}Shared Resources}{20}{}%
+\contentsline {subsection}{\numberline {6.1}Race Conditions}{20}{}%
+\contentsline {subsection}{\numberline {6.2}Guidelines for Concurrent programming}{20}{}%
+\contentsline {section}{\numberline {7}Memory Models}{22}{}%
+\contentsline {subsection}{\numberline {7.1}Memory Reordering and Hierarchy}{22}{}%
+\contentsline {subsection}{\numberline {7.2}The Java Memory Model (JMM)}{23}{}%
+\contentsline {section}{\numberline {8}Behind Locks}{25}{}%
+\contentsline {subsection}{\numberline {8.1}State Space Diagrams}{25}{}%
+\contentsline {subsection}{\numberline {8.2}Attempts to mutual exclusion}{25}{}%
+\contentsline {subsection}{\numberline {8.3}Successful Algorithms}{26}{}%
+\contentsline {section}{\numberline {9}Hardware Support for Parallelism}{29}{}%
+\contentsline {subsection}{\numberline {9.1}Typical Hardware Instructions}{29}{}%
+\contentsline {subsection}{\numberline {9.2}Locks using atomic operations}{29}{}%
+\contentsline {section}{\numberline {10}Beyond Locks}{31}{}%
+\contentsline {subsection}{\numberline {10.1}Deadlocks}{31}{}%
+\contentsline {subsection}{\numberline {10.2}Semaphores}{31}{}%
+\contentsline {subsection}{\numberline {10.3}Barriers}{32}{}%
+\contentsline {subsection}{\numberline {10.4}Producer Consumer Pattern}{33}{}%
+\contentsline {subsection}{\numberline {10.5}Monitors}{34}{}%
