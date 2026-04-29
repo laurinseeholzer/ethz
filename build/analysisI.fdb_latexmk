@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1777298404.80413 "/home/laurin/dev/ethz/analysisI.tex" "build/analysisI.pdf" "analysisI" 1777298405.9382 0
+["pdflatex"] 1777455095.82962 "/home/laurin/dev/ethz/analysisI.tex" "build/analysisI.pdf" "analysisI" 1777455096.90149 0
   "/home/laurin/dev/ethz/analysisI.tex" 1776939021.07818 596 1c2ad0fc65826297124d4b19dca1804b ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -116,9 +116,9 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1774398240.84368 4602601 5d02a5c5d52d7237566d144856366042 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1774397783 7753788 a0020c5830dd8c877264576b28708675 ""
   "analysisI.tex" 1776939021.07818 596 1c2ad0fc65826297124d4b19dca1804b ""
-  "build/analysisI.aux" 1777298405.79869 1938 4c99016b512d1f8b86fb15b13f51ad6d "pdflatex"
-  "build/analysisI.toc" 1777298405.79969 1173 f8a46a5edd050c34ffd06a7ce7c9203e "pdflatex"
-  "sectionsNotes/analysisI/differential_calculus.tex" 1777298404.5677 13773 475fe51e8a85440af3b8d87d89c9f58e ""
+  "build/analysisI.aux" 1777455096.76154 1938 4c99016b512d1f8b86fb15b13f51ad6d "pdflatex"
+  "build/analysisI.toc" 1777455096.76254 1173 f8a46a5edd050c34ffd06a7ce7c9203e "pdflatex"
+  "sectionsNotes/analysisI/differential_calculus.tex" 1777455095.62854 14841 3b38d77d2d4c8d9a4c1ae5e4a0f561d5 ""
   "sectionsNotes/analysisI/functions.tex" 1776946024.19358 14103 1874411b5154e02781f417aa822ea1a3 ""
   "sectionsNotes/analysisI/logic_sets_numbers.tex" 1776873601.02152 17833 d95d5bfb93765b4d8b99172ba61b0d6a ""
   "sectionsNotes/analysisI/sequences_series.tex" 1776889493.19355 13298 3c0e35d1f782fb192de5ef3134f8c70e ""
