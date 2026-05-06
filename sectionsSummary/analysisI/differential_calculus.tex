@@ -85,7 +85,7 @@
     $$(f^{-1})'(x) = \frac{1}{f'(f^{-1}(x))} $$
 \end{theorem}
 
-\subsection{Local extrema}
+\subsection{Bernoulli-L'Hopital}
 
 \begin{theorem}
     Let $I \subset \mathbb{R}$ be a an intervall, $f: I \to \mathbb{R}$, and let $x_0$ be a local Extrema of $f$. Then one of the following holds:
@@ -94,4 +94,39 @@
         \item $f$ is not differentiable at $x_0$
         \item $f$ is differentiable at $x_0$ and $f'(x_0) = 0$
     \end{itemize}
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Rolle's Theorem:} Let $f:[a,b] \to \mathbb{R}$ be differentiable on $(a,b)$ and continous on $[a,b]$, and assume that $f(a) = f(b)$, then there exists a $\xi \in (a,b)$ such that $f'(\xi) = 0$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Mean Value Theorem:} Let $f:[a,b] \to \mathbb{R}$ be differentiable on $(a,b)$ and continous on $[a,b]$, then there exists a $\xi \in (a,b)$ such that $f'(\xi) = \frac{f(b)-f(a)}{b-a}$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{L'Hopital's Rule:} Let $f,g: I \to \mathbb{R}$ differentiable functions on $I \subset \mathbb{R}$ and $a \in \bar{I}$. If $\lim_{x \to a} \frac{f(x)}{g(x)} \in \{0, \infty\}$ (\textbf{0/0 or inf/inf}) and $\lim_{x \to a} \frac{f'(x)}{g'(x)} = L$ exists then $\lim_{x \to a} \frac{f(x)}{g(x)} = L$
+\end{theorem}
+
+\subsection{Taylor Approximation}
+
+\begin{definition}
+    A function $f$ is called \textbf{concave / convex} on $I$ if for all $a,b \in I$ and $t \in (0,1)$
+    $$f((1-t)a + tb) \geq (\leq) (1-t)f(a) + tf(b) $$
+\end{definition}
+
+\begin{theorem}
+    $f$ is convex/concave iff $f'$ is monotonically increasing/decreasing on $I$ i.e. if $f'' \geq (\leq) 0$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Taylor's Theorem:} Let $f: (a,b) \to \mathbb{R}$ be $n+1$-times differentiable, then for all $x \in (a,b)$ then
+    $f(x) = P_n(x) + R_n(x)$
+    where $P_n(x)$ is the Taylor polynomial of degree $n$ at $a$
+    
+    $$ P_n(x) = \sum_{k=0}^{n} \frac{f^{(k)}(a)}{k!} (x-a)^k $$
+
+    and $R_n(x)$ is the remainder term
+    $$ R_n(x) = \frac{f^{(n+1)}(\xi)}{n+1!} (x-a)^{n+1} $$
+    for some $\xi \in (a,b)$
 \end{theorem}

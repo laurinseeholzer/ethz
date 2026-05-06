@@ -238,3 +238,97 @@
     $$E[T] \le 2n \sum_{j=1}^{\infty} (3/4)^{j-1} = 2n \cdot \frac{1}{1 - 3/4} = 8n$$
     The expected runtime of $QuickSelect(A, 1, n, k)$ is indeed linear, as claimed.
 \end{proof}
+
+\subsection{Duplicate Detection}
+
+\begin{definition}
+    We are given a sequence of data-elements $A_i \in \Sigma^*$ where $\Sigma$ is a set of size n. Determine if there are any duplicates in $A$.
+\end{definition}
+
+\begin{remark}
+    We could sort the sequence in $O(n log n)$ and check for duplicates in $O(n)$. But what if the data elements are too large to efficiently sort them?
+\end{remark}
+
+\begin{algorithm}
+S = [A1, A2 ... An];
+X = [(hash(A1), 1), (hash(A2), 2), ... (hash(An), n)];
+Duplicates = [];
+X.sortByHashValue();
+
+for every block of elements with the same hash value do: 
+    if block.size > 1:
+        For every pair (Ai, Aj) in block do:
+            if Ai.data == Aj.data:
+                Duplicates.add((Ai.data, Aj.data));
+return Duplicates;
+\end{algorithm}
+
+\begin{remark}
+    Note that we have to check each pair in their block as our hash function guarantees that same datavalues recieve same hash values but not necessarily uniquely.
+\end{remark}
+
+\begin{theorem}
+    The expected number of actual data comparisons is $O(\#duplicates) + O(1)$.
+\end{theorem}
+
+\begin{proof}
+    
+\end{proof}
+
+\subsection{Floyd-Cycle Detection}
+
+\begin{definition}
+    Given an array $A[1, \dots, n]$ where $A[i] \in \{1, \dots, n\}$ find two indices $i \neq j$ such that $A[i] = A[j]$.
+\end{definition}
+
+\begin{remark}
+    We want to solve this problem wiht $O(n)$ expected runtime and $O(1)$ extra space.
+\end{remark}
+
+\begin{remark}
+    \textbf{Idea:} We can model this as a directed graph with nodes $1 \dots n$ and edges $i \to A[i]$.
+\end{remark}
+
+\begin{lemma}
+    There exists a $t \in \mathbb{N}$ such that $X_t = X_{2t}$ if there are duplicates in $A$.
+\end{lemma}
+
+\begin{proof}
+    Assume there are duplicates in $A$ hence there is a cycle in the graph. Let $r = \lfloor \frac{k}{l} \rfloor \cdot l - k \geq 0$ with $l$ the length of a cycle and $k$ the length of the path before the cycle starts (tail). Observe that $X_{k+r} = X_{2(k+r)}$ furhter 
+    $$k + r = \lfloor \frac{k}{l} \rfloor l \lt (\frac{k}{l}+1)l = k+l \leq n$$
+    Thus $t=k+r$ is an itteration index where the sequence repeats itself. Therfore if we find such $t$ then $X_t = X_{2t}$ and the two corresponding array entries must be equal.
+\end{proof}
+
+\begin{algorithm}
+tortoise = A[n]
+hare = A[A[n]]
+t = 1
+
+while tortoise != hare:
+    tortoise = A[tortoise]
+    hare = A[A[hare]]
+    t += 1
+
+hare = n
+while hare != tortoise:
+    i = hare;
+    j = tortoise;
+    hare = A[hare]
+    tortoise = A[tortoise]
+
+return i, j
+\end{algorithm}
+
+\begin{remark}
+    Observe that this algorithm only uses $O(1)$ extra space.
+\end{remark}
+
+\begin{lemma}
+    Let $t\leq n$ with $X_t = X_{2t}$ then $X_{t+k} = X_{k}$ holds for all $k \geq 0$.
+\end{lemma}
+
+\begin{proof}
+    We know $X_t = X_{2t}$ and thus $2t = t+p*l$ for some $p \in \mathbb{N}$ hence $t=p*l$ holds and finally $X_{t+k} = X_{k+l*p} = X_{k}$ holds by induction.
+\end{proof}
+
+

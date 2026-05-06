@@ -1,0 +1,63 @@
+\section{Differential equations}
+
+\subsection{Modelling of differential equations}
+
+\begin{example}
+    Assume at time $t=0$ one takes in a certain amount of alcohol. The alcohol first flows to the stomac and is then absorbed into the blood. We want to find a description of the current amount of alcohol in the stomac $m_S(t)$ and in the blood $m_B(t)$.
+
+    We assume the following: 
+    \begin{itemize}
+        \item the amount of alcohol in the stomac decreases by $ \alpha \Delta t m_S(t) $
+        $$m_S(t+\Delta t) = m_S(t) - \alpha \Delta t \cdot m_S(t)$$
+        $$\implies \frac{m_S(t+\Delta t) - m_S(t)}{\Delta t} = - \alpha \cdot m_S(t)$$
+        $$\implies m_S'(t) = - \alpha \cdot m_S(t)$$
+        \item the amount of alcohol in the blood is decreased by a constant amount of $\beta \Delta t$
+        $$m_B(t)' = \alpha \cdot m_S(t) - \beta$$
+    \end{itemize}
+\end{example}
+
+\begin{definition}
+    A differential equation is an equation which contains derivatives of functions.
+\end{definition}
+
+\begin{definition}
+    A differential equation is called
+    \begin{itemize}
+        \item of \textbf{n-th order}, if the n-th derivative is the highest occurring derivative.
+        \item \textbf{linear}, if the unknown function $u(t)$ and its derivatives appear in the equation in the form of a linear combination.
+        \item \textbf{homogeneous}, if it only contains multiples of the unknown function $u(t)$ and its derivatives.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    An ordinary differential equation (ODE) is a differential equation which contains only derivatives of one independent variable.
+\end{definition}
+
+\subsection{Linear, homogeneous ODEs}
+
+\begin{theorem}
+    \textbf{Superposition principle}: If $y_1$ and $y_2$ are solutions to a linear homogeneous differential equation so is
+    $$y(t) = c_1 y_1(t) + c_2 y_2(t), \quad c_1, c_2 \in \mathbb{R}$$
+\end{theorem}
+
+\begin{theorem}
+    Linear homogenous differential equations of $n$-th order have $n$ solutions $y_1, ..., y_n$ such that
+    $$y(x) = C_1 y_1(x) + ... + C_n y_n(x), \quad C_i \in \mathbb{R}, \text{ for } i = 1, ..., n$$
+    is called the general solution.
+\end{theorem}
+
+\begin{lemma}
+    Let $y(x) = e^{\lambda x}, \lambda \in \mathbb{R}$ then by deriving $n$ times and taking out $e^{\lambda x}$ we will get the characteristic equation
+    $$a_n \lambda^n + a_{n-1} \lambda^{n-1} + ... + a_1 \lambda + a_0 = 0$$
+    And the characteristic polynom
+    $$P(\lambda) = a_n \lambda^n + ... + a_0$$
+\end{lemma}
+
+\begin{theorem}
+    We can find the general solution of a linear, homogeneous ODE of $n$-th order by finding the roots of the characteristic polynom
+    \begin{itemize}
+        \item \textbf{Distinct real roots}: $y_i(x) = e^{\lambda_i x}, \lambda_i \in \mathbb{R}$
+        \item \textbf{Multiple real roots}: $y_i(x) = x^k e^{\lambda_i x}, \lambda_i \in \mathbb{R}$
+        \item \textbf{Complex roots}: $y_i(x) = e^{\alpha x} \cos(\beta x), e^{\alpha x} \sin(\beta x), \lambda_i = \alpha + i \beta \in \mathbb{C}$
+    \end{itemize}
+\end{theorem}

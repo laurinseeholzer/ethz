@@ -1,0 +1,33 @@
+\section{SIMD Architectures}
+
+\begin{definition}
+    \textbf{Single Instruction, Multiple Data (SIMD)}: Same instruction applied to multiple data elements at once.
+\end{definition}
+
+\begin{definition}
+    \textbf{Data Parallelism}: Performing the same operation on multiple data elements in parallel. (opposed to control parallelism: multiple instructions)
+\end{definition}
+
+\begin{definition}
+    \textbf{Array Processor}: Instruction operates on multiple data elements at the same time using different spaces (PEs).
+\end{definition}
+
+\begin{definition}
+    \textbf{Vector Processor}: Instruction operates on multiple data elements in consecutive time steps (pipelined) using the same space (PE).
+\end{definition}
+
+\begin{remark}
+    Vector processing allows for deeper pipelines as it does not require handling of data dependencies or branches but requires regular data structures and a lot of memory bandwidth.
+\end{remark}
+
+\begin{definition}
+    \textbf{Vector Registers (VRs)}: Registers that store multiple data elements in parallel.
+\end{definition}
+
+\begin{definition}
+    \textbf{Stride}: The distance between consecutive memory addresses that are accessed in parallel.
+\end{definition}
+
+\begin{definition}
+    \textbf{Memory Banks}: Physical memory modules that can be accessed in parallel.
+\end{definition}
