@@ -1,0 +1,121 @@
+\section{Flow Networks}
+
+\begin{definition}
+    A \textbf{Flow Network} is a directed graph $G = (V, E)$ with a \textbf{source} $s \in V$, a \textbf{sink} $t \in V$, and a \textbf{capacity function} $c : E \to \mathbb{R}_{\geq 0}$ assigning a non-negative capacity to each edge.
+\end{definition}
+
+\begin{definition}
+    A \textbf{flow} in a network $G = (V, E, c, s, t)$ is a function $f : E \to \mathbb{R}_{\geq 0}$ satisfying:
+    \begin{itemize}
+        \item \textbf{Capacity constraint}: $\forall e \in E : 0 \leq f(e) \leq c(e)$
+        \item \textbf{Flow conservation}: $\forall v \in V \setminus \{s, t\} : \sum_{e \text{ into } v} f(e) = \sum_{e \text{ out of } v} f(e)$
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    The \textbf{value} of a flow $f$ is defined as the total flow leaving the source:
+    $$|f| := \sum_{e \text{ out of } s} f(e) - \sum_{e \text{ into } s} f(e)$$
+\end{definition}
+
+\begin{remark}
+    By flow conservation, the net flow out of $s$ equals the net flow into $t$:
+    $$|f| = \sum_{e \text{ into } t} f(e) - \sum_{e \text{ out of } t} f(e)$$
+\end{remark}
+
+\begin{definition}
+    For a flow $f$ and a vertex $v$, the \textbf{net outflow} of $v$ is:
+    $$\text{netout}(v) := \sum_{e \text{ out of } v} f(e) - \sum_{e \text{ into } v} f(e)$$
+    Flow conservation requires $\text{netout}(v) = 0$ for all $v \in V \setminus \{s, t\}$.
+\end{definition}
+
+\subsection{Cuts}
+
+\begin{definition}
+    An \textbf{$s$-$t$ cut} is a partition $(S, T)$ of $V$ with $s \in S$ and $t \in T$. The \textbf{capacity} of the cut is:
+    $$c(S, T) := \sum_{\substack{e = (u,v) \\ u \in S,\, v \in T}} c(e)$$
+\end{definition}
+
+\begin{lemma}
+    For any flow $f$ and any $s$-$t$ cut $(S, T)$:
+    $$|f| = \sum_{\substack{e = (u,v) \\ u \in S,\, v \in T}} f(e) \;-\; \sum_{\substack{e = (u,v) \\ u \in T,\, v \in S}} f(e)$$
+\end{lemma}
+
+\begin{proof}
+    Sum the net outflow equation over all $v \in S$. By flow conservation, interior vertices contribute $0$, and only the source $s$ has net outflow $|f|$. Collecting edge terms gives exactly the net flow across the cut.
+\end{proof}
+
+\begin{theorem}
+    For any flow $f$ and any $s$-$t$ cut $(S, T)$:
+    $$|f| \leq c(S, T)$$
+\end{theorem}
+
+\begin{proof}
+    By the lemma above and the capacity constraint $f(e) \leq c(e)$:
+    $$|f| = \sum_{e \in (S,T)} f(e) - \sum_{e \in (T,S)} f(e) \leq \sum_{e \in (S,T)} c(e) = c(S, T)$$
+\end{proof}
+
+\subsection{Max-Flow Min-Cut}
+
+\begin{theorem}
+    \textbf{Max-Flow Min-Cut Theorem}: The maximum value of an $s$-$t$ flow equals the minimum capacity of an $s$-$t$ cut:
+    $$\max_f |f| = \min_{(S,T)} c(S, T)$$
+\end{theorem}
+
+\begin{remark}
+    The theorem has three equivalent characterizations. The following are equivalent:
+    \begin{itemize}
+        \item $f$ is a maximum flow.
+        \item There is no augmenting path from $s$ to $t$ in the residual network $G_f$.
+        \item There exists an $s$-$t$ cut $(S, T)$ with $|f| = c(S, T)$.
+    \end{itemize}
+\end{remark}
+
+\subsection{Residual Networks and Augmenting Paths}
+
+\begin{definition}
+    Given a flow $f$ in network $G$, the \textbf{residual network} $G_f = (V, E_f)$ has residual capacity:
+    $$c_f(u, v) := \begin{cases} c(u,v) - f(u,v) & \text{if } (u,v) \in E \\ f(v,u) & \text{if } (v,u) \in E \\ 0 & \text{otherwise} \end{cases}$$
+    The edge set $E_f$ contains all pairs $(u, v)$ with $c_f(u, v) > 0$.
+\end{definition}
+
+\begin{remark}
+    Each original edge $(u, v) \in E$ with $f(u,v) > 0$ introduces a \textbf{back edge} $(v, u)$ in $G_f$ with residual capacity $f(u,v)$. This allows flow to be ``cancelled'' or rerouted.
+\end{remark}
+
+\begin{definition}
+    An \textbf{augmenting path} is a directed path from $s$ to $t$ in the residual network $G_f$. The \textbf{bottleneck capacity} of such a path $P$ is:
+    $$\Delta(f, P) := \min_{e \in P} c_f(e)$$
+\end{definition}
+
+\begin{lemma}
+    If $P$ is an augmenting path with bottleneck $\Delta = \Delta(f, P)$, then augmenting $f$ along $P$ (adding $\Delta$ on forward edges, subtracting $\Delta$ on backward edges) yields a valid flow $f'$ with $|f'| = |f| + \Delta$.
+\end{lemma}
+
+\subsection{Ford-Fulkerson Algorithm}
+
+\begin{algorithm}
+//Ford-Fulkerson Algorithm
+Initialize f(e) = 0 for all e in E.
+
+while there exists an augmenting path P from s to t in G_f:
+    delta = bottleneck capacity of P
+    for each edge (u, v) in P:
+        if (u, v) in E:
+            f(u, v) += delta
+        else:    // back edge (u, v), i.e. (v, u) in E
+            f(v, u) -= delta
+
+return f
+\end{algorithm}
+
+\begin{theorem}
+    If all capacities are integers, Ford-Fulkerson terminates in $O(|f^*| \cdot |E|)$ time, where $|f^*|$ is the value of the maximum flow.
+\end{theorem}
+
+\begin{proof}
+    Each augmentation increases $|f|$ by at least $1$ (since capacities are integers, $\Delta \geq 1$). The flow value is bounded by $|f^*|$, so there are at most $|f^*|$ augmentations. Each augmenting path search via DFS/BFS takes $O(|E|)$.
+\end{proof}
+
+\begin{important}
+    Ford-Fulkerson is \textbf{not guaranteed to terminate} for irrational capacities. For rational capacities it always terminates, but can be exponentially slow with bad path choices.
+\end{important}

@@ -331,4 +331,72 @@ return i, j
     We know $X_t = X_{2t}$ and thus $2t = t+p*l$ for some $p \in \mathbb{N}$ hence $t=p*l$ holds and finally $X_{t+k} = X_{k+l*p} = X_{k}$ holds by induction.
 \end{proof}
 
+\subsection{Long-Path Problem}
 
+\begin{definition}
+    Given a graph $G = (V,E)$ and some $B \in \mathbb{N}$. Decide whether there exists a path of length $B$ in $G$.
+\end{definition}
+
+\begin{theorem}
+    If there exists an algorithm for the long-path problem with $t(n)$ time, then we can decide in $t(2n -2) + O(n^2)$ time if a given graph is Hamiltonian.
+\end{theorem}
+
+\begin{proof}
+    We construct a new graph $G'$ with $n' \leq 2n-2$ such that
+    $$G \text{ hamiltonian } \iff G' \text{ has a path of length } n$$
+    Let $v \in V$ be an arbitrary vertex of $G$. We construct $G'$ by replacing edges $e = (v, w) \in E$ with edges $(w, w')$ where $w'$ is a copy of $w$ and removing $v$.
+    Observe that if $G$ has a Hamiltonian cycle, this cycle includes $v$ hence in $G'$ this corresponds to a path of length $n$ namely $w_i', w_i, \dots w_j, w_j'$ for some $w_i, w_j$ adjacent to $v$.
+    Further observe that if $G'$ has a path of length $n$ then all vertices in that path are distinct and have degree $\geq 2$ hence they must be the $n$ vertices in $G$ (as the added vertices have degree $1$). Hence the end and start vertices of that path correspond to two distinct vertices adjacent to $v$ in $G$ and removing these two vertices and the edges from that path yields a Hamiltonian cycle in $G$.
+    Thus we have shown
+    $$G \text{ hamiltonian } \iff G' \text{ has a path of length } n$$ 
+\end{proof}
+
+\begin{definition}
+    A \textbf{colorful path} in a k-edge-colored graph $G$ is a path where every edge has a different color.  
+\end{definition}
+
+\begin{remark}
+    Instead of finding a path of length $k$ we look for a colorful path with at least $k$ colors. For this we define 
+    $$P_i(v) \coloneqq \{ S\subset [k] | |S|=i+1 \text{ and } \exists\text{ path } v_0=v, e_1, \dots e_{i+1}, v_{i+1}\text{ with edge colors }S \}$$
+    if for a $v \in V$ we have $P_{k-1}(v) \neq \emptyset$ we found a colorful path with $k$ colors. We compute for all $v \in V$ the set $P_i(v)$ for $i=0 \dots k-1$.
+\end{remark}
+
+\begin{lemma}
+    We can compute $P_i$ dynamically using base case 
+    $$P_0(v) = \{ \{c(v)\} \}$$
+    and reccurence
+    $$P_i(v) = \bigcup_{u \in N(v)} \{S \cup \{c(v)\} | S \in P_{i-1}(u) \land c(v) \notin S \}$$
+\end{lemma}
+
+\begin{algorithm}
+colorful(G, i):
+
+for all v in V do:
+    P[i][v] = {}
+    for all u in N(v) do:
+        for all S in P[i-1][u] do:
+            if c(v,u) not in S then
+                P[i][v].add(S union {c(v,u)})
+\end{algorithm}
+
+\begin{theorem}
+    The runtime of the above algorithm is bounded by $O(2^k \cdot k \cdot m)$.
+\end{theorem}
+
+\begin{proof}
+    $$\sum_{i=1}^{k-1} O(\text{colorful(G, i)})$$
+    $$ = \sum_{i=1}^{k-1} O(\sum_{v \in V} deg(v) \cdot \max_{u \in N(v)} |P_{i-1}(v)|)$$
+    $$ = \sum_{i=1}^{k-1} O(m \cdot \binom{k}{i} \cdot i)$$ 
+    $$ = O(2^k  \cdot k \cdot m)$$
+\end{proof}
+
+\begin{remark}
+    Assume $G$ contains a $k-1$ long path $P$
+    $$P[\exists \text{coloful path of length of length k-1 }]$$
+    $$ \geq P[ \text{P is colorful} ]$$  
+    $$ \geq \frac{k!}{k^k} \geq e^{-k}$$
+\end{remark}
+
+\begin{theorem}
+    The monte carlo algorithm (Repeated $\lambda e^k$ times)has a runtime of $O(\lambda \cdot (2e)^k \cdot k \cdot m)$ and a probability of error $e^{-\lambda}$
+\end{theorem}
