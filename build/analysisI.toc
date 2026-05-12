@@ -18,3 +18,5 @@
 \contentsline {section}{\numberline {5}Differential equations}{36}{}%
 \contentsline {subsection}{\numberline {5.1}Modelling of differential equations}{36}{}%
 \contentsline {subsection}{\numberline {5.2}Linear, homogeneous ODEs}{36}{}%
+\contentsline {subsection}{\numberline {5.3}Boundary-value Problems}{37}{}%
+\contentsline {section}{\numberline {6}Integration}{38}{}%

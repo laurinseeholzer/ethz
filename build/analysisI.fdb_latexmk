@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1778060849.87147 "/home/laurin/dev/ethz/analysisI.tex" "build/analysisI.pdf" "analysisI" 1778060850.32465 0
-  "/home/laurin/dev/ethz/analysisI.tex" 1778057278.94088 655 11b368076eeabedf18412c4f6f4b0485 ""
+["pdflatex"] 1778573462.2965 "/home/laurin/dev/ethz/analysisI.tex" "build/analysisI.pdf" "analysisI" 1778573462.85197 0
+  "/home/laurin/dev/ethz/analysisI.tex" 1778503863.452 691 adb2781d687eaf026c264f1c8e869834 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
@@ -115,12 +115,13 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1775001600 40900 887e0dc8cac988a9e9c574af364cf837 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1777806177.26788 4602016 72a039a3c4aea0fa25b5d35d65138f54 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1777805916 7753802 be5e41a9e647686271b5358067c82b4f ""
-  "analysisI.tex" 1778057278.94088 655 11b368076eeabedf18412c4f6f4b0485 ""
-  "build/analysisI.aux" 1778060850.26256 2296 758854157c4c03e802627265ea6c0940 "pdflatex"
-  "build/analysisI.toc" 1778060850.26256 1408 6d9ed3144a5397f0a1fb9129e60dce3b "pdflatex"
+  "analysisI.tex" 1778503863.452 691 adb2781d687eaf026c264f1c8e869834 ""
+  "build/analysisI.aux" 1778573462.72033 2513 a5ef4866974c58b422ba02837bb3e4a9 "pdflatex"
+  "build/analysisI.toc" 1778573462.72133 1543 e653a2019bb0dd78b721d7b488fc8a91 "pdflatex"
   "sectionsNotes/analysisI/differential_calculus.tex" 1777459151.00371 14843 ba1509adad4952d4561c8f56ca3e63f6 ""
-  "sectionsNotes/analysisI/differential_equations.tex" 1778060849.75756 3072 7f7a4a20ccbaeb93f910d95668e0f82f ""
+  "sectionsNotes/analysisI/differential_equations.tex" 1778502433.53197 3512 256dece6dbec39902fbe18a99b8f9cf6 ""
   "sectionsNotes/analysisI/functions.tex" 1776946024.19358 14103 1874411b5154e02781f417aa822ea1a3 ""
+  "sectionsNotes/analysisI/integration.tex" 1778573461.91733 852 5801b40bb5bb70ac3042f36e6fd5e142 ""
   "sectionsNotes/analysisI/logic_sets_numbers.tex" 1776873601.02152 17833 d95d5bfb93765b4d8b99172ba61b0d6a ""
   "sectionsNotes/analysisI/sequences_series.tex" 1776889493.19355 13298 3c0e35d1f782fb192de5ef3134f8c70e ""
   "templateNotes/commands.tex" 1774795684.82424 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""

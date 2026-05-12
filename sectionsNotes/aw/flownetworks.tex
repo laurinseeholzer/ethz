@@ -119,3 +119,57 @@ return f
 \begin{important}
     Ford-Fulkerson is \textbf{not guaranteed to terminate} for irrational capacities. For rational capacities it always terminates, but can be exponentially slow with bad path choices.
 \end{important}
+
+\subsection{Maximum Matchings using MaxFlow}
+
+\begin{definition}
+    \textbf{Maxium Bipartite Matching: } Given a bipartite graph $ G = (S \cup T,E)$ find a maximum matching in $G$.
+\end{definition}
+
+\begin{remark}
+    We can define a flow network $G' = (V', E', c')$ with
+    $$V' = S \quad \cup \quad T \quad \cup \quad \{s, t\}$$
+    $$E' = {s} \times S \quad \cup \quad E \quad \cup \quad T \times {t}$$
+    $$c' = 1$$
+    Then the maximum integer flow $f$ in $G'$ equals to $val(f) = \frac{|M|}{3}$, where $M$ is the maximum matching in $G$.
+\end{remark}
+
+\begin{remark}
+    This can be solved in $O(mn)$ using Ford-Fulkerson.
+\end{remark}
+
+\subsection{Image Segmentation using MaxFlow}
+
+\begin{definition}
+    \textbf{Image Segmentation: } Given a $n$-dimensional image with pixels $P$ and edges between neighboring pixels $E$. We are given weights 
+    $$\alpha_p, \beta_p \geq 0 \quad \forall p \in P$$
+    expressing the preference of pixel $p$ to be in the foreground $A$ and background $B$ respectively and confidence values 
+    $$\gamma_e \geq 0 \quad \forall e \in E$$
+    describing the confidence that neighboring pixels are in the same partition. Find a partition $(A,B)$ of $P$ with maximum quality:
+    $$q(A,B) = \sum_{p \in A} \alpha_p + \sum_{p \in B} \beta_p - \sum_{e=(u,v) \in E'} \gamma_e $$
+    where $E'$ are edges between pixels in $P$ that are in different partitions.
+\end{definition}
+
+\begin{remark}
+    The intuition beind the quality function is that we want to maximize the sum of the confidences in the partitions while penaltizing neighboring pixels that are in different partitions based on the confidence that they are in the same partition.
+\end{remark}
+
+\begin{lemma}
+    Let $S = \sum_{p \in P} (\alpha_p + \beta_p)$. We have
+    $$q(A,B) = S - \sum_{p \in A} \beta_p - \sum_{p \in B} \alpha_p - \sum_{e=(u,v) \in E'} \gamma_e$$
+    obsere that instead of maximizing $q$ we can try to minimize
+    $$q'(A,B) = \sum_{p \in A} \beta_p - \sum_{p \in B} \alpha_p +1 \sum_{e=(u,v) \in E'} \gamma_e$$
+\end{lemma}
+
+\begin{theorem}
+    To solve the problem we can create a flow network where there are 
+    \begin{itemize}
+    \item edges from $s$ to pixels with capacity $\alpha_p$ and from pixels to $t$ with capacity $\beta_p$ 
+    \item edges with capacity $\gamma_e$ in both directions between neighboring pixels
+    \end{itemize} 
+    The min-cut in this network then corresponds to the maximum quality. 
+\end{theorem}
+
+\begin{proof}
+    Obsere that in any $S, T$ cut the capacity of the cut is made of $\beta_p$ for $p \in A$ and $\alpha_p$ for $p \in B$ and $\gamma_e$ for $e \in E'$. Hence y minimizing the cut $S, T$ we minimize $q'$ therfore maximize our partition quality $q$.
+\end{proof}

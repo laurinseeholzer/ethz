@@ -42,3 +42,13 @@
 \contentsline {section}{\numberline {11}VLIW Architectures}{32}{}%
 \contentsline {subsection}{\numberline {11.1}Compiler optimizations for VLIW}{32}{}%
 \contentsline {section}{\numberline {12}Systolic Array Architectures}{33}{}%
+\contentsline {section}{\numberline {13}SIMD Architectures}{34}{}%
+\contentsline {section}{\numberline {14}GPU Architectures}{35}{}%
+\contentsline {subsection}{\numberline {14.1}SIMT}{35}{}%
+\contentsline {subsection}{\numberline {14.2}GPU Architecture}{35}{}%
+\contentsline {subsection}{\numberline {14.3}Warps}{36}{}%
+\contentsline {subsection}{\numberline {14.4}Advantages and Disadvantages of Warp Execution}{36}{}%
+\contentsline {subsection}{\numberline {14.5}Fine-Grained Multithreading and Latency Hiding}{36}{}%
+\contentsline {subsection}{\numberline {14.6}Memory and Performance Trade-Offs}{37}{}%
+\contentsline {section}{\numberline {15}Memory}{38}{}%
+\contentsline {subsection}{\numberline {15.1}organization of Memory}{38}{}%

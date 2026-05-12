@@ -32,3 +32,5 @@
 \contentsline {subsection}{\numberline {10.2}Max-Flow Min-Cut}{44}{}%
 \contentsline {subsection}{\numberline {10.3}Residual Networks and Augmenting Paths}{44}{}%
 \contentsline {subsection}{\numberline {10.4}Ford-Fulkerson Algorithm}{45}{}%
+\contentsline {subsection}{\numberline {10.5}Maximum Matchings using MaxFlow}{46}{}%
+\contentsline {subsection}{\numberline {10.6}Image Segmentation using MaxFlow}{46}{}%

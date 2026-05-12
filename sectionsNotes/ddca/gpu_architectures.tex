@@ -1,0 +1,109 @@
+\section{GPU Architectures}
+
+\subsection{SIMT}
+
+\begin{definition}
+    \textbf{Single Instruction, Multiple Threads (SIMT)} is an execution model where a \textbf{single instruction is issued simultaneously to a group of threads}, each operating on its own private data and registers. Unlike SIMD, each thread has its own program counter, so threads can diverge independently.
+\end{definition}
+
+\begin{remark}
+    Both SIMT and SIMD apply the same operation to many data elements in parallel. SIMT presents each thread as an independent scalar program, the hardware then groups threads and executes them in lock-step, achieving SIMD-like efficiency without exposing vector width to the programmer.
+\end{remark}
+
+\begin{definition}
+    \textbf{Thread Divergence} occurs when threads within the same group take different control-flow paths. The hardware executing each branch with only the relevant threads active. 
+\end{definition}
+
+
+\subsection{GPU Architecture}
+
+\begin{definition}
+    A \textbf{GPU} is optimized for \textbf{high-throughput} parallelism by using large amounts of small arithmetic modules and allowing for long latency with enormous amounts of parallelism.
+\end{definition}
+
+\begin{definition}
+    A GPU is organized hierarchically to implement SIMT:
+    \begin{itemize}
+        \item \textbf{Streaming Multiprocessor (SM):} The basic processing block. Each SM contains multiple CUDA cores, a large register file, shared memory, and warp schedulers.
+        \item \textbf{Warps:} Groups of 32 threads scheduled and executed together in lock-step.
+        \item \textbf{Thread Blocks:} Groups of warps assigned to the same SM; threads within a block share fast on-chip shared memory.
+        \item \textbf{Grid:} The full set of thread blocks launched for a kernel, distributed across all SMs.
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    Each SM runs many warps simultaneously. The warp scheduler selects a ready warp each cycle to issue instructions, hiding the latency of stalled warps without any out-of-order hardware.
+\end{remark}
+
+\subsection{Warps}
+
+\begin{definition}
+    A \textbf{warp} is the fundamental unit of thread scheduling on a GPU. It consists of threads that always execute the same instruction at the same cycle on different data (SIMT). 
+\end{definition}
+
+\begin{remark}
+    Warps exist to amortize control overhead: one instruction fetch, decode, and issue serves 32 threads simultaneously. Managing thousands of threads as groups of 32 is far more practical than scheduling individual threads. The warp granularity also matches the width of the underlying SIMD execution units.
+\end{remark}
+
+\subsection{Advantages and Disadvantages of Warp Execution}
+
+\begin{theorem}
+    \textbf{Advantages of warp-based execution:}
+    \begin{itemize}
+        \item \textbf{Amortized control overhead:} One instruction fetch and issue covers 32 threads.
+        \item \textbf{Latency hiding:} With many warps per SM, the scheduler switches to a ready warp when another stalls, keeping functional units busy without out-of-order logic.
+        \item \textbf{Memory coalescing:} When all threads in a warp access contiguous, aligned addresses, the memory controller merges requests into a single wide transaction, maximizing bandwidth.
+    \end{itemize}
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Disadvantages of warp-based execution:}
+    \begin{itemize}
+        \item \textbf{Thread divergence:} Conditional branches cause warps to serialize -- in the worst case only 1 of 32 lanes is active, yielding $\frac{1}{32}$ of peak throughput.
+        \item \textbf{Uncoalesced memory access:} Scattered (non-contiguous) accesses by threads in a warp result in multiple separate memory transactions, wasting bandwidth.
+        \item \textbf{Resource pressure:} Large register footprints reduce occupancy, limiting latency hiding.
+        \item \textbf{Tail effects:} If the thread count is not a multiple of 32, the last warp is partially filled, wasting execution lanes.
+    \end{itemize}
+\end{theorem}
+
+
+\subsection{Fine-Grained Multithreading and Latency Hiding}
+
+\begin{definition}
+    \textbf{Fine-Grained Multithreading (FGMT)} is a technique where the processor switches between warps \textbf{every clock cycle}. While one warp is stalled (e.g., waiting on a memory response), another ready warp executes, keeping functional units occupied.
+\end{definition}
+
+
+\begin{theorem}
+    \textbf{Latency Hiding:} To fully hide a memory latency of $L$ cycles, the SM must have enough independent warps to keep functional units busy during that latency. Informally:
+    $$N_{\text{warps}} \;\geq\; \frac{L}{\text{arithmetic instructions between memory accesses}}$$
+\end{theorem}
+
+\begin{example}
+        For example, global memory latency on modern GPUs is $\approx 600$ cycles, requiring $\sim$20--30 active warps per SM to maintain full throughput.
+\end{example}
+
+\begin{important}
+    The GPU's strategy is to \textbf{tolerate latency through parallelism} rather than reduce it. This works only when there is sufficient occupancy (enough independent warps) and regular memory access patterns.
+\end{important}
+
+
+\subsection{Memory and Performance Trade-Offs}
+
+\begin{remark}
+    The GPU memory hierarchy has drastically different latencies at each level:
+    \begin{itemize}
+        \item \textbf{Registers:} $\sim$1 cycle. Private per thread; total capacity is shared among all resident warps.
+        \item \textbf{Shared Memory / L1:} $\sim$20--30 cycles. On-chip, per SM; shared by all threads in a block. Must be explicitly managed.
+        \item \textbf{L2 Cache:} $\sim$100--200 cycles. Shared across all SMs.
+        \item \textbf{Global Memory (HBM/GDDR):} $\sim$400--800 cycles. High bandwidth ($\sim$1--3 TB/s) but must be hidden by FGMT.
+    \end{itemize}
+\end{remark}
+
+\begin{definition}
+    \textbf{Memory Coalescing:} The GPU merges the memory requests of all threads in a warp into one wide DRAM transaction when addresses are contiguous and aligned. Uncoalesced access (scattered addresses) results in many separate transactions and a proportional loss of bandwidth.
+\end{definition}
+
+\begin{definition}
+    \textbf{Bank Conflicts} occur in shared memory when multiple threads access different addresses in the same memory bank simultaneously. The accesses are serialized, reducing effective bandwidth. Avoided by careful data layout (padding, transposition).
+\end{definition}

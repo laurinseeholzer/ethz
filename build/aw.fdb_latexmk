@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1778149901.0267 "/home/laurin/dev/ethz/aw.tex" "build/aw.pdf" "aw" 1778149901.64423 0
+["pdflatex"] 1778599252.75924 "/home/laurin/dev/ethz/aw.tex" "build/aw.pdf" "aw" 1778599253.30051 0
   "/home/laurin/dev/ethz/aw.tex" 1778149739.2845 848 96665c32beb35f1b412a6a7636d4c1dd ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.enc" 1561323594 2496 4d35740f3a177992ff7b134746c0a1db ""
@@ -126,13 +126,13 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1777806177.26788 4602016 72a039a3c4aea0fa25b5d35d65138f54 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1777805916 7753802 be5e41a9e647686271b5358067c82b4f ""
   "aw.tex" 1778149739.2845 848 96665c32beb35f1b412a6a7636d4c1dd ""
-  "build/aw.aux" 1778149901.57377 3840 436acb84a1a1d037df27757e23bed546 "pdflatex"
-  "build/aw.toc" 1778149901.57477 2378 be8b5f47d849cf62379d160225942d5a "pdflatex"
+  "build/aw.aux" 1778599253.2345 4093 3358748d3aa5ce3fa86b263fd58e2bee "pdflatex"
+  "build/aw.toc" 1778599253.2345 2549 4a9f6ecc54ee8be1add68b609644074e "pdflatex"
   "sectionsNotes/aw/bounding_probability.tex" 1776356211.47537 5882 35361791af4a39ae60ebb299a55a5adf ""
   "sectionsNotes/aw/coloring.tex" 1775498240.26484 3330 955395be61c4052cd84a6f5ef27ebacd ""
   "sectionsNotes/aw/connectivness_of_graphs.tex" 1775222779.38498 4210 7b718065d115232ffe9e2d25b58926ce ""
   "sectionsNotes/aw/distributions.tex" 1775862088.81705 2700 2867477f95225def1ce99a0530cbcacb ""
-  "sectionsNotes/aw/flownetworks.tex" 1778149900.88678 5198 8a173d21af93511d0c3d85adcca5566c ""
+  "sectionsNotes/aw/flownetworks.tex" 1778599252.63949 7934 528d76257c31635937ae4c79eb3b29b8 ""
   "sectionsNotes/aw/hamiltonian_cycles_eulertours.tex" 1775344495.86813 5687 ecaec159173704ddf247b47c68e599cd ""
   "sectionsNotes/aw/intro_probability.tex" 1775518855.30557 9496 37bf54fc3eef976e8b6045515d5a5ebb ""
   "sectionsNotes/aw/matchings.tex" 1775344497.62426 4317 36109e7eb755f2c029c7c0eeee702726 ""

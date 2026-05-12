@@ -1,0 +1,65 @@
+\section{Memory}
+
+\begin{remark}
+    Memory is the \textbf{limiting factor} in computation. It limits computation in time, uses by far most of the space and consumes most of the energy.
+\end{remark}
+
+\begin{remark}
+    The robustness decreases with increased memory capacity. (Ex. Row-Hammering-Attack)
+\end{remark}
+
+\begin{remark}
+    What the programmer sees is \textbf{virtual memory addresses} that are mapped to \textbf{physical memory} behind the scenes. This simplifies programming.
+\end{remark}
+
+\begin{definition}
+    \textbf{Ideal memory} has zero latency, cost, energy and infinite capacity and bandwidth
+\end{definition}
+
+\begin{definition}
+    \textbf{Memory types} are defined by the trade-offs of cost and performance.
+    \begin{itemize}
+        \item FlipFlops and Latches: (tens of transistors per bit)
+        \item Static Random Access Memory (SRAM): (6 transistors per bit)
+        \item Dynamic Random Access Memory (DRAM): (cheaper but slower, needs refreshing)
+        \item Storage: (slow but cheap, 1 transistor per bit, non-volatile)
+    \end{itemize}
+\end{definition}
+
+\subsection{organization of Memory}
+
+\begin{definition}
+    Memory is an array of cells with adressing and output logic.
+\end{definition}
+
+\begin{remark}
+    To increase performance memory is divided into multiple banks that allow concurrent access to independent adresses.
+\end{remark}
+
+\begin{definition}
+    A typical \textbf{DRAM hierarchy} has
+    \begin{itemize}
+        \item Multiple-channels that leave/enter the memory controller 
+        \item Dual in-line memory modules (DIMM) which are mounted on the motherboard
+        \item Ranks most likely front/back of card which are independently adressable bank groups with that share command and data busses.
+        \item Chips that have multiple banks and share data bus out of the chip
+        \item Bank can be made of multiple mats and has a global row/collumn organization
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    A bank hase a \textbf{row-buffer} where a whole row is loaded and from where the column bit is selected.
+\end{definition}
+
+\begin{remark}
+    If a row is already in the row-buffer it is a row hit, else a row-miss.
+\end{remark}
+
+\begin{remark}
+    To load a row into the row-buffer we use a row of sense amplifiers that sense the bit in the capacitors, amplify and then restore them.
+\end{remark}
+
+\begin{remark}
+    On a high level,SRAM is organized similarly but uses more transistors and is faster.
+\end{remark}
+
