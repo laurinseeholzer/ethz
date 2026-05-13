@@ -186,3 +186,43 @@ long dequeue() {
 
 \subsection{Monitors}
 
+\begin{definition}
+    A \textbf{monitor} is a synchronization primitive that allows threads to wait on condition variables to be notified about changes in the state of the monitor.
+\end{definition}
+
+\begin{definition}
+    A \textbf{condition variable} is condition that threads can wait on. Other threads can signal the condition variable to notify waiting threads that the condition has changed.
+\end{definition}
+
+\begin{codeexample}
+Monitor buffer = new BufferMonitor(10);
+Condition nonFull = buffer.newCondition();
+Condition nonEmpty = buffer.newCondition();
+
+void producer() {
+    buffer.lock();
+    try {
+        while (buffer.isFull()) {
+            nonFull.await();
+        }
+        buffer.enqueue(i);
+        nonEmpty.signal();
+    } finally {
+        buffer.unlock();
+    }
+}
+
+void consumer() {
+    buffer.lock();
+    try {
+        while (buffer.isEmpty()) {
+            nonEmpty.await();
+        }
+        buffer.dequeue();
+        nonFull.signal();
+    } finally {
+        buffer.unlock();
+    }
+}
+\end{codeexample}
+

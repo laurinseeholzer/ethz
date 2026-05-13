@@ -3,47 +3,47 @@
 \contentsline {subsection}{\numberline {1.2}Parallelism}{4}{}%
 \contentsline {subsection}{\numberline {1.3}Multithreading}{5}{}%
 \contentsline {section}{\numberline {2}Synchronization}{8}{}%
-\contentsline {subsection}{\numberline {2.1}Locks and Synchronized}{8}{}%
-\contentsline {subsection}{\numberline {2.2}Wait, notify, notifyAll}{9}{}%
-\contentsline {subsection}{\numberline {2.3}Lock API}{9}{}%
-\contentsline {section}{\numberline {3}Optimization}{12}{}%
-\contentsline {subsection}{\numberline {3.1}Caching}{12}{}%
-\contentsline {subsection}{\numberline {3.2}Vectorization}{12}{}%
-\contentsline {subsection}{\numberline {3.3}Instruction Level Parallelism (ILP)}{12}{}%
-\contentsline {subsection}{\numberline {3.4}Pipelining}{13}{}%
-\contentsline {subsection}{\numberline {3.5}Parallel Performance}{13}{}%
-\contentsline {section}{\numberline {4}Divide and Conquer}{15}{}%
-\contentsline {subsection}{\numberline {4.1}Executor Service}{15}{}%
-\contentsline {subsection}{\numberline {4.2}Fork-Join}{16}{}%
-\contentsline {subsection}{\numberline {4.3}Task graphs}{17}{}%
-\contentsline {section}{\numberline {5}Parallel Algorithms}{18}{}%
-\contentsline {subsection}{\numberline {5.1}Parallel Patterns}{18}{}%
-\contentsline {subsection}{\numberline {5.2}Parallel Algorithms}{18}{}%
-\contentsline {subsubsection}{\numberline {5.2.1}Prefix-Sum}{18}{}%
-\contentsline {subsubsection}{\numberline {5.2.2}Pack}{19}{}%
-\contentsline {subsubsection}{\numberline {5.2.3}Quicksort}{19}{}%
-\contentsline {section}{\numberline {6}Shared Resources}{20}{}%
-\contentsline {subsection}{\numberline {6.1}Race Conditions}{20}{}%
-\contentsline {subsection}{\numberline {6.2}Guidelines for Concurrent programming}{20}{}%
-\contentsline {section}{\numberline {7}Memory Models}{22}{}%
-\contentsline {subsection}{\numberline {7.1}Memory Reordering and Hierarchy}{22}{}%
-\contentsline {subsection}{\numberline {7.2}The Java Memory Model (JMM)}{23}{}%
-\contentsline {section}{\numberline {8}Behind Locks}{25}{}%
-\contentsline {subsection}{\numberline {8.1}State Space Diagrams}{25}{}%
-\contentsline {subsection}{\numberline {8.2}Attempts to mutual exclusion}{25}{}%
-\contentsline {subsection}{\numberline {8.3}Successful Algorithms}{26}{}%
-\contentsline {section}{\numberline {9}Hardware Support for Parallelism}{29}{}%
-\contentsline {subsection}{\numberline {9.1}Typical Hardware Instructions}{29}{}%
-\contentsline {subsection}{\numberline {9.2}Locks using atomic operations}{29}{}%
-\contentsline {section}{\numberline {10}Beyond Locks}{31}{}%
-\contentsline {subsection}{\numberline {10.1}Deadlocks}{31}{}%
-\contentsline {subsection}{\numberline {10.2}Semaphores}{31}{}%
-\contentsline {subsection}{\numberline {10.3}Barriers}{32}{}%
-\contentsline {subsection}{\numberline {10.4}Producer Consumer Pattern}{33}{}%
-\contentsline {subsection}{\numberline {10.5}Monitors}{34}{}%
-\contentsline {section}{\numberline {11}Locking Strategies}{34}{}%
-\contentsline {subsection}{\numberline {11.1}Fine-Grained Locking}{34}{}%
-\contentsline {subsection}{\numberline {11.2}Read-Write Locks}{35}{}%
-\contentsline {subsection}{\numberline {11.3}Optimistic Locking}{35}{}%
-\contentsline {subsection}{\numberline {11.4}Lazy Locking}{35}{}%
-\contentsline {subsection}{\numberline {11.5}Lock-Free Data Structures}{36}{}%
+\contentsline {subsection}{\numberline {2.1}Race Conditions}{8}{}%
+\contentsline {subsection}{\numberline {2.2}Locks and Synchronized}{9}{}%
+\contentsline {subsection}{\numberline {2.3}Wait, notify, notifyAll}{9}{}%
+\contentsline {subsection}{\numberline {2.4}Lock API}{10}{}%
+\contentsline {subsection}{\numberline {2.5}Guidelines for Concurrent programming}{11}{}%
+\contentsline {section}{\numberline {3}Optimization}{13}{}%
+\contentsline {subsection}{\numberline {3.1}Caching}{13}{}%
+\contentsline {subsection}{\numberline {3.2}Vectorization}{13}{}%
+\contentsline {subsection}{\numberline {3.3}Instruction Level Parallelism (ILP)}{13}{}%
+\contentsline {subsection}{\numberline {3.4}Pipelining}{14}{}%
+\contentsline {subsection}{\numberline {3.5}Parallel Performance}{14}{}%
+\contentsline {section}{\numberline {4}Parallel Patterns}{16}{}%
+\contentsline {subsection}{\numberline {4.1}Divide and Conquer}{16}{}%
+\contentsline {subsubsection}{\numberline {4.1.1}Executor Service}{16}{}%
+\contentsline {subsubsection}{\numberline {4.1.2}Fork-Join}{17}{}%
+\contentsline {subsubsection}{\numberline {4.1.3}Task graphs}{18}{}%
+\contentsline {subsection}{\numberline {4.2}Parallel Patterns}{18}{}%
+\contentsline {subsection}{\numberline {4.3}Parallel Algorithms}{19}{}%
+\contentsline {subsubsection}{\numberline {4.3.1}Prefix-Sum}{19}{}%
+\contentsline {subsubsection}{\numberline {4.3.2}Pack}{19}{}%
+\contentsline {subsubsection}{\numberline {4.3.3}Quicksort}{19}{}%
+\contentsline {section}{\numberline {5}Memory Models}{21}{}%
+\contentsline {subsection}{\numberline {5.1}Memory Reordering and Hierarchy}{21}{}%
+\contentsline {subsection}{\numberline {5.2}The Java Memory Model (JMM)}{22}{}%
+\contentsline {section}{\numberline {6}Locks}{24}{}%
+\contentsline {subsection}{\numberline {6.1}Hardware Support for Parallelism}{24}{}%
+\contentsline {subsubsection}{\numberline {6.1.1}Typical Hardware Instructions}{24}{}%
+\contentsline {subsubsection}{\numberline {6.1.2}Locks using atomic operations}{24}{}%
+\contentsline {subsection}{\numberline {6.2}Locking algorithms}{25}{}%
+\contentsline {subsubsection}{\numberline {6.2.1}State Space Diagrams}{25}{}%
+\contentsline {subsubsection}{\numberline {6.2.2}Attempts to mutual exclusion}{26}{}%
+\contentsline {subsubsection}{\numberline {6.2.3}Successful Algorithms}{27}{}%
+\contentsline {subsection}{\numberline {6.3}Locking Strategies}{29}{}%
+\contentsline {subsubsection}{\numberline {6.3.1}Fine-Grained Locking}{29}{}%
+\contentsline {subsubsection}{\numberline {6.3.2}Read-Write Locks}{29}{}%
+\contentsline {subsubsection}{\numberline {6.3.3}Optimistic Locking}{29}{}%
+\contentsline {subsubsection}{\numberline {6.3.4}Lazy Locking}{30}{}%
+\contentsline {subsubsection}{\numberline {6.3.5}Lock-Free Data Structures}{30}{}%
+\contentsline {section}{\numberline {7}Beyond Locks}{31}{}%
+\contentsline {subsection}{\numberline {7.1}Deadlocks}{31}{}%
+\contentsline {subsection}{\numberline {7.2}Semaphores}{31}{}%
+\contentsline {subsection}{\numberline {7.3}Barriers}{32}{}%
+\contentsline {subsection}{\numberline {7.4}Producer Consumer Pattern}{33}{}%
+\contentsline {subsection}{\numberline {7.5}Monitors}{34}{}%

@@ -1,4 +1,6 @@
-\section{Divide and Conquer}
+\section{Parallel Patterns}
+
+\subsection{Divide and Conquer}
 
 \begin{definition}
     \textbf{Divide and Conquer } refers to the strategy of splitting a problem into smaller subproblems, solving them recursively, and combining the results.
@@ -16,7 +18,7 @@ This concept can be used in many parallel algorithms. Until now we have used man
     There are some fixes that can improve manual fork/join such as \textbf{sequential-cutoffs} or running one subproblem on the thread itself (\textbf{invoke/compute}), instad of creating two new threads.
 \end{remark}
 
-\subsection{Executor Service}
+\subsubsection{Executor Service}
 
 The Executor Service framework provides the way to schedule and run tasks on a thread-pool automatically.
 
@@ -57,7 +59,7 @@ Pros and Cons of Executor service:
     \item Suited for: flat structures that can run independently in parallel.
 \end{itemize}
 
-\subsection{Fork-Join}
+\subsubsection{Fork-Join}
 
 The fork-join framework is built for divide and conquer parallelism. It manages a pool of threads using a \textbf{work-stealing strategy}: each thread maintains a local task-queue, and when finished with its own tasks, steals work from others to minimize idle time.
 
@@ -103,7 +105,7 @@ class MyTask extends RecursiveTask<Integer> {
     Make sure that every task has enough work to do (aprox. 100-10'000 ops.), else the overhead will be larger than the parallel speedup gain.
 \end{important}
 
-\subsection{Task graphs}
+\subsubsection{Task graphs}
 
 The execution of parallel programs using Fork-Join can be represented as a Task-Graph (DAG).
 
@@ -117,5 +119,85 @@ The execution of parallel programs using Fork-Join can be represented as a Task-
 
 It is the programmers responsibility to find the optimal decomposition/alogrithm for the problem to ensure a
 minimal span (a balanced tree). \textbf{Fork-join will guarantee optimal scheduling of the tasks with minimal idletime.}
+
+
+\subsection{Parallel Patterns}
+
+\begin{definition}
+    A \textbf{reduction} is a parallel operation that produces a single answer from a collection via an
+    associative operator using for example DC. (The order of operations does not matter).
+\end{definition}
+
+\begin{example}
+    Finding the Max, Min, Sum or Product over all entries of an array.  
+\end{example}
+
+\begin{definition}
+    A \textbf{map} applies a function to each elements of a collection producing an output of the same size.
+\end{definition}
+
+\begin{example}
+    Vector addition can be done using a map pattern. We split the vectors into dim(v)/2 recursively
+    until we have dim(v)=1 then sum the vectors and write the result directly into the result vector.
+\end{example}
+
+\begin{remark}
+    Maps and Reductions have (when parallelized) an optimal span of $O(\log n)$.
+\end{remark}
+
+\begin{definition}
+    A \textbf{stencil} is an extension of the map pattern that applies a function to each element of a collection producing an output of the same size. The function uses the element itself and its neighbours.
+\end{definition}
+
+\begin{example}
+    A smoothing kernel (ex. 3x3) that calculates the average value is sled over an image to smooth/blur the image.
+\end{example}
+
+\subsection{Parallel Algorithms}
+
+\subsubsection{Prefix-Sum}
+
+\begin{remark}
+    Prefix-Sum (calculating input[1] + input[2] + ... + input[n]) seams to be unparallisable. But infact it is!
+\end{remark}
+
+\begin{algorithm}
+upTask(); //divide problem and build tree with sums of subproblems
+downTask(); //fill in the correction values (left_sum + parent_correction)
+\end{algorithm}
+
+\begin{theorem}
+    The span of the prefix sum algorithm is $O(\log n)$. This leads to a parallelism of $\frac{n}{\log n}$.
+\end{theorem}
+
+\subsubsection{Pack}
+
+Another application of this problem is the \textbf{Pack} algorithm which removes all elements from an array that satisfy a certain condition and packs them into a seperate output.
+
+\begin{algorithm}
+applyMap(); //applies a map to the input
+//results in a binary vector [1, 0, 1, 1, 0, ...]
+
+parallelPrefixSum(); //prefix sum of the binary vector
+//results in [1, 1, 2, 3, 3, ...]
+
+applyPackMap(); //applies map to the result of the prefix sum
+//results in [0, 2, 3, ...] (indices of output elements)
+\end{algorithm}
+
+\subsubsection{Quicksort}
+
+We can reduce the limiting factor of the problem division from a span of $O(n)$ to a span of $O(\log n)$
+using the pack-pattern we have seen before.
+
+\begin{algorithm}
+applyMaps(); //apply maps for greater and smaller than pivot
+parallelPrefixSum(); //num. of smaler/greater elems. come bofore
+applyMap(); //index = numLessThan || numTotalLessThan + numGreaterThan
+\end{algorithm}
+
+We can do this by using two pack-patterns to partition the data. This leads to a partitioning of $O(\log n)$
+levels times $O(\log n)$ for prefixSum hence $O(\log^2 n)$ total span. This means a parallelism of 
+$\frac{n \log n}{\log^2 n} = \frac{n}{\log n}$.
 
         

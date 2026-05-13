@@ -1,4 +1,78 @@
-\section{Behind Locks}
+\section{Locks}
+
+\subsection{Hardware Support for Parallelism}
+
+\begin{remark}
+    \textbf{Software algorithms} such as Bakery or Filter locks have \textbf{linear space complexity} $O(n)$, making them impractical for large numbers of processes. Hardware support is needed to implement locks efficiently.
+\end{remark}
+
+\begin{remark}
+    Moder architectures offer \textbf{atomic instructions} that allow for operations to happen in a single atomic step. This allows mutex-implementation with \textbf{constant space complexity} $O(1)$ and can be used for lock-free programming.
+\end{remark}
+
+\subsubsection{Typical Hardware Instructions}
+
+\begin{definition}
+    \textbf{Compare and Swap (CAS):} Atomically compares the value of a memory location with a given value. If they are equal, it updates the memory location with a new value. Otherwise, it does nothing.
+\end{definition}
+
+\begin{definition}
+    \textbf{Test and Set (TAS):} Atomically reads the value of a memory location and sets it to 1.
+\end{definition}
+
+\begin{definition}
+    \textbf{Load Linked / Store Conditional (LL/SC): } LL reads the value of a memory location and sets a "link" to it. SC writes a new value to the memory location only if the link is still valid (i.e., no other process has written to that location since the LL).
+\end{definition}
+
+\begin{remark}
+    \textbf{Java} offers these funcitonalities via the classes \textbf{AtomicInteger}, \textbf{AtomicLong}, etc.
+\end{remark}
+
+\subsubsection{Locks using atomic operations}
+
+\begin{codeexample}
+//TAS LOCK IN Java
+public class TASLock implements Lock {
+    AtomicBoolean state = new AtomicBoolean(false);
+
+    public void lock() {
+        while (state.getAndSet(true)) {
+            //busy wait
+        }
+    }
+
+    public void unlock() {
+        state.set(false);
+    }
+}
+\end{codeexample}
+
+\begin{remark}
+    This lock consistently checks the state variable with an atomic write operation, which causes a lot of cache coherence traffic. To avoid this we can use TATAS lock (checking if the state is false before trying to acquire the lock).
+\end{remark}
+
+\begin{codeexample}
+//TAS LOCK IN Java
+public class TATASLock implements Lock {
+    AtomicBoolean state = new AtomicBoolean(false);
+
+    public void lock() {
+        do {
+            while (state.get());
+        } while (state.getAndSet(true));
+    }
+
+    public void unlock() {
+        state.set(false);
+    }
+}
+\end{codeexample}
+
+\begin{remark}
+    To further optimize this lock we can use a backoff strategy (e.g. exponential backoff) to reduce the cache coherence traffic. This means that if a process fails to acquire the lock, it will wait for a certain amount of time (ex. exponentially increasing) before trying again.
+\end{remark}
+
+\subsection{Locking algorithms}
 
 To implement a Lock (Mutex) correctly using only basic memory reads/writes, three conditions must be met:
 \begin{enumerate}
@@ -7,7 +81,7 @@ To implement a Lock (Mutex) correctly using only basic memory reads/writes, thre
     \item \textbf{Freedom from Starvation:} Every process that attempts to enter must eventually succeed.
 \end{enumerate}
 
-\subsection{State Space Diagrams}
+\subsubsection{State Space Diagrams}
 
 \begin{definition}
     A \textbf{State Space Diagram} is a formal tool used to track every possible configuration of a concurrent program.
@@ -23,7 +97,7 @@ To implement a Lock (Mutex) correctly using only basic memory reads/writes, thre
     \end{itemize}
 \end{remark}
 
-\subsection{Attempts to mutual exclusion}
+\subsubsection{Attempts to mutual exclusion}
 
 \begin{algorithm}
 volatile int flag[2] = {0, 0};
@@ -61,7 +135,7 @@ turn = 0;
 Observe that this algorithm also fails as we do not guarantee that a thread resets the turn variable if it crahses or does not use the critical section. Furthermore this algorithm would ensure strict alternation (round-robin) between the threads.
 
 
-\subsection{Successful Algorithms}
+\subsubsection{Successful Algorithms}
 
 The first correct solution to the mutual exclusion problem for two processes. It combines the flag system with a \textbf{turn} variable to break ties. If both want to enter, the \textbf{turn} variable decides who must temporarily retract their interest.
 
@@ -155,3 +229,77 @@ In all cases, we reach a contradiction, proving the algorithm is starvation-free
 \begin{remark}
     But how can there exist computers with thousands to millions of threads? (Solution: Mutex is not implemented as we thought)
 \end{remark}
+
+
+\subsection{Locking Strategies} 
+
+\subsubsection{Fine-Grained Locking}
+
+\begin{remark}
+    Instead of locking everything coarse-grained (the whole data structure) we can lock individual parts of it. This is called \textbf{fine-grained locking} and allows for higher concurrency.
+\end{remark}
+
+\subsubsection{Read-Write Locks}
+
+\begin{remark}
+    With coarse- and fine-grained locking we have complete mutual exclusion on resources but what if we only need exclusive access for writing?
+\end{remark}
+
+\begin{definition}
+    A \textbf{read-write lock} allow fair access to resources by allowing one writer (every N reads) or multiple readers at the same time.
+\end{definition}
+
+\begin{remark}
+    To implement a RWL we need to keep track of the number of readers waiting, the number of writers waiting and the number of readers a writer has to wait until it can write (this ensures fairness).
+\end{remark}
+
+\subsubsection{Optimistic Locking}
+
+\begin{remark}
+    When for example traversing a list, finding a node with \textbf{hand-over-hand locking} requires locking all nodes on the way which consumes time and energy. But how high is it that two threads edit the same node at the same time? 
+\end{remark}
+
+\begin{definition}
+    \textbf{Optimistic Locking: } Instead of locking every node we could traverse the list without locking and only lock the node we are interested in. If we lock and notice that the node has been modified and our locks on (predecessor/successor) are nolonger valid we restart the operation.
+\end{definition}
+
+\begin{remark}
+    Optimistic locking allows us for less overhead on locking but might require multiple traversals if there is high contention.
+\end{remark}
+
+\subsubsection{Lazy Locking}
+
+\begin{definition}
+    \textbf{Lazy locking} is a technique where data-elements are not immediately updated, but rather marked as deleted (or inserted) and only updated when a thread traverses the data structure again. This saves the overhead of multiple traversals.
+\end{definition}
+
+\subsubsection{Lock-Free Data Structures}
+
+\begin{remark}
+    Using atomic operations (mostly CAS) we can implement data structures without locks. 
+\end{remark}
+
+\begin{codeexample}
+class ConcurrentCounter {
+    private AtomicLong value;
+    
+    public ConcurrentCounter() {
+        value = new AtomicLong(0);
+    }
+    
+    public void increment() {
+        long expected;
+        do {
+            expected = value.get();
+        } while (!value.compareAndSet(expected, expected + 1));
+    }
+    
+    public long getValue() {
+        return value.get();
+    }
+}
+\end{codeexample}
+
+\begin{important}
+    The \textbf{ABA problem} is a common issue in lock-free programming where an atomic operation (like compare-and-swap) succeeds because the value has changed twice (e.g., A -> B -> A), making it appear unchanged to the operation. This can lead to incorrect program states.
+\end{important}
