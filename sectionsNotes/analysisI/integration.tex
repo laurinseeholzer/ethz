@@ -1,19 +1,98 @@
 \section{Integration}
 
+
 \begin{definition}
-    Given a function $f: I \to \mathbb{R}$ for $I \subseteq \mathbb{R}$ an open interval. An \textbf{anti-derivative} (or \textbf{primitive function}) of $f$ is a function $F: I \to \mathbb{R}$ such that $F'(x) = f(x)$ for all $x \in I$.
+    Functions $F: I \to \mathbb{R}$ such that $F'(x) = f(x)$ for all $x \in (a, b)$ are called
+    \textbf{antiderivatives of $f$}
 \end{definition}
 
 \begin{definition}
    The family of all anti-derivatives of a function $f: I \to \mathbb{R}$ for $I \subseteq \mathbb{R}$ an open interval is called the \textbf{indefinite integral} and is denoted by
-   $$\int f(x) dx = \{ F: I \to \mathbb{R} : F'(x) = f(x) \}$$
+   $$\int f(x) dx = \{ F: I \to \mathbb{R} : F'(x) = f(x) \} = F(x) + C $$
+\end{definition}
+
+\begin{theorem}
+    Let $f, g: I \to \mathbb{R}$ be integrable functions and let $c \in \mathbb{R}$. Then
+    $$\int (f(x) \pm g(x)) dx = \int f(x) dx \pm \int g(x) dx$$
+    $$\int c f(x) dx = c \int f(x) dx$$
+\end{theorem}
+
+\begin{remark}
+    Some important basic antiderivatives:
+    \begin{itemize}
+        \item $F'(x) = 0 \quad \implies \quad F(x) = C$
+        \item $F'(x) = 1 \quad \implies \quad F(x) = x + C$
+        \item $F'(x) = a x^p \quad \implies \quad F(x) = \frac{a}{p+1} x^{p+1} + C$
+        \item $F'(x) = a^x \quad \implies \quad F(x) = \frac{a^x}{ln(a)} + C$
+        \item $F'(x) = sin(x) \quad \implies \quad F(x) = -cos(x) + C$
+        \item $F'(x) = cos(x) \quad \implies \quad F(x) = sin(x) + C$
+        \item $F'(x) = tan(x) \quad \implies \quad F(x) = ln|cos(x)| + C$
+        \item $F'(x) = \frac{1}{x} \quad \implies \quad F(x) = ln|x| + C$
+        \item $F'(x) = \frac{1}{1+x^2} \quad \implies \quad F(x) = arctan(x) + C$
+    \end{itemize}
+    
+\end{remark}
+
+\begin{theorem}
+    \textbf{Partial Integration:} For functions $f(x)$ and $g(x)$ we have
+    $$\int f'(x)g(x)dx = f(x)g(x) - \int f(x)g'(x)dx $$
+\end{theorem}
+
+\begin{remark}
+    The equation is derived from the product rule for differentiation. 
+\end{remark}
+
+\begin{example}
+    Let $f(x) = x$ and $g(x) = e^x$. Then 
+    $$\int x e^x dx = x e^x - \int e^x dx = x e^x - e^x + C$$
+\end{example}
+
+\begin{theorem}
+    \textbf{Substitution Rule:} For functions $f(x)$ and $g(x)$ we have
+    $$\int f(g(x))g'(x)dx = F(g(x)) + C $$
+\end{theorem}
+
+\begin{remark}
+    The equation is derived from the chain rule for differentiation. 
+\end{remark}
+
+\begin{example}
+    Let $f(x) = x$ and $g(x) = e^x$. Then 
+    $$\int x e^x dx = x e^x - \int e^x dx = x e^x - e^x + C$$
+\end{example}
+
+\begin{remark}
+    \textbf{Upper and Lower Sums (Stair Functions):} One can partition the integration interval into $\Delta x$ wide subintervals. And for each subinterval we can approximate the area of the function with the area of a rectangle. The sum of the areas of these rectangles is an approximation of the area of the function. If for all subintervals we take the lower bound of the function we get the lower sum. If for all subintervals we take the upper bound of the function we get the upper sum.
+\end{remark}
+
+\begin{definition}
+    Let $U$ and $L$ denote the upper and lower sums of a function $f$ then 
+    $f$ is called \textbf{Riemann-integrable} iff $\sup_{U} = \inf_{L}$. The value of the integral is then this value.
 \end{definition}
 
 \begin{remark}
-    For indefinite integrals we have
-    $$\int f(x) \pm g(x) dx = \int f(x) dx \pm \int g(x) dx$$
-    $$\int c f(x) dx = c \int f(x) dx$$
-    $$...$$
-    Note that to determine indefinite integrals we can use differentiation rules in reverse.
+    All continuous functions are Riemann-integrable. 
 \end{remark}
 
+\begin{theorem}
+    Let $f$ and $g$ be integrable and $c \in \mathbb{R}$ then:
+    \begin{itemize}
+        \item linearity: $\int (f(x) \pm g(x))dx = \int f(x)dx \pm \int g(x)dx$
+        \item monotonicity: $f(x) \leq g(x) \implies \int f(x)dx \leq \int g(x)dx$
+        \item triangle inequality: $\left| \int f(x)dx \right| \leq \int |f(x)|dx$
+        \item inversion of integration direction: $\int_{a}^{b} f(x)dx = -\int_{b}^{a} f(x)dx$
+        \item partition of the integration interval: $\int_{a}^{c} f(x)dx = \int_{a}^{b} f(x)dx + \int_{b}^{c} f(x)dx$
+    \end{itemize}    
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Mean Value Theorem for Integrals:}
+    Let $f: [a,b] \to \mathbb{R}$ be continuous. Then there exists a $c \in [a,b]$ such that
+    $$\int_{a}^{b} f(x)dx = (b-a)f(c)$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Fundamental Theorem of Integral Calculus:}
+    Let $f: [a,b] \to \mathbb{R}$ be continuous. Then 
+    $$\int_{a}^{b} f(x)dx = F(b) - F(a)$$
+\end{theorem}

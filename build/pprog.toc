@@ -41,9 +41,14 @@
 \contentsline {subsubsection}{\numberline {6.3.3}Optimistic Locking}{29}{}%
 \contentsline {subsubsection}{\numberline {6.3.4}Lazy Locking}{30}{}%
 \contentsline {subsubsection}{\numberline {6.3.5}Lock-Free Data Structures}{30}{}%
-\contentsline {section}{\numberline {7}Beyond Locks}{31}{}%
-\contentsline {subsection}{\numberline {7.1}Deadlocks}{31}{}%
-\contentsline {subsection}{\numberline {7.2}Semaphores}{31}{}%
-\contentsline {subsection}{\numberline {7.3}Barriers}{32}{}%
-\contentsline {subsection}{\numberline {7.4}Producer Consumer Pattern}{33}{}%
-\contentsline {subsection}{\numberline {7.5}Monitors}{34}{}%
+\contentsline {subsubsection}{\numberline {6.3.6}The ABA Problem}{31}{}%
+\contentsline {section}{\numberline {7}Beyond Locks}{32}{}%
+\contentsline {subsection}{\numberline {7.1}Deadlocks}{32}{}%
+\contentsline {subsection}{\numberline {7.2}Semaphores}{32}{}%
+\contentsline {subsection}{\numberline {7.3}Barriers}{33}{}%
+\contentsline {subsection}{\numberline {7.4}Producer Consumer Pattern}{34}{}%
+\contentsline {subsection}{\numberline {7.5}Monitors}{35}{}%
+\contentsline {section}{\numberline {8}Concurrency Theory}{37}{}%
+\contentsline {subsection}{\numberline {8.1}Linearizability}{37}{}%
+\contentsline {subsection}{\numberline {8.2}Sequential Consistency}{37}{}%
+\contentsline {subsection}{\numberline {8.3}Consensus}{38}{}%

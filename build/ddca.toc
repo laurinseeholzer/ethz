@@ -52,3 +52,5 @@
 \contentsline {subsection}{\numberline {14.6}Memory and Performance Trade-Offs}{37}{}%
 \contentsline {section}{\numberline {15}Memory}{38}{}%
 \contentsline {subsection}{\numberline {15.1}organization of Memory}{38}{}%
+\contentsline {subsection}{\numberline {15.2}Memory Technologies}{39}{}%
+\contentsline {subsection}{\numberline {15.3}Memory Hierarchy}{39}{}%

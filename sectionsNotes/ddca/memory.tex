@@ -63,3 +63,42 @@
     On a high level,SRAM is organized similarly but uses more transistors and is faster.
 \end{remark}
 
+\subsection{Memory Technologies}
+
+\begin{definition}
+    \textbf{Static Random Access Memory (SRAM)} is a low latency memory built from two cross-coupled inverters that uses 6 transistors and does not need any refresh cycles.
+\end{definition}
+
+\begin{definition}
+    \textbf{Dynamic Random Access Memory (DRAM)} uses only 1 transistor and a capacitor to store a bit. It is cheaper but slower and needs to be refreshed periodically.
+\end{definition}
+
+\begin{definition}
+    \textbf{Phase change memory (PCM)} is a new non-volatile memory technology that uses chalcogenide glass in its Amorphous and Crystalline forms to store bits. The form of the glass can be changed by applying heat using current to the material. 
+\end{definition}
+
+\begin{remark}
+    PCM is slow, energy hungry and has limited endurance (the material degrades over time). However, it is non-volatile and very dense.
+\end{remark}
+
+\subsection{Memory Hierarchy}
+
+\begin{remark}
+    The reason to having multiple levels of memory are the trade-offs between cost, capacity, latency and energy consumption. We can not have fast and large memory at the same time hence we have a small fast memory (caches) and a large slow memory (RAM). 
+\end{remark}
+
+\begin{remark}
+    By intelligently selecting and moving chunks of data form the main memory to the caches we get nearly the performance of a large and fast memory.
+\end{remark}
+
+\begin{definition}
+   \textbf{Data Locality} is the property of data that allows us to predict where it will be accessed next.
+   \begin{itemize}
+       \item \textbf{Temporal locality:} If a data item is accessed, it is likely to be accessed again soon.
+       \item \textbf{Spatial locality:} If a data item is accessed, it is likely that nearby data items will be accessed soon.
+   \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Manually managed memory} is when the programmer has to manually tell the system when to put what into which cache. These are often refered to as shared memory or scratchpads.
+\end{definition}

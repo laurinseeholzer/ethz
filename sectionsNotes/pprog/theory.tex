@@ -1,0 +1,103 @@
+\section{Concurrency Theory}
+
+\subsection{Linearizability}
+
+\begin{definition}
+    A \textbf{history} is a partially ordered set of invocations and responses of operations that appear in a distributed program. 
+\end{definition}
+
+\begin{definition}
+    A history $H$ is \textbf{linearizable} if it can be extended to a history $G$ by
+    \begin{itemize}
+        \item appending zero or more responses to pending invocations that took effect
+        \item discarding zero or more pending invocations that did not take affect
+    \end{itemize}
+    such that $G$ is equivalent to a legal sequantial history $S$ with $\to_G \subseteq \to_S$.
+\end{definition}
+
+\begin{remark}
+    Note that $\to_G$ is a total order of the operations in $G$ that satisfies the leagal sequential order of $S$.
+\end{remark}
+
+\begin{theorem}
+    History $H$ is linearizable $\iff$ for every object $x$ $H | x$ is linearizable.
+\end{theorem}
+
+\begin{remark}
+    The consequence of this theorem is that linearizability can be proven in isolation for each object and then composed.
+\end{remark}
+
+\subsection{Sequential Consistency}
+
+\begin{definition}
+    A history $H$ is \textbf{sequentially consistent} if it can be extended to a history $G$ by
+    \begin{itemize}
+        \item appending zero or more responses to pending invocations that took effect
+        \item discarding zero or more pending invocations that did not take affect
+    \end{itemize}
+    such that $G$ is equivalent to a legal sequential history $S$.
+\end{definition}
+
+\begin{remark}
+    Sequential consitancy does not require the preservation of the real-time order and only has to respect program order of each thread.
+\end{remark}
+
+\begin{theorem}
+    Sequential consitency is not a local property thus we lose composability.
+\end{theorem}
+
+\begin{remark}
+    Another idea: Programs should respect real-time order of algorithms separated by periods of quiescence. Quiescence consitency requires non-overlapping methods to take effect in real-time order.
+\end{remark}
+
+\subsection{Consensus}
+
+\begin{definition}
+    A \textbf{consensus object} has a function $decide(value)$ that can be invoked by multiple threads and returns the same value for all threads where value is one of the values $v_i$ proposed by the threads.
+\end{definition}
+
+\begin{remark}
+    The consensus object allows threads to agree on a single and valid output value.
+\end{remark}
+
+\begin{definition}
+    The \textbf{Consensus Number} is the maximum number of nodes that can solve consensus validly, sequentially consitent and wait-free.
+\end{definition}
+
+\begin{theorem}
+    Compare and Swap has an infinite consensus number.
+\end{theorem}
+
+\begin{proof}
+    This can be proven by implementing a valid, sequentially consitent and wait-free consensus object using compare and swap.
+\end{proof}
+
+\begin{codeexample}
+class CASConsensus {
+    private final int FIRST = -1;
+    private AtomicInteger r = AtomicInteger(FIRST);
+    private AtomicIntegerArray proposed;
+
+    public int decide(int value) {
+        int i = ThreadID.get();
+        proposed.set(i, value);
+        if (r.compareAndSet(FIRST, i)) {
+            return proposed.get(i);
+        } else {
+            return proposed.get(r.get());
+        }
+    }
+}
+\end{codeexample}
+
+\begin{example}
+    Lets prove that there is no wait free implementation of a FIFO Queue using atomic registers.
+\end{example}
+
+\begin{proof}
+    Assume there is a wait free implementation. Then i can use the FIFO Queue to solve $n=2$ consensus which is a contradiction as atomic have a consensus number of 1.
+\end{proof}
+
+\begin{remark}
+    We can solve consensu with FIFO Queue by setting $q[0] = 1$ and $q[1] = 0$ if $p_1$ wants to output 1 and $p_2$ wants to output 0, then they both try to dequeue the value who ever gets the value $1$ will win and the other will lose. 
+\end{remark}

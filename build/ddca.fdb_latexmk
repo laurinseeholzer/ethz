@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1778408727.21328 "/home/laurin/dev/ethz/ddca.tex" "build/ddca.pdf" "ddca" 1778408727.70735 0
+["pdflatex"] 1778962618.9425 "/home/laurin/dev/ethz/ddca.tex" "build/ddca.pdf" "ddca" 1778962619.52694 0
   "/home/laurin/dev/ethz/ddca.tex" 1778251038.09043 970 cd5657d61450ca56572f63ebbe5d357f ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.enc" 1561323594 2496 4d35740f3a177992ff7b134746c0a1db ""
@@ -117,15 +117,15 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1775001600 40900 887e0dc8cac988a9e9c574af364cf837 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1777806177.26788 4602016 72a039a3c4aea0fa25b5d35d65138f54 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1777805916 7753802 be5e41a9e647686271b5358067c82b4f ""
-  "build/ddca.aux" 1778408727.64046 6305 37ac64d09c7b24d1836c87cae47fb1bc "pdflatex"
-  "build/ddca.toc" 1778408727.64146 4023 63e96e1a9f2db3f7d3672fe3b79df518 "pdflatex"
+  "build/ddca.aux" 1778962619.45156 6530 635354b54479ec0768a2ccf3d64b68c8 "pdflatex"
+  "build/ddca.toc" 1778962619.45354 4166 248b210487afd9527fbd84f599c2a229 "pdflatex"
   "ddca.tex" 1778251038.09043 970 cd5657d61450ca56572f63ebbe5d357f ""
   "sectionsNotes/ddca/branch_prediction.tex" 1777059286.89805 8604 7d314f50b5a89c4bb296d834f755ee43 ""
   "sectionsNotes/ddca/combinational_logic.tex" 1774798734.68836 2074 d45cf739f5c614a271d4c2fba0acec5e ""
   "sectionsNotes/ddca/fundamentals.tex" 1774798543.79368 4294 de1e0ab5c270552c3949085f500e3c63 ""
-  "sectionsNotes/ddca/gpu_architectures.tex" 1778408727.09573 6423 4d17bb6b0f7e03c7aa7a8607def04944 ""
+  "sectionsNotes/ddca/gpu_architectures.tex" 1778408763.6828 6423 4d17bb6b0f7e03c7aa7a8607def04944 ""
   "sectionsNotes/ddca/instruction_set_architecture.tex" 1774811399.05921 6198 bd9e08b042d0e915b2faed01e5f9ac84 ""
-  "sectionsNotes/ddca/memory.tex" 1778268873.93449 2507 1f5e64bc21abcc7949266649ec061425 ""
+  "sectionsNotes/ddca/memory.tex" 1778962618.80056 4542 dbfd0a2a23121c2e4a980bd1ae6f8428 ""
   "sectionsNotes/ddca/microarchitecture.tex" 1775139714.98115 5181 b39f88d1110cb52b2e9c1d2054068d87 ""
   "sectionsNotes/ddca/out_of_order_execution.tex" 1776602632.97493 4903 0a8c3b5ad2f5ba940fdd63b3ce527cf7 ""
   "sectionsNotes/ddca/pipelining.tex" 1775141438.7409 8080 725dd8a1ec826f67d737b483a5ca0af5 ""

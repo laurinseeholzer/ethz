@@ -300,6 +300,37 @@ class ConcurrentCounter {
 }
 \end{codeexample}
 
+\begin{remark}
+    A lock free algorithm is always deadlock free
+\end{remark}
+
+\begin{definition}
+    \textbf{Lock-Free: } System wide progress is guaranteed. This means that at least one process can always make progress.
+\end{definition}
+
+\begin{definition}
+    \textbf{Wait-Free: } Any operation on the data structure will terminate in a bounded number of steps.
+\end{definition}
+
+\subsubsection{The ABA Problem}
+
+\begin{remark}
+    Assume we have a stack that we try to implement lock free and to save computation we dont fully garbage collect (reclaim memory) of popped elements. Instead we store them in a pool.
+\end{remark}
+
+\begin{example}
+   Assume we pop element $a$ from the stack and store it in the pool. Then we push some element $b$ and then $a$ again (which we got from the pool, hence has the same adress). A thread that read the last element before poping $a$ and now checks again will not notice the change of the stack.
+\end{example}
+
 \begin{important}
     The \textbf{ABA problem} is a common issue in lock-free programming where an atomic operation (like compare-and-swap) succeeds because the value has changed twice (e.g., A -> B -> A), making it appear unchanged to the operation. This can lead to incorrect program states.
 \end{important}
+
+
+\begin{definition}
+    We can use \textbf{Tagged Pointers} to significantly reduce the probability of the ABA problem by incrementing a \textbf{tag} along with the pointer in the CAS operation to detect up to $2^k$ changes where $k$ is the number of bits used for the tag.
+\end{definition}
+
+\begin{definition}
+    \textbf{Hazard Pointers:} A common technique to solve the ABA problem is to use hazard pointers. A hazard pointer is a pointer to a node that is currently being accessed by a thread. So when a thread reads the state of a datastructure it will store the address of the nodes it reads in its hazard pointer. Anyone trying to edit it will see the hazard pointer and not modify the nodes.
+\end{definition}

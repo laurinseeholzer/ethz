@@ -138,6 +138,52 @@ return f
     This can be solved in $O(mn)$ using Ford-Fulkerson.
 \end{remark}
 
+\subsection{Matchings in Bipartite Graphs}
+
+\begin{definition}
+    \textbf{Maximum Bipartite Matching: } Given a bipartite graph $G = (A \cup B, E)$ find a maximum matching in $G$.
+\end{definition}
+
+\begin{remark}
+    We can construct a flow network $G' = (V', E', c')$ with
+    $$V' = S \quad \cup \quad T \quad \cup \quad \{s, t\}$$
+    $$E' = {s} \times S \quad \cup \quad E \quad \cup \quad T \times {t}$$
+    $$c' = 1$$
+\end{remark}
+
+\begin{lemma}
+    The maximum flow in $G'$ equals to $\frac{|M|}{2}$, where $M$ is the maximum matching in $G$.
+\end{lemma}
+
+\subsection{Edge-disjoint Paths}
+
+\begin{definition}
+    \textbf{Edge-disjoint Paths: } Given a graph and vertices $s, t$ find a maximum set of edge-disjoint paths from $s$ to $t$.
+\end{definition}
+
+\begin{remark}
+    We can construct a flow network $N_G = (V, E', c')$ with
+    $$E' = \{(u,v), (v,u) | \forall \{u,v\} \in E \}$$
+    $$c'(e) = 1 \quad \forall e \in E'$$    
+    We can find $k$ edge disjoint paths in $G$ and by calculating the max flow of $N_G$ and greedily selecting consecutive edges until we reach the sink. Observe that this is possible because every vertex has the same amount of incomming as outgoing edges.
+\end{remark}
+
+\begin{lemma}
+    As we can find $k$ edge-disjoint paths in $G$ we have $k \leq maxFlow(N_G)$. Further if we had $k$ edge disjoint paths we would be able to construct a flow of value $k$ in $N_G$ by sending $1$ unit of flow along each path. Thus $k \leq maxFlow(N_G)$. By this we geometrically
+    $$k = maxFlow(N_G)$$
+\end{lemma}
+
+\begin{lemma}
+    Observe that the number of edges $k'$ that separate $s$ from $t$ in $G$ form a minimal $s-t$ cut in $N_G$ and thus
+    $$k' = minCut(S,T)$$
+\end{lemma}
+
+\begin{theorem}
+    By the above lemmas and the max-flow min-cut theorem we have (Menger's Theorem)
+    $$k = maxFlow(N_G) = minCut(S,T) = k'$$
+    Which means that the maximum number of edge-disjoint paths equals to the minimum number of edges that separate $s$ from $t$ in $G$.
+\end{theorem}
+
 \subsection{Image Segmentation using MaxFlow}
 
 \begin{definition}
