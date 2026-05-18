@@ -49,7 +49,7 @@
 
 \begin{theorem}
     \textbf{Substitution Rule:} For functions $f(x)$ and $g(x)$ we have
-    $$\int f(g(x))g'(x)dx = F(g(x)) + C $$
+    $$\int f(g(x))g'(x)dx  = \int f(u) u' dx = \int f(u) \frac{du}{dx} dx = \int f(u) du = F(g(x)) + C $$
 \end{theorem}
 
 \begin{remark}
@@ -93,6 +93,18 @@
 
 \begin{theorem}
     \textbf{Fundamental Theorem of Integral Calculus:}
-    Let $f: [a,b] \to \mathbb{R}$ be continuous. Then 
-    $$\int_{a}^{b} f(x)dx = F(b) - F(a)$$
+    Let $f: [a,b] \to \mathbb{R}$ be continuous. 
+    Then for all $C \in \mathbb{R}, F(x)$ is an antiderivative of $f$
+    $$F(x) = \int_{a}^{x} f(y)dy + C$$
 \end{theorem}
+
+\begin{proof}
+    As $f$ is continous it is integrable on $[a,x]$ for any $x \in [a,b]$.
+    Let $x_0 \in [a,b]$ and $\varepsilon > 0$ arbitrary. Then there exist a $\delta > 0$ such that for any $x \in [a,b]$ with $0 < |x-x_0| < \delta$ we have $|f(x) - f(x_0)| < \varepsilon$. 
+    Then for $x \in [a,b]$ with $0 < |x-x_0| < \delta$
+    $$\left| \frac{F(x)-F(x_0)}{x-x_0} - f(x_0) \right| = \left| \frac{1}{x-x_0} \left( \int_{a}^{x} f(y)dy -\int_{a}^{x_0} f(y)dy \right) - f(x_0) \right|$$
+    $$= \left| \frac{1}{x-x_0} \int_{x_0}^{x} f(y)dy - \frac{1}{x-x_0} \int_{x_0}^{x} f(x_0) \right| = \left| \frac{1}{x-x_0} \int_{x_0}^{x} (f(y)-f(x_0)) dy \right|$$
+    $$\leq \frac{1}{x-x_0} \int_{x_0}^{x} |f(y)-f(x_0)| dy$$
+    $$\leq \frac{1}{x-x_0} \int_{x_0}^{x} \varepsilon dy = \frac{1}{x-x_0} \varepsilon (x-x_0) = \varepsilon$$
+    Observe that $x$ can be larger or smaller than $x_0$, but $\varepsilon$ does not depend on $x$.
+\end{proof}

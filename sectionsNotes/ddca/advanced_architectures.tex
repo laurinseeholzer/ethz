@@ -1,6 +1,100 @@
-\section{GPU Architectures}
+\section{Advanced Architectures}
 
-\subsection{SIMT}
+\subsection{VLIW Architectures}
+
+\begin{definition}
+    \textbf{VLIW (Very Long Instruction Word)}: A parallel architecture where multiple independent operations are grouped into a single "very long" instruction word and executed simultaneously by multiple \textbf{processing elements (PE)}.
+\end{definition}
+
+\begin{remark}
+    This drops the need for complex dependency checking hardware (like in superscalar processors), as the \textbf{compiler is responsible} for ensuring that all operations in a single VLIW instruction are independent.
+\end{remark}
+
+\begin{important}
+    The compiler needs to \textbf{statically align} the instructions (and insert noops if necessary) for them to be processed by the correct PE. This \textbf{significantly reduces portability}, as the binary code is tied to the very specific hardware architecture.
+\end{important}
+
+\begin{remark}
+    The main advantage of VLIW is its simplicity and potential for high instruction-level parallelism.
+\end{remark}
+
+\subsubsection{Compiler optimizations for VLIW}
+
+\begin{definition}
+    \textbf{Trace Scheduling} is a compiler optimization technique that attempts to find the \textbf{most frequently executed paths} (the "trace") through a program and schedules instructions along that path to maximize parallelism.
+\end{definition}
+
+\begin{remark}
+    Trace scheduling is particularly effective for VLIW architectures because it allows the compiler to pack as many independent instructions as possible into a single VLIW instruction.
+\end{remark}
+
+\begin{definition}
+    \textbf{Superblocks} expand the trace to have a single entry point, but multiple exit points. 
+\end{definition}
+
+\begin{remark}
+    This is done trough tail duplication which eliminates side-entries to the trace which allows for further more agressive optimization.
+\end{remark}
+
+\subsection{SIMD Architectures}
+
+\begin{definition}
+    \textbf{Single Instruction, Multiple Data (SIMD)}: Same instruction applied to multiple data elements at once.
+\end{definition}
+
+\begin{definition}
+    \textbf{Data Parallelism}: Performing the same operation on multiple data elements in parallel. (opposed to control parallelism: multiple instructions)
+\end{definition}
+
+\begin{definition}
+    \textbf{Array Processor}: Instruction operates on multiple data elements at the same time using different spaces (PEs).
+\end{definition}
+
+\begin{definition}
+    \textbf{Vector Processor}: Instruction operates on multiple data elements in consecutive time steps (pipelined) using the same space (PE).
+\end{definition}
+
+\begin{remark}
+    Vector processing allows for deeper pipelines as it does not require handling of data dependencies or branches but requires regular data structures and a lot of memory bandwidth.
+\end{remark}
+
+\begin{definition}
+    \textbf{Vector Registers (VRs)}: Registers that store multiple data elements in parallel.
+\end{definition}
+
+\begin{definition}
+    \textbf{Stride}: The distance between consecutive memory addresses that are accessed in parallel.
+\end{definition}
+
+\begin{definition}
+    \textbf{Memory Banks}: Physical memory modules that can be accessed in parallel.
+\end{definition}
+
+\subsection{Systolic Array Architectures}
+
+\begin{remark}
+    Systolic arrays might be hard to understand intuitively. The key idea is to have a \textbf{very specific architecture} of processing elements (PEs) that are connected in a \textbf{grid- or array-like structure} and control the flow of data. This allows us to process large amounts of data in parallel without having to load data entries multiple times.
+\end{remark}
+
+\begin{important}
+    Systolic arrays are \textbf{not a standard pipeline}, they allow for \textbf{non linear and multi-dimensional data flow}.
+\end{important}
+
+\begin{example}
+    To convolve a matrix with a kernel, we can use a systolic array to process the data in parallel. 
+\end{example}
+
+\begin{remark}
+    The main advantage of systolic arrays is their high efficiency in terms of data movement and processing power as well as the regularity of the design. 
+\end{remark}
+
+\begin{remark}
+    The main disadvantage is that they are very specialized and not good at exploiting irregular parallelism.
+\end{remark}
+
+\subsection{GPU Architectures}
+
+\subsubsection{SIMT}
 
 \begin{definition}
     \textbf{Single Instruction, Multiple Threads (SIMT)} is an execution model where a \textbf{single instruction is issued simultaneously to a group of threads}, each operating on its own private data and registers. Unlike SIMD, each thread has its own program counter, so threads can diverge independently.
@@ -15,7 +109,7 @@
 \end{definition}
 
 
-\subsection{GPU Architecture}
+\subsubsection{GPU Architecture}
 
 \begin{definition}
     A \textbf{GPU} is optimized for \textbf{high-throughput} parallelism by using large amounts of small arithmetic modules and allowing for long latency with enormous amounts of parallelism.
@@ -35,7 +129,7 @@
     Each SM runs many warps simultaneously. The warp scheduler selects a ready warp each cycle to issue instructions, hiding the latency of stalled warps without any out-of-order hardware.
 \end{remark}
 
-\subsection{Warps}
+\subsubsection{Warps}
 
 \begin{definition}
     A \textbf{warp} is the fundamental unit of thread scheduling on a GPU. It consists of threads that always execute the same instruction at the same cycle on different data (SIMT). 
@@ -45,7 +139,7 @@
     Warps exist to amortize control overhead: one instruction fetch, decode, and issue serves 32 threads simultaneously. Managing thousands of threads as groups of 32 is far more practical than scheduling individual threads. The warp granularity also matches the width of the underlying SIMD execution units.
 \end{remark}
 
-\subsection{Advantages and Disadvantages of Warp Execution}
+\subsubsection{Advantages and Disadvantages of Warp Execution}
 
 \begin{theorem}
     \textbf{Advantages of warp-based execution:}
@@ -67,7 +161,7 @@
 \end{theorem}
 
 
-\subsection{Fine-Grained Multithreading and Latency Hiding}
+\subsubsection{Fine-Grained Multithreading and Latency Hiding}
 
 \begin{definition}
     \textbf{Fine-Grained Multithreading (FGMT)} is a technique where the processor switches between warps \textbf{every clock cycle}. While one warp is stalled (e.g., waiting on a memory response), another ready warp executes, keeping functional units occupied.
@@ -88,7 +182,7 @@
 \end{important}
 
 
-\subsection{Memory and Performance Trade-Offs}
+\subsubsection{Memory and Performance Trade-Offs}
 
 \begin{remark}
     The GPU memory hierarchy has drastically different latencies at each level:
