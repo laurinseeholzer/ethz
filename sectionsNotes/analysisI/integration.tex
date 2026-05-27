@@ -108,3 +108,20 @@
     $$\leq \frac{1}{x-x_0} \int_{x_0}^{x} \varepsilon dy = \frac{1}{x-x_0} \varepsilon (x-x_0) = \varepsilon$$
     Observe that $x$ can be larger or smaller than $x_0$, but $\varepsilon$ does not depend on $x$.
 \end{proof}
+
+\begin{proof}
+    \textbf{Uniqueness of Antiderivatives} Let $G(x)$ be another antiderivative of $f: [a,b] \to \mathbb{R}$ with $F(X) = \int_{a}^{x} f(y)dy + C$. We define $H(x) = F(x) - G(x)$ and get
+    $$H'(x) = F'(x) - G'(x) = f(x) - f(x) = 0$$ 
+    Hence $H(x)$ must be a constant $C$ and $F(x) = G(x) + C$. Thus, the antiderivatives are only unique up to a constant.
+\end{proof}
+
+\begin{lemma}
+    \textbf{Substitution} for definite integrals: Let $f: I \to \mathbb{R}$ be integrable, $g: [a,b] \to I$ differentiable and $f'$ integrable. Then
+    $$\int_{a}^{b} f(g(x))g'(x)dx  = \int_{g(a)}^{g(b)} f(u) du$$
+\end{lemma}
+
+\begin{lemma}
+    \textbf{Integration by Parts} for definite integrals: Let $f: I \to \mathbb{R}$ be integrable, $g: [a,b] \to I$ differentiable and $f'$ integrable. Then
+    $$\int_{a}^{b} f(g(x))g'(x)dx  = \int_{g(a)}^{g(b)} f(u) du$$
+\end{lemma}
+

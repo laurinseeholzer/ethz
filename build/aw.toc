@@ -27,12 +27,16 @@
 \contentsline {subsection}{\numberline {6.5}Duplicate Detection}{37}{}%
 \contentsline {subsection}{\numberline {6.6}Floyd-Cycle Detection}{38}{}%
 \contentsline {subsection}{\numberline {6.7}Long-Path Problem}{39}{}%
-\contentsline {section}{\numberline {7}Flow Networks}{42}{}%
-\contentsline {subsection}{\numberline {7.1}Cuts}{42}{}%
-\contentsline {subsection}{\numberline {7.2}Max-Flow Min-Cut}{43}{}%
-\contentsline {subsection}{\numberline {7.3}Residual Networks and Augmenting Paths}{43}{}%
-\contentsline {subsection}{\numberline {7.4}Ford-Fulkerson Algorithm}{44}{}%
-\contentsline {subsection}{\numberline {7.5}Maximum Matchings using MaxFlow}{45}{}%
-\contentsline {subsection}{\numberline {7.6}Matchings in Bipartite Graphs}{45}{}%
-\contentsline {subsection}{\numberline {7.7}Edge-disjoint Paths}{46}{}%
-\contentsline {subsection}{\numberline {7.8}Image Segmentation using MaxFlow}{46}{}%
+\contentsline {subsection}{\numberline {6.8}Minimum cut in Multigraphs}{41}{}%
+\contentsline {subsubsection}{\numberline {6.8.1}Bootstrapping}{42}{}%
+\contentsline {subsection}{\numberline {6.9}Small Enclosing Disk Problem}{43}{}%
+\contentsline {subsection}{\numberline {6.10}Convex Hull}{44}{}%
+\contentsline {section}{\numberline {7}Flow Networks}{46}{}%
+\contentsline {subsection}{\numberline {7.1}Cuts}{46}{}%
+\contentsline {subsection}{\numberline {7.2}Max-Flow Min-Cut}{47}{}%
+\contentsline {subsection}{\numberline {7.3}Residual Networks and Augmenting Paths}{47}{}%
+\contentsline {subsection}{\numberline {7.4}Ford-Fulkerson Algorithm}{48}{}%
+\contentsline {subsection}{\numberline {7.5}Maximum Matchings using MaxFlow}{49}{}%
+\contentsline {subsection}{\numberline {7.6}Matchings in Bipartite Graphs}{49}{}%
+\contentsline {subsection}{\numberline {7.7}Edge-disjoint Paths}{50}{}%
+\contentsline {subsection}{\numberline {7.8}Image Segmentation using MaxFlow}{50}{}%

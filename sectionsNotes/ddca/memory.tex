@@ -102,3 +102,93 @@
 \begin{definition}
     \textbf{Manually managed memory} is when the programmer has to manually tell the system when to put what into which cache. These are often refered to as shared memory or scratchpads.
 \end{definition}
+
+\subsection{Cache}
+
+\begin{definition}
+    Caches can be more or less strict in terms of where and how data is stored (mapped).
+    \begin{itemize}
+        \item \textbf{Direct Mapped:} The simplest form of cache where each memory address can only be mapped to one specific cache line.
+        \item \textbf{Set Associative:} Each memory address can be mapped to one of multiple cache lines within a specific set.
+        \item \textbf{Fully Associative:} Each memory address can be mapped to any cache line.
+    \end{itemize}    
+\end{definition}
+
+\begin{definition}
+    \textbf{Replacement Strategies} are needed in case we access a cache line and it is already full. In that case we need to replace a cache line with the new one. Common strategies are:
+    \begin{itemize}
+        \item \textbf{Random:} Randomly select a cache line to replace.
+        \item \textbf{FIFO:} First In First Out.
+        \item \textbf{LRU:} Least Recently Used.
+        \item \textbf{LFU:} Least Frequently Used.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Beladys OPT} evicts the cache line that will be used furthest in the future. This is achieves optimal number of cache misses but not optimal performance because cache misses might cost different amounts of time depending on where they are in the memory hierarchy. Furthermore it would require perfect knowledge of future accesses.
+\end{definition}
+
+\begin{definition}
+    \textbf{Write-Policy} defines what happens to data when it is written to the cache.
+    \begin{itemize}
+        \item \textbf{Write-Back:} The data is only written to the cache and not to the main memory.
+        \item \textbf{Write-Through:} The data is written to both the cache and the main memory.
+    \end{itemize}    
+\end{definition}
+
+\begin{remark}
+    \textbf{Cache compression} if cached data is close to each other we can save a base adress and then only the offsets of the other elements in the cache line. This effecively shrinks cache space usage.
+\end{remark}
+
+
+\subsubsection{Prefetching}
+
+\begin{definition}
+    \textbf{Prefetching} fetches data before the program needs it to hide memory latency. It can eliminate compulsory misses.
+\end{definition}
+
+\begin{remark}
+    \textbf{Correctness:} Prefetching mispredictions do not affect program correctness. No state recovery is needed because unused prefetched data is simply ignored.
+\end{remark}
+
+\begin{definition}
+    \textbf{Performance Metrics:}
+    \begin{itemize}
+        \item \textbf{Accuracy:} Used prefetches / total sent prefetches.
+        \item \textbf{Coverage:} Prefetched misses / all misses.
+        \item \textbf{Timeliness:} On-time prefetches / used prefetches.
+        \item \textbf{Bandwidth/Cache Usage:} Extra bandwidth consumed and \textbf{Cache Pollution} (displacing useful demand data).
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    \textbf{Four Questions:} What (address), When (initiation time), Where (cache level/buffer), and How (who operates it).
+\end{remark}
+
+\begin{definition}
+    \textbf{Hardware Prefetchers} monitor accesses to find patterns:
+    \begin{itemize}
+        \item \textbf{Instruction-Based (Stride):} Tracks strides per individual instruction using the Program Counter (PC).
+        \item \textbf{Memory-Region-Based:} Detects patterns across multiple instructions within a region.
+        \item \textbf{Stream Buffers:} Special case of region-based stride prefetching where stride $N=1$.
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    \textbf{Software Prefetching:} Programmer or compiler inserts ISA-specific instructions (e.g., x86 \texttt{PREFETCH}).
+\end{remark}
+
+\begin{definition}
+    \textbf{Execution-Based Prefetching} pre-executes program pieces to find misses.
+    \begin{itemize}
+        \item \textbf{Runahead Execution:} When the oldest instruction is a long-latency miss, the processor checkpoints architectural state and speculatively executes ahead to generate prefetches.
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    \textbf{Modern Techniques:}
+    \begin{itemize}
+        \item \textbf{Pythia:} Uses Reinforcement Learning to select prefetch offsets based on rewards for accuracy and bandwidth efficiency.
+        \item \textbf{Hermes:} Uses a Perceptron to predict if a load will go off-chip, allowing it to bypass the slow on-chip cache hierarchy.
+    \end{itemize}
+\end{remark}

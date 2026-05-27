@@ -101,3 +101,80 @@ class CASConsensus {
 \begin{remark}
     We can solve consensu with FIFO Queue by setting $q[0] = 1$ and $q[1] = 0$ if $p_1$ wants to output 1 and $p_2$ wants to output 0, then they both try to dequeue the value who ever gets the value $1$ will win and the other will lose. 
 \end{remark}
+
+\subsection{Transactional Memory}
+
+\begin{remark}
+    Note that synchronization with locks is hard to implement, not composable and pessimistic.
+\end{remark}
+
+\begin{remark}
+    The idea behind transactional memory is to remove the burden of synchronization from the programmer and make the hardware (HTM) or the underlaying software (STM) responsible to enforce synchronization where declared/needed.
+\end{remark}
+
+\begin{definition}
+    In transactional memory the programer can declare sections of his code as \textbf{atomic} and leave it to the system and hardware to ensure this code block takes effect atomically (also called a \textbf{transaction}).
+\end{definition}
+
+\begin{lemma}
+    Transactions run isolated and are consitent and atomic, thus other threads can only observe the start or the end state of the transaction. Where HTM offers fast execution at limited size while STM might offer larger transactions at higher time/enery consumption.
+\end{lemma}
+
+\begin{remark}
+    Transactional Memory can be implemented on a Hardware level (HTM) or on the Software level (STM).
+\end{remark}
+
+\begin{remark}
+    STMs are still actively being developed. There is a lot of reseach happening in the field of Hybrid (STM and HTM) implementations.
+\end{remark}
+
+\begin{definition}
+    \textbf{Nesting} in a TM implementation referes to how transactions in transactions behave (ex. if an inner transaction aborts).
+\end{definition}
+
+\begin{definition}
+    \textbf{Flat Nesting} is the simplest form of nesting where:
+    \begin{itemize}
+        \item inner transactions are invisible to the outside world
+        \item if an inner transaction aborts the outer transaction aborts
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    We will use Scala's Software Transactional Memory (STM) to implement and demonstrate our ideas.
+\end{remark}
+
+\begin{remark}
+    \textbf{How it works:}
+\end{remark}
+
+
+\subsection{Distributed Memory and Message Passing}
+
+\begin{remark}
+    Shared mutable data is difficult to handle. A possible solution is functional programming. Alternatively, we can use local mutable data where threads send data to each other via message passing.
+\end{remark}
+
+\begin{definition}
+    \textbf{Message Passing} can be either synchronous or asynchronous:
+    \begin{itemize}
+        \item \textbf{Synchronous}: Sender blocks until the message is received.
+        \item \textbf{Asynchronous}: Fire and forget (messages are buffered).
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    In contrast to shared memory, distributed memory architectures rely on isolated mutability.
+\end{remark}
+
+\begin{definition}
+    \textbf{MPI (Message Passing Interface)} is a standard for distributed memory programming. Processes are grouped into \textbf{communicators}, and each process is assigned a unique identifier called a \textbf{process rank}.
+\end{definition}
+
+\begin{definition}
+    Message passing operations can be:
+    \begin{itemize}
+        \item \textbf{Blocking}: The operation blocks until the data is safely sent/received.
+        \item \textbf{Non-blocking}: The operation returns immediately, allowing for overlap between computation and communication.
+    \end{itemize}
+\end{definition}

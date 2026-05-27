@@ -400,3 +400,157 @@ for all v in V do:
 \begin{theorem}
     The monte carlo algorithm (Repeated $\lambda e^k$ times)has a runtime of $O(\lambda \cdot (2e)^k \cdot k \cdot m)$ and a probability of error $e^{-\lambda}$
 \end{theorem}
+
+\subsection{Minimum cut in Multigraphs}
+
+\begin{definition}
+    \textbf{Minimum Edge Cut Problem: } Given a multigraph $G=(V,E)$ determine the cardinality $\mu(G)$ of a minimum edge cut in $G$.
+\end{definition}
+
+\begin{definition}
+    A \textbf{multigraph} $G$ is an undirected, unweighted graph whith possibly multiple edges between two vertices.
+\end{definition}
+
+\begin{definition}
+    An \textbf{Edge Cut} is a set of edges $C \subseteq E$ such that $G \setminus C$ is disconnected.
+\end{definition}
+
+\begin{remark}
+    This problem is equivalent to finding a Partition $S \cup T = V$ such that the number of edges between $S$ and $T$ is minimized.
+\end{remark}
+
+\begin{lemma}
+    Observe that the following holds:
+    $$2 |E| = \sum_{v \in V} deg(v) \quad \text{ and } \quad \mu(G) \leq mindeg(v)$$ 
+\end{lemma}
+
+\begin{theorem}
+    Using maxflow we can dtermine the global min cut in $O(n^4\log n)$ time.
+\end{theorem}
+
+\begin{proof}
+    We can find the global min cut by selecting an arbitrary vertes $s$ which must be on one side of the min cut. Then we iterate over all $t \in V \setminus \{s\}$ and determine the min cut between $s$ and $t$ in time $O(nm \log n)$. This will lead us to an alogrithm of $O(n^2 m  \log n) \leq O(n^4 \log n)$
+\end{proof}
+
+\begin{definition}
+    \textbf{Edge Contraction: } Let $G=(V,E)$ be a graph. Edge contraction operates on an edge $(u,v) \in E$ and merges the two vertices $u$ and $v$ into a single vertex $w$. All edges incident to $u$ or $v$ are now incident to $w$.
+\end{definition}
+
+\begin{theorem}
+    Using edge contractions we can find a global min cut in $O(n^4 \log n)$ with a success probability of $\frac{1}{n}$.
+\end{theorem}
+
+\begin{proof}
+    Observe that contracting an edge $(u,v) \in E$ only increses the min cut if the edge is part of the min cut, else the min cut remains the same. Hence we can contract $n-2$ times and get a graph with $2$ vertices where the min cut is exactly the degree of the vertices. 
+    The probability of choosing an edge which is part of the min cut is at most 
+    $$P[e \in C_{min}] = \frac{\mu(G)}{|E|} \leq \frac{2 |E|}{n |E|} = \frac{2}{n}$$
+    Now observe that for $n \geq 3$ we have
+    $$P[\mu(G_n) = \mu(G_{n-1})] \geq (1 - \frac{2}{n}) P[\mu(G_{n-1}) = \mu(G_{n-2})]$$
+    Hence
+    $$P[\mu(G) = \mu(G_2)] \geq \frac{n-2}{n}\cdot\frac{n-3}{n-1}\cdot\frac{n-4}{n-2}\cdot\dots\cdot\frac{3}{5}\cdot\frac{2}{4}\cdot\frac{1}{3}\cdot1 = \frac{2}{n(n-1)} = \binom{n}{2}^{-1}$$
+\end{proof}
+
+\begin{theorem}
+    By repeating the above algorithm $\lambda \binom{n}{2}$ times and returning the smalles value we get a success probability of $1 - e^{-\lambda}$. Let $\lambda = \ln n$ we get a failure prob of $\frac{1}{n}$. 
+\end{theorem}
+
+\subsubsection{Bootstrapping}
+
+\begin{remark}
+    Observe that the probability of picking the wrong edge grows with each step hence the last few steps are critical and the probability of failure is dominated by the last few steps.
+\end{remark}
+
+\begin{theorem}
+    We can stop the contraction process early at $|G| = t$ in $O(n(n-t))$ and compute the rest using $\lambda = 1$ in $O(t^4)$ to reduce error in the last few steps. By repeting this $\lambda \frac{n(n-1)}{t(t-1)}\frac{e}{1-e}$ and setting $t=\sqrt{n}$ we get a total runtime of $O(\lambda n^3)$ with an error probability of $e^{-\lambda}$.
+\end{theorem}
+
+\subsection{Small Enclosing Disk Problem}
+
+\begin{definition}
+    Given a finite set $P \subset \mathbb{R}^2$ find the smallest disk/circle $C_P$ such that $P \subset C_P$
+\end{definition}
+
+\begin{lemma}
+    For every set $P$ there exists a certificate $C(P)$ of three points such that the disk defined by the points in $C(P)$ is $C_P$.
+\end{lemma}
+
+\begin{remark}
+    The brutforce approach tries every combination $Q$ of three points in $O(n^3)$ time and checks in $O(n)$ if $P \subseteq Q(P)$.
+\end{remark}
+
+\begin{remark}
+    Another idea would be to choose $Q$ randomly and check if $P \subseteq Q(P)$. This still leads to a $O(n^4)$ randomized algorithm.
+\end{remark}
+
+\begin{theorem}
+    By doubling the number of copies of points $p_i \notin Q$ every iteration we get a randomized algorithm which finds the smallest enclosing disk in $O(n \log n)$ expected time.
+\end{theorem}
+
+\begin{proof}
+    The Sampling Lemma states that for a multiset $P'$ of size $N$ and a random subset $R$ of size $r$, the expected number of points outside the disk $C(R)$ is bounded by:
+    $$\mathbb{E}[|P' \setminus C^{\bullet}(R)|] \le 3 \frac{N-r}{r+1} \le 3 \frac{N}{r+1}$$
+
+    Since we use $r=11$ in every round, the total number of points $X_k$ in the multiset after $k$ rounds grows only moderately in expectation:
+    $$\mathbb{E}[X_k] \le (1 + \frac{3}{11+1})^k \cdot n = (\frac{5}{4})^k \cdot n$$
+
+    At the same time, there exists a small basis $B \subseteq P$ with $|B| \le 3$ that defines the optimal disk $C(P)$. As long as the algorithm has not terminated ($T \ge k$), at least one point from $B$ must be outside $C(Q)$ and thus be doubled in each round. By the pigeonhole principle, after $k$ rounds, at least one point in $B$ must have been doubled at least $k/3$ times:
+        $$X_k \ge 2^{k/3}$$
+
+    By combining these two bounds, we can bound the probability that the algorithm is still running after $k$ rounds:
+    $$2^{k/3} \cdot Pr[T \ge k] \le \mathbb{E}[X_k] \le (\frac{5}{4})^k \cdot n$$
+    $$Pr[T \ge k] \le \left( \frac{5}{4 \cdot 2^{1/3}} \right)^k \cdot n \approx 0.993^k \cdot n$$
+        
+    Since this probability decreases exponentially as $k$ increases, the expected number of rounds is $E[T] = O(\log n)$. Given that each round takes $O(n)$ time to check all points, the total expected runtime is:
+    $$\mathbb{E}[\text{runtime}] = O(n \log n)$$
+\end{proof}
+
+
+\subsection{Convex Hull}
+
+\begin{definition}
+    The \textbf{Convex Hull} $\mathcal{CH}(P)$ of a finite set of points $P \subset \mathbb{R}^2$ is the intersection of all convex sets containing $P$. Equivalently, it is the set of all convex combinations of points in $P$:
+    $$ \mathcal{CH}(P) = \left\{ \sum_{i=1}^{|P|} \lambda_i p_i \;\middle|\; p_i \in P, \lambda_i \ge 0, \sum_{i=1}^{|P|} \lambda_i = 1 \right\} $$
+\end{definition}
+
+\begin{definition}
+    A directed segment $\vec{pq}$ for $p, q \in P$ is a \textbf{border edge} of $\mathcal{CH}(P)$ if and only if all other points in $P \setminus \{p, q\}$ lie on the same side (e.g., strictly to the left) of the directed line passing through $p$ and $q$.
+\end{definition}
+
+\begin{definition}
+    For a directed line passing through points $p = (x_p, y_p)$ and $q = (x_q, y_q)$, a point $r = (x_r, y_r)$ is located to the \textbf{left} or \textbf{right} of $\vec{pq}$ according to the sign of the 2D cross product:
+    $$ \text{CCW}(p, q, r) = (x_q - x_p)(y_r - y_p) - (y_q - y_p)(x_r - x_p) $$
+    If $\text{CCW}(p, q, r) > 0$, $r$ lies strictly to the left of $\vec{pq}$ (counter-clockwise orientation). If $\text{CCW}(p, q, r) < 0$, $r$ lies strictly to the right (clockwise orientation). If $\text{CCW}(p, q, r) = 0$, the points are collinear.
+\end{definition}
+
+\begin{theorem}
+    Given a vertex $p \in P$ that is guaranteed to be on the boundary of $\mathcal{CH}(P)$, the next vertex $q \in P$ on the convex hull can be found in $\mathcal{O}(n)$ time. This is achieved by finding a point $q$ such that for all $r \in P \setminus \{p, q\}$, we have $\text{CCW}(p, q, r) > 0$ (all points lie to the left).
+\end{theorem}
+
+\begin{remark}
+    \textbf{Initialization:} The point $p_0 \in P$ with the minimum $y$-coordinate (and minimum $x$-coordinate in case of a tie) is an extremal point of $P$ and is therefore guaranteed to be a vertex of $\mathcal{CH}(P)$.
+\end{remark}
+
+\begin{theorem}
+    The \textbf{Gift Wrapping Algorithm (Jarvis March)} iteratively finds the next border edge, computing the convex hull of $P$ in $\mathcal{O}(nh)$ time, where $h$ is the number of vertices on the convex hull.
+\end{theorem}
+
+\begin{proof}
+    The algorithm starts with an extremal point $p_0$. In each step, it finds the point $q$ that forms the smallest angle with the current edge (i.e., the point "most to the right"). By the geometric definition of a convex hull, the segment $\vec{pq}$ must be a border edge because all other points lie to the left of it. The algorithm terminates when it wraps back around to $p_0$, successfully tracing the entire boundary.
+    
+    We must perform $h$ iterations to find all vertices of the convex hull. In each iteration, we scan through all $n$ points in $P$ to find the one that forms the smallest angle with the current edge. The angle comparison (via cross product) takes $\mathcal{O}(1)$ time. Thus, the total time complexity is $\mathcal{O}(h \cdot n)$.
+\end{proof}
+
+\begin{codeexample}
+p = min_x(min_y(P))
+hull = empty_list()
+
+do {
+    hull.add(p)
+    q = any_point_in(P) != p
+    for r in P {
+        if r on the right side of p-q:
+            q = r
+    }
+    p = q
+} while p != hull[0]
+\end{codeexample}

@@ -18,5 +18,6 @@
 \contentsline {section}{\numberline {5}Differential equations}{36}{}%
 \contentsline {subsection}{\numberline {5.1}Modelling of differential equations}{36}{}%
 \contentsline {subsection}{\numberline {5.2}Linear, homogeneous ODEs}{36}{}%
-\contentsline {subsection}{\numberline {5.3}Boundary-value Problems}{37}{}%
-\contentsline {section}{\numberline {6}Integration}{38}{}%
+\contentsline {subsection}{\numberline {5.3}General First Order ODEs}{37}{}%
+\contentsline {subsection}{\numberline {5.4}Boundary-value Problems}{38}{}%
+\contentsline {section}{\numberline {6}Integration}{39}{}%
