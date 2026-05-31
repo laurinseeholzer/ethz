@@ -15,21 +15,33 @@
 \raggedcolumns                       
 \raggedbottom                        
 
-% --- Section & Subsection Formatting ---
-\setcounter{secnumdepth}{0}         
+% --- Section, Subsection & Subsubsection Formatting ---
+\setcounter{secnumdepth}{3}         
 
-\titleformat{\section}
-  {\normalfont\large\bfseries}      
-  {\thesection}{0em}                
-  {}                                
-  [{\vspace{2pt}\titlerule[0.8pt]\vspace{4pt}}] 
+\newcommand{\sectionbox}[1]{%
+  \colorbox{black}{\parbox{\dimexpr\columnwidth-2\fboxsep-6pt\relax}{\strut\large\color{white}\thesection.\quad#1}}%
+}
 
-\titlespacing*{\section}{0pt}{8pt}{0pt} 
+\titleformat{\section}[block]
+  {\normalfont\large\bfseries\color{white}}
+  {}
+  {0pt}
+  {\sectionbox}
+
+\titlespacing*{\section}{0pt}{10pt}{4pt} 
 
 \titleformat{\subsection}
-  {\normalfont\normalsize\bfseries}
-  {\thesubsection}{0em}
+  {\normalfont\large\bfseries}
+  {\thesubsection}{0.3em}
   {}
-  [{\vspace{2pt}\titlerule[0.3pt]\vspace{3pt}}] 
+  [{\vspace{1pt}\titlerule[0.8pt]\vspace{3pt}}] 
 
-\titlespacing*{\subsection}{0pt}{6pt}{0pt}
+\titlespacing*{\subsection}{0pt}{8pt}{2pt}
+
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries}
+  {\thesubsubsection}{0.3em}
+  {}
+  [{\vspace{1pt}\titlerule[0.4pt]\vspace{2pt}}]
+
+\titlespacing*{\subsubsection}{0pt}{6pt}{2pt}

@@ -1,0 +1,199 @@
+\section{Beyond Locks}
+
+\subsection{Deadlocks}
+
+\begin{remark}
+\textbf{Deadlock detection} in systems is implemented by finding cycles in the dependency graph.
+\end{remark}
+
+\begin{remark}
+\textbf{Deadlock avoidance} techniques to ensure a cycle can never arise:
+\begin{itemize}
+    \item \textbf{Imposing an ordering} on the resources and requiring processes to acquire resources in that order
+    \item \textbf{Two-phase locking protocol} with retry and release on failure
+\end{itemize}
+\end{remark}
+
+\begin{codeexample}
+//Programming trick to create a global ordering
+class Resource {
+    private static final AtomicLong counter = new AtomicLong();
+    private final long index = counter.incrementAndGet();
+    ...
+}
+\end{codeexample}
+
+\subsection{Semaphores}
+
+\begin{definition}
+A \textbf{semaphore} is a synchronization primitive that acts as a thread-safe counter to control access to a shared resource by multiple processes.
+\end{definition}
+
+\begin{codeexample}
+public class Semaphore {
+    private int n, S;
+    acquire() {
+        wait until S > 0;
+        S--;
+    }
+    release() {
+        S++;
+    }
+}
+\end{codeexample}
+
+\begin{codeexample}
+Semaphore semaphore = new Semaphore(n);
+semaphore.acquire();
+    //no more than n threads can be here at once
+semaphore.release();
+\end{codeexample}
+
+\begin{remark}
+Semaphores are a generalization of locks and can be used to implement locks and other synchronization primitives.
+\end{remark}
+
+\begin{definition}
+A \textbf{binary semaphore} is a semaphore that can only have values 0 and 1, this can be used to implement locks.
+\end{definition}
+
+\begin{definition}
+A \textbf{rendezvous} is a location in the code where threads have to wait until all threads have reached that location before they can continue.
+\end{definition}
+
+\begin{remark}
+For two threads, a rendezvous can be implemented with two binary semaphores.
+\end{remark}
+
+\begin{codeexample}
+void thread1() {
+    A.acquire();
+    B.release();
+    B.acquire();
+    A.release();
+}
+void thread2() {
+    B.acquire(); 
+    A.release();
+    A.acquire();
+    B.release();
+}
+\end{codeexample}
+
+\begin{important}
+Using Semaphores is often problematic as the programmer has to have deep knowledge of the algorithm to correctly implement the synchronization.
+\end{important}
+
+\subsection{Barriers}
+
+\begin{definition}
+A \textbf{barrier} is a synchronization primitive that coordinates threads to wait until all have reached the barrier, then releases them all at once.
+\end{definition}
+
+\begin{definition}
+A \textbf{two-phase barrier} is implemented with two semaphores and a counter.
+\end{definition}
+
+\begin{codeexample}
+mutex=1, barrier1=0, barrier2=1, count=0;
+
+aquire(mutex);
+    count++; 
+    if (count == n) {
+        accuire(barrier2);
+        release(barrier1);
+    }
+release(mutex);
+
+acuire(barrier1); release(barrier1);
+
+aquire(mutex);
+    count--;
+    if (count == 0) {
+        accuire(barrier1);
+        release(barrier2);
+    }
+release(mutex);
+\end{codeexample}
+
+\subsection{Producer Consumer Pattern}
+
+\begin{definition}
+The \textbf{producer consumer pattern} is a synchronization pattern where producers generate data and consumers process it, coordinated through a shared buffer.
+\end{definition}
+
+\begin{remark}
+We can use producer-consumer patterns to build data flow parallel programs (pipelines):
+$T_0 \rightarrow T_1 \rightarrow T_2 \dots T_n$
+where $T_0$ is a producer, $T_n$ is a consumer, and intermediate nodes are both.
+\end{remark}
+
+\begin{remark}
+A \textbf{Producer-Consumer Queue} with buffer improves throughput. We stall $T_i$ iff the queue $Q_i$ is full. Implemented using Semaphores that signal producers (space available) and consumers (data available).
+\end{remark}
+
+\begin{codeexample}
+void enqueue(long x) {
+    try {
+        nonFull.acquire();
+        manipulation.acquire();
+        buffer[in] = x;
+        in = (in + 1) % n;
+    } catch (Exception e) {}
+    finally {
+        manipulation.release();
+        nonEmpty.release();
+    }
+}
+\end{codeexample}
+
+\begin{codeexample}
+long dequeue() {
+    long x = 0;
+    try {
+        nonEmpty.acquire();
+        manipulation.acquire();
+        x = buffer[out];
+        out = (out + 1) % n;
+    } catch (Exception e) {}
+    finally {
+        manipulation.release();
+        nonFull.release();
+    }
+    return x;
+}
+\end{codeexample}
+
+\subsection{Monitors}
+
+\begin{definition}
+A \textbf{monitor} is a synchronization primitive that allows threads to wait on condition variables to be notified about changes in state.
+\end{definition}
+
+\begin{definition}
+A \textbf{condition variable} is a condition that threads can wait on. Other threads can signal it to notify waiting threads.
+\end{definition}
+
+\begin{codeexample}
+Monitor buffer = new BufferMonitor(10);
+Condition nonFull = buffer.newCondition();
+Condition nonEmpty = buffer.newCondition();
+
+void producer() {
+    buffer.lock();
+    try {
+        while (buffer.isFull()) { nonFull.await(); }
+        buffer.enqueue(i);
+        nonEmpty.signal();
+    } finally { buffer.unlock(); }
+}
+
+void consumer() {
+    buffer.lock();
+    try {
+        while (buffer.isEmpty()) { nonEmpty.await(); }
+        buffer.dequeue();
+        nonFull.signal();
+    } finally { buffer.unlock(); }
+}
+\end{codeexample}

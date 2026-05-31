@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2026.3.25)  22 APR 2026 09:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2026.5.3)  31 MAY 2026 14:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -724,36 +724,40 @@ Package microtype Info: No adjustment of character kerning.
  (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
 ) (./sectionsSummary/aw/connectivness_of_graphs.tex
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 4.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1.
  (/usr/share/texlive/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 4.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 1.
  (/usr/share/texlive/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 4.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 1.
  (/usr/share/texlive/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 4.
+(Font)              <10> on input line 1.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 4.
+(Font)              <7> on input line 1.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 4.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 4.
+(Font)              <5> on input line 1.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 1.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 4.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 1.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8> on input line 4.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6> on input line 4.
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 57.
  (/usr/share/texlive/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
@@ -766,7 +770,12 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-) (./sectionsSummary/aw/eulertours.tex) (./sectionsSummary/aw/hamiltonian_cycles.tex) (./sectionsSummary/aw/matchings.tex
+) (./sectionsSummary/aw/eulertours.tex) (./sectionsSummary/aw/hamiltonian_cycles.tex
+Underfull \hbox (badness 10000) in paragraph at lines 47--51
+[]\OT1/lmr/bx/n/8 (+20) Thm. 28. []Christofides 1.5-
+ []
+
+) (./sectionsSummary/aw/matchings.tex
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 40.
  (/usr/share/texlive/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
@@ -778,27 +787,27 @@ Package microtype Info: Loading generic protrusion settings for font family
 Package microtype Info: Character `texttrademark ' is missing
 (microtype)             in font `TS1/lmtt/m/n/5'.
 (microtype)             Ignoring protrusion settings for this character.
-) (./sectionsSummary/aw/coloring.tex) (./sectionsSummary/aw/intro_probability.tex [1
+) (./sectionsSummary/aw/coloring.tex [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rmtt.enc}]) (./sectionsSummary/aw/random_variables.tex
-Underfull \hbox (badness 10000) in paragraph at lines 28--30
-\OT1/lmr/m/it/8 (+20) For ran-dom vari-ables $\OML/lmm/m/it/8 X[]; [] ; X[]$ \OT1/lmr/m/it/8 (+20) and
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rmtt.enc}]) (./sectionsSummary/aw/intro_probability.tex) (./sectionsSummary/aw/random_variables.tex
+Underfull \hbox (badness 6157) in paragraph at lines 28--30
+[]\OT1/lmr/bx/n/8 (+20) Thm. 58. []Lin-ear-ity of Ex-pec-ta-
  []
 
 ) (./sectionsSummary/aw/distributions.tex [2{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]) (./sectionsSummary/aw/bounding_probability.tex) [3] (build/awSummary.aux) ) 
 Here is how much of TeX's memory you used:
- 24273 strings out of 476041
- 501077 string characters out of 5793174
- 2398388 words of memory out of 6000000
- 44126 multiletter control sequences out of 15000+600000
- 560407 words of font info for 137 fonts, out of 8000000 for 9000
+ 24248 strings out of 476041
+ 500831 string characters out of 5793175
+ 2335388 words of memory out of 6000000
+ 44145 multiletter control sequences out of 15000+600000
+ 544412 words of font info for 118 fonts, out of 8000000 for 9000
  1137 hyphenation exceptions out of 8191
- 106i,11n,107p,1028b,1555s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmri8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmtt8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on build/awSummary.pdf (3 pages, 308835 bytes).
+ 106i,12n,107p,1028b,1574s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmtt8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
+Output written on build/awSummary.pdf (3 pages, 266210 bytes).
 PDF statistics:
- 109 PDF objects out of 1000 (max. 8388607)
- 69 compressed objects within 1 object stream
+ 99 PDF objects out of 1000 (max. 8388607)
+ 63 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 24077 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 17933 words of extra memory for PDF output out of 20736 (max. 10000000)
 

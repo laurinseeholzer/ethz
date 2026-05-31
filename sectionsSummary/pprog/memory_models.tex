@@ -5,19 +5,42 @@
 \end{definition}
 
 \begin{remark}
-    \textbf{\texttt{volatile}:} Prevents local caching/reordering skips; ensures immediate visibility across threads. Memory barriers strictly enforce ordering.
+    \textbf{\texttt{volatile}:} Prevents local caching/reordering; ensures immediate visibility across threads. Memory barriers strictly enforce ordering.
+\end{remark}
+
+\begin{important}
+    Volatile arrays only guarantee that the array reference is volatile, not the elements.
+\end{important}
+
+\begin{remark}
+    Almost all common architectures allow the reordering of \textbf{Stores after Loads} to maximize performance, unless explicitly prevented by memory barriers.
 \end{remark}
 
 \subsection{Java Memory Model (JMM)}
 Contract providing minimal memory operation guarantees.
 
 \begin{definition} 
+    \textbf{Program Order (PO):} Total intra-thread execution trace order (no global sync).
+\end{definition}
+
+\begin{definition}
+    \textbf{Synchronization Actions (SA):} E.g., Read/Write \texttt{volatile}, lock acquire/release.
+\end{definition}
+
+\begin{remark}
+    SA establish HB dependencies between threads:
     \begin{itemize}
-        \item \textbf{Program Order (PO):} Total intra-thread execution trace order (no global sync).
-        \item \textbf{Sync Actions (SA):} E.g., Read/Write \texttt{volatile}, lock acquire/release.
-        \item \textbf{Sync Order (SO):} Total global order of all SA across all threads.
-        \item \textbf{Happens-Before (HB):} Transitive closure of PO \& SA (Synchronizes-With). $A \xrightarrow{HB} B \implies$ $B$ sees results of $A$.
+        \item Write to volatile in thread $A$ $\rightarrow$ Read from volatile in thread $B$
+        \item Lock release in thread $A$ $\rightarrow$ Lock acquire in thread $B$
     \end{itemize}
+\end{remark}
+
+\begin{definition}
+    \textbf{Synchronization Order (SO):} Total global order of all SA. All threads see these actions in the same global order.
+\end{definition}
+
+\begin{definition}
+    \textbf{Happens-Before (HB):} Transitive closure of PO \& Synchronizes-With (SW). $A \xrightarrow{HB} B \implies$ $B$ sees results of $A$.
 \end{definition}
 
 \begin{remark}

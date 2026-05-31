@@ -1,5 +1,6 @@
 % --- Define Theorem Styles (tcolorbox for perfect breaking) ---
 
+\theoremstyle{definition}           % Upright body text (not italic)
 \newtheorem{definition}{Def.}
 \newtheorem{theorem}[definition]{Thm.}
 \newtheorem{lemma}[definition]{Lem.}
@@ -18,7 +19,7 @@
     arc=0pt, outer arc=0pt,
     top=2pt, bottom=2pt, left=3pt, right=3pt,
     boxsep=0pt,
-    before skip=2pt, after skip=2pt,
+    before skip=9pt, after skip=9pt,
 }
 \tcolorboxenvironment{theorem}{
     enhanced jigsaw,
@@ -28,7 +29,7 @@
     arc=0pt, outer arc=0pt,
     top=2pt, bottom=2pt, left=3pt, right=3pt,
     boxsep=0pt,
-    before skip=2pt, after skip=2pt,
+    before skip=9pt, after skip=9pt,
 }
 \tcolorboxenvironment{lemma}{
     enhanced jigsaw,
@@ -38,7 +39,7 @@
     arc=0pt, outer arc=0pt,
     top=2pt, bottom=2pt, left=3pt, right=3pt,
     boxsep=0pt,
-    before skip=2pt, after skip=2pt,
+    before skip=9pt, after skip=9pt,
 }
 \tcolorboxenvironment{example}{
     enhanced jigsaw,
@@ -48,7 +49,7 @@
     arc=0pt, outer arc=0pt,
     top=2pt, bottom=2pt, left=3pt, right=3pt,
     boxsep=0pt,
-    before skip=2pt, after skip=2pt,
+    before skip=9pt, after skip=9pt,
 }
 
 % 2. Standard Block Style (Remark - Left line only)
@@ -61,7 +62,7 @@
     arc=0pt, outer arc=0pt,
     top=1pt, bottom=1pt, left=5pt, right=2pt,
     boxsep=0pt,
-    before skip=2pt, after skip=2pt,
+    before skip=9pt, after skip=9pt,
 }
 
 % 3. Important Block Style (Full border)
@@ -73,7 +74,7 @@
     arc=0pt, outer arc=0pt,
     top=2pt, bottom=2pt, left=3pt, right=3pt,
     boxsep=0pt,
-    before skip=2pt, after skip=2pt,
+    before skip=9pt, after skip=9pt,
 }
 
 
@@ -82,8 +83,8 @@
 \lstnewenvironment{codeexample}[1][]
 {
     \refstepcounter{definition}
-    \vspace{2pt} 
-    \noindent\textbf{Code Example \thedefinition}\vspace{2pt} 
+    \endgraf\vspace{2pt} 
+    \noindent\textbf{Code Example \thedefinition}\endgraf\vspace{2pt} 
     \lstset{
         basicstyle=\ttfamily\scriptsize, 
         numbers=left,
@@ -111,8 +112,8 @@
 \lstnewenvironment{algorithm}[1][]
 {
     \refstepcounter{definition}
-    \vspace{2pt}
-    \noindent\textbf{Algorithm \thedefinition}\vspace{2pt} 
+    \endgraf\vspace{2pt}
+    \noindent\textbf{Algorithm \thedefinition}\endgraf\vspace{2pt} 
     \lstset{
         basicstyle=\ttfamily\scriptsize,
         numbers=left,

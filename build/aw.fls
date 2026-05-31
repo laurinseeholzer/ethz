@@ -683,10 +683,6 @@ INPUT sectionsNotes/aw/connectivness_of_graphs.tex
 INPUT ./sectionsNotes/aw/connectivness_of_graphs.tex
 INPUT ./sectionsNotes/aw/connectivness_of_graphs.tex
 INPUT sectionsNotes/aw/connectivness_of_graphs.tex
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbxti10.tfm
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmti8.tfm
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmti7.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm
 INPUT /usr/share/texlive/texmf-dist/tex/latex/inconsolata/ot1zi4.fd
@@ -710,6 +706,7 @@ INPUT ./sectionsNotes/aw/hamiltonian_cycles_eulertours.tex
 INPUT sectionsNotes/aw/hamiltonian_cycles_eulertours.tex
 INPUT /usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.enc
 INPUT /usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
 INPUT ./sectionsNotes/aw/matchings.tex
 INPUT ./sectionsNotes/aw/matchings.tex
 INPUT ./sectionsNotes/aw/matchings.tex
@@ -749,7 +746,6 @@ INPUT build/aw.aux
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
-INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
@@ -764,7 +760,6 @@ INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb
-INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb

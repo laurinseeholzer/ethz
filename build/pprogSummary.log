@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2026.3.25)  11 APR 2026 01:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2026.5.3)  31 MAY 2026 14:00
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -723,85 +723,97 @@ Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
  (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
-) (./sectionsSummary/pprog/threads_and_processes.tex
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 10.
- (/usr/share/texlive/texmf-dist/tex/latex/lm/ts1lmr.fd
-File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 48.
+) (./sectionsSummary/pprog/threads_processes.tex
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1.
  (/usr/share/texlive/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 48.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 1.
  (/usr/share/texlive/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 48.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 1.
  (/usr/share/texlive/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 48.
+(Font)              <10> on input line 1.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 48.
+(Font)              <7> on input line 1.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 48.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 48.
+(Font)              <5> on input line 1.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 1.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 48.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 1.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-LaTeX Font Info:    Trying to load font information for OT1+lmtt on input line 72.
- (/usr/share/texlive/texmf-dist/tex/latex/lm/ot1lmtt.fd
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 10.
+ (/usr/share/texlive/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8> on input line 44.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6> on input line 44.
+
+Overfull \hbox (68.94365pt too wide) detected at line 44
+[]  \OT1/lmr/m/n/8 =[]\OMS/lmsy/m/n/8 )  []  [] 6 \OT1/lmr/m/n/8 =[]\OMS/lmsy/m/n/8 )  []
+ []
+
+LaTeX Font Info:    Trying to load font information for OT1+lmtt on input line 67.
+(/usr/share/texlive/texmf-dist/tex/latex/lm/ot1lmtt.fd
 File: ot1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-) (./sectionsSummary/pprog/synchronization.tex
-Underfull \hbox (badness 10000) in paragraph at lines 80--82
+) (./sectionsSummary/pprog/synchronization.tex [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rmtt.enc}]
+Underfull \hbox (badness 10000) in paragraph at lines 98--100
 \OT1/lmr/m/n/8 (+20) Instead of us-ing built-in syn-chro-nized
  []
 
 
-Underfull \hbox (badness 5578) in paragraph at lines 80--82
+Underfull \hbox (badness 5578) in paragraph at lines 98--100
 \OT1/lmr/m/n/8 (+20) blocks we can also use locks from the
  []
 
-[1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rmtt.enc}]
-Underfull \hbox (badness 10000) in paragraph at lines 121--123
+Underfull \hbox (badness 10000) in paragraph at lines 137--139
 
  []
 
-) (./sectionsSummary/pprog/optimization.tex) (./sectionsSummary/pprog/divide_and_conquer.tex
-Underfull \hbox (badness 10000) in paragraph at lines 33--34
-[]\OT1/lmr/bx/n/8 (+20) Rem. 51. []\OT1/lmr/bx/it/8 (+20) Pool Types\OT1/lmr/m/it/8 (+20) :
+) (./sectionsSummary/pprog/optimization.tex) (./sectionsSummary/pprog/parallel_patterns.tex
+Underfull \hbox (badness 10000) in paragraph at lines 32--33
+[]\OT1/lmr/bx/n/8 (+20) Rem. 63. []Pool Types\OT1/lmr/m/n/8 (+20) :
  []
 
-) (./sectionsSummary/pprog/parallel_algorithms.tex [2{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}]) [3] (build/pprogSummary.aux) ) 
+[2{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}]) (./sectionsSummary/pprog/memory_models.tex
+LaTeX Font Info:    Font shape `OT1/lmtt/bx/n' in size <8> not available
+(Font)              Font shape `OT1/lmtt/b/n' tried instead on input line 8.
+) (./sectionsSummary/pprog/locks.tex [3]) (./sectionsSummary/pprog/beyond_locks.tex [4]) (./sectionsSummary/pprog/theory.tex [5]) [6] (build/pprogSummary.aux) ) 
 Here is how much of TeX's memory you used:
- 24240 strings out of 476041
- 499904 string characters out of 5793174
- 2181388 words of memory out of 6000000
- 44060 multiletter control sequences out of 15000+600000
- 563213 words of font info for 162 fonts, out of 8000000 for 9000
+ 24358 strings out of 476041
+ 502025 string characters out of 5793175
+ 2148388 words of memory out of 6000000
+ 44183 multiletter control sequences out of 15000+600000
+ 552008 words of font info for 158 fonts, out of 8000000 for 9000
  1137 hyphenation exceptions out of 8191
- 106i,8n,107p,1031b,1901s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmri8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmtt8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on build/pprogSummary.pdf (3 pages, 302383 bytes).
+ 106i,14n,107p,1031b,1564s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmri8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmtt8.pfb>
+Output written on build/pprogSummary.pdf (6 pages, 332009 bytes).
 PDF statistics:
- 93 PDF objects out of 1000 (max. 8388607)
- 59 compressed objects within 1 object stream
+ 94 PDF objects out of 1000 (max. 8388607)
+ 60 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 26125 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 19981 words of extra memory for PDF output out of 20736 (max. 10000000)
 

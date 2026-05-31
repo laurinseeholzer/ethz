@@ -684,8 +684,6 @@ INPUT ./sectionsNotes/pprog/threads_processes.tex
 INPUT ./sectionsNotes/pprog/threads_processes.tex
 INPUT sectionsNotes/pprog/threads_processes.tex
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbxti10.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 INPUT /usr/share/texlive/texmf-dist/tex/latex/inconsolata/ot1zi4.fd
@@ -730,8 +728,7 @@ INPUT sectionsNotes/pprog/locks.tex
 INPUT ./sectionsNotes/pprog/locks.tex
 INPUT ./sectionsNotes/pprog/locks.tex
 INPUT sectionsNotes/pprog/locks.tex
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmti8.tfm
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmti7.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
 INPUT ./sectionsNotes/pprog/beyond_locks.tex
 INPUT ./sectionsNotes/pprog/beyond_locks.tex
 INPUT ./sectionsNotes/pprog/beyond_locks.tex
@@ -750,7 +747,6 @@ INPUT build/pprog.aux
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
-INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
