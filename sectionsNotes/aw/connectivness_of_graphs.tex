@@ -86,20 +86,76 @@
     If $G$ is connected, the block graph of $G$ is a tree.
 \end{theorem}
 
+\subsection{Finding Cut Vertices and Bridges (DFS \& Low Values)}
+
+To find cut vertices and bridges efficiently in linear time $O(|V| + |E|)$, we use a modified \textbf{Depth-First Search (DFS)} to compute a spanning forest (or tree $T$ if $G$ is connected) and assign two numbers to each vertex: a DFS number $\text{dfs}[v]$ and a low-value $\text{low}[v]$.
+
+\begin{definition}
+    During DFS, the edges of $G$ are classified into:
+    \begin{itemize}
+        \item \textbf{Tree edges}: Edges in the DFS spanning tree $T$ traversed to discover new vertices.
+        \item \textbf{Back edges} (Restkanten): Edges in $G \setminus T$ that connect a vertex to one of its ancestors in the DFS tree.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    For every vertex $v \in V$, the low-value $\text{low}[v]$ is defined as:
+    \begin{align*}
+        \text{low}[v] \coloneqq \min \Big\{ \text{dfs}[u] \;\Big|\; & u \text{ is reachable from } v \text{ by a path consisting of} \\
+        & \text{any number of tree edges followed by at most one back edge} \Big\}
+    \end{align*}
+    It can be recursively computed as:
+    $$\text{low}[v] = \min \left\{ \text{dfs}[v], \min_{\{v,w\} \in E_{\text{back}}} \text{dfs}[w], \min_{\{v,w\} \in E_{\text{tree}}, w \text{ child of } v} \text{low}[w] \right\}$$
+\end{definition}
+
+\begin{theorem}
+    \textbf{Characterization of Cut Vertices and Bridges}:
+    Let $T$ be a DFS tree of a connected graph $G$ started at root $s$.
+    \begin{itemize}
+        \item The root $s$ is a \textbf{cut vertex} iff $s$ has at least two children in $T$.
+        \item A vertex $v \neq s$ is a \textbf{cut vertex} iff there exists a child $w$ of $v$ in $T$ such that:
+        $$\text{low}[w] \ge \text{dfs}[v]$$
+        \item A tree edge $\{v, w\}$ (where $w$ is a child of $v$) is a \textbf{bridge} (cut edge) iff:
+        $$\text{low}[w] > \text{dfs}[v]$$
+    \end{itemize}
+\end{theorem}
+
 \begin{algorithm}
-#Depth-First Search (DFS) & Low Values
-#For efficient computation of cut vertices and edges in time $O(|V|+|E|)$.
+#DFS-Visit(G, v)
+#Computes low values and identifies cut vertices recursively.
 
-low[v] := #the smallest DFS number reachable from $v$ by a directed path consisting of tree edges and at most one back edge.
-
-#It holds that:
-low[v] = min{ dfs[v], min_{(v,w)  back edge} dfs[w], min_{(v,w)  tree edge} low[w] }
-
-#A vertex v is a cut vertex iff:
-
-v != root and there exists a child u with low[u] >= df s[v].
-v = root and has >= 2 children in the DFS tree.
-
-A tree edge (v,w) is a bridge iff low[w] >= df s[v].
+1. num := num + 1
+2. dfs[v] := num
+3. low[v] := dfs[v]
+4. isArtVert[v] := false
+5. for each neighbor w of v do:
+    if dfs[w] = 0 then:
+        T := T U {(v, w)}
+        val := DFS-Visit(G, w)
+        if val >= dfs[v] then:
+            isArtVert[v] := true
+        low[v] := min(low[v], val)
+    else if {v, w} not in T then:
+        low[v] := min(low[v], dfs[w])
+6. return low[v]
 \end{algorithm}
+
+\begin{algorithm}
+#DFS(G, s)
+#Main driver to find all cut vertices and bridges of a connected graph.
+
+1. for each vertex v in V:
+    dfs[v] := 0
+2. num := 0
+3. T := empty set
+4. DFS-Visit(G, s)
+5. if s has >= 2 children in T then:
+    isArtVert[s] := true
+   else:
+    isArtVert[s] := false
+\end{algorithm}
+
+\begin{theorem}
+    For any connected graph $G = (V, E)$ stored as adjacency lists, all cut vertices and bridges can be computed in time $O(|V| + |E|)$ and space $O(|V|)$.
+\end{theorem}
 

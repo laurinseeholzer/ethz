@@ -89,8 +89,19 @@
 \end{remark}
 
 \begin{example}
-    Assume a family with two children from which we know that one of them is a girl ($B$). What is the probability that the other child is also a girl ($A$)?
-    $$P[A \mid B] = \frac{P[A \cap B]}{P[B]} = \frac{1/4}{3/4} = \frac{1}{3}$$
+    \textbf{Two-Siblings Problem (Zweikinderproblem)}:
+    Assume a family has two children, and both genders are equally likely at birth. We define the sample space as:
+    $$\Omega = \{ \text{gg}, \text{gb}, \text{bg}, \text{bb} \}$$
+    where the letters represent the gender (g for girl, b for boy) in order of birth. Each elementary event has probability $1/4$.
+    We want to find the probability that both children are girls ($A = \{ \text{gg} \}$).
+    
+    \begin{enumerate}
+        \item \textbf{Scenario 1}: We know that the family has at least one girl ($B_{\text{at least one}} = \{ \text{gg}, \text{gb}, \text{bg} \}$). Then:
+        $$P[A \mid B_{\text{at least one}}] = \frac{P[A \cap B_{\text{at least one}}]}{P[B_{\text{at least one}}]} = \frac{1/4}{3/4} = \frac{1}{3}$$
+        \item \textbf{Scenario 2}: We know that the older child is a girl ($B_{\text{older}} = \{ \text{gg}, \text{gb} \}$). Then:
+        $$P[A \mid B_{\text{older}}] = \frac{P[A \cap B_{\text{older}}]}{P[B_{\text{older}}]} = \frac{1/4}{2/4} = \frac{1}{2}$$
+    \end{enumerate}
+    This shows how critical the exact conditioning information is, as the gender of the older sibling is independent of the younger one, whereas the global statement of "at least one girl" couples the two events.
 \end{example}
 
 \begin{theorem}
@@ -540,7 +551,19 @@ this results in a stable set but what is the expected size of S?
 \end{definition}
 
 \begin{example}
-    There are $n$ diffrent types of collectible cards. In every round we uniformly get one of them. Let $X$ be the number of rounds until we have all $n$ types of cards. What is $\mathbb{E}[X]$?
+    \textbf{Coupon Collector's Problem (Sammelbilder-Problem)}:
+    There are $n$ different types of collectible cards. In every round we uniformly get one of them. Let $X$ be the number of rounds until we have all $n$ types of cards. What is $\mathbb{E}[X]$?
+    
+    We divide the process into phases: Phase $i$ denotes the steps from acquiring the $(i-1)$-th unique card (exclusive) to acquiring the $i$-th unique card (inclusive). Let $X_i$ be the number of rounds spent in phase $i$. Clearly, the total number of rounds is $X = \sum_{i=1}^n X_i$.
+    
+    In phase $i$, we already have $i-1$ unique cards. The probability of obtaining a new unique card in any round is:
+    $$p_i = \frac{n - (i - 1)}{n} = \frac{n - i + 1}{n}$$
+    Thus, $X_i$ is geometrically distributed with parameter $p_i$, meaning its expectation is:
+    $$\mathbb{E}[X_i] = \frac{1}{p_i} = \frac{n}{n - i + 1}$$
+    By the linearity of expectation, we have:
+    $$\mathbb{E}[X] = \sum_{i=1}^n \mathbb{E}[X_i] = \sum_{i=1}^n \frac{n}{n - i + 1} = n \sum_{j=1}^n \frac{1}{j} = n H_n$$
+    where $H_n$ is the $n$-th harmonic number. Since $H_n = \ln n + \mathcal{O}(1)$, we get:
+    $$\mathbb{E}[X] = n \ln n + \mathcal{O}(n).$$
 \end{example}
 
 \subsection{Bounding Probability}

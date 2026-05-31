@@ -61,6 +61,52 @@
 P[S, x] = max { P[S \ {x}, y] | y in N(x) intersect S, y != 1 }
 \end{algorithm}
 
+\subsection{Counting Hamiltonian Cycles}
+
+Finding if a graph has a Hamiltonian cycle is NP-complete. However, we can efficiently \textit{count} the number of Hamiltonian cycles in a graph using the \textbf{Principle of Inclusion-Exclusion (PIE)} in time $O(n^{2.81} \log n \cdot 2^n)$ and polynomial space $O(n^2)$, which is much more space-efficient than the $O(n \cdot 2^n)$ space required by dynamic programming.
+
+\begin{definition}
+    Let $G = (V, E)$ be a graph with $V = [n]$. Choose an arbitrary start vertex $s \in V$. For any subset $S \subseteq V \setminus \{s\}$, we define:
+    $$W_S \coloneqq \{ \text{Walks of length } n \text{ in } G \text{ with start and end vertex } s \text{ that do not visit any vertices in } S \}$$
+\end{definition}
+
+\begin{remark}
+    The size of the set $W_S$ can be computed efficiently: let $A_S$ be the adjacency matrix of the induced subgraph $G[V \setminus S]$. Then $|W_S|$ is exactly the $(s,s)$-entry of the matrix $(A_S)^n$.
+    Using matrix exponentiation with Strassen's algorithm, this takes $O(n^{2.81} \log n)$ time and $O(n^2)$ space.
+\end{remark}
+
+\begin{theorem}
+    The number of Hamiltonian cycles in $G = (V, E)$ is given by:
+    $$\text{Number of Hamiltonian Cycles} = \frac{1}{2} \sum_{S \subseteq V \setminus \{s\}} (-1)^{|S|} |W_S|$$
+\end{theorem}
+
+\begin{proof}
+    A walk of length $n$ starting and ending at $s$ is a Hamiltonian cycle if and only if it visits every vertex of $G$ exactly once (which means it visits all $n$ vertices). 
+    The set $W_{\emptyset}$ contains all walks of length $n$ from $s$ to $s$ in $G$. However, this also includes walks that do not visit all vertices. The set of "invalid" walks is $\bigcup_{i \in V \setminus \{s\}} W_{\{i\}}$, since any walk that misses at least one vertex $i \neq s$ is in this union.
+    Thus, the number of walks of length $n$ starting and ending at $s$ that visit all vertices is:
+    $$\left| W_{\emptyset} \setminus \bigcup_{i \in V \setminus \{s\}} W_{\{i\}} \right|$$
+    Using the Principle of Inclusion-Exclusion, and noting that $\bigcap_{i \in S} W_{\{i\}} = W_S$, we get:
+    $$\left| W_{\emptyset} \setminus \bigcup_{i \in V \setminus \{s\}} W_{\{i\}} \right| = \sum_{S \subseteq V \setminus \{s\}} (-1)^{|S|} |W_S|$$
+    Since every Hamiltonian cycle can be traversed in two directions, each cycle is counted exactly twice as a walk from $s$ to $s$. Dividing by $2$ yields the total number of Hamiltonian cycles.
+\end{proof}
+
+\begin{algorithm}
+#Zaehle_Hamiltonkreise (Count Hamiltonian Cycles)
+#Time complexity: O(n^2.81 * log n * 2^n), Space complexity: O(n^2)
+
+1. Choose arbitrary start vertex s := 1
+2. Initialize Z := |W_\emptyset|
+3. For all non-empty subsets S \subseteq V \setminus {s}:
+    Determine |W_S| using the adjacency matrix of G[V \ S]
+    Z := Z + (-1)^|S| * |W_S|
+4. Z := Z / 2
+5. Return Z
+\end{algorithm}
+
+\begin{theorem}
+    The algorithm Zaehle\_Hamiltonkreise correctly computes the number of Hamiltonian cycles in $G$ and requires $O(n^2)$ space and $O(n^{2.81} \log n \cdot 2^n)$ time, where $n = |V|$.
+\end{theorem}
+
 \begin{theorem}
     Hamiltionian decision is NP-Complete. (Karp 1972)
 \end{theorem}

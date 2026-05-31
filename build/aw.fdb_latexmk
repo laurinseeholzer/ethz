@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1780228925.33007 "/home/laurin/dev/ethz/aw.tex" "build/aw.pdf" "aw" 1780228926.80239 0
+["pdflatex"] 1780254572.35328 "/home/laurin/dev/ethz/aw.tex" "build/aw.pdf" "aw" 1780254574.02905 0
   "/home/laurin/dev/ethz/aw.tex" 1780228923.47705 722 2900264d3f14895862937d15c34685b0 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.enc" 1561323594 2496 4d35740f3a177992ff7b134746c0a1db ""
@@ -121,15 +121,15 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1777806177.26788 4602016 72a039a3c4aea0fa25b5d35d65138f54 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1777805916 7753802 be5e41a9e647686271b5358067c82b4f ""
   "aw.tex" 1780228923.47705 722 2900264d3f14895862937d15c34685b0 ""
-  "build/aw.aux" 1780228926.64908 4941 af909923a7c70e62400d915f5e037704 "pdflatex"
-  "build/aw.toc" 1780228926.65008 3110 b147f74506debea49e0614a37d3f2d99 "pdflatex"
+  "build/aw.aux" 1780254573.83327 5331 63a0b5f5f99d62a7ffb8bf160be732a1 "pdflatex"
+  "build/aw.toc" 1780254573.83449 3377 015a9e7c8acfde48c297109625a56352 "pdflatex"
   "sectionsNotes/aw/coloring.tex" 1775498240.26484 3330 955395be61c4052cd84a6f5ef27ebacd ""
-  "sectionsNotes/aw/connectivness_of_graphs.tex" 1775222779.38498 4210 7b718065d115232ffe9e2d25b58926ce ""
+  "sectionsNotes/aw/connectivness_of_graphs.tex" 1780252618.21004 6545 9fbb9ec36b86fd7b160ce0f9fb42f198 ""
   "sectionsNotes/aw/flownetworks.tex" 1779306844.60681 9942 245253eec9d1d9a122c5eb8720ec2c16 ""
-  "sectionsNotes/aw/hamiltonian_cycles_eulertours.tex" 1779118052.01386 5687 ecaec159173704ddf247b47c68e599cd ""
+  "sectionsNotes/aw/hamiltonian_cycles_eulertours.tex" 1780252655.64804 8766 1fdc906efeb68eb00308d1767eae2003 ""
   "sectionsNotes/aw/matchings.tex" 1775344497.62426 4317 36109e7eb755f2c029c7c0eeee702726 ""
-  "sectionsNotes/aw/probability_theory.tex" 1779118316.75981 31040 af294a8f44fa9af1ea685afbed3d9155 ""
-  "sectionsNotes/aw/randomized_algorithms.tex" 1779967132.76913 29723 fac50efded71316f908fa90551319c32 ""
+  "sectionsNotes/aw/probability_theory.tex" 1780252674.54504 33093 92aed4971491c8188815564e48094f89 ""
+  "sectionsNotes/aw/randomized_algorithms.tex" 1780254572.07019 31479 bd053d79bbb766e82abb86324e0bc655 ""
   "templateNotes/commands.tex" 1774795684.82424 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
   "templateNotes/packages.tex" 1780227668.11717 493 dd01896e8ca6d5605bcdf6aeec6f0cbe ""
   "templateNotes/theorem_styles.tex" 1780227718.45916 2599 ef35b4d09ba532e85d73c0bf2d41006f ""

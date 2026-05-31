@@ -555,17 +555,52 @@ do {
 } while p != hull[0]
 \end{codeexample}
 
-\subsection{Reachable Vertices}
+\subsection{Reachable Vertices}  
 
 \begin{definition}
-    Given a graph $G$ for each vertext $v \in V$ count the number of vertices $u$ that are reachable from $v$.
+    Given a directed graph $G=(V, E)$, for each vertex $v \in V$, calculate the number of reachable vertices $n_v = |R(v)|$, where $R(v) = \{ u \in V \mid u \text{ is reachable from } v \}$.
 \end{definition}
 
 \begin{remark}
-    For an undirected graph this is just the size of the connected component and can be solved in $O(n+m)$ by running BFS/DFS from each node.
+    For an undirected graph, this is simply the size of the connected component. It can be solved in $O(n+m)$ by first identifying components via DFS and then counting their sizes.
 \end{remark}
 
 \begin{remark}
-    The problem is not efficiently solvable for directed graphs in the worst case. Hence we need to try and find an approximate solution in near linear time.
+    The problem is not efficiently solvable for directed graphs in the worst case, as an exact solution takes $O(n(n+m))$. Improving this to sub-quadratic time likely contradicts the Strong Exponential Time Hypothesis. Thus, we seek an approximate solution in near-linear time.
 \end{remark}
 
+\begin{algorithm}  
+\\Subroutine: Minimum Reachable Value
+\\To enable approximation, we use a subroutine that finds 
+\\the smallest value r_u among all reachable vertices u for every v
+
+V = V.sort(ascending, r_v)
+min[v] = \infty
+for v_i in V:
+    if min[v_i] == \infty:
+        DFSREV(v_i)
+        min[u] = r_{v_i} \\for all u in R(v_i)
+
+\end{algorithm}
+
+\subsubsection{Approximation Algorithm}
+
+\begin{remark}
+    The core idea is to assign each vertex $v$ a random variable $r_v \sim \text{Uniform}([0,1])$. The minimum value $x_v = \min_{u \in R(v)} r_u$ among $n_v$ such variables is roughly $1/n_v$ in expectation.
+\end{remark}
+
+\begin{theorem} 
+    \textbf{Algorithm:} Repeat the process $l = \lceil 2 \log_2(2n/\delta) \rceil$ times. In each iteration, compute $x_{i,v}$ using the subroutine. The estimate $\tilde{n}_v$ is the reciprocal of the median of these $x_{i,v}$ values, which achieves an approximation in $O((n \log n + m) \log(n/\delta))$ time.
+\end{theorem}
+
+\begin{theorem}
+    With probability $\ge 1-\delta$, the estimate satisfies $n_v/20 \le \tilde{n}_v \le 20n_v$ for all $v$.
+\end{theorem}
+
+\begin{theorem}
+    By increasing the iterations $l$ to $O(\frac{1}{\epsilon^2} \log(\frac{n}{\delta}))$, a $(1 \pm \epsilon)$-approximation can be achieved.
+\end{theorem}
+
+\begin{remark}  
+    This algorithmic approach (using minima of random variables) is also used in the \textit{count-distinct} problem (e.g., HyperLogLog) to estimate the number of unique elements in data streams.
+\end{remark}

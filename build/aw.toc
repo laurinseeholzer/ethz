@@ -1,43 +1,46 @@
 \contentsline {section}{\numberline {1}Connectivness of Graphs}{4}{}%
 \contentsline {subsection}{\numberline {1.1}Specialcase $k=1$}{5}{}%
-\contentsline {section}{\numberline {2}Hamiltonian Cycles and Eulertours}{7}{}%
-\contentsline {subsection}{\numberline {2.1}Eulertours}{7}{}%
-\contentsline {subsection}{\numberline {2.2}Hamiltonian Cycles}{7}{}%
-\contentsline {subsection}{\numberline {2.3}Travelling Salesman Problem (TSP)}{8}{}%
-\contentsline {subsubsection}{\numberline {2.3.1}Metric TSP}{8}{}%
-\contentsline {section}{\numberline {3}Matchings}{10}{}%
-\contentsline {section}{\numberline {4}Coloring}{13}{}%
-\contentsline {section}{\numberline {5}Probability Theory}{15}{}%
-\contentsline {subsection}{\numberline {5.1}Conditional Probability}{17}{}%
-\contentsline {subsection}{\numberline {5.2}Independence}{19}{}%
-\contentsline {subsection}{\numberline {5.3}Random Variables}{19}{}%
-\contentsline {subsubsection}{\numberline {5.3.1}Expectation}{20}{}%
-\contentsline {subsubsection}{\numberline {5.3.2}Variance}{22}{}%
-\contentsline {subsubsection}{\numberline {5.3.3}Multiple Random Variables}{23}{}%
-\contentsline {subsubsection}{\numberline {5.3.4}Combined Random Variables}{24}{}%
-\contentsline {subsection}{\numberline {5.4}Distributions}{26}{}%
-\contentsline {subsection}{\numberline {5.5}Bounding Probability}{28}{}%
-\contentsline {subsubsection}{\numberline {5.5.1}Chernoff Bounds}{29}{}%
-\contentsline {subsubsection}{\numberline {5.5.2}Target Shooting}{30}{}%
-\contentsline {section}{\numberline {6}Randomized Algorithms}{32}{}%
-\contentsline {subsection}{\numberline {6.1}Reduction of Error probability}{32}{}%
-\contentsline {subsection}{\numberline {6.2}Optimization problems}{33}{}%
-\contentsline {subsection}{\numberline {6.3}Primality Testing}{34}{}%
-\contentsline {subsection}{\numberline {6.4}Sorting and Selecting}{36}{}%
-\contentsline {subsection}{\numberline {6.5}Duplicate Detection}{38}{}%
-\contentsline {subsection}{\numberline {6.6}Floyd-Cycle Detection}{39}{}%
-\contentsline {subsection}{\numberline {6.7}Long-Path Problem}{40}{}%
-\contentsline {subsection}{\numberline {6.8}Minimum cut in Multigraphs}{42}{}%
-\contentsline {subsubsection}{\numberline {6.8.1}Bootstrapping}{43}{}%
-\contentsline {subsection}{\numberline {6.9}Small Enclosing Disk Problem}{44}{}%
-\contentsline {subsection}{\numberline {6.10}Convex Hull}{45}{}%
-\contentsline {subsection}{\numberline {6.11}Reachable Vertices}{46}{}%
-\contentsline {section}{\numberline {7}Flow Networks}{48}{}%
-\contentsline {subsection}{\numberline {7.1}Cuts}{48}{}%
-\contentsline {subsection}{\numberline {7.2}Max-Flow Min-Cut}{49}{}%
-\contentsline {subsection}{\numberline {7.3}Residual Networks and Augmenting Paths}{49}{}%
-\contentsline {subsection}{\numberline {7.4}Ford-Fulkerson Algorithm}{50}{}%
-\contentsline {subsection}{\numberline {7.5}Maximum Matchings using MaxFlow}{51}{}%
-\contentsline {subsection}{\numberline {7.6}Matchings in Bipartite Graphs}{51}{}%
-\contentsline {subsection}{\numberline {7.7}Edge-disjoint Paths}{51}{}%
-\contentsline {subsection}{\numberline {7.8}Image Segmentation using MaxFlow}{52}{}%
+\contentsline {subsection}{\numberline {1.2}Finding Cut Vertices and Bridges (DFS \& Low Values)}{6}{}%
+\contentsline {section}{\numberline {2}Hamiltonian Cycles and Eulertours}{8}{}%
+\contentsline {subsection}{\numberline {2.1}Eulertours}{8}{}%
+\contentsline {subsection}{\numberline {2.2}Hamiltonian Cycles}{8}{}%
+\contentsline {subsection}{\numberline {2.3}Counting Hamiltonian Cycles}{9}{}%
+\contentsline {subsection}{\numberline {2.4}Travelling Salesman Problem (TSP)}{10}{}%
+\contentsline {subsubsection}{\numberline {2.4.1}Metric TSP}{11}{}%
+\contentsline {section}{\numberline {3}Matchings}{12}{}%
+\contentsline {section}{\numberline {4}Coloring}{15}{}%
+\contentsline {section}{\numberline {5}Probability Theory}{17}{}%
+\contentsline {subsection}{\numberline {5.1}Conditional Probability}{19}{}%
+\contentsline {subsection}{\numberline {5.2}Independence}{21}{}%
+\contentsline {subsection}{\numberline {5.3}Random Variables}{22}{}%
+\contentsline {subsubsection}{\numberline {5.3.1}Expectation}{22}{}%
+\contentsline {subsubsection}{\numberline {5.3.2}Variance}{24}{}%
+\contentsline {subsubsection}{\numberline {5.3.3}Multiple Random Variables}{25}{}%
+\contentsline {subsubsection}{\numberline {5.3.4}Combined Random Variables}{26}{}%
+\contentsline {subsection}{\numberline {5.4}Distributions}{29}{}%
+\contentsline {subsection}{\numberline {5.5}Bounding Probability}{31}{}%
+\contentsline {subsubsection}{\numberline {5.5.1}Chernoff Bounds}{32}{}%
+\contentsline {subsubsection}{\numberline {5.5.2}Target Shooting}{33}{}%
+\contentsline {section}{\numberline {6}Randomized Algorithms}{35}{}%
+\contentsline {subsection}{\numberline {6.1}Reduction of Error probability}{35}{}%
+\contentsline {subsection}{\numberline {6.2}Optimization problems}{36}{}%
+\contentsline {subsection}{\numberline {6.3}Primality Testing}{37}{}%
+\contentsline {subsection}{\numberline {6.4}Sorting and Selecting}{39}{}%
+\contentsline {subsection}{\numberline {6.5}Duplicate Detection}{41}{}%
+\contentsline {subsection}{\numberline {6.6}Floyd-Cycle Detection}{42}{}%
+\contentsline {subsection}{\numberline {6.7}Long-Path Problem}{43}{}%
+\contentsline {subsection}{\numberline {6.8}Minimum cut in Multigraphs}{45}{}%
+\contentsline {subsubsection}{\numberline {6.8.1}Bootstrapping}{46}{}%
+\contentsline {subsection}{\numberline {6.9}Small Enclosing Disk Problem}{47}{}%
+\contentsline {subsection}{\numberline {6.10}Convex Hull}{48}{}%
+\contentsline {subsection}{\numberline {6.11}Reachable Vertices}{49}{}%
+\contentsline {subsubsection}{\numberline {6.11.1}Approximation Algorithm}{50}{}%
+\contentsline {section}{\numberline {7}Flow Networks}{52}{}%
+\contentsline {subsection}{\numberline {7.1}Cuts}{52}{}%
+\contentsline {subsection}{\numberline {7.2}Max-Flow Min-Cut}{53}{}%
+\contentsline {subsection}{\numberline {7.3}Residual Networks and Augmenting Paths}{53}{}%
+\contentsline {subsection}{\numberline {7.4}Ford-Fulkerson Algorithm}{54}{}%
+\contentsline {subsection}{\numberline {7.5}Maximum Matchings using MaxFlow}{55}{}%
+\contentsline {subsection}{\numberline {7.6}Matchings in Bipartite Graphs}{55}{}%
+\contentsline {subsection}{\numberline {7.7}Edge-disjoint Paths}{55}{}%
+\contentsline {subsection}{\numberline {7.8}Image Segmentation using MaxFlow}{56}{}%
