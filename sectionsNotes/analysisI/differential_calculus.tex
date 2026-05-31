@@ -140,7 +140,7 @@
 \end{theorem}
 
 \begin{remark}
-    This follows directly from the product rule.
+    This follows directly from the product and the chain rule.
 \end{remark}
 
 \begin{theorem}
@@ -201,7 +201,7 @@
 
 \begin{theorem}
     \textbf{Bernoulli-L'Hopital's Rule:} Let $f, g: I \to \mathbb{R}$ be differentiable functions on $(a, b)$ and let $x_0 \in (a, b)$. If $g(x) \neq 0$ and $g'(x) \neq 0$ for all $x \in (a, b)$. If 
-    $$\lim_{x \to x_0} |f(x)| = \lim_{x \to x_0} |g(x)| = 0 \text{or} \infty \quad  \text{and} \quad \exists L = \lim_{x \to x_0} \frac{f'(x)}{g'(x)}$$
+    $$\lim_{x \to x_0} |f(x)| = \lim_{x \to x_0} |g(x)| \in \{ 0, \infty \} \quad  \text{and} \quad \exists L = \lim_{x \to x_0} \frac{f'(x)}{g'(x)}$$
     $$\lim_{x \to x_0} \frac{f(x)}{g(x)} = \lim_{x \to x_0} \frac{f'(x)}{g'(x)} = L$$
 \end{theorem}
 
@@ -222,6 +222,11 @@
     $$\forall a, b \in I \forall t \in (0, 1) : f((1-t)a + bt) \leq (1-t) f(a) + t f(b)$$
 \end{definition}
 
+\begin{remark}
+    This is equivalent to saying that for any $x \in (a, b)$ we have
+    $$\frac{f(x)-f(a)}{x-a} \geq \frac{f(b)-f(x)}{b-x}$$
+\end{remark}
+
 \begin{definition}
     A function $f: I \to \mathbb{R}$ is called \textbf{concave} iff 
     $$\forall a, b \in I \forall t \in (0, 1) : f((1-t)a + bt) \geq (1-t) f(a) + t f(b)$$
@@ -241,12 +246,23 @@
     $$f \text{ is convex} \quad \iff \quad f' \text{ is increasing}$$
 \end{theorem}
 
+\begin{proof}
+    $\impliedby: \quad$ Assume $f'$ is increasing and let $x \in (a, b)$ be arbitrary. Then we have have by the mean value theorem that there exists $\psi \in (a, x) \xi \in (x, b)$ s.t.:
+    $$f'(\psi) = \frac{f(x)-f(a)}{x-a} \quad \text{and} \quad f'(\xi) = \frac{f(b)-f(x)}{b-x}$$
+    As $f'$ is increasing we know that $f'(\psi) \leq f'(\xi)$ and therefore
+    $$\frac{f(x)-f(a)}{x-a} \leq \frac{f(b)-f(x)}{b-x}$$
+    $\implies: \quad$ Assume $f$ is convex and let $h$ be small enough s.t. $x = a 
+    + h \leq b-h$ then by the convexity of $f$ we have
+    $$\frac{f(a+h)-f(a)}{h} \leq \frac{f(b-h)-f(a+h)}{(b-h) - (a+h)} \leq \frac{f(b)-f(b-h)}{h}$$
+    and as $f$ is differentiable they exists and are comparable therfore $f'(a) \leq f'(b)$
+\end{proof}
+
 \begin{theorem}
     Let $(a, b) \subset \mathbb{R}$ and $f: (a, b) \to \mathbb{R}$ be twice differentiable. Then 
     $$f \text{ is convex} \quad \iff \quad f'' \geq 0$$
 \end{theorem}
 
-\subsection{Approximation of functions}
+\subsection{Taylor Series}
 
 \begin{lemma}
     We can localy approximate the graph of $f$ at $x_0$ with the tangential line $t(x)$

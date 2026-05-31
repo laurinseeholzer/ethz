@@ -1,0 +1,114 @@
+\section{Integration}
+
+\subsection{Indefinite Integrals and Techniques}
+
+\begin{definition}
+    Functions $F: I \to \mathbb{R}$ such that $F'(x) = f(x)$ for all $x \in (a, b)$ are called \textbf{antiderivatives} of $f$.
+\end{definition}
+
+\begin{definition}
+    The family of all anti-derivatives of a function $f: I \to \mathbb{R}$ for $I \subseteq \mathbb{R}$ an open interval is called the \textbf{indefinite integral} and :=
+    $$\int f(x) \, dx$$
+    $$= \{ F: I \to \mathbb{R} : F'(x) = f(x) \} = F(x) + C$$
+\end{definition}
+
+\begin{theorem}
+    Let $f, g: I \to \mathbb{R}$ be integrable functions and let $c \in \mathbb{R}$. Then:
+    $$\int (f(x) \pm g(x)) \, dx$$
+    $$= \int f(x) \, dx \pm \int g(x) \, dx$$
+    $$\int c f(x) \, dx = c \int f(x) \, dx$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Basic Antiderivatives}:
+    $$\int x^p \, dx = \frac{x^{p+1}}{p+1} + C \quad (p \neq -1)$$
+    $$\int \frac{1}{x} \, dx = \ln|x| + C$$
+    $$\int e^x \, dx = e^x + C$$
+    $$\int a^x \, dx = \frac{a^x}{\ln(a)} + C$$
+    $$\int \sin(x) \, dx = -\cos(x) + C$$
+    $$\int \cos(x) \, dx = \sin(x) + C$$
+    $$\int \frac{1}{1+x^2} \, dx = \arctan(x) + C$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Integration by Parts}: For differentiable functions $f(x)$ and $g(x)$ we have:
+    $$\int f'(x)g(x) \, dx$$
+    $$= f(x)g(x) - \int f(x)g'(x) \, dx$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Substitution Rule}: For functions $f(x)$ and $g(x)$ we have:
+    $$\int f(g(x))g'(x) \, dx$$
+    $$= \int f(u) \, du = F(g(x)) + C$$
+    where $F$ is an antiderivative of $f$ and $u = g(x)$.
+\end{theorem}
+
+\subsection{The Definite Integral (Riemann Integral)}
+
+\begin{definition}
+    Let $U$ and $L$ denote the upper and lower sums of a bounded function $f$. Then $f$ is called \textbf{Riemann-integrable} iff $\inf U = \sup L$. The value of the definite integral $\int_a^b f(x) \, dx$ is then this common value.
+\end{definition}
+
+\begin{theorem}
+    \textbf{Integrability Conditions}: Any continuous or monotone function on $[a, b]$ is Riemann-integrable.
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Properties of Riemann Integral}: Let $f, g$ be integrable and $c \in \mathbb{R}$:
+    $$\int_a^b (f(x) \pm g(x)) \, dx = \int_a^b f(x) \, dx \pm \int_a^b g(x) \, dx$$
+    $$\int_a^b c f(x) \, dx = c \int_a^b f(x) \, dx$$
+    $$f(x) \leq g(x) \implies \int_a^b f(x) \, dx \leq \int_a^b g(x) \, dx$$
+    $$\left| \int_a^b f(x) \, dx \right| \leq \int_a^b |f(x)| \, dx$$
+    $$\int_{a}^{b} f(x) \, dx = -\int_{b}^{a} f(x) \, dx$$
+    $$\int_{a}^{c} f(x) \, dx = \int_{a}^{b} f(x) \, dx + \int_{b}^{c} f(x) \, dx$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Mean Value Theorem for Integrals}: Let $f: [a,b] \to \mathbb{R}$ be continuous. Then there exists a $c \in [a,b]$ such that:
+    $$\int_{a}^{b} f(x) \, dx = (b-a)f(c)$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Fundamental Theorem of Integral Calculus}: Let $f: [a,b] \to \mathbb{R}$ be continuous. Then for all $C \in \mathbb{R}$, $F(x)$ is an antiderivative of $f$ where:
+    $$F(x) = \int_{a}^{x} f(y) \, dy + C$$
+\end{theorem}
+
+\subsection{Sequences of Functions and Integrals}
+
+\begin{definition}
+    Let $(f_n)_{n \in \mathbb{N}_0}$ be a sequence of functions.
+    \textbf{Pointwise Convergence}: It converges pointwise to $f$ if for every $x$, the sequence of real numbers $(f_n(x))$ converges to $f(x)$.
+\end{definition}
+
+\begin{definition}
+    \textbf{Uniform Convergence}: It converges uniformly to $f$ if for every $\epsilon > 0$, there exists an $N$ such that for all $n \ge N$ and \textbf{for all} $x$ simultaneously, $|f_n(x) - f(x)| < \epsilon$.
+\end{definition}
+
+\begin{theorem}
+    \textbf{Swapping Limit and Integral}: If a sequence of integrable functions $(f_n)$ converges \textbf{uniformly} to $f$ on $[a,b]$, then the limit function $f$ is also integrable, and:
+    $$\int_a^b f(x) \, dx$$
+    $$= \lim_{n \to \infty} \int_a^b f_n(x) \, dx$$
+\end{theorem}
+
+\subsection{Definite Integration Techniques}
+
+\begin{lemma}
+    If $F: [a,b] \to \mathbb{R}$ is continuously differentiable, then:
+    $$F(x) = F(a) + \int_{a}^{x} F'(t) \, dt$$
+    $$\int_{a}^{b} F'(t) \, dt = F(b) - F(a) = \Big[ F(t) \Big]_a^b$$
+\end{lemma}
+
+\begin{lemma}
+    \textbf{Substitution for Definite Integrals}: Let $f$ be continuous and $g$ continuously differentiable.
+    $$\int_{a}^{b} f(g(x))g'(x) \, dx$$
+    $$= \int_{g(a)}^{g(b)} f(u) \, du$$
+    \textbf{Version 2}: If $f'(x) \neq 0$ and $f^{-1}$ is the inverse of $f$:
+    $$\int_a^b g(f(x)) \, dx$$
+    $$= \int_{f(a)}^{f(b)} g(y) (f^{-1})'(y) \, dy$$
+\end{lemma}
+
+\begin{lemma}
+    \textbf{Integration by Parts for Definite Integrals}: Let $f, g$ be continuously differentiable.
+    $$\int_{a}^{b} f'(x)g(x) \, dx$$
+    $$= \Big[ f(x)g(x) \Big]_{a}^{b} - \int_{a}^{b} f(x)g'(x) \, dx$$
+\end{lemma}

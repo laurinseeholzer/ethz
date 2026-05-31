@@ -110,12 +110,18 @@ class MyTask extends RecursiveTask<Integer> {
 The execution of parallel programs using Fork-Join can be represented as a Task-Graph (DAG).
 
 \begin{definition}
-    We introduce a new size $T_{\infty}$ which is the execution time assuming unlimited hardware. This is called the \textbf{span} and can be visualized as the sum of the execution times of the longest dependent path in our DAG.
+    $T_1$ is the execution time on a sequential machine and can be visualized as the sum of all task durations in our DAG.
+\end{definition}
+
+\begin{definition}
+    $T_{\infty}$ is the execution time assuming unlimited hardware. This is called the \textbf{span} and can be visualized as the sum of the execution times of the longest dependent path in our DAG.
 \end{definition}
 
 \begin{remark}
     The maximum speedup is limited by $\frac{T_1}{T_{\infty}} (Amdahls Law)$.
 \end{remark}
+
+
 
 It is the programmers responsibility to find the optimal decomposition/alogrithm for the problem to ensure a
 minimal span (a balanced tree). \textbf{Fork-join will guarantee optimal scheduling of the tasks with minimal idletime.}
@@ -152,6 +158,10 @@ minimal span (a balanced tree). \textbf{Fork-join will guarantee optimal schedul
 \begin{example}
     A smoothing kernel (ex. 3x3) that calculates the average value is sled over an image to smooth/blur the image.
 \end{example}
+
+\begin{remark}
+    Note that arrays and balanced trees are usually parallelizable while linked lists are not even if the per element operation is parallelizable.
+\end{remark}
 
 \subsection{Parallel Algorithms}
 

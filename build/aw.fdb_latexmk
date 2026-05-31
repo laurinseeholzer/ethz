@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1779881206.70636 "/home/laurin/dev/ethz/aw.tex" "build/aw.pdf" "aw" 1779881208.14513 0
+["pdflatex"] 1779967134.41304 "/home/laurin/dev/ethz/aw.tex" "build/aw.pdf" "aw" 1779967135.75644 0
   "/home/laurin/dev/ethz/aw.tex" 1779118272.57234 722 2900264d3f14895862937d15c34685b0 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.enc" 1561323594 2496 4d35740f3a177992ff7b134746c0a1db ""
@@ -126,15 +126,15 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1777806177.26788 4602016 72a039a3c4aea0fa25b5d35d65138f54 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1777805916 7753802 be5e41a9e647686271b5358067c82b4f ""
   "aw.tex" 1779118272.57234 722 2900264d3f14895862937d15c34685b0 ""
-  "build/aw.aux" 1779881207.9753 4827 8e8be6f4c38491f1a4b8b65dd2c4f94d "pdflatex"
-  "build/aw.toc" 1779881207.9763 3037 0d7921645107b87c5bc9078f9741cfcd "pdflatex"
+  "build/aw.aux" 1779967135.59416 4941 9624ea7bce3c78f49aef9ef2d5726311 "pdflatex"
+  "build/aw.toc" 1779967135.59516 3110 5abbe40324a5ddec0ed429099147462d "pdflatex"
   "sectionsNotes/aw/coloring.tex" 1775498240.26484 3330 955395be61c4052cd84a6f5ef27ebacd ""
   "sectionsNotes/aw/connectivness_of_graphs.tex" 1775222779.38498 4210 7b718065d115232ffe9e2d25b58926ce ""
   "sectionsNotes/aw/flownetworks.tex" 1779306844.60681 9942 245253eec9d1d9a122c5eb8720ec2c16 ""
   "sectionsNotes/aw/hamiltonian_cycles_eulertours.tex" 1779118052.01386 5687 ecaec159173704ddf247b47c68e599cd ""
   "sectionsNotes/aw/matchings.tex" 1775344497.62426 4317 36109e7eb755f2c029c7c0eeee702726 ""
   "sectionsNotes/aw/probability_theory.tex" 1779118316.75981 31040 af294a8f44fa9af1ea685afbed3d9155 ""
-  "sectionsNotes/aw/randomized_algorithms.tex" 1779881206.44967 29183 08bc9dc7be9e0d5d0782d60a38f88b6f ""
+  "sectionsNotes/aw/randomized_algorithms.tex" 1779967132.76913 29723 fac50efded71316f908fa90551319c32 ""
   "templateNotes/commands.tex" 1774795684.82424 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
   "templateNotes/packages.tex" 1774795684.82409 493 dd01896e8ca6d5605bcdf6aeec6f0cbe ""
   "templateNotes/theorem_styles.tex" 1774795684.82464 2530 5415b1d3cc1c5ce9df9c2be1dad76ee8 ""

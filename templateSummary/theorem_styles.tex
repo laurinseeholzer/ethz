@@ -7,66 +7,74 @@
 \newtheorem{important}[definition]{Imp.}
 \newtheorem{example}[definition]{Ex.}
 
-% 1. Gray Block Style (Def, Thm, Lem)
-\tcbset{
-    grayBlock/.style={
-        breakable,          % <-- Fixes the phantom blank pages
-        enhanced,
-        colback=black!5,    % Light gray background
-        colframe=black!5,   % Matches background to hide border
-        boxrule=0pt,
-        arc=0pt,            % Sharp corners
-        outer arc=0pt,
-        top=3pt, bottom=3pt, left=4pt, right=4pt,
-        boxsep=0pt,
-        before skip=4pt, after skip=4pt,
-        lines before break=1,
-    },
-    breakable,
-    lines before break=1,
-    before skip=0pt,        % Remove space before the box
-    after skip=0pt,         % Remove space after the box
-    boxsep=1pt,             % Shrink internal padding
-    top=1pt, bottom=1pt,    % Shrink internal padding
+% 1. Gray Block Style (Def, Thm, Lem, Ex)
+% NOTE: Do NOT use 'breakable' — it conflicts with multicols*.
+% Instead, keep boxes small (split large content across multiple environments).
+\tcolorboxenvironment{definition}{
+    enhanced jigsaw,        % jigsaw avoids the breakable overhead
+    colback=black!5,
+    colframe=black!5,
+    boxrule=0pt,
+    arc=0pt, outer arc=0pt,
+    top=2pt, bottom=2pt, left=3pt, right=3pt,
+    boxsep=0pt,
+    before skip=2pt, after skip=2pt,
 }
-\tcolorboxenvironment{definition}{grayBlock}
-\tcolorboxenvironment{theorem}{grayBlock}
-\tcolorboxenvironment{lemma}{grayBlock}
+\tcolorboxenvironment{theorem}{
+    enhanced jigsaw,
+    colback=black!5,
+    colframe=black!5,
+    boxrule=0pt,
+    arc=0pt, outer arc=0pt,
+    top=2pt, bottom=2pt, left=3pt, right=3pt,
+    boxsep=0pt,
+    before skip=2pt, after skip=2pt,
+}
+\tcolorboxenvironment{lemma}{
+    enhanced jigsaw,
+    colback=black!5,
+    colframe=black!5,
+    boxrule=0pt,
+    arc=0pt, outer arc=0pt,
+    top=2pt, bottom=2pt, left=3pt, right=3pt,
+    boxsep=0pt,
+    before skip=2pt, after skip=2pt,
+}
+\tcolorboxenvironment{example}{
+    enhanced jigsaw,
+    colback=black!5,
+    colframe=black!5,
+    boxrule=0pt,
+    arc=0pt, outer arc=0pt,
+    top=2pt, bottom=2pt, left=3pt, right=3pt,
+    boxsep=0pt,
+    before skip=2pt, after skip=2pt,
+}
 
 % 2. Standard Block Style (Remark - Left line only)
-\tcbset{
-    standardBlock/.style={
-        breakable,
-        enhanced,
-        colback=white,
-        colframe=black,
-        boxrule=0pt,
-        leftrule=1.5pt,     % Only the left line is drawn
-        arc=0pt,
-        outer arc=0pt,
-        top=2pt, bottom=2pt, left=6pt, right=2pt,
-        boxsep=0pt,
-        before skip=4pt, after skip=4pt
-    }
+\tcolorboxenvironment{remark}{
+    enhanced jigsaw,
+    colback=white,
+    colframe=black,
+    boxrule=0pt,
+    leftrule=1.5pt,
+    arc=0pt, outer arc=0pt,
+    top=1pt, bottom=1pt, left=5pt, right=2pt,
+    boxsep=0pt,
+    before skip=2pt, after skip=2pt,
 }
-\tcolorboxenvironment{remark}{standardBlock}
 
 % 3. Important Block Style (Full border)
-\tcbset{
-    importantBlock/.style={
-        breakable,
-        enhanced,
-        colback=white,
-        colframe=black,
-        boxrule=1pt,        % Full 1pt border
-        arc=0pt,
-        outer arc=0pt,
-        top=3pt, bottom=3pt, left=4pt, right=4pt,
-        boxsep=0pt,
-        before skip=4pt, after skip=4pt
-    }
+\tcolorboxenvironment{important}{
+    enhanced jigsaw,
+    colback=white,
+    colframe=black,
+    boxrule=1pt,
+    arc=0pt, outer arc=0pt,
+    top=2pt, bottom=2pt, left=3pt, right=3pt,
+    boxsep=0pt,
+    before skip=2pt, after skip=2pt,
 }
-\tcolorboxenvironment{important}{importantBlock}
 
 
 % --- Code & Algorithm Environments ---

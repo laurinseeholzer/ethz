@@ -1,19 +1,31 @@
-\section{Differential equations}
+\section{Differential Equations}
 
-\subsection{Modelling of differential equations}
+\subsection{Modelling and Definitions}
 
 \begin{example}
-    Assume at time $t=0$ one takes in a certain amount of alcohol. The alcohol first flows to the stomac and is then absorbed into the blood. We want to find a description of the current amount of alcohol in the stomac $m_S(t)$ and in the blood $m_B(t)$.
+    Assume at time $t=0$ one takes in a certain amount of alcohol. The alcohol first flows to the stomach and is then absorbed into the blood. We want to find a description of the current amount of alcohol in the stomach $m_S(t)$ and in the blood $m_B(t)$.
 
     We assume the following: 
     \begin{itemize}
-        \item the amount of alcohol in the stomac decreases by $ \alpha \Delta t m_S(t) $
+        \item the amount of alcohol in the stomach decreases by $ \alpha \Delta t \cdot m_S(t) $
         $$m_S(t+\Delta t) = m_S(t) - \alpha \Delta t \cdot m_S(t)$$
         $$\implies \frac{m_S(t+\Delta t) - m_S(t)}{\Delta t} = - \alpha \cdot m_S(t)$$
         $$\implies m_S'(t) = - \alpha \cdot m_S(t)$$
         \item the amount of alcohol in the blood is decreased by a constant amount of $\beta \Delta t$
-        $$m_B(t)' = \alpha \cdot m_S(t) - \beta$$
+        $$m_B'(t) = \alpha \cdot m_S(t) - \beta$$
     \end{itemize}
+\end{example}
+
+\begin{example}
+    A differential equation describing bounded growth, i.e., a quantity that cannot grow arbitrarily large, is modelled as:
+    $$u'(t) = k u(t) \left(1 - \frac{u(t)}{L}\right)$$
+    where $L$ and $k$ are positive constants. The value $L$ represents the maximum capacity. This equation can be simplified into a separable differential equation using the substitution $v(t) = \frac{1}{u(t)}$.
+\end{example}
+
+\begin{example}
+    A differential equation describing a bimolecular reaction $A + B \rightarrow C$, where $u(t)$ is the amount of substance $C$ at time $t$, is given by:
+    $$u'(t) = k(a - u(t))(b - u(t))$$
+    where $a, b$, and $k$ are positive real constants representing the initial concentrations and the reaction rate, respectively.
 \end{example}
 
 \begin{definition}
@@ -25,7 +37,7 @@
     \begin{itemize}
         \item of \textbf{n-th order}, if the n-th derivative is the highest occurring derivative.
         \item \textbf{linear}, if the unknown function $u(t)$ and its derivatives appear in the equation in the form of a linear combination.
-        \item \textbf{homogeneous}, if it only contains multiples of the unknown function $u(t)$ and its derivatives.
+        \item \textbf{homogeneous}, if a linear ODE only contains multiples of the unknown function $u(t)$ and its derivatives (i.e. right hand side is 0). It is \textbf{inhomogeneous} if there is a term (the disturbance function) that only depends on the independent variable.
     \end{itemize}
 \end{definition}
 
@@ -33,56 +45,186 @@
     An ordinary differential equation (ODE) is a differential equation which contains only derivatives of one independent variable.
 \end{definition}
 
-\subsection{Linear, homogeneous ODEs}
+\begin{theorem}[Picard-Lindelöf - Existence and Uniqueness]
+    If $f(x, y)$ is continuous and Lipschitz continuous with respect to $y$, then the initial value problem $y' = f(x, y)$ with $y(x_0) = y_0$ has a unique solution in some interval around $x_0$.
+\end{theorem}
+
+
+\subsection{First-Order ODEs}
 
 \begin{theorem}
-    \textbf{Superposition principle}: If $y_1$ and $y_2$ are solutions to a linear homogeneous differential equation so is
-    $$y(t) = c_1 y_1(t) + c_2 y_2(t), \quad c_1, c_2 \in \mathbb{R}$$
+    For an ODE of the form $y' = f(x)g(y)$, we can separate the variables and integrate:
+    $$\frac{dy}{dx} = f(x)g(y) \implies \int \frac{1}{g(y)} dy = \int f(x) dx + C$$
+\end{theorem}
+
+\begin{example}
+    Solve $y' = 2x y$. 
+    We separate: $\frac{1}{y} dy = 2x dx$. 
+    Integrating both sides gives $\ln|y| = x^2 + C$. 
+    Solving for $y$ yields $y = \pm e^C e^{x^2} = K e^{x^2}$.
+\end{example}
+
+\begin{theorem}
+    If a differential equation is of the form $y' = f(ax + by + c)$, we can substitute $u = ax + by + c$. This transforms the equation into an autonomous differential equation with separable variables.
+\end{theorem}
+
+\begin{example}
+    Solve $y' = (x+y)^2$. Substitute $u = x+y$, then $u' = 1 + y'$. 
+    The ODE becomes $u' - 1 = u^2 \implies u' = u^2 + 1$. 
+    This can now be solved using separation of variables: $\int \frac{1}{u^2+1} du = \int 1 dx \implies \arctan(u) = x + C$. 
+    Back-substituting gives $x+y = \tan(x+C) \implies y = \tan(x+C) - x$.
+\end{example}
+
+\begin{theorem}
+    If a differential equation can be written in the form:
+    $$y' = g\left(\frac{y}{x}\right)$$
+    it is called homogeneous in the variables. We can solve this by substituting $u = \frac{y}{x}$, which transforms it into an equation with separable variables.
+\end{theorem}
+
+\begin{example}
+    Solve the differential equation $y' = \frac{x^2 + y^2}{xy}$.
+    
+    First, we rewrite the right-hand side to show it is homogeneous in the variables (by dividing each term by $xy$):
+    $$y' = \frac{x^2}{xy} + \frac{y^2}{xy} = \frac{x}{y} + \frac{y}{x} = \frac{1}{\frac{y}{x}} + \frac{y}{x}$$
+    
+    We use the substitution $u = \frac{y}{x}$, which implies $y = u \cdot x$. 
+    By the product rule, the derivative is $y' = u'x + u$. 
+    
+    Substituting $y'$ and $\frac{y}{x}$ into our equation yields:
+    $$u'x + u = \frac{1}{u} + u$$
+    
+    Subtracting $u$ from both sides gives a separable differential equation:
+    $$u'x = \frac{1}{u} \implies u \, du = \frac{1}{x} \, dx$$
+    
+    Integrating both sides:
+    $$\int u \, du = \int \frac{1}{x} \, dx \implies \frac{1}{2}u^2 = \ln|x| + C$$
+    
+    Solving for $u$:
+    $$u^2 = 2\ln|x| + 2C \implies u = \pm \sqrt{2\ln|x| + K}$$
+    
+    Finally, back-substituting $u = \frac{y}{x}$:
+    $$\frac{y}{x} = \pm \sqrt{2\ln|x| + K} \implies y = \pm x \sqrt{2\ln|x| + K}$$
+\end{example}
+
+
+\subsection{Linear ODEs of n-th Order}
+
+\begin{theorem}
+    If $y_1$ and $y_2$ are solutions to a linear homogeneous differential equation so is
+    $$y(x) = C_1 y_1(x) + C_2 y_2(x), \quad C_1, C_2 \in \mathbb{R}$$
 \end{theorem}
 
 \begin{theorem}
-    Linear homogenous differential equations of $n$-th order have $n$ solutions $y_1, ..., y_n$ such that
+    Linear homogenous differential equations of $n$-th order have $n$ linearly independent solutions $y_1, ..., y_n$ such that
     $$y(x) = C_1 y_1(x) + ... + C_n y_n(x), \quad C_i \in \mathbb{R}, \text{ for } i = 1, ..., n$$
     is called the general solution.
 \end{theorem}
 
 \begin{lemma}
-    Let $y(x) = e^{\lambda x}, \lambda \in \mathbb{R}$ then by deriving $n$ times and taking out $e^{\lambda x}$ we will get the characteristic equation
+    Let $y(x) = e^{\lambda x}, \lambda \in \mathbb{C}$. By deriving $n$ times and substituting into the homogeneous ODE with constant coefficients, we obtain the characteristic equation:
     $$a_n \lambda^n + a_{n-1} \lambda^{n-1} + ... + a_1 \lambda + a_0 = 0$$
-    And the characteristic polynom
-    $$P(\lambda) = a_n \lambda^n + ... + a_0$$
+    The corresponding polynomial is the characteristic polynomial $p(\lambda)$.
 \end{lemma}
 
 \begin{theorem}
-    We can find the general solution of a linear, homogeneous ODE of $n$-th order by finding the roots of the characteristic polynom
+    We can find the general solution of a linear, homogeneous ODE of $n$-th order with constant coefficients by finding the roots of the characteristic polynomial:
     \begin{itemize}
-        \item \textbf{Distinct real roots}: $y_i(x) = e^{\lambda_i x}, \lambda_i \in \mathbb{R}$
-        \item \textbf{Multiple real roots}: $y_i(x) = x^k e^{\lambda_i x}, \lambda_i \in \mathbb{R}$
-        \item \textbf{Complex roots}: $y_i(x) = e^{\alpha x} \cos(\beta x), e^{\alpha x} \sin(\beta x), \lambda_i = \alpha + i \beta \in \mathbb{C}$
+        \item \textbf{Distinct real roots}: For each distinct root $\lambda_i \in \mathbb{R}$, we get a solution $y_i(x) = e^{\lambda_i x}$.
+        \item \textbf{Multiple real roots}: If a root $\lambda_i \in \mathbb{R}$ has multiplicity $m$, the $m$ linearly independent solutions are $e^{\lambda_i x}, x e^{\lambda_i x}, x^2 e^{\lambda_i x}, \dots, x^{m-1} e^{\lambda_i x}$.
+        \item \textbf{Complex roots}: Complex roots always come in conjugate pairs $\lambda = \alpha \pm i \beta \in \mathbb{C}$. If they have multiplicity $1$, they yield two real solutions: $y_1(x) = e^{\alpha x} \cos(\beta x)$ and $y_2(x) = e^{\alpha x} \sin(\beta x)$.
     \end{itemize}
 \end{theorem}
 
-\subsection{General First Order ODEs}
+\begin{example}
+    Solve $y'' - 5y' + 6y = 0$. 
+    Using the Euler Ansatz $y(x) = e^{\lambda x}$, we obtain the characteristic equation:
+    $$\lambda^2 - 5\lambda + 6 = 0$$
+    The roots are $\lambda_1 = 2$ and $\lambda_2 = 3$. Both are distinct real roots.
+    The general solution is therefore $y(x) = C_1 e^{2x} + C_2 e^{3x}$.
+\end{example}
+
+
+\subsection{Inhomogeneous Linear ODEs}
+
+\begin{lemma}
+    To solve general linear ODEs, we first find the general solution of the associated linear homogeneous ODE $y_h(x)$ of $n$-th order. Then we use an appropriate form $y_p(x)$ to find the particular solution of the inhomogeneous ODE. The general solution is then $y(x) = y_h(x) + y_p(x)$.
+\end{lemma}
+
+\subsubsection{Method of Undetermined Coefficients (Ansatz)}
+This method works for ODEs with \textbf{constant coefficients} and specific types of right-hand sides (disturbance functions) $s(x)$.
 
 \begin{theorem}
-    \textbf{Separation of Variables}: Let $z(x)' = g(z(x))$ then
-    $$\frac{dz}{dx} = g(z) \implies \int \frac{1}{g(z)} dz = \int 1 dx + C$$
+    If $s(x) = a_0 + a_1x + ... + a_mx^m$, then let $y_p(x) = C_0 + C_1x + ... + C_mx^m$. Find the constants $C_i$ by plugging $y_p(x)$ into the ODE.
 \end{theorem}
 
 \begin{theorem}
-    \textbf{Substitution}
+    If $s(x) = A e^{kx}$, then let $y_p(x) = C e^{kx}$. Find $C$ by plugging $y_p(x)$ into the ODE.
 \end{theorem}
 
-\begin{theorem}
-    \textbf{Variation of Constants} (for linear inhomogeneous ODEs): Let $y_h = C_1 y_1 + ... + C_n y_n$ be the general solution to a linear homogeneous ODE of $n$-th order. Then the general solution to the linear inhomogeneous ODE of $n$-th order is of the form
-    $$y(x) = C_1(x) y_1(x) + ... + C_n(x) y_n(x), \quad C_i \in \mathbb{R}, \text{ for } i = 1, ..., n$$
+\begin{theorem}[Trigonometric / Oscillation]
+    If $s(x) = A \sin(\omega x) + B \cos(\omega x)$, then let $y_p(x) = C_1 \sin(\omega x) + C_2 \cos(\omega x)$. Find the constants $C_i$ by plugging $y_p(x)$ into the ODE. Note: You must always include both sine and cosine in the Ansatz!
 \end{theorem}
 
-\subsection{Boundary-value Problems}
+\begin{important}
+    \textbf{Resonance (Special Cases)}: If the structure of the right-hand side $s(x)$ matches a root of the characteristic polynomial (e.g. $k$ is an $m$-fold root, or $i \omega$ is an $m$-fold root), then we must multiply our standard Ansatz by $x^m$. For example, if $s(x) = A e^{kx}$ and $k$ is a single root ($m=1$) of $p(\lambda)$, the Ansatz becomes $y_p(x) = x \cdot C e^{kx}$.
+\end{important}
 
-\begin{remark}
-    Assume we have the general solution $y = C_1 y_1 + C_2 y_2$ for a linear homogeneous ODE of second order. If we have some conditions for the function at certain points, e.g. $y(a) = A, y(b) = B$, then we can find the constants $C_1, C_2$ by solving the following system of linear equations:
-    $$y(a) = C_1 y_1(a) + C_2 y_2(a)$$
-    $$y(b) = C_1 y_1(b) + C_2 y_2(b)$$
-\end{remark}
+\begin{example}[Undetermined Coefficients]
+    Find a particular solution for $y'' - 3y' + 2y = e^{3x}$.
+    The right-hand side is an exponential $s(x) = e^{3x}$, with $k=3$.
+    The roots of the characteristic polynomial are $\lambda_1=1, \lambda_2=2$. Since $k=3$ is not a root, we have no resonance.
+    We use the Ansatz $y_p(x) = C e^{3x}$.
+    Plugging it into the ODE gives:
+    $$y_p''(x) - 3y_p'(x) + 2y_p(x) = 9Ce^{3x} - 3(3Ce^{3x}) + 2Ce^{3x} = 2Ce^{3x}$$
+    We equate this to the right-hand side $e^{3x}$:
+    $$2Ce^{3x} = e^{3x} \implies 2C = 1 \implies C = \frac{1}{2}$$
+    The particular solution is $y_p(x) = \frac{1}{2} e^{3x}$.
+\end{example}
 
+\begin{example}[Resonance]
+    Find a particular solution for $y'' - 3y' + 2y = e^{2x}$.
+    The right-hand side is $s(x) = e^{2x}$, with $k=2$.
+    The roots of the characteristic polynomial are $\lambda_1=1, \lambda_2=2$. Since $k=2$ matches a root, we have resonance ($m=1$).
+    Our Ansatz must be multiplied by $x$: $y_p(x) = x \cdot C e^{2x}$.
+    We plug $y_p(x)$, $y_p'(x) = C(1+2x)e^{2x}$, and $y_p''(x) = C(4+4x)e^{2x}$ into the ODE to solve for $C$:
+    $$C(4+4x)e^{2x} - 3C(1+2x)e^{2x} + 2Cx e^{2x} = e^{2x}$$
+    Dividing by $e^{2x}$ gives: $4C + 4Cx - 3C - 6Cx + 2Cx = 1 \implies C = 1$.
+    The particular solution is $y_p(x) = x e^{2x}$.
+\end{example}
+
+\subsubsection{Variation of Constants (First-Order ODEs)}
+
+\begin{theorem}[Variation of Constants]
+    For an inhomogeneous, linear differential equation of first order, we can find the particular solution by replacing the constant $C$ from the homogeneous solution with a function $C(x)$.
+    
+    If the homogeneous solution is $y_h(x) = C \cdot y_1(x)$, we set the particular solution to:
+    $$y_p(x) = C(x) \cdot y_1(x)$$
+    
+    By plugging this $y_p(x)$ back into the original inhomogeneous ODE, we get a condition for $C'(x)$, which we can integrate to find the function $C(x)$.
+\end{theorem}
+
+
+\subsection{Initial Value Problems and Boundary-Value Problems}
+
+The general solution $y(x)$ of an $n$-th order ODE contains $n$ unknown constants. We need $n$ additional conditions to specify a unique solution curve.
+
+\subsubsection{Initial Value Problem (IVP)}
+An Initial Value Problem specifies the conditions at the \textbf{same point} (e.g., $t_0$). 
+\begin{example}
+    Solve the IVP: $y'' + y = 0$ with $y(0) = 1$ and $y'(0) = 0$.
+    The general solution is $y(x) = C_1 \cos(x) + C_2 \sin(x)$.
+    Using the conditions:
+    $y(0) = C_1 \cdot 1 + C_2 \cdot 0 = 1 \implies C_1 = 1$.
+    $y'(x) = -C_1 \sin(x) + C_2 \cos(x) \implies y'(0) = C_2 \cdot 1 = 0 \implies C_2 = 0$.
+    The specific solution is $y(x) = \cos(x)$.
+\end{example}
+
+\subsubsection{Boundary-Value Problem (BVP)}
+A Boundary-Value Problem specifies the conditions at \textbf{different points} (often boundaries of an interval, $t_0 \ne t_1$).
+\begin{example}
+    Solve the BVP: $y'' + y = 0$ with $y(0) = 0$ and $y(\pi/2) = 1$.
+    The general solution is $y(x) = C_1 \cos(x) + C_2 \sin(x)$.
+    Using the first boundary condition: $y(0) = C_1 \cdot 1 + 0 = 0 \implies C_1 = 0$.
+    Using the second boundary condition: $y(\pi/2) = 0 + C_2 \cdot 1 = 1 \implies C_2 = 1$.
+    The specific solution is $y(x) = \sin(x)$.
+\end{example}

@@ -51,8 +51,12 @@ jmp test       // Infinite loop: Thread A never sees Thread B's update!
 \end{remark}
 
 \begin{remark}
-    Use \textbf{volatile} in Java to prevent memory reordering/update local cache/buffer everytime the variable changes.
+    Use \textbf{volatile} in Java to prevent memory reordering by updating the local cache/buffer every time the variable changes.
 \end{remark}
+
+\begin{important}
+    Volatile arrays only guarantee that the array reference is volatile, not the elements. 
+\end{important}
 
 \begin{remark}
    Almost all common architectures allow the reordering of \textbf{Stores after Loads} to maximize performance, unless explicitly prevented by memory barriers.
@@ -75,6 +79,14 @@ jmp test       // Infinite loop: Thread A never sees Thread B's update!
 \begin{definition} 
     \textbf{Synchronization Actions (SA):} Actions like reading/writing \textbf{volatile} variables or acquiring/releasing locks.
 \end{definition}
+
+\begin{remark}
+    Synchronization actions establish HB dependencies between actions in different threads.
+    \begin{itemize}
+        \item Write to volatile in thread $A$ $\rightarrow$ Read from volatile in thread $B$
+        \item Lock release in thread $A$ $\rightarrow$ Lock acquire in thread $B$
+    \end{itemize}
+\end{remark}
 
 \begin{definition} 
     \textbf{Synchronization Order (SO):} A total order of all SA. All threads see these actions in the same global order.

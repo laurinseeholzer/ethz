@@ -1,78 +1,64 @@
 \section{Functions}
 
 \begin{definition}
-A \textbf{function} $f: D \to C$ is a map from a domian $D$ to a codomain $C$ s.t. for each $x \in D$ there is exactly one $y \in C$ st. $f(x) = y$.
-\end{definition}
-
-\begin{remark}
-The input is called the \textbf{independent variable} (argument) while the output is called the \textbf{dependent variable}.
-\end{remark}
-
-\begin{definition}
-A function $f$ is called \textbf{injective} iff 
-$$\forall x_1, x_2 \in A : f(x_1) = f(x_2) \implies x_1 = x_2$$
+    A \textbf{function} $f: D \to C$ is a map from a domian $D$ to a codomain $C$ s.t. for each $x \in D$ there is exactly one $y \in C$ st. $f(x) = y$ (well defined).
 \end{definition}
 
 \begin{definition}
-A function $f$ is called \textbf{surjective} iff 
-$$\forall y \in B \exists x \in A : f(x) = y$$
+    A function $f$ is called \textbf{bouned} if there exists $M \in \mathbb{R}$ such that $|f(x)| \leq(\geq) M$ for all $x \in D$.
 \end{definition}
 
 \begin{definition}
-A function $f$ is called \textbf{bijective} iff $f$ is injective and surjective.
+    A function $f$ is called \textbf{injective} iff 
+    $$\forall x_1, x_2 \in A : f(x_1) = f(x_2) \implies x_1 = x_2$$
+    \textbf{surjective} iff 
+    $$\forall y \in B \exists x \in A : f(x) = y$$
+    and bijective iff $f$ is injective and surjective.
 \end{definition}
 
 \begin{definition}
-The \textbf{restriction} of $f$ under $D' \subset \mathbb{D}$ is defined as 
-$$f\upharpoonleft_{D'}: D' \to C, x \mapsto f(x) \quad \forall x \in \mathbb{D}$$
+    The \textbf{restriction} of $f$ under $D' \subset \mathbb{D}$ := 
+    $$f\upharpoonleft_{D'}: D' \to C, x \mapsto f(x) \quad \forall x \in \mathbb{D}$$
 \end{definition}
 
 \begin{definition}
-Let $f: D \to C$ and $g: C \to B$ be functions then 
-$$ g \circ f: D \to B \quad \text{with}$$
-$$g \circ f(x) = g(f(x)) \quad \forall x \in D $$
-is called the \textbf{composition} of $f$ and $g$.
+    Let $f: D \to C$ and $g: C \to B$ be functions then
+    $$g \circ f: D \to B \quad \text{with}$$
+    $$g \circ f(x) = g(f(x)) \quad \forall x \in D$$
+    is called the \textbf{composition} of $f$ and $g$.
 \end{definition}
 
 \begin{definition}
-The \textbf{identity function} $id_D: D \to D$ is defined as $id_D(x) = x \quad \forall x \in D$.
+    The \textbf{identity function} $id_D: D \to D$ := $id_D(x) = x \quad \forall x \in D$.
 \end{definition}
 
 \begin{definition}
-If a function $f: D \to C$ is bijective then there exists a unique function $f^{-1}: C \to D$ such that
-$$f(f^{-1}(y)) = id_C = y \quad \forall y \in C \quad \text{and}$$
-$$f^{-1}(f(x)) = id_D = x \quad \forall x \in D$$
-$f^{-1}$ is called the \textbf{inverse function} of $f$.
+    If a function $f: D \to C$ is bijective then there exists a unique function $f^{-1}: C \to D$ such that
+    $$ f(f^{-1}(y)) = id_C = y \quad \forall y \in C$$
+    and
+    $$ f^{-1}(f(x)) = id_D = x \quad \forall x \in D$$
+    $f^{-1}$ is called the \textbf{inverse function} of $f$.
 \end{definition}
 
 \begin{definition}
-A function $f$ is called \textbf{bouned} if $\exists M \in \mathbb{R}$ such that $|f(x)| \leq(\geq) M \, \forall x \in D$.
+    A function $f: \mathbb{R} \to \mathbb{R}$ is called
+    \textbf{even} iff 
+    $$\forall x \in \mathbb{R} : f(-x) = f(x)$$
+    and \textbf{odd} iff 
+    $$\forall x \in \mathbb{R} : f(-x) = -f(x)$$
 \end{definition}
 
 \begin{definition}
-A function  $f: \mathbb{R} \to \mathbb{R}$ is called \textbf{(strictly) monotonically increasing (decreasing)} iff 
-$$\forall x_1, x_2 \in \mathbb{R} : x_1 < x_2 \implies f(x_1) < (>) f(x_2)$$
+    A function  $f: \mathbb{R} \to \mathbb{R}$ is called \textbf{(strictly) monotonically increasing} iff 
+    $$\forall x_1, x_2 \in \mathbb{R} : x_1 < x_2 \implies f(x_1) < f(x_2)$$
+    and \textbf{(strictly) monotonically decreasing} iff 
+    $$\forall x_1, x_2 \in \mathbb{R} : x_1 < x_2 \implies f(x_1) > f(x_2)$$
 \end{definition}
 
 \begin{theorem}
-Every strictly monotonic function is injective.
+    Every strictly monotonic function is injective.
 \end{theorem}
 
-\begin{definition}
-    A function $f: \mathbb{R} \to \mathbb{R}$ is called 
-    \begin{itemize}
-        \item \textbf{even} iff $\forall x \in \mathbb{R} : f(-x) = f(x)$
-        \item \textbf{odd} iff $\forall x \in \mathbb{R} : f(-x) = -f(x)$
-    \end{itemize}
-\end{definition}
-
-\begin{definition}
-    The \textbf{graph} of a function $f: D \to C$ is the set of all ordered pairs $(x, f(x))$ for $x \in D$.
-\end{definition}
-
-\begin{definition}
-    A graph is \textbf{konvex} if it lies below the line segment connecting any two points on the graph. Similarly it is called \textbf{konkav} if it lies above the line segment connecting any two points on the graph.
-\end{definition}
 
 \subsection{Limits in the context of functions}
 
@@ -83,45 +69,89 @@ Every strictly monotonic function is injective.
     The limit $L$ is unique.
 \end{definition}
 
-
 \begin{definition}
-    A function $f: \mathbb{D} \to \mathbb{R}$ has in $x_0$ a \textbf{right-sided limit} $\quad \lim_{x \searrow x_0} f(x) = \lim_{x \to x_0^+} f(x) = L$ iff 
-    $$\forall \varepsilon > 0 \exists \delta > 0  \quad \text{s.t.}$$ 
-    $$\forall x \in \mathbb{D} (x_0 < x < x_0 + \delta \implies |f(x) - L| < \varepsilon)$$
-    \textbf{left-sided limit} $\lim_{x \nearrow x_0} f(x) = L$ iff 
+    A function $f: \mathbb{D} \to \mathbb{R}$ has in $x_0$ a
+    \textbf{right-sided limit} $\quad \lim_{x \searrow x_0} f(x) = \lim_{x \to x_0^+} f(x) = L$ iff 
     $$\forall \varepsilon > 0 \exists \delta > 0  \quad \text{s.t.}$$
-    $$\forall x \in \mathbb{D} (x_0 - \delta < x < x_0 \implies |f(x) - L| < \varepsilon)$$
-    
+    $$\forall x \in \mathbb{D} (x_0 < x < x_0 + \delta \implies |f(x) - L| < \varepsilon)$$
 \end{definition}
 
 \begin{definition}
     A function $f: \mathbb{D} \to \mathbb{R}$ has a \textbf{limit for x approaching infinity} $\lim_{x \to \infty} f(x) = L$ iff 
-    $$\forall \varepsilon > 0 \exists M > 0 \quad \text{s.t.}$$ 
-    $$\forall x \in \mathbb{D} (x > M \implies |f(x) - L| < \varepsilon)$$
-    \textbf{limit for x approaching negative infinity} $\lim_{x \to -\infty} f(x) = L$ iff 
     $$\forall \varepsilon > 0 \exists M > 0 \quad \text{s.t.}$$
-    $$\forall x \in \mathbb{D} (x < M \implies |f(x) - L| < \varepsilon)$$
+    $$\forall x \in \mathbb{D} (x > M \implies |f(x) - L| < \varepsilon)$$
 \end{definition}
 
 \begin{definition}
-    A function $f: \mathbb{D} \to \mathbb{R}$ has in $x_0$ a
-    \textbf{improper limit approaching infinity} $\lim_{x \to x_0} f(x) = \infty$ iff 
+    A function $f: \mathbb{D} \to \mathbb{R}$ has in $x_0$ a \textbf{improper limit approaching infinity} $\lim_{x \to x_0} f(x) = \infty$ iff 
     $$\forall N > 0 \exists \delta > 0 \quad \text{s.t.}$$
-    $$\forall x \in \mathbb{D} (0 < |x - x_0| < \delta \implies f(x) > N)$$
-    \textbf{improper limit approaching negative infinity} $\lim_{x \to x_0} f(x) = -\infty$ iff 
-    $$\forall N > 0 \exists \delta > 0 \quad \text{s.t.}$$
-    $$\forall x \in \mathbb{D} (0 < |x - x_0| < \delta \implies f(x) < -N)$$
+    $$forall x \in \mathbb{D} (0 < |x - x_0| < \delta \implies f(x) > N)$$
 \end{definition}
 
 \begin{theorem}
-    Let $A \in \mathbb{R}$ and assume $\lim_{x \to x_0} f(x) = K (\neq \pm \infty)$ and $\lim_{x \to x_0} g(x) = L (\neq \pm \infty)$.
-    \begin{itemize}
-        \item $\lim_{x \to x_0} (f(x) + g(x)) = K + L$
-        \item $\lim_{x \to x_0} (f(x) - g(x)) = K - L$
-        \item $\lim_{x \to x_0} (f(x) g(x)) = K L$
-        \item $\lim_{x \to x_0} (f(x) / g(x)) = K / L$
-        \item $\lim_{x \to x_0} (A f(x)) = A K$
-        \item $\lim_{x \to x_0} (f(x)/g(x)) = K/L$ if $L \neq 0$
-    \end{itemize}
+    Let $\lim_{x \to x_0} f(x) = K (\neq \pm \infty)$ and $\lim_{x \to x_0} g(x) = L (\neq \pm \infty)$
+    $$\lim_{x \to x_0} (f(x) + g(x)) = K + L$$
+    $$\lim_{x \to x_0} (f(x) - g(x)) = K - L$$
+    $$\lim_{x \to x_0} (f(x) g(x)) = K L$$
+    $$\lim_{x \to x_0} (f(x) / g(x)) = K / L$$
+    $$\lim_{x \to x_0} (A f(x)) = A K$$
+    $$\lim_{x \to x_0} (f(x)/g(x)) = K/L \text{if} L \neq 0$$
 \end{theorem}
 
+\subsection{Continuity of functions}
+
+\begin{definition}
+    A function $f: D \to \mathbb{R}$ is called \textbf{continous} at $x_0$ if
+    $$\forall \epsilon \gt 0 \exists \delta \gt 0 \text{ such that }$$
+    $$\forall x \in I (\mid x - x_0 \mid \lt \delta \implies \mid f(x) - f(c) \mid \gt \epsilon)$$
+    The function is called continuous if it is continuous at every point in its domain.
+\end{definition}
+
+\begin{remark}
+    The \textbf{intuition} behind this definition is that for any given distance $\epsilon > 0$ around $f(x_0)$, we can find a $\delta > 0$ such that for all $x \in D$ that are at least $\delta$ close to $x_0$, we have $|f(x) - f(x_0)| < \epsilon$. 
+    So for any bound on the output ($\epsilon$) there exists a bound on the input ($\delta$) such that all elements in the input bound $(x_0 - \delta, x_0 + \delta)$ are mapped to the output bound $(f(x_0) - \epsilon, f(x_0) + \epsilon)$.
+\end{remark}
+
+\begin{definition}
+    Let $f: D \to \mathbb{R}$ be a function. Then $f$ is called \textbf{left(right)-continuous} at $x_0$ if
+    $$\lim_{x \to x_0^{-(+)}} f(x) = f(x_0)$$
+\end{definition}
+
+\begin{theorem}
+    Let $f: D \subset \mathbb{D}(f) \subset \mathbb{R}$ be a function and $x_0 \in D$. $f$ is continuous at $x_0$ iff for every sequence $(x_n)_{n\in\mathbb{N}} \subset D$ with $\lim_{n\to\infty} x_n = x_0$ it holds that $\lim_{n\to\infty} f(x_n) = f(x_0)$.
+\end{theorem}
+
+\begin{remark}
+    Continuity can also be viewed in terms of intervals, where a function $f$ is continuous iff for every open interval $I \subset \mathbb{R}$ it holds that $f^{-1}(I)$ is open.
+\end{remark}
+
+\begin{lemma}
+    Let $f, g$ be continuous functions then
+    $$f+g, \quad f-g, \quad f \cdot g, \quad c \cdot f, \quad \frac{f}{g}, \quad f \circ g$$
+    are continuous
+\end{lemma}
+
+\begin{theorem}
+    Let $I$ be an interval and let $f: I \to J$ be a continuous and bijective function. Then $J$ is an interval too and the inverse function $f^{-1}: J \to I$ is continuous.
+\end{theorem}
+
+\begin{theorem}
+    Let $f: D \to \mathbb{R}$ be a continuous function. Let $c \in [f(a), f(b)]$ then there exists a $x_0 \in [a, b]$ such that $f(x_0) = c$.
+\end{theorem}
+
+\begin{lemma}
+    Let $[a, b]$ be a compact interval and let $(x_n)_{n\in\mathbb{N}} \subset [a, b]$ be a sequence. Then there exists a subsequence $(x_{n_k})_{k\in\mathbb{N}}$ such that 
+    $$ \lim_{k\to\infty} x_{n_k} = x_0 \quad \text{ for some } x_0 \in [a, b]. $$
+\end{lemma}
+
+\begin{definition}
+    Let $f: D \subset \mathbb{R} \to \mathbb{R}$ be a function
+    If for $x_0 \in D$ it holds that $f(x_0) \geq f(x) \forall x \in D$, then $f$ has a local maximum at $x_0$.
+    If for $x_0 \in D$ it holds that $f(x_0) \leq f(x) \forall x \in D$, then $f$ has a local minimum at $x_0$.
+\end{definition}
+
+\begin{theorem}
+    Let $f: I \subset \mathbb{R} \to \mathbb{R}$ be a continous function and $I$ be a compact interval. Then $f$ is bounded and attains its maximum and minimum value on $I$. Hence
+    $$\exists x_{min}, x_{max} \in I \text{ such that }$$
+    $$ f(x_{min}) \leq f(x) \leq f(x_{max}) \quad \forall x \in I$$
+\end{theorem}

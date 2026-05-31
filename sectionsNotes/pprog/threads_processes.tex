@@ -93,6 +93,10 @@ Thread thread = new Thread(runnable);
 thread.start(); // calls MyRunnable.run()
 \end{codeexample}
 
+\begin{remark}
+    The .run() method is never called directly, because then the method is executed by the current thread (e.g. the main-thread). To span a new thread and run it we have to use thread.start().
+\end{remark}
+
 In its lifecylce a thread can have the follwoing states:
 \begin{itemize}
     \item \textbf{NEW: }The thread has been created but not yet started.
@@ -100,6 +104,7 @@ In its lifecylce a thread can have the follwoing states:
     \item \textbf{RUNNING: }The thread is currently executing.
     \item \textbf{BLOCKED: }The thread is waiting for access to I/O devices
     \item \textbf{WAITING: }The thread is waiting to be notified
+    \item \textbf{TIMED WAITING: }The thread is waiting for a specified amount of time before it continues.
     \item \textbf{TERMINATED: }The thread has finished its execution
 \end{itemize}
 
@@ -149,4 +154,8 @@ MyTimerThread extends Thread {
 
 \begin{important}
     \textbf{Thread scheduling is not deterministic.} This means that we can't rely on the order (interleaving) in which threads are executed.
+\end{important}
+
+\begin{important}
+    The program execution is finished if all non-deamon threads have terminated, not necessarily when the main method or main thread terminates.
 \end{important}

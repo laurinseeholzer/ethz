@@ -102,13 +102,13 @@ Balancing a pipeline can increase throughput.
 \end{remark}
 
 \begin{theorem}
-    Amdahl's Law sets a limit on speedup, as the sequential part of the algorithm can not be parallelized.
-    $$S(p) = \frac{1}{1-f + \frac{f}{p}}$$
+    \textbf{Amdahl's Law } sets a limit on speedup, as the sequential part of the algorithm can not be parallelized.
+    $$S(p) = \frac{1}{f + \frac{1-f}{p}} \implies_{p \to \infty} S(p) \leq \frac{1}{f}$$
 \end{theorem}
 
 
 \begin{theorem}
-    Gustafson's Law proposes an optimistic view compared to Amdahl. It shows that we might not be able to shrink execution time but we can perform more operations in that same execution time.
+    \textbf{Gustafson's Law } proposes an optimistic view compared to Amdahl. It shows that we might not be able to shrink execution time but we can perform more operations in that same execution time.
     $$S_p = f + P(1 - f)$$
 \end{theorem}
 

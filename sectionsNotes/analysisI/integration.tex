@@ -1,9 +1,9 @@
 \section{Integration}
 
+\subsection{Indefinite Integrals and Techniques}
 
 \begin{definition}
-    Functions $F: I \to \mathbb{R}$ such that $F'(x) = f(x)$ for all $x \in (a, b)$ are called
-    \textbf{antiderivatives of $f$}
+    Functions $F: I \to \mathbb{R}$ such that $F'(x) = f(x)$ for all $x \in (a, b)$ are called \textbf{antiderivatives} of $f$.
 \end{definition}
 
 \begin{definition}
@@ -20,21 +20,20 @@
 \begin{remark}
     Some important basic antiderivatives:
     \begin{itemize}
-        \item $F'(x) = 0 \quad \implies \quad F(x) = C$
-        \item $F'(x) = 1 \quad \implies \quad F(x) = x + C$
-        \item $F'(x) = a x^p \quad \implies \quad F(x) = \frac{a}{p+1} x^{p+1} + C$
-        \item $F'(x) = a^x \quad \implies \quad F(x) = \frac{a^x}{ln(a)} + C$
-        \item $F'(x) = sin(x) \quad \implies \quad F(x) = -cos(x) + C$
-        \item $F'(x) = cos(x) \quad \implies \quad F(x) = sin(x) + C$
-        \item $F'(x) = tan(x) \quad \implies \quad F(x) = ln|cos(x)| + C$
-        \item $F'(x) = \frac{1}{x} \quad \implies \quad F(x) = ln|x| + C$
-        \item $F'(x) = \frac{1}{1+x^2} \quad \implies \quad F(x) = arctan(x) + C$
+        \item $f(x) = 0 \quad \implies \quad F(x) = C$
+        \item $f(x) = 1 \quad \implies \quad F(x) = x + C$
+        \item $f(x) = x^p \quad \implies \quad F(x) = \frac{1}{p+1} x^{p+1} + C \quad (p \neq -1)$
+        \item $f(x) = e^x \quad \implies \quad F(x) = e^x + C$
+        \item $f(x) = a^x \quad \implies \quad F(x) = \frac{a^x}{\ln(a)} + C$
+        \item $f(x) = \sin(x) \quad \implies \quad F(x) = -\cos(x) + C$
+        \item $f(x) = \cos(x) \quad \implies \quad F(x) = \sin(x) + C$
+        \item $f(x) = \frac{1}{x} \quad \implies \quad F(x) = \ln|x| + C$
+        \item $f(x) = \frac{1}{1+x^2} \quad \implies \quad F(x) = \arctan(x) + C$
     \end{itemize}
-    
 \end{remark}
 
 \begin{theorem}
-    \textbf{Partial Integration:} For functions $f(x)$ and $g(x)$ we have
+    \textbf{Integration by Parts:} For differentiable functions $f(x)$ and $g(x)$ we have
     $$\int f'(x)g(x)dx = f(x)g(x) - \int f(x)g'(x)dx $$
 \end{theorem}
 
@@ -43,13 +42,14 @@
 \end{remark}
 
 \begin{example}
-    Let $f(x) = x$ and $g(x) = e^x$. Then 
-    $$\int x e^x dx = x e^x - \int e^x dx = x e^x - e^x + C$$
+    Let $f'(x) = e^x \implies f(x) = e^x$ and $g(x) = x \implies g'(x) = 1$. Then 
+    $$\int x e^x dx = x e^x - \int e^x \cdot 1 dx = x e^x - e^x + C$$
 \end{example}
 
 \begin{theorem}
     \textbf{Substitution Rule:} For functions $f(x)$ and $g(x)$ we have
     $$\int f(g(x))g'(x)dx  = \int f(u) u' dx = \int f(u) \frac{du}{dx} dx = \int f(u) du = F(g(x)) + C $$
+    where $F$ is an antiderivative of $f$.
 \end{theorem}
 
 \begin{remark}
@@ -57,31 +57,38 @@
 \end{remark}
 
 \begin{example}
-    Let $f(x) = x$ and $g(x) = e^x$. Then 
-    $$\int x e^x dx = x e^x - \int e^x dx = x e^x - e^x + C$$
+    Evaluate $\int 2x e^{x^2} dx$. 
+    Let $u = x^2 \implies \frac{du}{dx} = 2x \implies du = 2x dx$.
+    Substituting gives:
+    $$\int e^u du = e^u + C = e^{x^2} + C$$
 \end{example}
 
+\subsection{The Definite Integral (Riemann Integral)}
+
 \begin{remark}
-    \textbf{Upper and Lower Sums (Stair Functions):} One can partition the integration interval into $\Delta x$ wide subintervals. And for each subinterval we can approximate the area of the function with the area of a rectangle. The sum of the areas of these rectangles is an approximation of the area of the function. If for all subintervals we take the lower bound of the function we get the lower sum. If for all subintervals we take the upper bound of the function we get the upper sum.
+    \textbf{Upper and Lower Sums (Stair Functions):} One can partition the integration interval into subintervals. For each subinterval we can approximate the area of the function with the area of a rectangle. The sum of the areas of these rectangles is an approximation of the area under the function. Taking the infimum of the function on each subinterval yields the lower sum $L$. Taking the supremum yields the upper sum $U$.
 \end{remark}
 
 \begin{definition}
-    Let $U$ and $L$ denote the upper and lower sums of a function $f$ then 
-    $f$ is called \textbf{Riemann-integrable} iff $\sup_{U} = \inf_{L}$. The value of the integral is then this value.
+    Let $U$ and $L$ denote the upper and lower sums of a bounded function $f$. Then $f$ is called \textbf{Riemann-integrable} iff $\inf U = \sup L$. The value of the definite integral $\int_a^b f(x)dx$ is then this common value.
 \end{definition}
 
-\begin{remark}
-    All continuous functions are Riemann-integrable. 
-\end{remark}
+\begin{theorem}
+    \textbf{Integrability Conditions:}
+    \begin{itemize}
+        \item All continuous functions on $[a,b]$ are Riemann-integrable.
+        \item All monotone functions on $[a,b]$ are Riemann-integrable.
+    \end{itemize}   
+\end{theorem}
 
 \begin{theorem}
     Let $f$ and $g$ be integrable and $c \in \mathbb{R}$ then:
     \begin{itemize}
-        \item linearity: $\int (f(x) \pm g(x))dx = \int f(x)dx \pm \int g(x)dx$
-        \item monotonicity: $f(x) \leq g(x) \implies \int f(x)dx \leq \int g(x)dx$
-        \item triangle inequality: $\left| \int f(x)dx \right| \leq \int |f(x)|dx$
-        \item inversion of integration direction: $\int_{a}^{b} f(x)dx = -\int_{b}^{a} f(x)dx$
-        \item partition of the integration interval: $\int_{a}^{c} f(x)dx = \int_{a}^{b} f(x)dx + \int_{b}^{c} f(x)dx$
+        \item Linearity: $\int_a^b (f(x) \pm g(x))dx = \int_a^b f(x)dx \pm \int_a^b g(x)dx$
+        \item Monotonicity: $f(x) \leq g(x) \implies \int_a^b f(x)dx \leq \int_a^b g(x)dx$
+        \item Triangle inequality: $\left| \int_a^b f(x)dx \right| \leq \int_a^b |f(x)|dx$
+        \item Inversion of bounds: $\int_{a}^{b} f(x)dx = -\int_{b}^{a} f(x)dx$
+        \item Partition of interval: $\int_{a}^{c} f(x)dx = \int_{a}^{b} f(x)dx + \int_{b}^{c} f(x)dx$
     \end{itemize}    
 \end{theorem}
 
@@ -94,34 +101,76 @@
 \begin{theorem}
     \textbf{Fundamental Theorem of Integral Calculus:}
     Let $f: [a,b] \to \mathbb{R}$ be continuous. 
-    Then for all $C \in \mathbb{R}, F(x)$ is an antiderivative of $f$
+    Then for all $C \in \mathbb{R}$, $F(x)$ is an antiderivative of $f$ where:
     $$F(x) = \int_{a}^{x} f(y)dy + C$$
 \end{theorem}
 
 \begin{proof}
-    As $f$ is continous it is integrable on $[a,x]$ for any $x \in [a,b]$.
+    As $f$ is continuous it is integrable on $[a,x]$ for any $x \in [a,b]$.
     Let $x_0 \in [a,b]$ and $\varepsilon > 0$ arbitrary. Then there exist a $\delta > 0$ such that for any $x \in [a,b]$ with $0 < |x-x_0| < \delta$ we have $|f(x) - f(x_0)| < \varepsilon$. 
-    Then for $x \in [a,b]$ with $0 < |x-x_0| < \delta$
+    Then for $x \in [a,b]$ with $0 < |x-x_0| < \delta$:
     $$\left| \frac{F(x)-F(x_0)}{x-x_0} - f(x_0) \right| = \left| \frac{1}{x-x_0} \left( \int_{a}^{x} f(y)dy -\int_{a}^{x_0} f(y)dy \right) - f(x_0) \right|$$
-    $$= \left| \frac{1}{x-x_0} \int_{x_0}^{x} f(y)dy - \frac{1}{x-x_0} \int_{x_0}^{x} f(x_0) \right| = \left| \frac{1}{x-x_0} \int_{x_0}^{x} (f(y)-f(x_0)) dy \right|$$
-    $$\leq \frac{1}{x-x_0} \int_{x_0}^{x} |f(y)-f(x_0)| dy$$
-    $$\leq \frac{1}{x-x_0} \int_{x_0}^{x} \varepsilon dy = \frac{1}{x-x_0} \varepsilon (x-x_0) = \varepsilon$$
-    Observe that $x$ can be larger or smaller than $x_0$, but $\varepsilon$ does not depend on $x$.
+    $$= \left| \frac{1}{x-x_0} \int_{x_0}^{x} f(y)dy - \frac{1}{x-x_0} \int_{x_0}^{x} f(x_0) dy \right| = \left| \frac{1}{x-x_0} \int_{x_0}^{x} (f(y)-f(x_0)) dy \right|$$
+    $$\leq \frac{1}{|x-x_0|} \left| \int_{x_0}^{x} |f(y)-f(x_0)| dy \right| \leq \frac{1}{|x-x_0|} \left| \int_{x_0}^{x} \varepsilon dy \right| = \varepsilon$$
 \end{proof}
 
 \begin{proof}
-    \textbf{Uniqueness of Antiderivatives} Let $G(x)$ be another antiderivative of $f: [a,b] \to \mathbb{R}$ with $F(X) = \int_{a}^{x} f(y)dy + C$. We define $H(x) = F(x) - G(x)$ and get
+    \textbf{Uniqueness of Antiderivatives:} Let $G(x)$ be another antiderivative of $f: [a,b] \to \mathbb{R}$ where $F(x) = \int_{a}^{x} f(y)dy + C$. We define $H(x) = F(x) - G(x)$ and get
     $$H'(x) = F'(x) - G'(x) = f(x) - f(x) = 0$$ 
-    Hence $H(x)$ must be a constant $C$ and $F(x) = G(x) + C$. Thus, the antiderivatives are only unique up to a constant.
+    Hence $H(x)$ must be a constant $C'$ and $F(x) = G(x) + C'$. Thus, antiderivatives are unique up to a constant.
 \end{proof}
 
+\subsection{Sequences of Functions and Integrals}
+
+\begin{definition}
+    Let $(f_n)_{n \in \mathbb{N}_0}$ be a sequence of functions. 
+    \begin{itemize}
+        \item \textbf{Pointwise Convergence}: It converges pointwise to $f$ if for every $x$, the sequence of real numbers $(f_n(x))$ converges to $f(x)$.
+        \item \textbf{Uniform Convergence}: It converges uniformly to $f$ if for every $\epsilon > 0$, there exists an $N$ such that for all $n \ge N$ and \textbf{for all} $x$ simultaneously, $|f_n(x) - f(x)| < \epsilon$.
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}
+    \textbf{Swapping Limit and Integral:} If a sequence of integrable functions $(f_n)$ converges \textbf{uniformly} to $f$ on $[a,b]$, then the limit function $f$ is also integrable, and we can swap the limit and the integral:
+    $$\int_a^b f(x)dx = \lim_{n \to \infty} \int_a^b f_n(x) dx$$
+\end{theorem}
+
+\subsection{Definite Integration Techniques}
+
 \begin{lemma}
-    \textbf{Substitution} for definite integrals: Let $f: I \to \mathbb{R}$ be integrable, $g: [a,b] \to I$ differentiable and $f'$ integrable. Then
-    $$\int_{a}^{b} f(g(x))g'(x)dx  = \int_{g(a)}^{g(b)} f(u) du$$
+    If $F: [a,b] \to \mathbb{R}$ is continuously differentiable, then:
+    $$F(x) = F(a) + \int_{a}^{x} F'(t)dt \quad \text{and} \quad \int_{a}^{b} f(t)dt = F(b) - F(a) = \Big[ F(x) \Big]_a^b$$
 \end{lemma}
 
 \begin{lemma}
-    \textbf{Integration by Parts} for definite integrals: Let $f: I \to \mathbb{R}$ be integrable, $g: [a,b] \to I$ differentiable and $f'$ integrable. Then
+    \textbf{Substitution for Definite Integrals:} Let $f$ be continuous and $g$ continuously differentiable.
     $$\int_{a}^{b} f(g(x))g'(x)dx  = \int_{g(a)}^{g(b)} f(u) du$$
+    
+    \textbf{Version 2:} If $f'(x) \neq 0$ and $f^{-1}$ is the inverse of $f$:
+    $$\int_a^b g(f(x)) dx = \int_{f(a)}^{f(b)} g(y) (f^{-1})'(y) dy$$
 \end{lemma}
 
+\begin{example}
+    Evaluate $\int_0^{\pi/2} \sin(x) \cos(x) dx$.
+    Let $u = \sin(x)$. Then $\frac{du}{dx} = \cos(x) \implies du = \cos(x) dx$.
+    For definite integrals, we must also substitute the bounds:
+    Lower bound: $x = 0 \implies u = \sin(0) = 0$.
+    Upper bound: $x = \pi/2 \implies u = \sin(\pi/2) = 1$.
+    Substituting gives:
+    $$\int_0^1 u \, du = \Big[ \frac{1}{2} u^2 \Big]_0^1 = \frac{1}{2} (1)^2 - \frac{1}{2} (0)^2 = \frac{1}{2}$$
+\end{example}
+
+\begin{lemma}
+    \textbf{Integration by Parts for Definite Integrals:} Let $f, g$ be continuously differentiable.
+    $$\int_{a}^{b} f'(x)g(x)dx  = \Big[ f(x)g(x) \Big]_{a}^{b} - \int_{a}^{b} f(x)g'(x)dx$$
+\end{lemma}
+
+\begin{example}
+    Evaluate $\int_1^e \ln(x) dx$.
+    We can write this as $\int_1^e 1 \cdot \ln(x) dx$.
+    Let $f'(x) = 1 \implies f(x) = x$.
+    Let $g(x) = \ln(x) \implies g'(x) = \frac{1}{x}$.
+    Using integration by parts for definite integrals:
+    $$\int_1^e 1 \cdot \ln(x) dx = \Big[ x \ln(x) \Big]_1^e - \int_1^e x \cdot \frac{1}{x} dx$$
+    $$= (e \ln(e) - 1 \ln(1)) - \int_1^e 1 dx = e - \Big[ x \Big]_1^e = e - (e - 1) = 1$$
+\end{example}

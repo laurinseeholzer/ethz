@@ -65,10 +65,11 @@
 \end{definition}
 
 \begin{theorem}
-    Compare and Swap has an infinite consensus number.
+    Atmoic Registers have a consensus number of 1 while Test and Set and Get and Set have consensus number of 2 and Compare and Swap has an infinite consensus number.
 \end{theorem}
 
 \begin{proof}
+    \textbf{CAS has infinite consensus number:}
     This can be proven by implementing a valid, sequentially consitent and wait-free consensus object using compare and swap.
 \end{proof}
 
@@ -95,7 +96,7 @@ class CASConsensus {
 \end{example}
 
 \begin{proof}
-    Assume there is a wait free implementation. Then i can use the FIFO Queue to solve $n=2$ consensus which is a contradiction as atomic have a consensus number of 1.
+    Assume there is a wait free implementation. Then i can use the FIFO Queue to solve $n=2$ consensus which is a contradiction as atomic registers have a consensus number of 1.
 \end{proof}
 
 \begin{remark}
@@ -120,9 +121,25 @@ class CASConsensus {
     Transactions run isolated and are consitent and atomic, thus other threads can only observe the start or the end state of the transaction. Where HTM offers fast execution at limited size while STM might offer larger transactions at higher time/enery consumption.
 \end{lemma}
 
+\begin{definition}
+    In TM we define for each transaction the \textbf{read set} of read variables during the transaction and the \textbf{write set} of written variables during the transaction.
+\end{definition}
+
 \begin{remark}
-    Transactional Memory can be implemented on a Hardware level (HTM) or on the Software level (STM).
+    Conflicts can occure when the write set of transation $A$ overlaps with the read or write set of transaction $B$.
 \end{remark}
+
+\begin{remark}
+    Transactional Memory can be implemented on a Hardware level (HTM) (often using the existing cache coherence infrastructure) or on the Software level (STM).
+\end{remark}
+
+\begin{definition}
+    In STM we have to distinguish between \textbf{Weak isolation} and \textbf{strong isolation}.
+    \begin{itemize}
+        \item \textbf{Weak isolation} only isolates Transactions from each other.
+        \item \textbf{Strong isolation} isolates Transactions from each other and from operations outside the transaction.
+    \end{itemize}
+\end{definition}
 
 \begin{remark}
     STMs are still actively being developed. There is a lot of reseach happening in the field of Hybrid (STM and HTM) implementations.
@@ -142,10 +159,6 @@ class CASConsensus {
 
 \begin{remark}
     We will use Scala's Software Transactional Memory (STM) to implement and demonstrate our ideas.
-\end{remark}
-
-\begin{remark}
-    \textbf{How it works:}
 \end{remark}
 
 
@@ -178,3 +191,24 @@ class CASConsensus {
         \item \textbf{Non-blocking}: The operation returns immediately, allowing for overlap between computation and communication.
     \end{itemize}
 \end{definition}
+
+\begin{definition}
+    Apart from send/receive operations MPI offers:
+    \begin{itemize}
+        \item \textbf{Barriers} to synchronize processes
+        \item \textbf{Broadcast} to send data from one process to all processes
+        \item \textbf{Reduce} to perform operations on the data from all processes and return the result to one process
+        \item \textbf{Scatter} to send data from one process distributed in chunks to all processes
+        \item \textbf{Gather} to receive data from all processes distributed in chunks and combine and send it to one process
+    \end{itemize}
+\end{definition}
+
+\subsubsection{Actor Model}
+
+\begin{definition}
+    \textbf{Actor Model} is a model of distributed computing where actors are the fundamental units of computation. Actors communicate with each other by sending messages.
+\end{definition}
+
+\begin{remark}
+    Actors are isolated from each other and can only communicate with each other by sending messages. This eliminates the need for locks or other synchronization primitives.
+\end{remark}

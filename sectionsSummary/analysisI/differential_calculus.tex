@@ -1,132 +1,213 @@
 \section{Differential calculus}
 
 \begin{definition}
-    The \textbf{average rate of change} of a function $f$ in the domain between $a$ and $a + h$ is defined as
-    $$ \frac{\Delta y}{\Delta x} = \frac{f(a+h)-f(a)}{h}$$
-    and also called the differential quotient.
+    The \textbf{average rate of change} of a function $f$ in the domain between $a$ and $a + h$ :=
+    $$\frac{\Delta y}{\Delta x} = \frac{f(a+h)-f(a)}{h}$$
+    and also called the \textbf{difference quotient}.
 \end{definition}
 
 \begin{definition}
-    The \textbf{derivative} $f'$ of a function $f$ at the coordinate $a$ is defined as
-    $$ \lim_{h \to 0}\frac{f(a+h)-f(a)}{h} = \lim_{b \to a}\frac{f(b)-f(a)}{b-a} $$
-    $$ = \frac{df}{dx}\vert_{x=a} = f'(a) $$
+    The \textbf{derivative} $f'$ of a function $f$ at the coordinate $a$ :=
+    $$\lim_{h \to 0}\frac{f(a+h)-f(a)}{h} = \lim_{b \to a}\frac{f(b)-f(a)}{b-a}$$
+    $$ = \frac{df}{dx}\vert_{x=a} = f'(a)$$
 \end{definition}
 
+\begin{remark}
+    The derivative $f'(a)$ can geometrically interpreted as the incline/decline of the graph of $f$ at the point $(a, f(a))$.
+\end{remark}
+
 \begin{definition}
-    If for a function $f$ at the cooridnate $a$ the derivative $\exists f'(a)$ then f is called \textbf{differentiable} at $a$. If $f$ is differentiable for every $a \in \mathbb{D}$ then $f$ is called differentiable.
+    If for a function $f$ at the coordinate $a$ the derivative $f'(a)$ exists then $f$ is called \textbf{differentiable} at $a$. If $f$ is differentiable for every $a \in \mathbb{D}$ then $f$ is called differentiable.
 \end{definition}
 
 \begin{lemma}
-    If $f$ is differentiable at $x_0$ then $f$ is continous at $x_0$.
+    If $f$ is differentiable at $x_0$ then $f$ is continuous at $x_0$.
 \end{lemma}
 
 \begin{definition}
     If the limit 
     $$\lim_{h>0 \to 0}\frac{f(a+h)-f(a)}{h}$$
-    existst then we call it the \textbf{right-sided derivative} (or the left-sided derivative analogue)
+    exists then we call it the \textbf{right-sided derivative} (or the left-sided derivative analogue)
 \end{definition}
 
 \begin{definition}
     For a function $f$ we can iteratively define higher derivatives for $n \in \mathbb{N}_0$
-    $$ f^{(0)} = f, f^{(1)} = f', f^{(2)} = f'', \dots $$
-    $$ f^{(n+1)} = (f^{(n)})' $$
-    if $f^{(n)}$ exists we call it $n$-times differentiable.
+    $$f^{(1)} = f', f^{(2)} = f'', \dots f^{(n+1)} = (f^{(n)})'$$
+    if $f^{(n)}$ exists we call it $n$\textbf{-times differentiable}.
 \end{definition}
 
 \begin{definition}
-    if $f^{(n)}$ is continous we call $f$ $n$-times continous differentiable. The set of all $n$-times continous differentiable functions on $D$ is denoted as $C^n(D)$
+    if $f^{(n)}$ is continuous we call $f$ $n$\textbf{-times continuous differentiable}. The set of all $n$-times continuous differentiable functions on $D$ is denoted as $C^n(D)$
 \end{definition}
 
 \begin{definition}
-    We call $C^{\infty}(D) \coloneqq \cap_{n=0}^{\infty} C^n(D)$ the set of smooth functions.
+    If for a function $f$ and some $x_0 \in \mathbb{D}$ and $\delta \gt 0$ we have
+    $$f(x_0) \geq (\leq) f(x) \quad \forall x \in \mathbb{D} \cap (x_0 - \delta, x_0 + \delta)$$
+    then $x_0$ is called a \textbf{local maximum (minimum)}.
 \end{definition}
 
 \subsection{Derivation rules}
 
 \begin{theorem}
     For functions $f(x)$ we have
-    \begin{itemize}
-        \item $f(x) = a x^p \quad \implies \quad f'(x) = a p x^{p-1}$
-        \item $f(x) = a^x \quad \implies \quad f'(x) = ln(a) \cdot a^x$
-        \item $f(x) = sin(x) \quad \implies \quad f'(x) = cos(x)$
-        \item $f(x) = cos(x) \quad \implies \quad f'(x) = -sin(x)$
-        \item $f(x) = tan(x) \quad \implies \quad f'(x) = \frac{1}{cos^2(x)} = 1 + tan^2(x)$
-        \item $f(x) = sinh(x) \quad \implies \quad f'(x) = cosh(x)$
-        \item $f(x) = cosh(x) \quad \implies \quad f'(x) = sinh(x)$
-        \item $f(x) = ln(x) \quad \implies \quad f'(x) = \frac{1}{x}$
-        \item $f(x) = arcsin(x) \quad \implies \quad f'(x) = \frac{1}{\sqrt{1-x^2}}$
-        \item $f(x) = arccos(x) \quad \implies \quad f'(x) = \frac{-1}{\sqrt{1-x^2}}$
-        \item $f(x) = arctan(x) \quad \implies \quad f'(x) = \frac{1}{1+x^2}$
-    \end{itemize}
+    $$f(x) = a x^p \quad \implies \quad f'(x) = a p x^{p-1}$$
+    $$f(x) = a^x \quad \implies \quad f'(x) = \ln(a) \cdot a^x$$
+    $$f(x) = \sin(x) \quad \implies \quad f'(x) = \cos(x)$$
+    $$f(x) = \cos(x) \quad \implies \quad f'(x) = -\sin(x)$$
+    $$f(x) = \tan(x) \quad \implies \quad f'(x) = \frac{1}{\cos^2(x)}$$
+    $$f(x) = \sinh(x) \quad \implies \quad f'(x) = \cosh(x)$$
+    $$f(x) = \cosh(x) \quad \implies \quad f'(x) = \sinh(x)$$
+    $$f(x) = \ln(x) \quad \implies \quad f'(x) = \frac{1}{x}$$
+    $$f(x) = \arcsin(x) \quad \implies \quad f'(x) = \frac{1}{\sqrt{1-x^2}}$$
+    $$f(x) = \arccos(x) \quad \implies \quad f'(x) = -\frac{1}{\sqrt{1-x^2}}$$
+    $$f(x) = \arctan(x) \quad \implies \quad f'(x) = \frac{1}{1+x^2}$$
 \end{theorem}
 
 \begin{theorem}
     \textbf{Sum Rule:} For the $n$-th derivative of a sum:
-    $$(f + g)^{(n)} = f^{(n)} + g^{(n)} $$
+    $$(f + g)^{(n)} = f^{(n)} + g^{(n)}$$
 \end{theorem}
 
 \begin{theorem}
     \textbf{General Leibniz Rule (Product):} The $n$-th derivative of a product is given by:
-    $$(f \cdot g)^{(n)} = \sum_{k=0}^{n} \binom{n}{k} f^{(n-k)} g^{(k)} $$
+    $$(f \cdot g)^{(n)} = \sum_{k=0}^{n} \binom{n}{k} f^{(n-k)} g^{(k)}$$
 \end{theorem}
 
 \begin{theorem}
     \textbf{Chain Rule:} For the composition of functions:
-    $$(f \circ g)'(x) = f'(g(x)) \cdot g'(x) $$
+    $$(f \circ g)'(x)$$
+    $$= f'(g(x)) \cdot g'(x)$$
 \end{theorem}
 
 \begin{theorem}
     \textbf{Quotient Rule:} For $g(x) \neq 0$:
-    $$\left(\frac{f}{g}\right)' = \frac{f'g - fg'}{g^2} $$
+    $$\left(\frac{f}{g}\right)'$$
+    $$= \frac{f'g - fg'}{g^2}$$
 \end{theorem}
 
 \begin{theorem}
     \textbf{Inverse Functions:} If $f$ is differentiable and injective:
-    $$(f^{-1})'(x) = \frac{1}{f'(f^{-1}(x))} $$
+    $$(f^{-1})'(x)$$
+    $$= \frac{1}{f'(f^{-1}(x))}$$
 \end{theorem}
 
 \subsection{Bernoulli-L'Hopital}
 
 \begin{theorem}
-    Let $I \subset \mathbb{R}$ be a an intervall, $f: I \to \mathbb{R}$, and let $x_0$ be a local Extrema of $f$. Then one of the following holds:
-    \begin{itemize}
+    Let $I \subset \mathbb{R}$ be an interval, $f: I \to \mathbb{R}$, and let $x_0$ be a local extremum of $f$. Then one of the following holds:
+    \begin{enumerate}
         \item $x_0$ is an endpoint of $I$
         \item $f$ is not differentiable at $x_0$
         \item $f$ is differentiable at $x_0$ and $f'(x_0) = 0$
-    \end{itemize}
+    \end{enumerate}
 \end{theorem}
 
 \begin{theorem}
-    \textbf{Rolle's Theorem:} Let $f:[a,b] \to \mathbb{R}$ be differentiable on $(a,b)$ and continous on $[a,b]$, and assume that $f(a) = f(b)$, then there exists a $\xi \in (a,b)$ such that $f'(\xi) = 0$
+    \textbf{Rolle's Theorem}: Let $a \lt b$ with $f(a) = f(b)$, and let $f:[a, b] \to \mathbb{R}$ be continuous on $[a, b]$ and differentiable on $(a, b)$. Then $\exists \xi \in (a, b)$ with
+    $$f'(\xi) = 0$$
 \end{theorem}
 
 \begin{theorem}
-    \textbf{Mean Value Theorem:} Let $f:[a,b] \to \mathbb{R}$ be differentiable on $(a,b)$ and continous on $[a,b]$, then there exists a $\xi \in (a,b)$ such that $f'(\xi) = \frac{f(b)-f(a)}{b-a}$
+    \textbf{Mean-Value-Theorem}: Let $a \lt b$, and let $f:[a, b] \to \mathbb{R}$ be continuous on $[a, b]$ and differentiable on $(a, b)$. Then $\exists \xi \in (a, b)$ with
+    $$f'(\xi) = \frac{f(b)-f(a)}{b-a}$$
 \end{theorem}
 
 \begin{theorem}
-    \textbf{L'Hopital's Rule:} Let $f,g: I \to \mathbb{R}$ differentiable functions on $I \subset \mathbb{R}$ and $a \in \bar{I}$. If $\lim_{x \to a} \frac{f(x)}{g(x)} \in \{0, \infty\}$ (\textbf{0/0 or inf/inf}) and $\lim_{x \to a} \frac{f'(x)}{g'(x)} = L$ exists then $\lim_{x \to a} \frac{f(x)}{g(x)} = L$
+    \textbf{Cauchy's Mean-Value-Theorem}: Let $a \lt b$, and let $f, g:[a, b] \to \mathbb{R}$ be continuous on $[a, b]$ and differentiable on $(a, b)$. Then $\exists \xi \in (a, b)$ with
+    $$\frac{f(b)-f(a)}{g(b)-g(a)}$$
+    $$= \frac{f'(\xi)}{g'(\xi)}$$
 \end{theorem}
 
-\subsection{Taylor Approximation}
+\begin{theorem}
+    \textbf{Bernoulli-L'Hopital's Rule:} Let $f, g: I \to \mathbb{R}$ be differentiable functions on $(a, b)$ and let $x_0 \in (a, b)$. If $g(x) \neq 0$ and $g'(x) \neq 0$ for all $x \in (a, b)$. If
+    $$\lim_{x \to x_0} |f(x)| = \lim_{x \to x_0} |g(x)| \in \{ 0, \infty \}$$
+    $$\text{and} \quad \exists L = \lim_{x \to x_0} \frac{f'(x)}{g'(x)}$$
+    then
+    $$\lim_{x \to x_0} \frac{f(x)}{g(x)} = \lim_{x \to x_0} \frac{f'(x)}{g'(x)} = L$$
+\end{theorem}
+
+\subsection{Convex and Concave graphs}
 
 \begin{definition}
-    A function $f$ is called \textbf{concave / convex} on $I$ if for all $a,b \in I$ and $t \in (0,1)$
-    $$f((1-t)a + tb) \geq (\leq) (1-t)f(a) + tf(b) $$
+    A function $f: I \to \mathbb{R}$ is called \textbf{convex} iff $\forall a, b \in I \forall t \in (0, 1)$
+    $$f((1-t)a + bt) \leq (1-t) f(a) + t f(b)$$
+\end{definition}
+
+\begin{definition}
+    A function $f: I \to \mathbb{R}$ is called \textbf{concave} iff $\forall a, b \in I \forall t \in (0, 1)$
+    $$f((1-t)a + bt) \geq (1-t) f(a) + t f(b)$$
 \end{definition}
 
 \begin{theorem}
-    $f$ is convex/concave iff $f'$ is monotonically increasing/decreasing on $I$ i.e. if $f'' \geq (\leq) 0$
+    Let $(a, b) \subset \mathbb{R}$ and $f: (a, b) \to \mathbb{R}$ be differentiable. Then $\forall x$
+    $$f'(x) \geq 0 \quad \iff \quad f \text{ is increasing}$$
 \end{theorem}
 
 \begin{theorem}
-    \textbf{Taylor's Theorem:} Let $f: (a,b) \to \mathbb{R}$ be $n+1$-times differentiable, then for all $x \in (a,b)$ then
-    $f(x) = P_n(x) + R_n(x)$
-    where $P_n(x)$ is the Taylor polynomial of degree $n$ at $a$
-    
-    $$ P_n(x) = \sum_{k=0}^{n} \frac{f^{(k)}(a)}{k!} (x-a)^k $$
+    Let $(a, b) \subset \mathbb{R}$ and $f: (a, b) \to \mathbb{R}$ be differentiable. Then
+    $$f \text{ is convex} \quad \iff \quad f' \text{ is increasing}$$
+\end{theorem}
 
-    and $R_n(x)$ is the remainder term
-    $$ R_n(x) = \frac{f^{(n+1)}(\xi)}{n+1!} (x-a)^{n+1} $$
-    for some $\xi \in (a,b)$
+\begin{theorem}
+    Let $(a, b) \subset \mathbb{R}$ and $f: (a, b) \to \mathbb{R}$ be twice differentiable. Then
+    $$f \text{ is convex} \quad \iff \quad f'' \geq 0$$
+\end{theorem}
+
+\subsection{Taylor Series}
+
+\begin{lemma}
+    We can locally approximate the graph of $f$ at $x_0$ with the tangent line $t(x)$:
+    $$f(x) \approx t(x)$$
+    $$= f(x_0) + f'(x_0)(x-x_0)$$
+\end{lemma}
+
+\begin{lemma}
+    To even more accurately approximate the function $f$ we can add further terms to the tangent line expansion:
+    $$f(x) \approx t(x)$$
+    $$= f(x_0) + f'(x_0)(x-x_0) + \frac{f''(x_0)}{2}(x-x_0)^2$$
+\end{lemma}
+
+\begin{theorem}
+    \textbf{Taylor's Theorem}: Let $f: (a, b) \to \mathbb{R}$ be $n+1$ times differentiable. Then 
+    $$f(x) = P_n(x) + R(x)$$
+    with $P_n(x)$ the Taylor polynomial of degree $n$ and $R(x)$ the remainder term:
+    $$P_n(x)$$
+    $$= \sum_{k=0}^n \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k$$
+    $$R(x)$$
+    $$= \frac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1} \quad \text{for some } \xi \in (x_0, x) \text{ or } (x, x_0)$$
+\end{theorem}
+
+\begin{definition}
+    The \textbf{Taylor series expansion} of an infinitely differentiable function $f: (a, b) \to \mathbb{R}$ at $x_0$ is given by:
+    $$f(x)$$
+    $$= \sum_{k=0}^\infty \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k$$
+\end{definition}
+
+\begin{theorem}
+    \textbf{Standard Taylor Series}: The following converge for all $x \in \mathbb{R}$:
+    $$e^x = \sum_{k=0}^\infty \frac{x^k}{k!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \dots$$
+    $$\sin{x} = \sum_{k=0}^\infty (-1)^k \frac{x^{2k+1}}{(2k+1)!} = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \dots$$
+    $$\cos{x} = \sum_{k=0}^\infty (-1)^k \frac{x^{2k}}{(2k)!} = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \dots$$
+\end{theorem}
+
+\begin{important}
+    Not all infinitely differentiable functions have a Taylor series expansion that converges to the function itself. For example, $\ln(1+x)$, $\frac{1}{1-x}$, and $(1+x)^p$ only converge for $-1 \lt x \lt 1$.
+\end{important}
+
+\begin{theorem}
+    Let $f(x) = \sum_{n=0}^\infty a_n x^n$ and $g(x) = \sum_{n=0}^\infty b_n x^n$ be two power series with radius of convergence $R$. Then:
+    $$f(x)g(x)$$
+    $$= \sum_{n=0}^\infty \left(\sum_{k=0}^n a_k b_{n-k}\right) x^n$$
+\end{theorem}
+
+\begin{theorem}
+    Let $f(x) = \sum_{n=0}^\infty a_n x^n$ be a power series with radius of convergence $R$. Then:
+    $$f'(x)$$
+    $$= \sum_{n=1}^\infty n a_n x^{n-1}$$
+\end{theorem}
+
+\begin{theorem}
+    Let $f(x) = \sum_{n=0}^\infty a_n x^n$ be a power series with radius of convergence $R$. Then:
+    $$\int f(x) \, dx$$
+    $$= \sum_{n=0}^\infty \int a_n x^n \, dx$$
 \end{theorem}

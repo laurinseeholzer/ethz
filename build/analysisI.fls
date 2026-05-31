@@ -711,13 +711,6 @@ INPUT sectionsNotes/analysisI/differential_calculus.tex
 INPUT ./sectionsNotes/analysisI/differential_calculus.tex
 INPUT ./sectionsNotes/analysisI/differential_calculus.tex
 INPUT sectionsNotes/analysisI/differential_calculus.tex
-INPUT ./sectionsNotes/analysisI/differential_equations.tex
-INPUT ./sectionsNotes/analysisI/differential_equations.tex
-INPUT ./sectionsNotes/analysisI/differential_equations.tex
-INPUT sectionsNotes/analysisI/differential_equations.tex
-INPUT ./sectionsNotes/analysisI/differential_equations.tex
-INPUT ./sectionsNotes/analysisI/differential_equations.tex
-INPUT sectionsNotes/analysisI/differential_equations.tex
 INPUT ./sectionsNotes/analysisI/integration.tex
 INPUT ./sectionsNotes/analysisI/integration.tex
 INPUT ./sectionsNotes/analysisI/integration.tex
@@ -725,6 +718,13 @@ INPUT sectionsNotes/analysisI/integration.tex
 INPUT ./sectionsNotes/analysisI/integration.tex
 INPUT ./sectionsNotes/analysisI/integration.tex
 INPUT sectionsNotes/analysisI/integration.tex
+INPUT ./sectionsNotes/analysisI/differential_equations.tex
+INPUT ./sectionsNotes/analysisI/differential_equations.tex
+INPUT ./sectionsNotes/analysisI/differential_equations.tex
+INPUT sectionsNotes/analysisI/differential_equations.tex
+INPUT ./sectionsNotes/analysisI/differential_equations.tex
+INPUT ./sectionsNotes/analysisI/differential_equations.tex
+INPUT sectionsNotes/analysisI/differential_equations.tex
 INPUT build/analysisI.aux
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
