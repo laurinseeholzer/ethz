@@ -174,21 +174,100 @@
     \end{itemize}
 \end{definition}
 
+\begin{definition}
+    \textbf{Software Prefetching:} Programmer or compiler inserts ISA-specific instructions (e.g., x86 $PREFETCH$).
+\end{definition}
+
 \begin{remark}
-    \textbf{Software Prefetching:} Programmer or compiler inserts ISA-specific instructions (e.g., x86 \texttt{PREFETCH}).
+    Software prefetching consumes execution bandwidth and offers limited portability as the prefetch distance depends on hardware latency.
 \end{remark}
 
 \begin{definition}
-    \textbf{Execution-Based Prefetching} pre-executes program pieces to find misses.
-    \begin{itemize}
-        \item \textbf{Runahead Execution:} When the oldest instruction is a long-latency miss, the processor checkpoints architectural state and speculatively executes ahead to generate prefetches.
-    \end{itemize}
+    \textbf{Execution-Based Prefetching} pre-executes program pieces to find misses using Runahead Execution.
+    When the oldest instruction in the pipeline is a long-latency miss, the processor checkpoints architectural state and speculatively executes ahead to generate prefetches.
 \end{definition}
+
+\begin{remark}
+    Runahead execution allows to detect future cache misses while waiting for the fetch of the current cache miss. This allows for memory level parallelism without the imense hardware of a Reorder Buffer (ROB).
+\end{remark}
+
+\begin{remark}
+    Runahead exectuion can not parallelize dependent misses (Pointer-Chasing). We can use \textbf{Adress-Value Delta (AVD) Prediction} to predict the value of a memory access and prefetch the data.
+\end{remark}
 
 \begin{remark}
     \textbf{Modern Techniques:}
     \begin{itemize}
-        \item \textbf{Pythia:} Uses Reinforcement Learning to select prefetch offsets based on rewards for accuracy and bandwidth efficiency.
-        \item \textbf{Hermes:} Uses a Perceptron to predict if a load will go off-chip, allowing it to bypass the slow on-chip cache hierarchy.
+        \item \textbf{Pythia:} Uses Reinforcement Learning to select prefetch offsets based on rewards and current system state to increase accuracy and bandwidth efficiency.
+        \item \textbf{Hermes:} Uses a Perceptron to predict if a load will go off-chip, allowing it to bypass the slow on-chip cache hierarchy to find data faster.
     \end{itemize}
 \end{remark}
+
+\begin{remark}
+    \textbf{Challenges in Multi-Core Prefetching:} Prefetching of core $A$ can interfere with Cache and Bus bandwidth or the access to the DRAM (banks, ranks, channels...) of core $B$. To avoid contention/pollution of cache/bus capacity and DRAM accesses, prefetching has to be throttled and coordinated across cores.
+\end{remark}
+
+\subsection{Virtual Memory}
+
+\begin{definition}
+    \textbf{Virtual Memory} is an automatic memory management technique that provides each process with the illusion of a private, very large address space.
+    \begin{itemize}
+        \item \textbf{Programmer Abstraction}: The programmer works with virtual addresses (VA) and does not deal with physical memory addresses.
+        \item \textbf{Indirection}: Requires a mapping mechanism to translate virtual addresses to physical addresses (PA).
+        \item \textbf{Isolation}: Each process has its own address space, ensuring one process cannot overwrite or access the memory of another.
+    \end{itemize}
+\end{definition}
+
+\begin{lemma}
+    \textbf{Address Translation} occurs at a page granularity. A virtual address is split into a Virtual Page Number (VPN) and a Page Offset. Only the VPN is translated into a Physical Page Number (PPN), while the offset remains identical in the physical address.
+\end{lemma}
+
+\begin{definition}
+    A \textbf{Page Table} is a per-process data structure stored in physical memory that maintains the virtual-to-physical mappings.
+    \begin{itemize}
+        \item \textbf{PTE (Page Table Entry)}: Contains the mapping (PPN) and status bits such as Present, Read/Write, and User/Supervisor.
+        \item \textbf{PDE (Page Directory Entry)}: Used in multi-level structures to point to the next level of the page table.
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    \textbf{Multi-Level Page Tables} address the size issue of single-level tables by only requiring the first-level table to be permanently in physical memory. Modern x86-64 systems use a 4-level page table structure.
+\end{remark}
+
+\begin{definition}
+    The \textbf{Translation Lookaside Buffer (TLB)} is a small hardware cache within the processor that stores recently used PTEs to speed up translation and avoid frequent memory accesses to the page table.
+\end{definition}
+
+\begin{example}
+    \textbf{Handling TLB Misses}:
+    \begin{itemize}
+        \item \textbf{Hardware-Managed (e.g., x86)}: A hardware Page Table Walker automatically traverses the table levels.
+        \item \textbf{Software-Managed (e.g., MIPS)}: The hardware raises an exception, and the OS performs the walk.
+    \end{itemize}
+\end{example}
+
+\begin{definition}
+    The \textbf{CLOCK Page Replacement Algorithm} is an approximation of LRU used when physical memory is full. It uses a circular list and a "reference (R) bit" in the PTE. The algorithm clears R-bits during traversal and replaces the first page found with an R-bit of 0.
+\end{definition}
+
+\subsubsection{Memory Protection}
+
+\begin{remark}
+    \textbf{Access Control} is enforced during translation by storing permission bits in the PTE.
+    \begin{itemize}
+        \item \textbf{Privilege Levels}: x86 uses four protection rings (Ring 0 for Kernel/Supervisor, Ring 3 for Applications/User).
+        \item \textbf{Enforcement}: If an access type (Read/Write) or privilege level violates the bits in the PDE/PTE, the hardware generates an exception.
+    \end{itemize}
+\end{remark}
+
+\begin{remark}
+    \textbf{RowHammer Security Issue}: This hardware failure allows an attacker to induce bit flips in adjacent memory rows. An attacker can use this to flip bits in a PTE, potentially gaining write access to their own page table and subsequently the entire physical memory.
+\end{remark}
+
+\begin{lemma}
+    \textbf{Cache-VM Interaction}: Systems must decide if caches are virtual or physical.
+    \begin{itemize}
+        \item \textbf{Virtually Addressed}: Faster access but suffers from \textbf{Homonyms} (same VA, different PA across processes) and \textbf{Synonyms} (different VAs, same PA).
+        \item \textbf{Physically Addressed}: Avoids aliasing but requires translation (TLB) before the cache can be fully accessed.
+    \end{itemize}
+\end{lemma}
