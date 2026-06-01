@@ -1,0 +1,88 @@
+\section{Hamiltonian Cycles and Eulertours}
+
+\subsection{Eulertours}
+
+\begin{definition}
+An \textbf{Eulertour} is a closed walk in a graph $G$ that contains every edge exactly once.
+\end{definition}
+
+\begin{theorem}
+A connected graph $G = (V, E)$ contains an Eulertour iff the degree of every vertex is even.
+\end{theorem}
+
+\begin{algorithm}
+#Find Eulertour in O(|E|) (Runner and Turtle)
+Runner traverses until hitting a visited vertex (cycle found).
+Turtle follows path until an unvisited neighbor is found.
+Runner is set loose again from there, expanding the tour by cycles.
+\end{algorithm}
+
+\subsection{Hamiltonian Cycles}
+
+\begin{definition}
+A \textbf{Hamiltonian Cycle} is a cycle containing every vertex exactly once.
+\end{definition}
+
+\begin{theorem}
+For $m, n \ge 2$, an $n \times m$ grid has a Hamiltonian cycle iff $n \cdot m$ is even.
+\end{theorem}
+
+\begin{theorem}
+A bipartite graph $G = (A \cup B, E)$ with $|A| \neq |B|$ cannot contain a Hamiltonian cycle.
+\end{theorem}
+
+\begin{theorem}
+\textbf{Dirac's Theorem}: Every graph $G$ with $|V| \ge 3$ and minimum degree $\delta(G) \ge |V|/2$ contains a Hamiltonian cycle.
+\end{theorem}
+
+\begin{algorithm}
+#DP for Hamiltonian Cycle O(n^2 * 2^n)
+#P[S, x] = 1 if exists 1-x path containing exactly vertices in S.
+P[S, x] = max { P[S \setminus {x}, y] | y in N(x) cap S, y != 1 }
+\end{algorithm}
+
+\subsubsection{Counting Hamiltonian Cycles}
+
+\begin{definition}
+For $S \subseteq V \setminus \{s\}$, define:
+$$W_S \coloneqq \{ \text{Walks of length } n \text{ from } s \text{ to } s \text{ avoiding } S \}$$
+$|W_S|$ is the $(s,s)$-entry of $(A_S)^n$, where $A_S$ is the adjacency matrix of $G[V \setminus S]$.
+\end{definition}
+
+\begin{theorem}
+The number of Hamiltonian cycles in $G$ is:
+$$\frac{1}{2} \sum_{S \subseteq V \setminus \{s\}} (-1)^{|S|} |W_S|$$
+This can be computed in $O(n^{2.81} \log n \cdot 2^n)$ time and $O(n^2)$ space (vs. $O(n \cdot 2^n)$ space for DP).
+\end{theorem}
+
+\begin{theorem}
+Hamiltonian decision is NP-Complete (Karp 1972).
+\end{theorem}
+
+\subsection{Travelling Salesman Problem (TSP)}
+
+The TSP finds a Hamiltonian cycle in $K_n$ with minimal weight (shortest roundtrip).
+
+\begin{theorem}
+The TSP is NP-Complete (reducible from Hamiltonian Cycle).
+\end{theorem}
+
+\subsubsection{Metric TSP}
+For graphs where triangle inequality holds:
+$$w(u,v) \le w(u,w) + w(w,v)$$
+
+\begin{algorithm}
+#2-Approximation for Metric TSP
+1. Determine MST T (|E(T)| <= |E(H)| for any Hamiltonian cycle H)
+2. Double edges of T to get Eulerian multigraph T'
+3. Traverse Eulertour, skip already visited vertices
+#Result: length <= 2 * |E(T)|
+\end{algorithm}
+
+\begin{algorithm}
+#Christofides 1.5-Approximation for Metric TSP
+1. Determine MST T (|E(T)| <= |E(H)|)
+2. Find minimal matching M for odd-degree vertices of T (|M| <= |E(H)|/2)
+3. Determine Eulertour in T + M 
+#Result: |W| <= |E(T)| + |M| <= 1.5 * |E(H)|
+\end{algorithm}

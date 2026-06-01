@@ -1,0 +1,212 @@
+\section{Randomized Algorithms}
+
+\begin{definition}
+A \textbf{Randomized Algorithm} is a function $A(I, R)$ with input $I$ and a source of randomness $R$.
+\begin{itemize}
+\item \textbf{Monte Carlo}: Always fast, but result not always correct.
+\item \textbf{Las Vegas}: Always correct, but runtime may vary.
+\end{itemize}
+\end{definition}
+
+\subsection{Error Reduction}
+
+\begin{theorem}
+If $A$ never returns a false result but may return $???$ with $P[\text{correct}] \geq \epsilon$, then calling $A$ up to $N = \epsilon^{-1} \ln(\delta^{-1})$ times gives $P[\text{correct}] \geq 1 - \delta$.
+\end{theorem}
+
+\begin{important}
+Generally \textbf{not possible to reduce error for Monte-Carlo}, except for algorithms with \textbf{one-sided error} or \textbf{error probability $\lt \frac{1}{2}$}.
+\end{important}
+
+\begin{theorem}
+\textbf{One-sided error}: If $P[A(I) = \text{true}] = 1$ for true-instances and $P[A(I) = \text{false}] \geq \epsilon$ for false-instances, then $N = \epsilon^{-1} \ln(\delta^{-1})$ calls yield $P[\text{correct}] \geq 1 - \delta$.
+\end{theorem}
+
+\begin{theorem}
+\textbf{Majority vote}: If $P[\text{correct}] \geq \frac{1}{2} + \epsilon$, then $N = 4\epsilon^{-2} \ln(\delta^{-1})$ calls with majority answer give $P[\text{correct}] \geq 1 - \delta$.
+\end{theorem}
+
+\begin{theorem}
+\textbf{Optimization}: If $P[A(I) \geq f(I)] \geq \epsilon$, then $N = \epsilon^{-2} \ln(\delta^{-1})$ calls returning the best solution gives $P[A_\delta(I) \geq f(I)] \geq 1 - \delta$.
+\end{theorem}
+
+\subsection{Primality Testing}
+
+\begin{definition}
+\textbf{Euler's Totient} $\varphi(n) = |Z_n^*|$: number of integers in $\{1,\dots,n-1\}$ coprime to $n$. If $n$ is prime, $\varphi(n)=n-1$.
+\end{definition}
+
+\begin{theorem}
+\textbf{Lagrange}: If $H$ is a subgroup of $G$, then $|H|$ divides $|G|$.
+\textbf{Fermat's Little Thm}: If $n$ is prime, then $a^{n-1} \equiv 1 \pmod n$ for all $a \in \{1,\dots,n-1\}$.
+\end{theorem}
+
+\begin{algorithm}
+#Fermat Test
+Choose a in {1...n-1} uniformly at random.
+If a^{n-1} mod n = 1: return "Prime"
+else: return "Not Prime"
+#If n is prime: always correct.
+#If n composite (not Carmichael): error <= 1/2.
+\end{algorithm}
+
+\begin{definition}
+A \textbf{Carmichael Number} is a composite $n$ where $a^{n-1} \equiv 1 \pmod n$ holds for all $a$ coprime to $n$ (e.g. $561 = 3 \times 11 \times 17$), causing Fermat test to almost always fail.
+\end{definition}
+
+\begin{definition}
+\textbf{Miller-Rabin Certificate}: Let $n > 2$ be odd. Write $n-1 = 2^k d$ with $d$ odd. If $n$ is prime and $a \in \{1,\dots,n-1\}$, then either:
+$$a^d \equiv 1 \pmod n$$
+$$\text{or } \exists i \in \{0,\dots,k\!-\!1\}: a^{2^i d} \equiv n\!-\!1 \pmod n$$
+If this fails, $a$ is a certificate proving $n$ is composite.
+\end{definition}
+
+\begin{theorem}
+\textbf{Miller-Rabin}: If $n$ is prime, output is always correct. If $n$ is composite, error $\leq \frac{1}{4}$ (even for Carmichael numbers). Repeating $k$ times gives error $\leq 4^{-k}$.
+\end{theorem}
+
+\subsection{Sorting and Selecting}
+
+\begin{theorem}
+The expected runtime of randomized quicksort is:
+$$\mathbb{E}[T_{1,n}] \leq 2(n+1)\ln(n) + O(n)$$
+\end{theorem}
+
+\begin{theorem}
+The expected runtime of randomized quickselect is $O(n)$, specifically $\leq 8n$ comparisons. Key insight: with prob $\geq 1/2$ the pivot reduces the problem size by factor $3/4$.
+\end{theorem}
+
+\subsection{Duplicate Detection}
+
+\begin{algorithm}
+#Duplicate Detection via Hashing
+1. Hash all elements: X = [(hash(Ai), i)]
+2. Sort by hash value
+3. For each block of equal hash values:
+   Compare actual data for all pairs in block
+#Expected data comparisons: O(#duplicates) + O(1).
+\end{algorithm}
+
+\subsection{Floyd-Cycle Detection}
+
+\begin{definition}
+Given $A[1,\dots,n]$ with $A[i] \in \{1,\dots,n\}$, find $i \neq j$ with $A[i] = A[j]$. Model as directed graph $i \to A[i]$.
+\end{definition}
+
+\begin{lemma}
+If there are duplicates, $\exists t \leq n$ such that $X_t = X_{2t}$ (tortoise-hare). If $X_t = X_{2t}$ then $X_{t+k} = X_k$ for all $k \geq 0$.
+\end{lemma}
+
+\begin{algorithm}
+#Floyd-Cycle Detection O(n) time, O(1) space
+tortoise = A[n]; hare = A[A[n]]
+1. Advance tortoise by 1, hare by 2 until they meet
+2. Reset hare to n, advance both by 1 until they meet
+   Return the two indices from the last step
+\end{algorithm}
+
+\subsection{Long-Path Problem}
+
+\begin{definition}
+Given $G = (V,E)$ and $B \in \mathbb{N}$, decide if $\exists$ a path of length $B$ in $G$.
+\end{definition}
+
+\begin{theorem}
+If long-path is solvable in $t(n)$, then Hamiltonian decision is solvable in $t(2n-2) + O(n^2)$.
+\end{theorem}
+
+\begin{definition}
+A \textbf{colorful path} in a $k$-edge-colored graph is a path where every edge has a different color. Define $P_i(v) \coloneqq \{S \subset [k] \mid |S|=i+1, \exists \text{ colorful path from } v \text{ using colors } S\}$.
+\end{definition}
+
+\begin{lemma}
+DP: $P_0(v) = \{\{c(v)\}\}$ and
+$$P_i(v) = \bigcup_{u \in N(v)} \{S \cup \{c(v)\} \mid$$
+$$S \in P_{i-1}(u) \land c(v) \notin S\}$$
+\end{lemma}
+
+\begin{theorem}
+Runtime of colorful path DP: $O(2^k \cdot k \cdot m)$. For a path of length $k-1$:
+$$P[\exists \text{ colorful path}] \geq \frac{k!}{k^k} \geq e^{-k}$$
+Repeated $\lambda e^k$ times: runtime $O(\lambda \cdot (2e)^k \cdot k \cdot m)$, error $e^{-\lambda}$.
+\end{theorem}
+
+\subsection{Minimum Cut in Multigraphs}
+
+\begin{definition}
+A \textbf{multigraph} allows multiple edges between two vertices. An \textbf{Edge Cut} $C \subseteq E$ makes $G \setminus C$ disconnected. The minimum edge cut has cardinality $\mu(G)$.
+\end{definition}
+
+\begin{lemma}
+$2|E| = \sum_{v} \deg(v)$ and $\mu(G) \leq \min_v \deg(v)$.
+\end{lemma}
+
+\begin{definition}
+\textbf{Edge Contraction} on $(u,v)$: merge $u,v$ into $w$, redirect all incident edges to $w$.
+\end{definition}
+
+\begin{theorem}
+Contract $n-2$ random edges to get 2 vertices. The min cut is preserved with probability $\geq \binom{n}{2}^{-1}$. Repeating $\lambda \binom{n}{2}$ times gives success probability $1 - e^{-\lambda}$.
+\end{theorem}
+
+\begin{theorem}
+Using maxflow: global min cut in $O(n^4 \log n)$ by fixing $s$ and iterating over all $t$.
+\end{theorem}
+
+\subsubsection{Bootstrapping}
+
+\begin{theorem}
+Stop contraction at $|G| = t$, compute rest exactly. With $t = \sqrt{n}$: total runtime $O(\lambda n^3)$, error $e^{-\lambda}$.
+\end{theorem}
+
+\subsection{Smallest Enclosing Disk}
+
+\begin{definition}
+Given $P \subset \mathbb{R}^2$, find the smallest disk $C_P$ containing $P$.
+\end{definition}
+
+\begin{lemma}
+$\exists$ a certificate $C(P)$ of $\leq 3$ points defining $C_P$.
+\end{lemma}
+
+\begin{theorem}
+Randomized algorithm: sample $Q$ of 3 points, check $P \subseteq C(Q)$, double copies of points outside $C(Q)$. Using sampling lemma with $r=11$:
+$$\mathbb{E}[|P' \setminus C^{\bullet}(R)|] \le 3\frac{N}{r+1}$$
+Expected runtime: $O(n \log n)$.
+\end{theorem}
+
+\subsection{Convex Hull}
+
+\begin{definition}
+The \textbf{Convex Hull} $\mathcal{CH}(P)$ is the intersection of all convex sets containing $P$:
+$$\mathcal{CH}(P) = \left\{ \textstyle\sum_{i} \lambda_i p_i \;\middle|\; \lambda_i \ge 0, \textstyle\sum \lambda_i = 1 \right\}$$
+\end{definition}
+
+\begin{definition}
+For points $p, q, r$, the \textbf{CCW} test:
+$$\text{CCW}(p,q,r) = (x_q\!-\!x_p)(y_r\!-\!y_p)$$
+$$- (y_q\!-\!y_p)(x_r\!-\!x_p)$$
+$> 0$: left (CCW), $< 0$: right (CW), $= 0$: collinear.
+\end{definition}
+
+\begin{theorem}
+\textbf{Gift Wrapping (Jarvis March)}: Iteratively find the next border edge by scanning all points for the smallest angle. Runtime $O(nh)$ where $h$ = number of hull vertices.
+\end{theorem}
+
+\subsection{Reachable Vertices}
+
+\begin{definition}
+Given directed $G=(V,E)$, for each $v \in V$, compute $n_v = |R(v)|$ (number of reachable vertices).
+\end{definition}
+
+\begin{remark}
+Exact: $O(n(n+m))$. Sub-quadratic likely contradicts SETH.
+\end{remark}
+
+\begin{theorem}
+Assign each vertex $r_v \sim \text{Uniform}([0,1])$. Compute $x_v = \min_{u \in R(v)} r_u$ via reverse DFS. Repeat $l = \lceil 2\log_2(2n/\delta)\rceil$ times, estimate $\tilde{n}_v$ as reciprocal of median. Runtime: $O((n\log n + m)\log(n/\delta))$.
+\end{theorem}
+
+\begin{theorem}
+With probability $\geq 1 - \delta$: $n_v/20 \leq \tilde{n}_v \leq 20 n_v$ for all $v$. Can be improved to $(1 \pm \epsilon)$-approximation with $O(\frac{1}{\epsilon^2}\log(\frac{n}{\delta}))$ iterations.
+\end{theorem}
