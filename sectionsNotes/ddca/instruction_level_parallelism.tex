@@ -3,20 +3,20 @@
 \subsection{Pipelining}
 
 \begin{definition}
-\textbf{Pipelining} is a microarchitecture implementation technique where \textbf{multiple instructions are overlapped} in execution. It functions like an assembly line, dividing the processing of an instruction into a sequence of stages so that a different instruction can be processed in each stage simultaneously.
+	\textbf{Pipelining} is a microarchitecture implementation technique where \textbf{multiple instructions are overlapped} in execution. It functions like an assembly line, dividing the processing of an instruction into a sequence of stages so that a different instruction can be processed in each stage simultaneously.
 \end{definition}
 
 \begin{important}
-The core objective of pipelining is to increase \textbf{instruction throughput} (the number of instructions completed per unit of time). While it significantly improves throughput, it generally does not decrease the \textbf{latency} of a single instruction; in fact, the latency may increase slightly due to the overhead of pipeline registers.
+	The core objective of pipelining is to increase \textbf{instruction throughput} (the number of instructions completed per unit of time). While it significantly improves throughput, it generally does not decrease the \textbf{latency} of a single instruction; in fact, the latency may increase slightly due to the overhead of pipeline registers.
 \end{important}
 
 \begin{theorem}
-In an ideal scenario where all stages have equal delay and there are no dependencies, a pipeline with $k$ stages provides a $k$-fold speedup. However, in reality, the speedup is limited by:
-\begin{itemize}
-    \item \textbf{Unbalanced stages:} The clock period is determined by the slowest stage.
-    \item \textbf{Sequencing overhead:} Pipeline registers add setup time and clock-to-Q delays.
-    \item \textbf{Hazards:} Dependencies between instructions that prevent seamless overlapping.
-\end{itemize}
+	In an ideal scenario where all stages have equal delay and there are no dependencies, a pipeline with $k$ stages provides a $k$-fold speedup. However, in reality, the speedup is limited by:
+	\begin{itemize}
+		\item \textbf{Unbalanced stages:} The clock period is determined by the slowest stage.
+		\item \textbf{Sequencing overhead:} Pipeline registers add setup time and clock-to-Q delays.
+		\item \textbf{Hazards:} Dependencies between instructions that prevent seamless overlapping.
+	\end{itemize}
 \end{theorem}
 
 
@@ -24,126 +24,126 @@ In an ideal scenario where all stages have equal delay and there are no dependen
 \subsubsection{The 5-Stage Instruction Pipeline}
 
 \begin{definition}
-A standard RISC pipeline (like MIPS or LC-3) typically consists of five stages:
-\begin{enumerate}
-    \item \textbf{Instruction Fetch (IF):} Fetch the instruction from memory and update the PC.
-    \item \textbf{Instruction Decode (ID):} Decode the instruction and read operands from the register file.
-    \item \textbf{Execute (EX):} Perform an arithmetic/logic operation or calculate a memory address.
-    \item \textbf{Memory Access (MEM):} Read from or write to the data memory.
-    \item \textbf{Write-Back (WB):} Write the result back into the register file.
-\end{enumerate}
+	A standard RISC pipeline (like MIPS or LC-3) typically consists of five stages:
+	\begin{enumerate}
+		\item \textbf{Instruction Fetch (IF):} Fetch the instruction from memory and update the PC.
+		\item \textbf{Instruction Decode (ID):} Decode the instruction and read operands from the register file.
+		\item \textbf{Execute (EX):} Perform an arithmetic/logic operation or calculate a memory address.
+		\item \textbf{Memory Access (MEM):} Read from or write to the data memory.
+		\item \textbf{Write-Back (WB):} Write the result back into the register file.
+	\end{enumerate}
 \end{definition}
 
 \begin{important}
-To maintain the state of different instructions in different stages, \textbf{Pipeline Registers} (IF/ID, ID/EX, EX/MEM, MEM/WB) are placed between the stages. These registers carry the data and control signals forward through the pipeline every clock cycle.
+	To maintain the state of different instructions in different stages, \textbf{Pipeline Registers} (IF/ID, ID/EX, EX/MEM, MEM/WB) are placed between the stages. These registers carry the data and control signals forward through the pipeline every clock cycle.
 \end{important}
 
 \subsubsection{Pipeline Hazards and Dependencies}
 
 \begin{definition}
-A hazard is a situation that prevents the next instruction in the stream from executing in its designated clock cycle.
-\begin{itemize}
-    \item \textbf{Structural Hazards:} Conflicts for hardware resources (e.g., using a single memory for both instructions and data).
-    \item \textbf{Data Hazards:} An instruction depends on the result of a previous instruction that has not yet completed.
-    \item \textbf{Control Hazards:} The next address to fetch is unknown because a branch or jump has not been resolved.
-\end{itemize}
+	A hazard is a situation that prevents the next instruction in the stream from executing in its designated clock cycle.
+	\begin{itemize}
+		\item \textbf{Structural Hazards:} Conflicts for hardware resources (e.g., using a single memory for both instructions and data).
+		\item \textbf{Data Hazards:} An instruction depends on the result of a previous instruction that has not yet completed.
+		\item \textbf{Control Hazards:} The next address to fetch is unknown because a branch or jump has not been resolved.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
-Data dependencies are primarily of three types:
-\begin{itemize}
-    \item \textbf{Flow Dependence (RAW):} Instruction $j$ needs data produced by instruction $i$.
-    \item \textbf{Anti-Dependence (WAR):} Instruction $j$ writes to a location that instruction $i$ reads.
-    \item \textbf{Output Dependence (WAW):} Both instructions write to the same location.
-\end{itemize}
-In a standard 5-stage in-order pipeline, only RAW hazards require hardware intervention.
+	Data dependencies are primarily of three types:
+	\begin{itemize}
+		\item \textbf{Flow Dependence (RAW):} Instruction $j$ needs data produced by instruction $i$.
+		\item \textbf{Anti-Dependence (WAR):} Instruction $j$ writes to a location that instruction $i$ reads.
+		\item \textbf{Output Dependence (WAW):} Both instructions write to the same location.
+	\end{itemize}
+	In a standard 5-stage in-order pipeline, only RAW hazards require hardware intervention.
 \end{definition}
 
 \subsubsection{Resolving Data Hazards}
 
 \begin{lemma}
-\textbf{Forwarding (Bypassing)} resolves many data hazards by routing the result of an instruction directly from the EX or MEM stage to the ALU input of a following instruction, bypassing the register file.
+	\textbf{Forwarding (Bypassing)} resolves many data hazards by routing the result of an instruction directly from the EX or MEM stage to the ALU input of a following instruction, bypassing the register file.
 \end{lemma}
 
 \begin{important}
-Forwarding cannot resolve a \textbf{Load-Use Hazard} (where a load is immediately followed by an instruction using the loaded data). This requires a \textbf{Stall}. The hardware must:
-\begin{enumerate}
-    \item Disable the PC and IF/ID register updates (holding instructions in place).
-    \item Flush the ID/EX register (inserting a "bubble" or NOP).
-\end{enumerate}
+	Forwarding cannot resolve a \textbf{Load-Use Hazard} (where a load is immediately followed by an instruction using the loaded data). This requires a \textbf{Stall}. The hardware must:
+	\begin{enumerate}
+		\item Disable the PC and IF/ID register updates (holding instructions in place).
+		\item Flush the ID/EX register (inserting a "bubble" or NOP).
+	\end{enumerate}
 \end{important}
 
 \subsubsection{Control Hazards and Branching}
 
 \begin{definition}
-\textbf{Control hazards} arise from the delay in determining the branch outcome. If the pipeline fetches the wrong instructions, it must \textbf{flush} those instructions once the branch is resolved.
+	\textbf{Control hazards} arise from the delay in determining the branch outcome. If the pipeline fetches the wrong instructions, it must \textbf{flush} those instructions once the branch is resolved.
 \end{definition}
 
 \begin{remark}
-Common strategies for handling branches include:
-\begin{itemize}
-    \item \textbf{Static Prediction:} For example, "Always Predict Not Taken."
-    \item \textbf{Dynamic Prediction:} Using a Branch History Table to predict based on past execution.
-    \item \textbf{Early Branch Resolution:} Moving the branch comparison to the Decode stage to reduce the misprediction penalty.
-\end{itemize}
+	Common strategies for handling branches include:
+	\begin{itemize}
+		\item \textbf{Static Prediction:} For example, "Always Predict Not Taken."
+		\item \textbf{Dynamic Prediction:} Using a Branch History Table to predict based on past execution.
+		\item \textbf{Early Branch Resolution:} Moving the branch comparison to the Decode stage to reduce the misprediction penalty.
+	\end{itemize}
 \end{remark}
 
 \subsubsection{Advanced Pipeline Issues}
 
 \begin{important}
-\textbf{Precise Exceptions:} A pipelined processor must be able to stop execution on an exception-causing instruction while ensuring all prior instructions complete and no subsequent instructions have modified the architectural state. This is challenging because instructions finish at different times.
+	\textbf{Precise Exceptions:} A pipelined processor must be able to stop execution on an exception-causing instruction while ensuring all prior instructions complete and no subsequent instructions have modified the architectural state. This is challenging because instructions finish at different times.
 \end{important}
 
 \begin{lemma}
-In systems with multi-cycle functional units (e.g., a fast integer ALU and a slow divider), instructions can finish \textbf{out of order}. This "out-of-order completion" can break the sequential semantics of the ISA if an exception occurs in the middle of a stream.
+	In systems with multi-cycle functional units (e.g., a fast integer ALU and a slow divider), instructions can finish \textbf{out of order}. This "out-of-order completion" can break the sequential semantics of the ISA if an exception occurs in the middle of a stream.
 \end{lemma}
 
 \begin{definition}
-\textbf{Fine-Grained Multithreading:} A technique where the processor switches to a different thread every clock cycle. This hides the latency of data and control hazards by ensuring that instructions currently in the pipeline are independent of one another.
+	\textbf{Fine-Grained Multithreading:} A technique where the processor switches to a different thread every clock cycle. This hides the latency of data and control hazards by ensuring that instructions currently in the pipeline are independent of one another.
 \end{definition}
 
 
 \subsubsection{Precise Exceptions and Interrupts}
 
-In a pipelined Architecture, not all instructions take the same amount of time in the execution stage. 
-So what happens if a previous instruction causes an exception and the next instruction has already been written back to the register file? 
-We need to make sure that the state of the processor is consistent with the ISA. 
+In a pipelined Architecture, not all instructions take the same amount of time in the execution stage.
+So what happens if a previous instruction causes an exception and the next instruction has already been written back to the register file?
+We need to make sure that the state of the processor is consistent with the ISA.
 
 \begin{definition}
-    Unplanned changes in program exection due to internal problems are called \textbf{exceptions} while due to external events they are called \textbf{interrupts}.
+	Unplanned changes in program exection due to internal problems are called \textbf{exceptions} while due to external events they are called \textbf{interrupts}.
 \end{definition}
 
 \begin{important}
-    When an exception/interrupt occurs all previous instructions should be retired whil no later instructions should be allowed to proceed nor be retired.
+	When an exception/interrupt occurs all previous instructions should be retired whil no later instructions should be allowed to proceed nor be retired.
 \end{important}
 
 Hence when the oldest instruction ready to be retired is detected to have caused an exception we have to:
 \begin{itemize}
-    \item Ensure architectural state is consistent (REG-File, PC, Memory)
-    \item Flush all younger instructions in the pipeline
-    \item Save PC and REG
-    \item Redirect to exception handler
+	\item Ensure architectural state is consistent (REG-File, PC, Memory)
+	\item Flush all younger instructions in the pipeline
+	\item Save PC and REG
+	\item Redirect to exception handler
 \end{itemize}
 
 \begin{remark}
-    In Single-Cycle machines this is easy to handle as we only have one instruction in the pipeline at a time which ensures sequential execution semantics.
+	In Single-Cycle machines this is easy to handle as we only have one instruction in the pipeline at a time which ensures sequential execution semantics.
 \end{remark}
 
 \begin{remark}
-    Note that we could make every operation take the same amount of time in the pipeline, this would ensure sequential execution semantics but would be very inefficient.
+	Note that we could make every operation take the same amount of time in the pipeline, this would ensure sequential execution semantics but would be very inefficient.
 \end{remark}
 
 
 \begin{remark}
-    The idea behind a \textbf{reorder-buffer} is that we complete instructions out of order but reorder them before making the results visible to the architectural state.
+	The idea behind a \textbf{reorder-buffer} is that we complete instructions out of order but reorder them before making the results visible to the architectural state.
 \end{remark}
 
 \begin{definition}
-    A \textbf{Reorder-Buffer (ROB)} is a hardware structure that stores the results of instructions as they complete. It allows instructions to be retired in-order, even if they complete out-of-order.
+	A \textbf{Reorder-Buffer (ROB)} is a hardware structure that stores the results of instructions as they complete. It allows instructions to be retired in-order, even if they complete out-of-order.
 \end{definition}
 
 \begin{lemma}
-    Reordering-Buffer uses a valid bit in the REG to indicate whether the result is valid, if not the REG stores a pointer to the ROB entry where the result will be stored once the instruction completes (ROB also uses a valid bit to indicate readiness).
+	Reordering-Buffer uses a valid bit in the REG to indicate whether the result is valid, if not the REG stores a pointer to the ROB entry where the result will be stored once the instruction completes (ROB also uses a valid bit to indicate readiness).
 \end{lemma}
 
 This allows us to write out of order to the REG and ensure in order retirement where we can check in-order for any exceptions.
@@ -151,286 +151,286 @@ This allows us to write out of order to the REG and ensure in order retirement w
 \subsection{Out of Order Execution}
 
 \begin{remark}
-    An instruction that uses operands of a previous instruction is called a \textbf{dependent instruction}. If such a preceding instructions result are not yet available, the dependent instruction must wait for the result to be computed, which stalls an \textbf{in-order pipeline}.
+	An instruction that uses operands of a previous instruction is called a \textbf{dependent instruction}. If such a preceding instructions result are not yet available, the dependent instruction must wait for the result to be computed, which stalls an \textbf{in-order pipeline}.
 \end{remark}
 
 \begin{definition}
-    \textbf{Out-of-order execution (OoO)} is a technique that allows a processor to execute instructions in a different order than they appear in the program. This is done to improve performance.
+	\textbf{Out-of-order execution (OoO)} is a technique that allows a processor to execute instructions in a different order than they appear in the program. This is done to improve performance.
 \end{definition}
 
 \begin{remark}
-    OoO tolerates longer latencies by executing other independent instructions between dependent ones that would otherwise stall the pipeline. This improves instructions per cycle (IPC).
+	OoO tolerates longer latencies by executing other independent instructions between dependent ones that would otherwise stall the pipeline. This improves instructions per cycle (IPC).
 \end{remark}
 
 \begin{definition}
-    The \textbf{dataflow principle} states that the execution order of instructions should be determined by the availability of their operands rather than their program order.
+	The \textbf{dataflow principle} states that the execution order of instructions should be determined by the availability of their operands rather than their program order.
 \end{definition}
 
 \begin{remark}
-    Typically OoO is only done in the core. Hence instructions are \textbf{fetched and decoded in order} then they are \textbf{executed out of order} and the results are \textbf{written back in order}.
+	Typically OoO is only done in the core. Hence instructions are \textbf{fetched and decoded in order} then they are \textbf{executed out of order} and the results are \textbf{written back in order}.
 \end{remark}
 
 \subsubsection{Mechanisms for OoO}
 
 \begin{definition}
-    \textbf{Register-Renaming} eliminates false dependencies (WAW and WAR), which occure because of the reuse of registernames, by decoupling the register names from the actual physical storage locations.
+	\textbf{Register-Renaming} eliminates false dependencies (WAW and WAR), which occure because of the reuse of registernames, by decoupling the register names from the actual physical storage locations.
 \end{definition}
 
 \begin{definition}
-    \textbf{Reservation Stations (RS)} are buffers that store instructions that are waiting for their operands to become available.
+	\textbf{Reservation Stations (RS)} are buffers that store instructions that are waiting for their operands to become available.
 \end{definition}
 
 \begin{definition}
-    \textbf{Tag Broadcast} is a mechanism that allows the results of instructions to be broadcast to all reservation stations that are waiting for those operands by broadcasting identification tags of available results via a bus.
+	\textbf{Tag Broadcast} is a mechanism that allows the results of instructions to be broadcast to all reservation stations that are waiting for those operands by broadcasting identification tags of available results via a bus.
 \end{definition}
 
 \subsubsection{Tomasulo's Algorithm}
 
 \begin{definition}
-    \textbf{Tomasulo's Algorithm} is an algorithm for out-of-order execution that uses reservation stations and tag broadcasting to eliminate false dependencies and improve performance.
+	\textbf{Tomasulo's Algorithm} is an algorithm for out-of-order execution that uses reservation stations and tag broadcasting to eliminate false dependencies and improve performance.
 \end{definition}
 
 \begin{algorithm}
-decode(instruction)
+	decode(instruction)
 
-if (free reservation station) {
+	if (free reservation station) {
 
-    reservation station = instruction
-    replace registers with tags from Register-Alias Table (RAT)
+			reservation station = instruction
+			replace registers with tags from Register-Alias Table (RAT)
 
-    if (operands ready) {
+			if (operands ready) {
 
-        execute to functional unit
-        broadcast result and update RAT
+					execute to functional unit
+					broadcast result and update RAT
 
-    } else {
-        observe common data bus for tags of operands
-    }
+				} else {
+					observe common data bus for tags of operands
+				}
 
-} else {
-    wait
-}
+		} else {
+			wait
+		}
 \end{algorithm}
 
 \begin{important}
-    The instruction window size (how many instr. can be fetched/decoded and not yet retired) limits the scalability of Tomasulo's algorithm.
+	The instruction window size (how many instr. can be fetched/decoded and not yet retired) limits the scalability of Tomasulo's algorithm.
 \end{important}
 
 \begin{remark}
-    Moder processors use the already discussed reorder buffer (ROB) to ensure in order commitment of results.
+	Moder processors use the already discussed reorder buffer (ROB) to ensure in order commitment of results.
 \end{remark}
 
 \begin{remark}
-    The usage of a \textbf{Scheduler} with reservation stations and a \textbf{reorder buffer} can be visualized as a camel with two humps.
+	The usage of a \textbf{Scheduler} with reservation stations and a \textbf{reorder buffer} can be visualized as a camel with two humps.
 \end{remark}
 
 \begin{remark}
-    OoO allows for larger latency tolerance and exploitation of Irregular parallelism but comes at the cost of increased complexity and power consumption.
+	OoO allows for larger latency tolerance and exploitation of Irregular parallelism but comes at the cost of increased complexity and power consumption.
 \end{remark}
 
 \subsubsection{Memory Dependencies}
 
 \begin{example}
-    Instruction $i$ writes to memory adress $x$ while the instruction $i+1$ reads from $x$. In out of order execution it can happen that $i+1$ finishes before $i$ which invalidates its result. Hence we need to handle memory dependencies.
+	Instruction $i$ writes to memory adress $x$ while the instruction $i+1$ reads from $x$. In out of order execution it can happen that $i+1$ finishes before $i$ which invalidates its result. Hence we need to handle memory dependencies.
 \end{example}
 
 \begin{definition}
-    \textbf{Memory Disambiguation} is the process of determining whether a load/store is dependent on a previous load/store.
+	\textbf{Memory Disambiguation} is the process of determining whether a load/store is dependent on a previous load/store.
 \end{definition}
 
 \begin{definition}
-    \textbf{Solutions to memory dependencies:}
-    \begin{itemize}
-        \item \textbf{Conservative: } Assume all load/stores are dependend and stall the pipeline to ensure correctness.
-        \item \textbf{Agressive: } Assume no load/stores are dependent and pay the extra time/work when a false result is generated.
-        \item \textbf{Intelligent: } Try and predict whether a load/store is dependent or not in order to minimize the penalty of false results.
-    \end{itemize}
+	\textbf{Solutions to memory dependencies:}
+	\begin{itemize}
+		\item \textbf{Conservative: } Assume all load/stores are dependend and stall the pipeline to ensure correctness.
+		\item \textbf{Agressive: } Assume no load/stores are dependent and pay the extra time/work when a false result is generated.
+		\item \textbf{Intelligent: } Try and predict whether a load/store is dependent or not in order to minimize the penalty of false results.
+	\end{itemize}
 \end{definition}
 
 \begin{remark}
-    Observe that the intelligent approach is a trade-off between the conservative and aggressive approaches and ensures the best performance.
+	Observe that the intelligent approach is a trade-off between the conservative and aggressive approaches and ensures the best performance.
 \end{remark}
 
 \begin{definition}
-    \textbf{Load/Store Queue (LSQ)} is a queue that stores load/store results that have not yet been committed to the reorder buffer.
+	\textbf{Load/Store Queue (LSQ)} is a queue that stores load/store results that have not yet been committed to the reorder buffer.
 \end{definition}
 
 \begin{definition}
-    \textbf{Store-to-Load Forwarding} is a mechanism that allows the result of a store instruction to be forwarded directly to a load instruction that is waiting for that result. This works by searching the LSQ for a matching address and directly copying the data from there.
+	\textbf{Store-to-Load Forwarding} is a mechanism that allows the result of a store instruction to be forwarded directly to a load instruction that is waiting for that result. This works by searching the LSQ for a matching address and directly copying the data from there.
 \end{definition}
 
 
 \subsection{Superscalar Execution}
 
 \begin{definition}
-    A $N$-\textbf{Superscalar Processor} is a processor that can issue more than one ($N$) instruction per clock cycle.
+	A $N$-\textbf{Superscalar Processor} is a processor that can issue more than one ($N$) instruction per clock cycle.
 \end{definition}
 
 \begin{remark}
-    Note that superscalar execution is orthogonal to OoO execution. A processor can be in-order or out-of-order and scalar or superscalar.
+	Note that superscalar execution is orthogonal to OoO execution. A processor can be in-order or out-of-order and scalar or superscalar.
 \end{remark}
 
 \begin{important}
-    The main challenge of superscalar processors is to find independent instructions to execute in parallel. (For example trough Forwarding, Software-Optimizations, Speciulation or Multi-Threading)
+	The main challenge of superscalar processors is to find independent instructions to execute in parallel. (For example trough Forwarding, Software-Optimizations, Speciulation or Multi-Threading)
 \end{important}
 
 \begin{remark}
-    The \textbf{tradeoffs} of Superscalar execution are IPC vs Complexity.
+	The \textbf{tradeoffs} of Superscalar execution are IPC vs Complexity.
 \end{remark}
 
 \subsection{Branch Prediction}
 
 \begin{remark}
-    \textbf{The Goal:} Branch prediction handles control dependencies. It attempts to answer the fundamental question: How do we exploit instruction-level parallelism in the presence of control flow?
+	\textbf{The Goal:} Branch prediction handles control dependencies. It attempts to answer the fundamental question: How do we exploit instruction-level parallelism in the presence of control flow?
 \end{remark}
 
 \begin{remark}
-    \textbf{The Cost of Misprediction:} Branch mispredictions drastically reduce IPC in deep pipelines. Modern processors therefore target 95\%+ accuracy.
+	\textbf{The Cost of Misprediction:} Branch mispredictions drastically reduce IPC in deep pipelines. Modern processors therefore target 95\%+ accuracy.
 \end{remark}
 
 \begin{definition}
-    There are multiple different \textbf{Branch Types}: Conditional (if, while), Unconditional (goto), Indirect (register targets), \& Function calls/returns. \textit{Conditional} and \textit{indirect} are the hardest to predict.
+	There are multiple different \textbf{Branch Types}: Conditional (if, while), Unconditional (goto), Indirect (register targets), \& Function calls/returns. \textit{Conditional} and \textit{indirect} are the hardest to predict.
 \end{definition}
 
 \begin{remark}
-    Control dependencies are handled by:
-    \begin{itemize}
-        \item \textbf{Stalling} or \textbf{Predicting} the pipeline.
-        \item \textbf{Delayed Branching:} Executing adjacent instructions unconditionally.
-        \item \textbf{Multi-threading:} Executing other threads.
-        \item \textbf{Predicated Execution:} Converting control to data-dependence.
-        \item \textbf{Multi-path Execution:} Fetching all branches simultaneously.
-    \end{itemize}
+	Control dependencies are handled by:
+	\begin{itemize}
+		\item \textbf{Stalling} or \textbf{Predicting} the pipeline.
+		\item \textbf{Delayed Branching:} Executing adjacent instructions unconditionally.
+		\item \textbf{Multi-threading:} Executing other threads.
+		\item \textbf{Predicated Execution:} Converting control to data-dependence.
+		\item \textbf{Multi-path Execution:} Fetching all branches simultaneously.
+	\end{itemize}
 \end{remark}
 
 \subsubsection{Static Branch Prediction}
 
 \begin{definition}
-    \textbf{Static Branch Prediction}: The branch outcome is predicted strictly at compile time. Because it is static, it cannot adapt to dynamic changes in branch behavior during runtime.
+	\textbf{Static Branch Prediction}: The branch outcome is predicted strictly at compile time. Because it is static, it cannot adapt to dynamic changes in branch behavior during runtime.
 \end{definition}
 
 \begin{remark}
-    The simplest strategy is to always predict the same outcome (\textbf{Always Taken} or \textbf{Always Not-Taken}). This logic requires minimal hardware but yields low accuracy.
+	The simplest strategy is to always predict the same outcome (\textbf{Always Taken} or \textbf{Always Not-Taken}). This logic requires minimal hardware but yields low accuracy.
 \end{remark}
 
 \begin{definition}
-    \textbf{BTFN (Backward Taken, Forward Not-Taken)}: Predicts backward branches as taken and forward branches as not-taken.
+	\textbf{BTFN (Backward Taken, Forward Not-Taken)}: Predicts backward branches as taken and forward branches as not-taken.
 \end{definition}
 \begin{remark}
-    BTFN significantly improves prediction success by intelligently exploiting loop structures. Backward branches are typically loop iterations, which are statistically taken much more often than not.
+	BTFN significantly improves prediction success by intelligently exploiting loop structures. Backward branches are typically loop iterations, which are statistically taken much more often than not.
 \end{remark}
 
 \begin{definition}
-    \textbf{Profile-based Prediction}: Predicts the outcome based on branch behavior statistics gathered from a previous profiling run of the program.
+	\textbf{Profile-based Prediction}: Predicts the outcome based on branch behavior statistics gathered from a previous profiling run of the program.
 \end{definition}
 
 \begin{definition}
-    \textbf{Program-based Prediction}: Uses compiler heuristics (e.g., assuming a check for a negative integer is an error path, hence not-taken).
+	\textbf{Program-based Prediction}: Uses compiler heuristics (e.g., assuming a check for a negative integer is an error path, hence not-taken).
 \end{definition}
 
 \begin{definition}
-    \textbf{Programmer-based Prediction}: Relies on explicit pragmas or hints provided by the programmer directly in the source code.
+	\textbf{Programmer-based Prediction}: Relies on explicit pragmas or hints provided by the programmer directly in the source code.
 \end{definition}
 
 \begin{codeexample}
-    // Pragmas as hints for the branch predictor
-    if (likely(x)) {...}
-    if (unlikely(error)) {...}
+	// Pragmas as hints for the branch predictor
+	if (likely(x)) {...}
+	if (unlikely(error)) {...}
 \end{codeexample}
 
 \subsubsection{Dynamic Branch Prediction}
 
 \begin{definition}
-    \textbf{Dynamic Branch Prediction}: The branch outcome is predicted at runtime based on the execution history.
+	\textbf{Dynamic Branch Prediction}: The branch outcome is predicted at runtime based on the execution history.
 \end{definition}
 
 \begin{definition}
-    \textbf{Branch Target Buffer (BTB)}: A hardware cache that specifically stores the \textit{target addresses} of recently executed branches. When a branch instruction is fetched, the BTB is accessed to provide the target address immediately, avoiding pipeline stalls while waiting for the ALU to compute the target.
+	\textbf{Branch Target Buffer (BTB)}: A hardware cache that specifically stores the \textit{target addresses} of recently executed branches. When a branch instruction is fetched, the BTB is accessed to provide the target address immediately, avoiding pipeline stalls while waiting for the ALU to compute the target.
 \end{definition}
 
 \begin{definition}
-    \textbf{Return Address Stack (RAS)}: Dedicated hardware for predicting function returns. It pushes the return address on a \texttt{call} instruction and pops it on a \texttt{ret}. It is highly accurate (>95\% with just an 8-entry stack) for predicting indirect returns.
+	\textbf{Return Address Stack (RAS)}: Dedicated hardware for predicting function returns. It pushes the return address on a \texttt{call} instruction and pops it on a \texttt{ret}. It is highly accurate (>95\% with just an 8-entry stack) for predicting indirect returns.
 \end{definition}
 
 \begin{definition}
-    \textbf{Indirect Branch Predictor}: Indirect branches map to multiple targets, making standard BTBs inaccurate. These are typically predicted using a dedicated history-based target predictor (e.g., indexing the BTB with the GHR XORed with the PC).
+	\textbf{Indirect Branch Predictor}: Indirect branches map to multiple targets, making standard BTBs inaccurate. These are typically predicted using a dedicated history-based target predictor (e.g., indexing the BTB with the GHR XORed with the PC).
 \end{definition}
 
 \begin{definition}
-    \textbf{Last-Time Predictor}: Predicts the outcome of a branch to be exactly the same as the outcome of the last time that specific branch was executed.
+	\textbf{Last-Time Predictor}: Predicts the outcome of a branch to be exactly the same as the outcome of the last time that specific branch was executed.
 \end{definition}
 \begin{remark}
-    Last-Time predictors are simple (one bit per branch). They exploit long loops (e.g. 1000 iterations) with high accuracy but perform extremely poorly on short loops (e.g. 2 iterations) or on branches that alternate heavily.
+	Last-Time predictors are simple (one bit per branch). They exploit long loops (e.g. 1000 iterations) with high accuracy but perform extremely poorly on short loops (e.g. 2 iterations) or on branches that alternate heavily.
 \end{remark}
 
 \begin{definition}
-    \textbf{Two-Bit Counter (Bimodal Predictor)}: Prediction only changes after two consecutive mistakes. This introduces \textbf{hysteresis} (via cyclic Strong/Weak states), preventing the prediction from arbitrarily flipping due to a single anomalous outcome.
+	\textbf{Two-Bit Counter (Bimodal Predictor)}: Prediction only changes after two consecutive mistakes. This introduces \textbf{hysteresis} (via cyclic Strong/Weak states), preventing the prediction from arbitrarily flipping due to a single anomalous outcome.
 \end{definition}
 \begin{remark}
-    Two-Bit Counters significantly improve prediction accuracy compared to Last-Time predictors (yielding around 0.85-0.90 accuracy).
+	Two-Bit Counters significantly improve prediction accuracy compared to Last-Time predictors (yielding around 0.85-0.90 accuracy).
 \end{remark}
 
 \begin{definition}
-    \textbf{Two-Level Prediction}: Attempts to correlate the outcome of a branch using history tracking:
-    \begin{itemize}
-        \item \textbf{Global History Register (GHR)}: Tracks the outcome of \textit{recent different branches} (global context).
-        \item \textbf{Local History Register (LHR)}: Tracks the outcome of \textit{the same branch} in its previous iterations.
-    \end{itemize}
+	\textbf{Two-Level Prediction}: Attempts to correlate the outcome of a branch using history tracking:
+	\begin{itemize}
+		\item \textbf{Global History Register (GHR)}: Tracks the outcome of \textit{recent different branches} (global context).
+		\item \textbf{Local History Register (LHR)}: Tracks the outcome of \textit{the same branch} in its previous iterations.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
-    \textbf{Gshare Predictor}: XORs the Global History Register (GHR) with the Program Counter (PC) to index the Pattern History Table (PHT), providing branch-specific context and drastically reducing interference.
+	\textbf{Gshare Predictor}: XORs the Global History Register (GHR) with the Program Counter (PC) to index the Pattern History Table (PHT), providing branch-specific context and drastically reducing interference.
 \end{definition}
 
 \begin{definition}
-    \textbf{Agree Predictor} \& \textbf{Gskew Predictor}: Advanced techniques beyond Gshare to reduce interference. The \textbf{Agree Predictor} predicts whether the outcome will \textit{agree} or \textit{disagree} with a statically determined bias bit. The \textbf{Gskew Predictor} uses multiple PHTs with different hash indexing functions and resolves predictions via a majority vote.
+	\textbf{Agree Predictor} \& \textbf{Gskew Predictor}: Advanced techniques beyond Gshare to reduce interference. The \textbf{Agree Predictor} predicts whether the outcome will \textit{agree} or \textit{disagree} with a statically determined bias bit. The \textbf{Gskew Predictor} uses multiple PHTs with different hash indexing functions and resolves predictions via a majority vote.
 \end{definition}
 
 \begin{important}
-    \textbf{Biased Branches \& Branch Filtering}: Filtering heavily biased branches (e.g., 99\% taken) to simpler predictors saves space in history tables for hard-to-predict branches.
+	\textbf{Biased Branches \& Branch Filtering}: Filtering heavily biased branches (e.g., 99\% taken) to simpler predictors saves space in history tables for hard-to-predict branches.
 \end{important}
 
 \begin{important}
-    \textbf{Tournament Predictor}: In many systems, branch prediction is not done using a single predictor. Instead, multiple different predictors run simultaneously, and a meta-predictor chooses whichever predictor has been the most accurate recently. 
+	\textbf{Tournament Predictor}: In many systems, branch prediction is not done using a single predictor. Instead, multiple different predictors run simultaneously, and a meta-predictor chooses whichever predictor has been the most accurate recently.
 \end{important}
 
 \begin{remark}
-    \textbf{Notable Historical \& Modern Implementations:}
-    \begin{itemize}
-        \item \textbf{Intel Pentium Pro}: First commercially successful out-of-order processor, utilizing two-level global prediction.
-        \item \textbf{Alpha 21264}: Famously utilized a highly accurate Tournament Predictor.
-        \item \textbf{Intel Pentium M}: Introduced specialized Loop and Jump predictors alongside traditional predictors.
-        \item \textbf{AMD Zen 2 (and newer)}: Employs a highly accurate hybrid \textbf{Perceptron + TAGE} multi-level branch predictor.
-    \end{itemize}
+	\textbf{Notable Historical \& Modern Implementations:}
+	\begin{itemize}
+		\item \textbf{Intel Pentium Pro}: First commercially successful out-of-order processor, utilizing two-level global prediction.
+		\item \textbf{Alpha 21264}: Famously utilized a highly accurate Tournament Predictor.
+		\item \textbf{Intel Pentium M}: Introduced specialized Loop and Jump predictors alongside traditional predictors.
+		\item \textbf{AMD Zen 2 (and newer)}: Employs a highly accurate hybrid \textbf{Perceptron + TAGE} multi-level branch predictor.
+	\end{itemize}
 \end{remark}
 
 \subsubsection{Advanced Predictors}
 
 \begin{definition}
-    \textbf{Perceptron Predictor}: Uses a single-layer neural network to predict the outcome of a branch.
+	\textbf{Perceptron Predictor}: Uses a single-layer neural network to predict the outcome of a branch.
 \end{definition}
 
 \begin{remark}
-    Efficiently implemented as an \textit{adder tree} followed by a sign check. Achieves top-tier accuracy (0.95+) but \textbf{only learns linearly separable functions} (cannot learn XOR-type correlations).
+	Efficiently implemented as an \textit{adder tree} followed by a sign check. Achieves top-tier accuracy (0.95+) but \textbf{only learns linearly separable functions} (cannot learn XOR-type correlations).
 \end{remark}
 
 \begin{definition}
-    \textbf{TAGE (TAgged GEometric history length)}: Uses multiple global history registers of varying, geometric lengths to predict the outcome of a branch.
+	\textbf{TAGE (TAgged GEometric history length)}: Uses multiple global history registers of varying, geometric lengths to predict the outcome of a branch.
 \end{definition}
 
 \begin{remark}
-    TAGE predictors represent state-of-the-art branch prediction. They are more complex to implement than perceptron predictors but achieve the highest structural prediction accuracy available (0.97+).
+	TAGE predictors represent state-of-the-art branch prediction. They are more complex to implement than perceptron predictors but achieve the highest structural prediction accuracy available (0.97+).
 \end{remark}
 
 \subsubsection{Alternative Control Flow Handling}
 
 \begin{definition}
-    \textbf{Delayed Branching}: The $N$ instructions fetched after the branch (delay slots) execute unconditionally. \\
-    \textit{Advantage}: Keeps pipeline full. \textit{Disadvantage}: Ties ISA to pipeline depth; hard to fill slots with useful independent instructions.
+	\textbf{Delayed Branching}: The $N$ instructions fetched after the branch (delay slots) execute unconditionally. \\
+	\textit{Advantage}: Keeps pipeline full. \textit{Disadvantage}: Ties ISA to pipeline depth; hard to fill slots with useful independent instructions.
 \end{definition}
 
 \begin{definition}
-    \textbf{Predicated Execution (e.g., CMOV)}: Eliminates branches via condition codes. An operation executes but only commits if the predicate is true.\\
-    \textit{Advantage}: Eliminates mispredictions, allows larger basic blocks. \textit{Disadvantage}: Wastes energy fetching/executing paths that are discarded.
+	\textbf{Predicated Execution (e.g., CMOV)}: Eliminates branches via condition codes. An operation executes but only commits if the predicate is true.\\
+	\textit{Advantage}: Eliminates mispredictions, allows larger basic blocks. \textit{Disadvantage}: Wastes energy fetching/executing paths that are discarded.
 \end{definition}
 

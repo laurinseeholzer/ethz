@@ -1,221 +1,221 @@
 \section{Flow Networks}
 
 \begin{definition}
-    A \textbf{Flow Network} is a directed graph $G = (V, E)$ with a \textbf{source} $s \in V$, a \textbf{sink} $t \in V$, and a \textbf{capacity function} $c : E \to \mathbb{R}_{\geq 0}$ assigning a non-negative capacity to each edge.
+	A \textbf{Flow Network} is a directed graph $G = (V, E)$ with a \textbf{source} $s \in V$, a \textbf{sink} $t \in V$, and a \textbf{capacity function} $c : E \to \mathbb{R}_{\geq 0}$ assigning a non-negative capacity to each edge.
 \end{definition}
 
 \begin{definition}
-    A \textbf{flow} in a network $G = (V, E, c, s, t)$ is a function $f : E \to \mathbb{R}_{\geq 0}$ satisfying:
-    \begin{itemize}
-        \item \textbf{Capacity constraint}: $\forall e \in E : 0 \leq f(e) \leq c(e)$
-        \item \textbf{Flow conservation}: $\forall v \in V \setminus \{s, t\} : \sum_{e \text{ into } v} f(e) = \sum_{e \text{ out of } v} f(e)$
-    \end{itemize}
+	A \textbf{flow} in a network $G = (V, E, c, s, t)$ is a function $f : E \to \mathbb{R}_{\geq 0}$ satisfying:
+	\begin{itemize}
+		\item \textbf{Capacity constraint}: $\forall e \in E : 0 \leq f(e) \leq c(e)$
+		\item \textbf{Flow conservation}: $\forall v \in V \setminus \{s, t\} : \sum_{e \text{ into } v} f(e) = \sum_{e \text{ out of } v} f(e)$
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
-    The \textbf{value} of a flow $f$ is defined as the total flow leaving the source:
-    $$|f| := \sum_{e \text{ out of } s} f(e) - \sum_{e \text{ into } s} f(e)$$
+	The \textbf{value} of a flow $f$ is defined as the total flow leaving the source:
+	$$|f| := \sum_{e \text{ out of } s} f(e) - \sum_{e \text{ into } s} f(e)$$
 \end{definition}
 
 \begin{remark}
-    By flow conservation, the net flow out of $s$ equals the net flow into $t$:
-    $$|f| = \sum_{e \text{ into } t} f(e) - \sum_{e \text{ out of } t} f(e)$$
+	By flow conservation, the net flow out of $s$ equals the net flow into $t$:
+	$$|f| = \sum_{e \text{ into } t} f(e) - \sum_{e \text{ out of } t} f(e)$$
 \end{remark}
 
 \begin{definition}
-    For a flow $f$ and a vertex $v$, the \textbf{net outflow} of $v$ is:
-    $$\text{netout}(v) := \sum_{e \text{ out of } v} f(e) - \sum_{e \text{ into } v} f(e)$$
-    Flow conservation requires $\text{netout}(v) = 0$ for all $v \in V \setminus \{s, t\}$.
+	For a flow $f$ and a vertex $v$, the \textbf{net outflow} of $v$ is:
+	$$\text{netout}(v) := \sum_{e \text{ out of } v} f(e) - \sum_{e \text{ into } v} f(e)$$
+	Flow conservation requires $\text{netout}(v) = 0$ for all $v \in V \setminus \{s, t\}$.
 \end{definition}
 
 \subsection{Cuts}
 
 \begin{definition}
-    An \textbf{$s$-$t$ cut} is a partition $(S, T)$ of $V$ with $s \in S$ and $t \in T$. The \textbf{capacity} of the cut is:
-    $$c(S, T) := \sum_{\substack{e = (u,v) \\ u \in S,\, v \in T}} c(e)$$
+	An \textbf{$s$-$t$ cut} is a partition $(S, T)$ of $V$ with $s \in S$ and $t \in T$. The \textbf{capacity} of the cut is:
+	$$c(S, T) := \sum_{\substack{e = (u,v) \\ u \in S,\, v \in T}} c(e)$$
 \end{definition}
 
 \begin{lemma}
-    For any flow $f$ and any $s$-$t$ cut $(S, T)$:
-    $$|f| = \sum_{\substack{e = (u,v) \\ u \in S,\, v \in T}} f(e) \;-\; \sum_{\substack{e = (u,v) \\ u \in T,\, v \in S}} f(e)$$
+	For any flow $f$ and any $s$-$t$ cut $(S, T)$:
+	$$|f| = \sum_{\substack{e = (u,v) \\ u \in S,\, v \in T}} f(e) \;-\; \sum_{\substack{e = (u,v) \\ u \in T,\, v \in S}} f(e)$$
 \end{lemma}
 
 \begin{proof}
-    Sum the net outflow equation over all $v \in S$. By flow conservation, interior vertices contribute $0$, and only the source $s$ has net outflow $|f|$. Collecting edge terms gives exactly the net flow across the cut.
+	Sum the net outflow equation over all $v \in S$. By flow conservation, interior vertices contribute $0$, and only the source $s$ has net outflow $|f|$. Collecting edge terms gives exactly the net flow across the cut.
 \end{proof}
 
 \begin{theorem}
-    For any flow $f$ and any $s$-$t$ cut $(S, T)$:
-    $$|f| \leq c(S, T)$$
+	For any flow $f$ and any $s$-$t$ cut $(S, T)$:
+	$$|f| \leq c(S, T)$$
 \end{theorem}
 
 \begin{proof}
-    By the lemma above and the capacity constraint $f(e) \leq c(e)$:
-    $$|f| = \sum_{e \in (S,T)} f(e) - \sum_{e \in (T,S)} f(e) \leq \sum_{e \in (S,T)} c(e) = c(S, T)$$
+	By the lemma above and the capacity constraint $f(e) \leq c(e)$:
+	$$|f| = \sum_{e \in (S,T)} f(e) - \sum_{e \in (T,S)} f(e) \leq \sum_{e \in (S,T)} c(e) = c(S, T)$$
 \end{proof}
 
 \subsection{Max-Flow Min-Cut}
 
 \begin{theorem}
-    \textbf{Max-Flow Min-Cut Theorem}: The maximum value of an $s$-$t$ flow equals the minimum capacity of an $s$-$t$ cut:
-    $$\max_f |f| = \min_{(S,T)} c(S, T)$$
+	\textbf{Max-Flow Min-Cut Theorem}: The maximum value of an $s$-$t$ flow equals the minimum capacity of an $s$-$t$ cut:
+	$$\max_f |f| = \min_{(S,T)} c(S, T)$$
 \end{theorem}
 
 \begin{remark}
-    The theorem has three equivalent characterizations. The following are equivalent:
-    \begin{itemize}
-        \item $f$ is a maximum flow.
-        \item There is no augmenting path from $s$ to $t$ in the residual network $G_f$.
-        \item There exists an $s$-$t$ cut $(S, T)$ with $|f| = c(S, T)$.
-    \end{itemize}
+	The theorem has three equivalent characterizations. The following are equivalent:
+	\begin{itemize}
+		\item $f$ is a maximum flow.
+		\item There is no augmenting path from $s$ to $t$ in the residual network $G_f$.
+		\item There exists an $s$-$t$ cut $(S, T)$ with $|f| = c(S, T)$.
+	\end{itemize}
 \end{remark}
 
 \subsection{Residual Networks and Augmenting Paths}
 
 \begin{definition}
-    Given a flow $f$ in network $G$, the \textbf{residual network} $G_f = (V, E_f)$ has residual capacity:
-    $$c_f(u, v) := \begin{cases} c(u,v) - f(u,v) & \text{if } (u,v) \in E \\ f(v,u) & \text{if } (v,u) \in E \\ 0 & \text{otherwise} \end{cases}$$
-    The edge set $E_f$ contains all pairs $(u, v)$ with $c_f(u, v) > 0$.
+	Given a flow $f$ in network $G$, the \textbf{residual network} $G_f = (V, E_f)$ has residual capacity:
+	$$c_f(u, v) := \begin{cases} c(u,v) - f(u,v) & \text{if } (u,v) \in E \\ f(v,u) & \text{if } (v,u) \in E \\ 0 & \text{otherwise} \end{cases}$$
+	The edge set $E_f$ contains all pairs $(u, v)$ with $c_f(u, v) > 0$.
 \end{definition}
 
 \begin{remark}
-    Each original edge $(u, v) \in E$ with $f(u,v) > 0$ introduces a \textbf{back edge} $(v, u)$ in $G_f$ with residual capacity $f(u,v)$. This allows flow to be ``cancelled'' or rerouted.
+	Each original edge $(u, v) \in E$ with $f(u,v) > 0$ introduces a \textbf{back edge} $(v, u)$ in $G_f$ with residual capacity $f(u,v)$. This allows flow to be ``cancelled'' or rerouted.
 \end{remark}
 
 \begin{definition}
-    An \textbf{augmenting path} is a directed path from $s$ to $t$ in the residual network $G_f$. The \textbf{bottleneck capacity} of such a path $P$ is:
-    $$\Delta(f, P) := \min_{e \in P} c_f(e)$$
+	An \textbf{augmenting path} is a directed path from $s$ to $t$ in the residual network $G_f$. The \textbf{bottleneck capacity} of such a path $P$ is:
+	$$\Delta(f, P) := \min_{e \in P} c_f(e)$$
 \end{definition}
 
 \begin{lemma}
-    If $P$ is an augmenting path with bottleneck $\Delta = \Delta(f, P)$, then augmenting $f$ along $P$ (adding $\Delta$ on forward edges, subtracting $\Delta$ on backward edges) yields a valid flow $f'$ with $|f'| = |f| + \Delta$.
+	If $P$ is an augmenting path with bottleneck $\Delta = \Delta(f, P)$, then augmenting $f$ along $P$ (adding $\Delta$ on forward edges, subtracting $\Delta$ on backward edges) yields a valid flow $f'$ with $|f'| = |f| + \Delta$.
 \end{lemma}
 
 \subsection{Ford-Fulkerson Algorithm}
 
 \begin{algorithm}
-//Ford-Fulkerson Algorithm
-Initialize f(e) = 0 for all e in E.
+	//Ford-Fulkerson Algorithm
+	Initialize f(e) = 0 for all e in E.
 
-while there exists an augmenting path P from s to t in G_f:
-    delta = bottleneck capacity of P
-    for each edge (u, v) in P:
-        if (u, v) in E:
-            f(u, v) += delta
-        else:    // back edge (u, v), i.e. (v, u) in E
-            f(v, u) -= delta
+	while there exists an augmenting path P from s to t in G_f:
+	delta = bottleneck capacity of P
+	for each edge (u, v) in P:
+	if (u, v) in E:
+	f(u, v) += delta
+	else:    // back edge (u, v), i.e. (v, u) in E
+	f(v, u) -= delta
 
-return f
+	return f
 \end{algorithm}
 
 \begin{theorem}
-    If all capacities are integers, Ford-Fulkerson terminates in $O(|f^*| \cdot |E|)$ time, where $|f^*|$ is the value of the maximum flow.
+	If all capacities are integers, Ford-Fulkerson terminates in $O(|f^*| \cdot |E|)$ time, where $|f^*|$ is the value of the maximum flow.
 \end{theorem}
 
 \begin{proof}
-    Each augmentation increases $|f|$ by at least $1$ (since capacities are integers, $\Delta \geq 1$). The flow value is bounded by $|f^*|$, so there are at most $|f^*|$ augmentations. Each augmenting path search via DFS/BFS takes $O(|E|)$.
+	Each augmentation increases $|f|$ by at least $1$ (since capacities are integers, $\Delta \geq 1$). The flow value is bounded by $|f^*|$, so there are at most $|f^*|$ augmentations. Each augmenting path search via DFS/BFS takes $O(|E|)$.
 \end{proof}
 
 \begin{important}
-    Ford-Fulkerson is \textbf{not guaranteed to terminate} for irrational capacities. For rational capacities it always terminates, but can be exponentially slow with bad path choices.
+	Ford-Fulkerson is \textbf{not guaranteed to terminate} for irrational capacities. For rational capacities it always terminates, but can be exponentially slow with bad path choices.
 \end{important}
 
 \subsection{Maximum Matchings using MaxFlow}
 
 \begin{definition}
-    \textbf{Maxium Bipartite Matching: } Given a bipartite graph $ G = (S \cup T,E)$ find a maximum matching in $G$.
+	\textbf{Maxium Bipartite Matching: } Given a bipartite graph $ G = (S \cup T,E)$ find a maximum matching in $G$.
 \end{definition}
 
 \begin{remark}
-    We can define a flow network $G' = (V', E', c')$ with
-    $$V' = S \quad \cup \quad T \quad \cup \quad \{s, t\}$$
-    $$E' = {s} \times S \quad \cup \quad E \quad \cup \quad T \times {t}$$
-    $$c' = 1$$
-    Then the maximum integer flow $f$ in $G'$ equals to $val(f) = \frac{|M|}{3}$, where $M$ is the maximum matching in $G$.
+	We can define a flow network $G' = (V', E', c')$ with
+	$$V' = S \quad \cup \quad T \quad \cup \quad \{s, t\}$$
+	$$E' = {s} \times S \quad \cup \quad E \quad \cup \quad T \times {t}$$
+	$$c' = 1$$
+	Then the maximum integer flow $f$ in $G'$ equals to $val(f) = \frac{|M|}{3}$, where $M$ is the maximum matching in $G$.
 \end{remark}
 
 \begin{remark}
-    This can be solved in $O(mn)$ using Ford-Fulkerson.
+	This can be solved in $O(mn)$ using Ford-Fulkerson.
 \end{remark}
 
 \subsection{Matchings in Bipartite Graphs}
 
 \begin{definition}
-    \textbf{Maximum Bipartite Matching: } Given a bipartite graph $G = (A \cup B, E)$ find a maximum matching in $G$.
+	\textbf{Maximum Bipartite Matching: } Given a bipartite graph $G = (A \cup B, E)$ find a maximum matching in $G$.
 \end{definition}
 
 \begin{remark}
-    We can construct a flow network $G' = (V', E', c')$ with
-    $$V' = S \quad \cup \quad T \quad \cup \quad \{s, t\}$$
-    $$E' = {s} \times S \quad \cup \quad E \quad \cup \quad T \times {t}$$
-    $$c' = 1$$
+	We can construct a flow network $G' = (V', E', c')$ with
+	$$V' = S \quad \cup \quad T \quad \cup \quad \{s, t\}$$
+	$$E' = {s} \times S \quad \cup \quad E \quad \cup \quad T \times {t}$$
+	$$c' = 1$$
 \end{remark}
 
 \begin{lemma}
-    The maximum flow in $G'$ equals to $\frac{|M|}{2}$, where $M$ is the maximum matching in $G$.
+	The maximum flow in $G'$ equals to $\frac{|M|}{2}$, where $M$ is the maximum matching in $G$.
 \end{lemma}
 
 \subsection{Edge-disjoint Paths}
 
 \begin{definition}
-    \textbf{Edge-disjoint Paths: } Given a graph and vertices $s, t$ find a maximum set of edge-disjoint paths from $s$ to $t$.
+	\textbf{Edge-disjoint Paths: } Given a graph and vertices $s, t$ find a maximum set of edge-disjoint paths from $s$ to $t$.
 \end{definition}
 
 \begin{remark}
-    We can construct a flow network $N_G = (V, E', c')$ with
-    $$E' = \{(u,v), (v,u) | \forall \{u,v\} \in E \}$$
-    $$c'(e) = 1 \quad \forall e \in E'$$    
-    We can find $k$ edge disjoint paths in $G$ and by calculating the max flow of $N_G$ and greedily selecting consecutive edges until we reach the sink. Observe that this is possible because every vertex has the same amount of incomming as outgoing edges.
+	We can construct a flow network $N_G = (V, E', c')$ with
+	$$E' = \{(u,v), (v,u) | \forall \{u,v\} \in E \}$$
+	$$c'(e) = 1 \quad \forall e \in E'$$
+	We can find $k$ edge disjoint paths in $G$ and by calculating the max flow of $N_G$ and greedily selecting consecutive edges until we reach the sink. Observe that this is possible because every vertex has the same amount of incomming as outgoing edges.
 \end{remark}
 
 \begin{lemma}
-    As we can find $k$ edge-disjoint paths in $G$ we have $k \leq maxFlow(N_G)$. Further if we had $k$ edge disjoint paths we would be able to construct a flow of value $k$ in $N_G$ by sending $1$ unit of flow along each path. Thus $k \leq maxFlow(N_G)$. By this we geometrically
-    $$k = maxFlow(N_G)$$
+	As we can find $k$ edge-disjoint paths in $G$ we have $k \leq maxFlow(N_G)$. Further if we had $k$ edge disjoint paths we would be able to construct a flow of value $k$ in $N_G$ by sending $1$ unit of flow along each path. Thus $k \leq maxFlow(N_G)$. By this we geometrically
+	$$k = maxFlow(N_G)$$
 \end{lemma}
 
 \begin{lemma}
-    Observe that the number of edges $k'$ that separate $s$ from $t$ in $G$ form a minimal $s-t$ cut in $N_G$ and thus
-    $$k' = minCut(S,T)$$
+	Observe that the number of edges $k'$ that separate $s$ from $t$ in $G$ form a minimal $s-t$ cut in $N_G$ and thus
+	$$k' = minCut(S,T)$$
 \end{lemma}
 
 \begin{theorem}
-    By the above lemmas and the max-flow min-cut theorem we have (Menger's Theorem)
-    $$k = maxFlow(N_G) = minCut(S,T) = k'$$
-    Which means that the maximum number of edge-disjoint paths equals to the minimum number of edges that separate $s$ from $t$ in $G$.
+	By the above lemmas and the max-flow min-cut theorem we have (Menger's Theorem)
+	$$k = maxFlow(N_G) = minCut(S,T) = k'$$
+	Which means that the maximum number of edge-disjoint paths equals to the minimum number of edges that separate $s$ from $t$ in $G$.
 \end{theorem}
 
 \subsection{Image Segmentation using MaxFlow}
 
 \begin{definition}
-    \textbf{Image Segmentation: } Given a $n$-dimensional image with pixels $P$ and edges between neighboring pixels $E$. We are given weights 
-    $$\alpha_p, \beta_p \geq 0 \quad \forall p \in P$$
-    expressing the preference of pixel $p$ to be in the foreground $A$ and background $B$ respectively and confidence values 
-    $$\gamma_e \geq 0 \quad \forall e \in E$$
-    describing the confidence that neighboring pixels are in the same partition. Find a partition $(A,B)$ of $P$ with maximum quality:
-    $$q(A,B) = \sum_{p \in A} \alpha_p + \sum_{p \in B} \beta_p - \sum_{e=(u,v) \in E'} \gamma_e $$
-    where $E'$ are edges between pixels in $P$ that are in different partitions.
+	\textbf{Image Segmentation: } Given a $n$-dimensional image with pixels $P$ and edges between neighboring pixels $E$. We are given weights
+	$$\alpha_p, \beta_p \geq 0 \quad \forall p \in P$$
+	expressing the preference of pixel $p$ to be in the foreground $A$ and background $B$ respectively and confidence values
+	$$\gamma_e \geq 0 \quad \forall e \in E$$
+	describing the confidence that neighboring pixels are in the same partition. Find a partition $(A,B)$ of $P$ with maximum quality:
+	$$q(A,B) = \sum_{p \in A} \alpha_p + \sum_{p \in B} \beta_p - \sum_{e=(u,v) \in E'} \gamma_e $$
+	where $E'$ are edges between pixels in $P$ that are in different partitions.
 \end{definition}
 
 \begin{remark}
-    The intuition beind the quality function is that we want to maximize the sum of the confidences in the partitions while penaltizing neighboring pixels that are in different partitions based on the confidence that they are in the same partition.
+	The intuition beind the quality function is that we want to maximize the sum of the confidences in the partitions while penaltizing neighboring pixels that are in different partitions based on the confidence that they are in the same partition.
 \end{remark}
 
 \begin{lemma}
-    Let $S = \sum_{p \in P} (\alpha_p + \beta_p)$. We have
-    $$q(A,B) = S - \sum_{p \in A} \beta_p - \sum_{p \in B} \alpha_p - \sum_{e=(u,v) \in E'} \gamma_e$$
-    obsere that instead of maximizing $q$ we can try to minimize
-    $$q'(A,B) = \sum_{p \in A} \beta_p - \sum_{p \in B} \alpha_p +1 \sum_{e=(u,v) \in E'} \gamma_e$$
+	Let $S = \sum_{p \in P} (\alpha_p + \beta_p)$. We have
+	$$q(A,B) = S - \sum_{p \in A} \beta_p - \sum_{p \in B} \alpha_p - \sum_{e=(u,v) \in E'} \gamma_e$$
+	obsere that instead of maximizing $q$ we can try to minimize
+	$$q'(A,B) = \sum_{p \in A} \beta_p - \sum_{p \in B} \alpha_p +1 \sum_{e=(u,v) \in E'} \gamma_e$$
 \end{lemma}
 
 \begin{theorem}
-    To solve the problem we can create a flow network where there are 
-    \begin{itemize}
-    \item edges from $s$ to pixels with capacity $\alpha_p$ and from pixels to $t$ with capacity $\beta_p$ 
-    \item edges with capacity $\gamma_e$ in both directions between neighboring pixels
-    \end{itemize} 
-    The min-cut in this network then corresponds to the maximum quality. 
+	To solve the problem we can create a flow network where there are
+	\begin{itemize}
+		\item edges from $s$ to pixels with capacity $\alpha_p$ and from pixels to $t$ with capacity $\beta_p$
+		\item edges with capacity $\gamma_e$ in both directions between neighboring pixels
+	\end{itemize}
+	The min-cut in this network then corresponds to the maximum quality.
 \end{theorem}
 
 \begin{proof}
-    Obsere that in any $S, T$ cut the capacity of the cut is made of $\beta_p$ for $p \in A$ and $\alpha_p$ for $p \in B$ and $\gamma_e$ for $e \in E'$. Hence y minimizing the cut $S, T$ we minimize $q'$ therfore maximize our partition quality $q$.
+	Obsere that in any $S, T$ cut the capacity of the cut is made of $\beta_p$ for $p \in A$ and $\alpha_p$ for $p \in B$ and $\gamma_e$ for $e \in E'$. Hence y minimizing the cut $S, T$ we minimize $q'$ therfore maximize our partition quality $q$.
 \end{proof}

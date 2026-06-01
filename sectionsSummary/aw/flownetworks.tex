@@ -1,98 +1,98 @@
 \section{Flow Networks}
 
 \begin{definition}
-A \textbf{Flow Network} is a directed graph $G = (V, E)$ with source $s$, sink $t$, and capacity $c: E \to \mathbb{R}_{\geq 0}$.
+	A \textbf{Flow Network} is a directed graph $G = (V, E)$ with source $s$, sink $t$, and capacity $c: E \to \mathbb{R}_{\geq 0}$.
 \end{definition}
 
 \begin{definition}
-A \textbf{flow} $f: E \to \mathbb{R}_{\geq 0}$ satisfies:
-\begin{itemize}
-\item \textbf{Capacity}: $0 \leq f(e) \leq c(e)$ for all $e \in E$.
-\item \textbf{Conservation}: $\sum_{e \text{ in}} f(e) = \sum_{e \text{ out}} f(e)$ for all $v \neq s,t$.
-\end{itemize}
-The \textbf{value} $|f| := \sum_{e \text{ out } s} f(e) - \sum_{e \text{ in } s} f(e)$.
+	A \textbf{flow} $f: E \to \mathbb{R}_{\geq 0}$ satisfies:
+	\begin{itemize}
+		\item \textbf{Capacity}: $0 \leq f(e) \leq c(e)$ for all $e \in E$.
+		\item \textbf{Conservation}: $\sum_{e \text{ in}} f(e) = \sum_{e \text{ out}} f(e)$ for all $v \neq s,t$.
+	\end{itemize}
+	The \textbf{value} $|f| := \sum_{e \text{ out } s} f(e) - \sum_{e \text{ in } s} f(e)$.
 \end{definition}
 
 \subsection{Cuts}
 
 \begin{definition}
-An \textbf{$s$-$t$ cut} $(S,T)$ partitions $V$ with $s \in S, t \in T$. Its capacity:
-$$c(S,T) := \sum_{\substack{e=(u,v) \\ u \in S, v \in T}} c(e)$$
+	An \textbf{$s$-$t$ cut} $(S,T)$ partitions $V$ with $s \in S, t \in T$. Its capacity:
+	$$c(S,T) := \sum_{\substack{e=(u,v) \\ u \in S, v \in T}} c(e)$$
 \end{definition}
 
 \begin{lemma}
-For any flow $f$ and $s$-$t$ cut $(S,T)$:
-$$|f| = \sum_{e \in (S,T)} f(e) - \sum_{e \in (T,S)} f(e)$$
+	For any flow $f$ and $s$-$t$ cut $(S,T)$:
+	$$|f| = \sum_{e \in (S,T)} f(e) - \sum_{e \in (T,S)} f(e)$$
 \end{lemma}
 
 \begin{theorem}
-For any flow $f$ and any $s$-$t$ cut $(S,T)$: $|f| \leq c(S,T)$.
+	For any flow $f$ and any $s$-$t$ cut $(S,T)$: $|f| \leq c(S,T)$.
 \end{theorem}
 
 \subsection{Max-Flow Min-Cut}
 
 \begin{theorem}
-\textbf{Max-Flow Min-Cut Theorem}: $\max_f |f| = \min_{(S,T)} c(S,T)$.
-The following are equivalent: (1) $f$ is a max flow. (2) No augmenting path in $G_f$. (3) $\exists$ cut $(S,T)$ with $|f| = c(S,T)$.
+	\textbf{Max-Flow Min-Cut Theorem}: $\max_f |f| = \min_{(S,T)} c(S,T)$.
+	The following are equivalent: (1) $f$ is a max flow. (2) No augmenting path in $G_f$. (3) $\exists$ cut $(S,T)$ with $|f| = c(S,T)$.
 \end{theorem}
 
 \subsection{Residual Networks}
 
 \begin{definition}
-The \textbf{residual network} $G_f = (V, E_f)$ has:
-$$c_f(u,v) = \begin{cases} c(u,v) - f(u,v) & (u,v) \in E \\ f(v,u) & (v,u) \in E \\ 0 & \text{otherwise} \end{cases}$$
-$E_f = \{(u,v) \mid c_f(u,v) > 0\}$. Back edges allow flow rerouting.
+	The \textbf{residual network} $G_f = (V, E_f)$ has:
+	$$c_f(u,v) = \begin{cases} c(u,v) - f(u,v) & (u,v) \in E \\ f(v,u) & (v,u) \in E \\ 0 & \text{otherwise} \end{cases}$$
+	$E_f = \{(u,v) \mid c_f(u,v) > 0\}$. Back edges allow flow rerouting.
 \end{definition}
 
 \begin{definition}
-An \textbf{augmenting path} is a directed $s$-$t$ path in $G_f$. Its \textbf{bottleneck} is $\Delta(f,P) := \min_{e \in P} c_f(e)$.
+	An \textbf{augmenting path} is a directed $s$-$t$ path in $G_f$. Its \textbf{bottleneck} is $\Delta(f,P) := \min_{e \in P} c_f(e)$.
 \end{definition}
 
 \begin{lemma}
-Augmenting $f$ along $P$ (add $\Delta$ on forward, subtract on backward edges) yields valid flow $f'$ with $|f'| = |f| + \Delta$.
+	Augmenting $f$ along $P$ (add $\Delta$ on forward, subtract on backward edges) yields valid flow $f'$ with $|f'| = |f| + \Delta$.
 \end{lemma}
 
 \subsection{Ford-Fulkerson}
 
 \begin{algorithm}
-#Ford-Fulkerson Algorithm
-Init f(e) = 0 for all e
-While exists augmenting path P in G_f:
-  delta = min residual capacity on P
-  Update f along P
-Return f
+	#Ford-Fulkerson Algorithm
+	Init f(e) = 0 for all e
+	While exists augmenting path P in G_f:
+	delta = min residual capacity on P
+	Update f along P
+	Return f
 \end{algorithm}
 
 \begin{theorem}
-For integer capacities, Ford-Fulkerson terminates in $O(|f^*| \cdot |E|)$ time.
+	For integer capacities, Ford-Fulkerson terminates in $O(|f^*| \cdot |E|)$ time.
 \end{theorem}
 
 \begin{important}
-Ford-Fulkerson is \textbf{not guaranteed to terminate} for irrational capacities. For rational capacities it terminates but can be exponentially slow.
+	Ford-Fulkerson is \textbf{not guaranteed to terminate} for irrational capacities. For rational capacities it terminates but can be exponentially slow.
 \end{important}
 
 \subsection{Applications of MaxFlow}
 
 \subsubsection{Maximum Bipartite Matching}
 \begin{remark}
-Construct flow network: add $s \to A$, $B \to t$ with capacity $1$, and edges from $E$ with capacity $1$. Max integer flow = size of max matching. Solvable in $O(mn)$.
+	Construct flow network: add $s \to A$, $B \to t$ with capacity $1$, and edges from $E$ with capacity $1$. Max integer flow = size of max matching. Solvable in $O(mn)$.
 \end{remark}
 
 \subsubsection{Edge-disjoint Paths}
 \begin{definition}
-Given $s, t$, find max set of edge-disjoint $s$-$t$ paths.
+	Given $s, t$, find max set of edge-disjoint $s$-$t$ paths.
 \end{definition}
 
 \begin{theorem}
-Replace each undirected edge with two directed edges of capacity $1$. Then the max number of edge-disjoint paths equals $\text{maxFlow}(N_G) = \text{minCut}(S,T)$ (Menger's Theorem).
+	Replace each undirected edge with two directed edges of capacity $1$. Then the max number of edge-disjoint paths equals $\text{maxFlow}(N_G) = \text{minCut}(S,T)$ (Menger's Theorem).
 \end{theorem}
 
 \subsubsection{Image Segmentation}
 \begin{definition}
-Given pixels $P$ with foreground/background preferences $\alpha_p, \beta_p$ and neighbor confidence $\gamma_e$. Find partition $(A,B)$ maximizing:
-$$q(A,B) = \sum_{p \in A} \alpha_p + \sum_{p \in B} \beta_p - \sum_{e \in E'} \gamma_e$$
+	Given pixels $P$ with foreground/background preferences $\alpha_p, \beta_p$ and neighbor confidence $\gamma_e$. Find partition $(A,B)$ maximizing:
+	$$q(A,B) = \sum_{p \in A} \alpha_p + \sum_{p \in B} \beta_p - \sum_{e \in E'} \gamma_e$$
 \end{definition}
 
 \begin{theorem}
-Create flow network: edges $s \to p$ with capacity $\alpha_p$, $p \to t$ with capacity $\beta_p$, and bidirectional edges between neighbors with capacity $\gamma_e$. The min-cut corresponds to the maximum quality partition.
+	Create flow network: edges $s \to p$ with capacity $\alpha_p$, $p \to t$ with capacity $\beta_p$, and bidirectional edges between neighbors with capacity $\gamma_e$. The min-cut corresponds to the maximum quality partition.
 \end{theorem}

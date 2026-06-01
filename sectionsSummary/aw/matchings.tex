@@ -1,41 +1,41 @@
 \section{Matchings}
 
 \begin{definition}
-An edge set $M \subseteq E$ is a \textbf{matching} in $G = (V, E)$ if no vertex is incident to more than one edge from $M$.
-\begin{itemize}
-\item \textbf{Covered}: Vertex $v$ is incident to an edge in $M$.
-\item \textbf{Perfect}: Every vertex is covered ($|M| = |V|/2$).
-\item \textbf{Maximal}: Cannot be extended by adding edges.
-\item \textbf{Maximum}: No matching with more edges exists.
-\end{itemize}
+	An edge set $M \subseteq E$ is a \textbf{matching} in $G = (V, E)$ if no vertex is incident to more than one edge from $M$.
+	\begin{itemize}
+		\item \textbf{Covered}: Vertex $v$ is incident to an edge in $M$.
+		\item \textbf{Perfect}: Every vertex is covered ($|M| = |V|/2$).
+		\item \textbf{Maximal}: Cannot be extended by adding edges.
+		\item \textbf{Maximum}: No matching with more edges exists.
+	\end{itemize}
 \end{definition}
 
 \begin{algorithm}
-#Greedy Algorithm (Leads to Maximal Matching)
-#Size of M is at least half the size of a maximum matching.
-M = empty set
-While E is not empty:
-  Choose arbitrary edge e from E, add to M
-  Remove all edges incident to e's endpoints from E
+	#Greedy Algorithm (Leads to Maximal Matching)
+	#Size of M is at least half the size of a maximum matching.
+	M = empty set
+	While E is not empty:
+	Choose arbitrary edge e from E, add to M
+	Remove all edges incident to e's endpoints from E
 \end{algorithm}
 
 \begin{theorem}
-\textbf{Hall's Marriage Theorem}: A bipartite graph $G = (A \cup B, E)$ contains a matching of cardinality $|M|=|A|$ iff:
-$$\forall X \subseteq A : |X| \le |N(X)|$$
+	\textbf{Hall's Marriage Theorem}: A bipartite graph $G = (A \cup B, E)$ contains a matching of cardinality $|M|=|A|$ iff:
+	$$\forall X \subseteq A : |X| \le |N(X)|$$
 \end{theorem}
 
 \begin{theorem}
-\textbf{Frobenius Corollary}: Every $k$-regular bipartite graph contains a perfect matching. In fact, it is a union of perfect matchings. A perfect matching can be found in $O(|E|)$ time if the graph is $k$- or $2^k$-regular.
+	\textbf{Frobenius Corollary}: Every $k$-regular bipartite graph contains a perfect matching. In fact, it is a union of perfect matchings. A perfect matching can be found in $O(|E|)$ time if the graph is $k$- or $2^k$-regular.
 \end{theorem}
 
 \begin{definition}
-An \textbf{$M$-augmenting path} alternates between edges in $M$ and not in $M$, starting and ending in uncovered vertices.
+	An \textbf{$M$-augmenting path} alternates between edges in $M$ and not in $M$, starting and ending in uncovered vertices.
 \end{definition}
 
 \begin{theorem}
-\textbf{Berge's Theorem (1957)}: A matching $M$ is maximum iff there is no $M$-augmenting path.
+	\textbf{Berge's Theorem (1957)}: A matching $M$ is maximum iff there is no $M$-augmenting path.
 \end{theorem}
 
 \begin{algorithm}
-\textbf{Hopcroft-Karp} ($O(|V|^{1/2}|E|)$ time for bipartite graphs): While there is an augmenting path, find a maximal set of vertex-disjoint shortest augmenting paths using BFS, and augment $M$ along all of them.
+	\textbf{Hopcroft-Karp} ($O(|V|^{1/2}|E|)$ time for bipartite graphs): While there is an augmenting path, find a maximal set of vertex-disjoint shortest augmenting paths using BFS, and augment $M$ along all of them.
 \end{algorithm}

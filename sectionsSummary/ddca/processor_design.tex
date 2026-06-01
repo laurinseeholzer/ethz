@@ -1,0 +1,78 @@
+\section{Processor Design}
+
+\subsection{Von-Neumann Architecture}
+
+\begin{definition}
+	\textbf{Von Neumann Model}: Memory (stores program + data), Processing Unit (ALU + registers), Control Unit (PC + IR), Input, Output.
+\end{definition}
+
+\begin{important}
+	\textbf{Stored Program}: Instructions and data share a linear memory.
+	\textbf{Sequential Processing}: Instructions executed one at a time unless control flow changes PC.
+\end{important}
+
+\begin{remark}
+	Instruction cycle: (1) Fetch $\to$ (2) Decode $\to$ (3) Evaluate Address $\to$ (4) Fetch Operands $\to$ (5) Execute $\to$ (6) Store Result.
+\end{remark}
+
+\begin{definition}
+	\textbf{Address Space}: Total unique locations ($2^n$ for $n$ address bits).
+	\textbf{Addressability}: Bits per address (byte=8, word=32).
+	\textbf{Endianness}: Big (MSB at lowest addr) vs. Little (LSB at lowest addr).
+\end{definition}
+
+\subsection{Instruction Set Architecture (ISA)}
+
+\begin{definition}
+	\textbf{ISA}: Contract between software and hardware. Specifies memory organization, register set, instruction set, opcodes, data types, and addressing modes.
+\end{definition}
+
+\begin{lemma}
+	\textbf{CISC}: Small semantic gap; complex instructions (x86).
+	\textbf{RISC}: Large semantic gap; simple primitive instructions (MIPS, LC-3).
+\end{lemma}
+
+\begin{definition}
+	\textbf{Addressing Modes}: Immediate (constant in instr.), Register, PC-Relative ($PC + offset$), Indirect (pointer to address), Base+Offset ($Reg + offset$).
+\end{definition}
+
+\subsection{Assembly}
+
+\begin{important}
+	In RISC: operands must be in registers before processing.
+	\textbf{Load (lw)}: Memory $\to$ Register. \textbf{Store (sw)}: Register $\to$ Memory.
+	\textbf{Conditional branches}: Based on condition codes (LC-3) or register comparison (MIPS).
+	\textbf{Unconditional jumps}: Always redirect PC.
+\end{important}
+
+\subsection{Microarchitecture}
+
+\begin{definition}
+	\textbf{Microarchitecture}: The specific hardware implementation of an ISA. One ISA can have many different microarchitectures (single-cycle, multi-cycle, OoO). Software is unaware of the implementation.
+\end{definition}
+
+\begin{remark}
+	Design metrics: Performance (execution time, throughput), Cost (die area), Power/Energy, Reliability.
+\end{remark}
+
+\subsubsection{Single-Cycle}
+
+\begin{definition}
+	Every instruction completes in exactly \textbf{one clock cycle}.
+	CPI = 1. Clock period = delay of \textbf{slowest} instruction (typically \texttt{lw}: fetch $\to$ decode $\to$ ALU $\to$ mem read $\to$ write-back). Fast instructions waste cycle time.
+\end{definition}
+
+\subsubsection{Multi-Cycle}
+
+\begin{definition}
+	Breaks execution into \textbf{multiple shorter cycles}. Variable CPI per instruction (e.g., \texttt{add}=3, \texttt{lw}=5). Enables functional unit reuse (one ALU for PC increment and arithmetic).
+\end{definition}
+
+\begin{theorem}
+	$$\text{Time} = \text{Instr. Count} \times \text{Avg. CPI} \times T_c$$
+	Higher CPI than single-cycle, but shorter $T_c$ (only slowest \textit{stage}, not entire instruction).
+\end{theorem}
+
+\begin{remark}
+	Control unit is an FSM tracking current step. Microarchitectural registers (IR, MDR, ALUOut) store intermediate results between cycles. \textbf{Sequencing overhead}: register setup/clk-to-Q adds per-cycle penalty; too many cycles can negate benefits.
+\end{remark}

@@ -1,273 +1,273 @@
 \section{Memory}
 
 \begin{remark}
-    Memory is the \textbf{limiting factor} in computation. It limits computation in time, uses by far most of the space and consumes most of the energy.
+	Memory is the \textbf{limiting factor} in computation. It limits computation in time, uses by far most of the space and consumes most of the energy.
 \end{remark}
 
 \begin{remark}
-    The robustness decreases with increased memory capacity. (Ex. Row-Hammering-Attack)
+	The robustness decreases with increased memory capacity. (Ex. Row-Hammering-Attack)
 \end{remark}
 
 \begin{remark}
-    What the programmer sees is \textbf{virtual memory addresses} that are mapped to \textbf{physical memory} behind the scenes. This simplifies programming.
+	What the programmer sees is \textbf{virtual memory addresses} that are mapped to \textbf{physical memory} behind the scenes. This simplifies programming.
 \end{remark}
 
 \begin{definition}
-    \textbf{Ideal memory} has zero latency, cost, energy and infinite capacity and bandwidth
+	\textbf{Ideal memory} has zero latency, cost, energy and infinite capacity and bandwidth
 \end{definition}
 
 \begin{definition}
-    \textbf{Memory types} are defined by the trade-offs of cost and performance.
-    \begin{itemize}
-        \item FlipFlops and Latches: (tens of transistors per bit)
-        \item Static Random Access Memory (SRAM): (6 transistors per bit)
-        \item Dynamic Random Access Memory (DRAM): (cheaper but slower, needs refreshing)
-        \item Storage: (slow but cheap, 1 transistor per bit, non-volatile)
-    \end{itemize}
+	\textbf{Memory types} are defined by the trade-offs of cost and performance.
+	\begin{itemize}
+		\item FlipFlops and Latches: (tens of transistors per bit)
+		\item Static Random Access Memory (SRAM): (6 transistors per bit)
+		\item Dynamic Random Access Memory (DRAM): (cheaper but slower, needs refreshing)
+		\item Storage: (slow but cheap, 1 transistor per bit, non-volatile)
+	\end{itemize}
 \end{definition}
 
 \subsection{organization of Memory}
 
 \begin{definition}
-    Memory is an array of cells with adressing and output logic.
+	Memory is an array of cells with adressing and output logic.
 \end{definition}
 
 \begin{remark}
-    To increase performance memory is divided into multiple banks that allow concurrent access to independent adresses.
+	To increase performance memory is divided into multiple banks that allow concurrent access to independent adresses.
 \end{remark}
 
 \begin{definition}
-    A typical \textbf{DRAM hierarchy} has
-    \begin{itemize}
-        \item Multiple-channels that leave/enter the memory controller 
-        \item Dual in-line memory modules (DIMM) which are mounted on the motherboard
-        \item Ranks most likely front/back of card which are independently adressable bank groups with that share command and data busses.
-        \item Chips that have multiple banks and share data bus out of the chip
-        \item Bank can be made of multiple mats and has a global row/collumn organization
-    \end{itemize}
+	A typical \textbf{DRAM hierarchy} has
+	\begin{itemize}
+		\item Multiple-channels that leave/enter the memory controller
+		\item Dual in-line memory modules (DIMM) which are mounted on the motherboard
+		\item Ranks most likely front/back of card which are independently adressable bank groups with that share command and data busses.
+		\item Chips that have multiple banks and share data bus out of the chip
+		\item Bank can be made of multiple mats and has a global row/collumn organization
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
-    A bank hase a \textbf{row-buffer} where a whole row is loaded and from where the column bit is selected.
+	A bank hase a \textbf{row-buffer} where a whole row is loaded and from where the column bit is selected.
 \end{definition}
 
 \begin{remark}
-    If a row is already in the row-buffer it is a row hit, else a row-miss.
+	If a row is already in the row-buffer it is a row hit, else a row-miss.
 \end{remark}
 
 \begin{remark}
-    To load a row into the row-buffer we use a row of sense amplifiers that sense the bit in the capacitors, amplify and then restore them.
+	To load a row into the row-buffer we use a row of sense amplifiers that sense the bit in the capacitors, amplify and then restore them.
 \end{remark}
 
 \begin{remark}
-    On a high level,SRAM is organized similarly but uses more transistors and is faster.
+	On a high level,SRAM is organized similarly but uses more transistors and is faster.
 \end{remark}
 
 \subsection{Memory Technologies}
 
 \begin{definition}
-    \textbf{Static Random Access Memory (SRAM)} is a low latency memory built from two cross-coupled inverters that uses 6 transistors and does not need any refresh cycles.
+	\textbf{Static Random Access Memory (SRAM)} is a low latency memory built from two cross-coupled inverters that uses 6 transistors and does not need any refresh cycles.
 \end{definition}
 
 \begin{definition}
-    \textbf{Dynamic Random Access Memory (DRAM)} uses only 1 transistor and a capacitor to store a bit. It is cheaper but slower and needs to be refreshed periodically.
+	\textbf{Dynamic Random Access Memory (DRAM)} uses only 1 transistor and a capacitor to store a bit. It is cheaper but slower and needs to be refreshed periodically.
 \end{definition}
 
 \begin{definition}
-    \textbf{Phase change memory (PCM)} is a new non-volatile memory technology that uses chalcogenide glass in its Amorphous and Crystalline forms to store bits. The form of the glass can be changed by applying heat using current to the material. 
+	\textbf{Phase change memory (PCM)} is a new non-volatile memory technology that uses chalcogenide glass in its Amorphous and Crystalline forms to store bits. The form of the glass can be changed by applying heat using current to the material.
 \end{definition}
 
 \begin{remark}
-    PCM is slow, energy hungry and has limited endurance (the material degrades over time). However, it is non-volatile and very dense.
+	PCM is slow, energy hungry and has limited endurance (the material degrades over time). However, it is non-volatile and very dense.
 \end{remark}
 
 \subsection{Memory Hierarchy}
 
 \begin{remark}
-    The reason to having multiple levels of memory are the trade-offs between cost, capacity, latency and energy consumption. We can not have fast and large memory at the same time hence we have a small fast memory (caches) and a large slow memory (RAM). 
+	The reason to having multiple levels of memory are the trade-offs between cost, capacity, latency and energy consumption. We can not have fast and large memory at the same time hence we have a small fast memory (caches) and a large slow memory (RAM).
 \end{remark}
 
 \begin{remark}
-    By intelligently selecting and moving chunks of data form the main memory to the caches we get nearly the performance of a large and fast memory.
+	By intelligently selecting and moving chunks of data form the main memory to the caches we get nearly the performance of a large and fast memory.
 \end{remark}
 
 \begin{definition}
-   \textbf{Data Locality} is the property of data that allows us to predict where it will be accessed next.
-   \begin{itemize}
-       \item \textbf{Temporal locality:} If a data item is accessed, it is likely to be accessed again soon.
-       \item \textbf{Spatial locality:} If a data item is accessed, it is likely that nearby data items will be accessed soon.
-   \end{itemize}
+	\textbf{Data Locality} is the property of data that allows us to predict where it will be accessed next.
+	\begin{itemize}
+		\item \textbf{Temporal locality:} If a data item is accessed, it is likely to be accessed again soon.
+		\item \textbf{Spatial locality:} If a data item is accessed, it is likely that nearby data items will be accessed soon.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
-    \textbf{Manually managed memory} is when the programmer has to manually tell the system when to put what into which cache. These are often refered to as shared memory or scratchpads.
+	\textbf{Manually managed memory} is when the programmer has to manually tell the system when to put what into which cache. These are often refered to as shared memory or scratchpads.
 \end{definition}
 
 \subsection{Cache}
 
 \begin{definition}
-    Caches can be more or less strict in terms of where and how data is stored (mapped).
-    \begin{itemize}
-        \item \textbf{Direct Mapped:} The simplest form of cache where each memory address can only be mapped to one specific cache line.
-        \item \textbf{Set Associative:} Each memory address can be mapped to one of multiple cache lines within a specific set.
-        \item \textbf{Fully Associative:} Each memory address can be mapped to any cache line.
-    \end{itemize}    
+	Caches can be more or less strict in terms of where and how data is stored (mapped).
+	\begin{itemize}
+		\item \textbf{Direct Mapped:} The simplest form of cache where each memory address can only be mapped to one specific cache line.
+		\item \textbf{Set Associative:} Each memory address can be mapped to one of multiple cache lines within a specific set.
+		\item \textbf{Fully Associative:} Each memory address can be mapped to any cache line.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
-    \textbf{Replacement Strategies} are needed in case we access a cache line and it is already full. In that case we need to replace a cache line with the new one. Common strategies are:
-    \begin{itemize}
-        \item \textbf{Random:} Randomly select a cache line to replace.
-        \item \textbf{FIFO:} First In First Out.
-        \item \textbf{LRU:} Least Recently Used.
-        \item \textbf{LFU:} Least Frequently Used.
-    \end{itemize}
+	\textbf{Replacement Strategies} are needed in case we access a cache line and it is already full. In that case we need to replace a cache line with the new one. Common strategies are:
+	\begin{itemize}
+		\item \textbf{Random:} Randomly select a cache line to replace.
+		\item \textbf{FIFO:} First In First Out.
+		\item \textbf{LRU:} Least Recently Used.
+		\item \textbf{LFU:} Least Frequently Used.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
-    \textbf{Beladys OPT} evicts the cache line that will be used furthest in the future. This is achieves optimal number of cache misses but not optimal performance because cache misses might cost different amounts of time depending on where they are in the memory hierarchy. Furthermore it would require perfect knowledge of future accesses.
+	\textbf{Beladys OPT} evicts the cache line that will be used furthest in the future. This is achieves optimal number of cache misses but not optimal performance because cache misses might cost different amounts of time depending on where they are in the memory hierarchy. Furthermore it would require perfect knowledge of future accesses.
 \end{definition}
 
 \begin{definition}
-    \textbf{Write-Policy} defines what happens to data when it is written to the cache.
-    \begin{itemize}
-        \item \textbf{Write-Back:} The data is only written to the cache and not to the main memory.
-        \item \textbf{Write-Through:} The data is written to both the cache and the main memory.
-    \end{itemize}    
+	\textbf{Write-Policy} defines what happens to data when it is written to the cache.
+	\begin{itemize}
+		\item \textbf{Write-Back:} The data is only written to the cache and not to the main memory.
+		\item \textbf{Write-Through:} The data is written to both the cache and the main memory.
+	\end{itemize}
 \end{definition}
 
 \begin{remark}
-    \textbf{Cache compression} if cached data is close to each other we can save a base adress and then only the offsets of the other elements in the cache line. This effecively shrinks cache space usage.
+	\textbf{Cache compression} if cached data is close to each other we can save a base adress and then only the offsets of the other elements in the cache line. This effecively shrinks cache space usage.
 \end{remark}
 
 
 \subsubsection{Prefetching}
 
 \begin{definition}
-    \textbf{Prefetching} fetches data before the program needs it to hide memory latency. It can eliminate compulsory misses.
+	\textbf{Prefetching} fetches data before the program needs it to hide memory latency. It can eliminate compulsory misses.
 \end{definition}
 
 \begin{remark}
-    \textbf{Correctness:} Prefetching mispredictions do not affect program correctness. No state recovery is needed because unused prefetched data is simply ignored.
+	\textbf{Correctness:} Prefetching mispredictions do not affect program correctness. No state recovery is needed because unused prefetched data is simply ignored.
 \end{remark}
 
 \begin{definition}
-    \textbf{Performance Metrics:}
-    \begin{itemize}
-        \item \textbf{Accuracy:} Used prefetches / total sent prefetches.
-        \item \textbf{Coverage:} Prefetched misses / all misses.
-        \item \textbf{Timeliness:} On-time prefetches / used prefetches.
-        \item \textbf{Bandwidth/Cache Usage:} Extra bandwidth consumed and \textbf{Cache Pollution} (displacing useful demand data).
-    \end{itemize}
+	\textbf{Performance Metrics:}
+	\begin{itemize}
+		\item \textbf{Accuracy:} Used prefetches / total sent prefetches.
+		\item \textbf{Coverage:} Prefetched misses / all misses.
+		\item \textbf{Timeliness:} On-time prefetches / used prefetches.
+		\item \textbf{Bandwidth/Cache Usage:} Extra bandwidth consumed and \textbf{Cache Pollution} (displacing useful demand data).
+	\end{itemize}
 \end{definition}
 
 \begin{remark}
-    \textbf{Four Questions:} What (address), When (initiation time), Where (cache level/buffer), and How (who operates it).
+	\textbf{Four Questions:} What (address), When (initiation time), Where (cache level/buffer), and How (who operates it).
 \end{remark}
 
 \begin{definition}
-    \textbf{Hardware Prefetchers} monitor accesses to find patterns:
-    \begin{itemize}
-        \item \textbf{Instruction-Based (Stride):} Tracks strides per individual instruction using the Program Counter (PC).
-        \item \textbf{Memory-Region-Based:} Detects patterns across multiple instructions within a region.
-        \item \textbf{Stream Buffers:} Special case of region-based stride prefetching where stride $N=1$.
-    \end{itemize}
+	\textbf{Hardware Prefetchers} monitor accesses to find patterns:
+	\begin{itemize}
+		\item \textbf{Instruction-Based (Stride):} Tracks strides per individual instruction using the Program Counter (PC).
+		\item \textbf{Memory-Region-Based:} Detects patterns across multiple instructions within a region.
+		\item \textbf{Stream Buffers:} Special case of region-based stride prefetching where stride $N=1$.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
-    \textbf{Software Prefetching:} Programmer or compiler inserts ISA-specific instructions (e.g., x86 $PREFETCH$).
+	\textbf{Software Prefetching:} Programmer or compiler inserts ISA-specific instructions (e.g., x86 $PREFETCH$).
 \end{definition}
 
 \begin{remark}
-    Software prefetching consumes execution bandwidth and offers limited portability as the prefetch distance depends on hardware latency.
+	Software prefetching consumes execution bandwidth and offers limited portability as the prefetch distance depends on hardware latency.
 \end{remark}
 
 \begin{definition}
-    \textbf{Execution-Based Prefetching} pre-executes program pieces to find misses using Runahead Execution.
-    When the oldest instruction in the pipeline is a long-latency miss, the processor checkpoints architectural state and speculatively executes ahead to generate prefetches.
+	\textbf{Execution-Based Prefetching} pre-executes program pieces to find misses using Runahead Execution.
+	When the oldest instruction in the pipeline is a long-latency miss, the processor checkpoints architectural state and speculatively executes ahead to generate prefetches.
 \end{definition}
 
 \begin{remark}
-    Runahead execution allows to detect future cache misses while waiting for the fetch of the current cache miss. This allows for memory level parallelism without the imense hardware of a Reorder Buffer (ROB).
+	Runahead execution allows to detect future cache misses while waiting for the fetch of the current cache miss. This allows for memory level parallelism without the imense hardware of a Reorder Buffer (ROB).
 \end{remark}
 
 \begin{remark}
-    Runahead exectuion can not parallelize dependent misses (Pointer-Chasing). We can use \textbf{Adress-Value Delta (AVD) Prediction} to predict the value of a memory access and prefetch the data.
+	Runahead exectuion can not parallelize dependent misses (Pointer-Chasing). We can use \textbf{Adress-Value Delta (AVD) Prediction} to predict the value of a memory access and prefetch the data.
 \end{remark}
 
 \begin{remark}
-    \textbf{Modern Techniques:}
-    \begin{itemize}
-        \item \textbf{Pythia:} Uses Reinforcement Learning to select prefetch offsets based on rewards and current system state to increase accuracy and bandwidth efficiency.
-        \item \textbf{Hermes:} Uses a Perceptron to predict if a load will go off-chip, allowing it to bypass the slow on-chip cache hierarchy to find data faster.
-    \end{itemize}
+	\textbf{Modern Techniques:}
+	\begin{itemize}
+		\item \textbf{Pythia:} Uses Reinforcement Learning to select prefetch offsets based on rewards and current system state to increase accuracy and bandwidth efficiency.
+		\item \textbf{Hermes:} Uses a Perceptron to predict if a load will go off-chip, allowing it to bypass the slow on-chip cache hierarchy to find data faster.
+	\end{itemize}
 \end{remark}
 
 \begin{remark}
-    \textbf{Challenges in Multi-Core Prefetching:} Prefetching of core $A$ can interfere with Cache and Bus bandwidth or the access to the DRAM (banks, ranks, channels...) of core $B$. To avoid contention/pollution of cache/bus capacity and DRAM accesses, prefetching has to be throttled and coordinated across cores.
+	\textbf{Challenges in Multi-Core Prefetching:} Prefetching of core $A$ can interfere with Cache and Bus bandwidth or the access to the DRAM (banks, ranks, channels...) of core $B$. To avoid contention/pollution of cache/bus capacity and DRAM accesses, prefetching has to be throttled and coordinated across cores.
 \end{remark}
 
 \subsection{Virtual Memory}
 
 \begin{definition}
-    \textbf{Virtual Memory} is an automatic memory management technique that provides each process with the illusion of a private, very large address space.
-    \begin{itemize}
-        \item \textbf{Programmer Abstraction}: The programmer works with virtual addresses (VA) and does not deal with physical memory addresses.
-        \item \textbf{Indirection}: Requires a mapping mechanism to translate virtual addresses to physical addresses (PA).
-        \item \textbf{Isolation}: Each process has its own address space, ensuring one process cannot overwrite or access the memory of another.
-    \end{itemize}
+	\textbf{Virtual Memory} is an automatic memory management technique that provides each process with the illusion of a private, very large address space.
+	\begin{itemize}
+		\item \textbf{Programmer Abstraction}: The programmer works with virtual addresses (VA) and does not deal with physical memory addresses.
+		\item \textbf{Indirection}: Requires a mapping mechanism to translate virtual addresses to physical addresses (PA).
+		\item \textbf{Isolation}: Each process has its own address space, ensuring one process cannot overwrite or access the memory of another.
+	\end{itemize}
 \end{definition}
 
 \begin{lemma}
-    \textbf{Address Translation} occurs at a page granularity. A virtual address is split into a Virtual Page Number (VPN) and a Page Offset. Only the VPN is translated into a Physical Page Number (PPN), while the offset remains identical in the physical address.
+	\textbf{Address Translation} occurs at a page granularity. A virtual address is split into a Virtual Page Number (VPN) and a Page Offset. Only the VPN is translated into a Physical Page Number (PPN), while the offset remains identical in the physical address.
 \end{lemma}
 
 \begin{definition}
-    A \textbf{Page Table} is a per-process data structure stored in physical memory that maintains the virtual-to-physical mappings.
-    \begin{itemize}
-        \item \textbf{PTE (Page Table Entry)}: Contains the mapping (PPN) and status bits such as Present, Read/Write, and User/Supervisor.
-        \item \textbf{PDE (Page Directory Entry)}: Used in multi-level structures to point to the next level of the page table.
-    \end{itemize}
+	A \textbf{Page Table} is a per-process data structure stored in physical memory that maintains the virtual-to-physical mappings.
+	\begin{itemize}
+		\item \textbf{PTE (Page Table Entry)}: Contains the mapping (PPN) and status bits such as Present, Read/Write, and User/Supervisor.
+		\item \textbf{PDE (Page Directory Entry)}: Used in multi-level structures to point to the next level of the page table.
+	\end{itemize}
 \end{definition}
 
 \begin{remark}
-    \textbf{Multi-Level Page Tables} address the size issue of single-level tables by only requiring the first-level table to be permanently in physical memory. Modern x86-64 systems use a 4-level page table structure.
+	\textbf{Multi-Level Page Tables} address the size issue of single-level tables by only requiring the first-level table to be permanently in physical memory. Modern x86-64 systems use a 4-level page table structure.
 \end{remark}
 
 \begin{definition}
-    The \textbf{Translation Lookaside Buffer (TLB)} is a small hardware cache within the processor that stores recently used PTEs to speed up translation and avoid frequent memory accesses to the page table.
+	The \textbf{Translation Lookaside Buffer (TLB)} is a small hardware cache within the processor that stores recently used PTEs to speed up translation and avoid frequent memory accesses to the page table.
 \end{definition}
 
 \begin{example}
-    \textbf{Handling TLB Misses}:
-    \begin{itemize}
-        \item \textbf{Hardware-Managed (e.g., x86)}: A hardware Page Table Walker automatically traverses the table levels.
-        \item \textbf{Software-Managed (e.g., MIPS)}: The hardware raises an exception, and the OS performs the walk.
-    \end{itemize}
+	\textbf{Handling TLB Misses}:
+	\begin{itemize}
+		\item \textbf{Hardware-Managed (e.g., x86)}: A hardware Page Table Walker automatically traverses the table levels.
+		\item \textbf{Software-Managed (e.g., MIPS)}: The hardware raises an exception, and the OS performs the walk.
+	\end{itemize}
 \end{example}
 
 \begin{definition}
-    The \textbf{CLOCK Page Replacement Algorithm} is an approximation of LRU used when physical memory is full. It uses a circular list and a "reference (R) bit" in the PTE. The algorithm clears R-bits during traversal and replaces the first page found with an R-bit of 0.
+	The \textbf{CLOCK Page Replacement Algorithm} is an approximation of LRU used when physical memory is full. It uses a circular list and a "reference (R) bit" in the PTE. The algorithm clears R-bits during traversal and replaces the first page found with an R-bit of 0.
 \end{definition}
 
 \subsubsection{Memory Protection}
 
 \begin{remark}
-    \textbf{Access Control} is enforced during translation by storing permission bits in the PTE.
-    \begin{itemize}
-        \item \textbf{Privilege Levels}: x86 uses four protection rings (Ring 0 for Kernel/Supervisor, Ring 3 for Applications/User).
-        \item \textbf{Enforcement}: If an access type (Read/Write) or privilege level violates the bits in the PDE/PTE, the hardware generates an exception.
-    \end{itemize}
+	\textbf{Access Control} is enforced during translation by storing permission bits in the PTE.
+	\begin{itemize}
+		\item \textbf{Privilege Levels}: x86 uses four protection rings (Ring 0 for Kernel/Supervisor, Ring 3 for Applications/User).
+		\item \textbf{Enforcement}: If an access type (Read/Write) or privilege level violates the bits in the PDE/PTE, the hardware generates an exception.
+	\end{itemize}
 \end{remark}
 
 \begin{remark}
-    \textbf{RowHammer Security Issue}: This hardware failure allows an attacker to induce bit flips in adjacent memory rows. An attacker can use this to flip bits in a PTE, potentially gaining write access to their own page table and subsequently the entire physical memory.
+	\textbf{RowHammer Security Issue}: This hardware failure allows an attacker to induce bit flips in adjacent memory rows. An attacker can use this to flip bits in a PTE, potentially gaining write access to their own page table and subsequently the entire physical memory.
 \end{remark}
 
 \begin{lemma}
-    \textbf{Cache-VM Interaction}: Systems must decide if caches are virtual or physical.
-    \begin{itemize}
-        \item \textbf{Virtually Addressed}: Faster access but suffers from \textbf{Homonyms} (same VA, different PA across processes) and \textbf{Synonyms} (different VAs, same PA).
-        \item \textbf{Physically Addressed}: Avoids aliasing but requires translation (TLB) before the cache can be fully accessed.
-    \end{itemize}
+	\textbf{Cache-VM Interaction}: Systems must decide if caches are virtual or physical.
+	\begin{itemize}
+		\item \textbf{Virtually Addressed}: Faster access but suffers from \textbf{Homonyms} (same VA, different PA across processes) and \textbf{Synonyms} (different VAs, same PA).
+		\item \textbf{Physically Addressed}: Avoids aliasing but requires translation (TLB) before the cache can be fully accessed.
+	\end{itemize}
 \end{lemma}

@@ -1,58 +1,151 @@
 \section{Fundamentals}
 
 \subsection{MOS Transistors}
+
 \begin{definition}
-\textbf{n-type}: Closed (ON) when Gate is High (1). Excellent at passing 0 (strong 0).
+	\textbf{nMOS}: ON when Gate=1, OFF when Gate=0. Passes strong 0, weak 1.
+	\textbf{pMOS}: ON when Gate=0, OFF when Gate=1. Passes strong 1, weak 0.
 \end{definition}
 
 \begin{definition}
-\textbf{p-type}: Closed (ON) when Gate is Low (0). Excellent at passing 1 (strong 1).
-\end{definition}
-
-\begin{definition}
-\textbf{CMOS}: Organized into two networks to prevent static power draw:
-\begin{itemize}
-    \item \textbf{Pull-Up (PUN)}: Built with pMOS to connect output to $V_{DD}$ (1).
-    \item \textbf{Pull-Down (PDN)}: Built with nMOS to connect output to Ground (0).
-\end{itemize}
+	\textbf{CMOS Logic}: Two complementary networks:
+	\begin{itemize}
+		\item \textbf{Pull-Up (PUN)}: pMOS connects output to $V_{DD}$ (1).
+		\item \textbf{Pull-Down (PDN)}: nMOS connects output to GND (0).
+	\end{itemize}
+	Output is always strongly driven; no significant static power draw.
 \end{definition}
 
 \subsection{Logic Gates}
 
 \begin{definition}
-\textbf{NOT}: 2 transistors (1 pMOS, 1 nMOS). $$Y = \overline{A}$$
-\textbf{NAND}: 4 transistors. $$Y = \overline{A \cdot B}$$
-\textbf{NOR}: 4 transistors. $$Y = \overline{A + B}$$
-\textbf{XOR}: (1 if different) $$Y = A \oplus B$$
-\textbf{XNOR}: (1 if same) $$Y = \overline{A \oplus B}$$
-\textbf{Buffer}:  (two NOT gates) $$Y = A$$
-AND/OR are usually implemented as NAND/NOR followed by an inverter.
+	\textbf{NOT}: $Y = \overline{A}$ (2 transistors).
+	\textbf{NAND}: $Y = \overline{A \cdot B}$ (4T: 2 pMOS parallel, 2 nMOS series).
+	\textbf{NOR}: $Y = \overline{A + B}$ (4T: 2 pMOS series, 2 nMOS parallel).
+	AND/OR are NAND/NOR + inverter (inverting gates are natural in CMOS).
 \end{definition}
 
-\begin{important}
-A set of gates is \textbf{logically complete} if any Boolean function can be realized using only those gates (e.g. $\{NAND\}$, $\{NOR\}$).
-\end{important}
+\begin{remark}
+	\textbf{XOR}: $Y = A \oplus B$ (1 if different).
+	\textbf{XNOR}: $Y = \overline{A \oplus B}$ (1 if same).
+	\textbf{Buffer}: $Y = A$ (two NOTs in series, for amplification/delay).
+\end{remark}
 
 \subsection{Boolean Algebra}
 
-\begin{theorem}
-\textbf{Basic Rules}: Identity ($A \cdot 1 = A, A + 0 = A$), Complement ($A \cdot \overline{A} = 0, A + \overline{A} = 1$), Distributive ($A \cdot (B + C) = A \cdot B + A \cdot C$).
-\end{theorem}
-
-\begin{theorem}
-\textbf{DeMorgan's theorems}:
-$$\overline{A \cdot B} = \overline{A} + \overline{B}$$
-$$\overline{A + B} = \overline{A} \cdot \overline{B}$$
-\end{theorem}
-
 \begin{definition}
-\textbf{Minterm}: AND term containing all input variables.
-\textbf{Sum of Products (SOP)}: OR of minterms for which output is 1.
+	Key rules: Identity ($A \cdot 1 = A$, $A + 0 = A$), Complement ($A \cdot \overline{A} = 0$, $A + \overline{A} = 1$), Distributive ($A(B+C) = AB + AC$).
 \end{definition}
 
-\begin{algorithm}
-#Karnaugh Map (K-Map) format
-1. Map truth table into grid where adjacent cells differ by 1 bit (Gray code).
-2. Circle groups of 2^n adjacent 1s.
-3. Eliminate variables that change within the circle.
-\end{algorithm}
+\begin{theorem}
+	\textbf{DeMorgan's}: $\overline{A \cdot B} = \overline{A} + \overline{B}$ and $\overline{A + B} = \overline{A} \cdot \overline{B}$.
+\end{theorem}
+
+\begin{important}
+	A gate set is \textbf{logically complete} if any Boolean function can be built from it. Complete sets: $\{$AND, OR, NOT$\}$, $\{$NAND$\}$, $\{$NOR$\}$.
+\end{important}
+
+\begin{definition}
+	\textbf{Minterm}: Product term with all variables. \textbf{SOP}: OR of minterms where output=1. \textbf{K-Map}: Group $2^n$ adjacent 1s to eliminate changing variables.
+\end{definition}
+
+\subsection{Combinational Logic}
+
+\begin{definition}
+	Output is a pure function of current inputs (no memory/state).
+\end{definition}
+
+\begin{definition}
+	\textbf{Decoder} ($n$-to-$2^n$): Sets exactly one of $2^n$ outputs to 1 based on $n$-bit input.
+	\textbf{Multiplexer}: $\log_2 N$ select lines choose which of $N$ data inputs reaches output. Can implement any logic function as a LUT.
+\end{definition}
+
+\begin{definition}
+	\textbf{Full Adder}: $S = A \oplus B \oplus C_{in}$, $C_{out} = AB + C_{in}(A \oplus B)$.
+	\textbf{Ripple Carry Adder}: Chain $n$ full adders; critical path is carry ripple from LSB to MSB.
+\end{definition}
+
+\begin{lemma}
+	\textbf{Tri-state buffer}: Output can be 0, 1, or High-Z (disconnected). Enables shared buses.
+	\textbf{PLA}: Programmable AND-plane + OR-plane = physical SOP implementation.
+\end{lemma}
+
+\subsection{Sequential Logic}
+
+\begin{definition}
+	Output depends on current inputs \textbf{and past state}. Uses storage elements (feedback loops).
+\end{definition}
+
+\begin{definition}
+	\textbf{R-S Latch}: Cross-coupled NANDs. Set ($S$=0) $\to Q$=1, Reset ($R$=0) $\to Q$=0. $S$=$R$=0 is \textbf{forbidden} (metastability).
+	\textbf{D Latch}: Adds Write Enable; when WE=1, $Q$ follows $D$. \textbf{Transparent} while enabled.
+\end{definition}
+
+\begin{important}
+	\textbf{D Flip-Flop}: Master-slave pair of D latches. \textbf{Edge-triggered}: captures $D$ only at rising clock edge. Solves transparency problem for synchronous design.
+\end{important}
+
+\subsubsection{Timing and Clock}
+
+\begin{definition}
+	\textbf{Asynchronous}: Transitions on input change (no coordination).
+	\textbf{Synchronous}: Transitions on clock edges (predictable, global).
+	\textbf{Clock}: Periodic 0/1 signal; period must cover worst-case combinational delay.
+\end{definition}
+
+\subsubsection{Finite State Machines}
+
+\begin{definition}
+	\textbf{FSM}: States + transitions + inputs + outputs.
+	\textbf{Moore}: Output depends only on state.
+	\textbf{Mealy}: Output depends on state \textbf{and} inputs.
+\end{definition}
+
+\begin{remark}
+	FSM implementation: (1) State register (sequential), (2) Next-state logic (combinational), (3) Output logic (combinational). State encoding: Binary (min bits), One-Hot (one bit/state), Output (use outputs as state bits).
+\end{remark}
+
+\subsubsection{Memory and Registers}
+
+\begin{definition}
+	\textbf{Register}: Group of D flip-flops with common clock/WE.
+	\textbf{Memory}: Array indexed by address. Address space = $2^n$ locations. Uses decoder + MUX.
+\end{definition}
+
+\subsection{Timing}
+
+\subsubsection{Combinational Timing}
+
+\begin{definition}
+	\textbf{Propagation delay ($t_{pd}$)}: Max time from input change to output stable (longest path).
+	\textbf{Contamination delay ($t_{cd}$)}: Min time from input change to output starts changing (shortest path).
+\end{definition}
+
+\begin{remark}
+	\textbf{Glitch}: Multiple output transitions from a single input change due to different path delays. Fixed by adding consensus terms in K-maps.
+\end{remark}
+
+\subsubsection{Sequential Timing}
+
+\begin{definition}
+	\textbf{Aperture time} $t_a = t_{setup} + t_{hold}$:
+	$t_{setup}$: Data must be stable \textbf{before} clock edge.
+	$t_{hold}$: Data must stay stable \textbf{after} clock edge.
+	Violation $\to$ \textbf{metastability} (output stuck between 0/1).
+\end{definition}
+
+\begin{definition}
+	$t_{pcq}$: Max time after clock edge until $Q$ stable.
+	$t_{ccq}$: Min time after clock edge until $Q$ starts changing.
+\end{definition}
+
+\begin{theorem}
+	\textbf{Setup constraint}: $T_c \geq t_{pcq} + t_{pd} + t_{setup}$ (determines $f_{max}$).
+	\textbf{Hold constraint}: $t_{ccq} + t_{cd} > t_{hold}$ (cannot fix by slowing clock).
+\end{theorem}
+
+\begin{important}
+	\textbf{Clock skew} ($t_{skew}$) worsens both:
+	Setup: $T_c \geq t_{pcq} + t_{pd} + t_{setup} + t_{skew}$.
+	Hold: $t_{ccq} + t_{cd} > t_{hold} + t_{skew}$.
+\end{important}

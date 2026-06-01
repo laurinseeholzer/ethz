@@ -1,0 +1,133 @@
+\section{Instruction Level Parallelism}
+
+\subsection{Pipelining}
+
+\begin{definition}
+	\textbf{Pipelining}: Overlap multiple instructions in execution (assembly line). Increases \textbf{throughput}, not single-instruction latency. Ideal $k$-stage pipeline $\to$ $k$-fold speedup.
+\end{definition}
+
+\begin{definition}
+	\textbf{5-Stage RISC Pipeline}: (1) IF: Fetch instruction, update PC. (2) ID: Decode, read registers. (3) EX: ALU / address calc. (4) MEM: Data memory access. (5) WB: Write result to register file. Pipeline registers (IF/ID, ID/EX, EX/MEM, MEM/WB) carry data between stages.
+\end{definition}
+
+\subsubsection{Pipeline Hazards}
+
+\begin{definition}
+	\textbf{Structural}: Hardware resource conflict.
+	\textbf{Data (RAW/WAR/WAW)}: Instruction depends on incomplete prior result. Only \textbf{RAW} (flow dependence) needs HW intervention in 5-stage in-order.
+	\textbf{Control}: Branch target unknown; wrong instructions may be fetched.
+\end{definition}
+
+\begin{lemma}
+	\textbf{Forwarding (Bypassing)}: Route result from EX/MEM stage directly to ALU input, bypassing register file. Resolves most RAW hazards.
+\end{lemma}
+
+\begin{important}
+	\textbf{Load-Use Hazard}: Forwarding cannot resolve (data available only after MEM). Requires a \textbf{1-cycle stall}: disable PC and IF/ID update, flush ID/EX (insert bubble/NOP).
+\end{important}
+
+\begin{remark}
+	\textbf{Branch handling}: Static prediction (always not-taken), Dynamic prediction (Branch History Table), Early resolution (move comparison to Decode stage).
+\end{remark}
+
+\subsubsection{Precise Exceptions}
+
+\begin{definition}
+	\textbf{Exceptions}: Internal problems. \textbf{Interrupts}: External events. Both require: retire all prior instructions, flush younger ones, save PC+state, redirect to handler.
+\end{definition}
+
+\begin{definition}
+	\textbf{Reorder Buffer (ROB)}: Stores results as instructions complete OoO. Retires \textbf{in-order}, checking for exceptions at retirement. Uses valid bits in registers pointing to ROB entries.
+\end{definition}
+
+\subsection{Out-of-Order Execution}
+
+\begin{definition}
+	\textbf{OoO}: Execute instructions based on operand availability (dataflow), not program order. Fetched/decoded in-order $\to$ executed OoO $\to$ retired in-order (via ROB).
+\end{definition}
+
+\begin{remark}
+	OoO tolerates long latencies by executing independent instructions while dependent ones wait. Improves IPC at cost of complexity and power.
+\end{remark}
+
+\subsubsection{OoO Mechanisms}
+
+\begin{definition}
+	\textbf{Register Renaming}: Eliminates false dependencies (WAW, WAR) by mapping architectural registers to physical storage.
+	\textbf{Reservation Stations (RS)}: Buffers holding instructions waiting for operands.
+	\textbf{Tag Broadcast}: Results broadcast via bus; RS entries with matching tags capture values.
+\end{definition}
+
+\begin{definition}
+	\textbf{Tomasulo's Algorithm}: Decode $\to$ allocate RS $\to$ rename via Register Alias Table (RAT) $\to$ if operands ready: execute + broadcast; else: watch bus for tags. Instruction window size limits scalability.
+\end{definition}
+
+\subsubsection{Memory Dependencies}
+
+\begin{definition}
+	\textbf{Memory Disambiguation}: Determine if load/store depends on prior load/store.
+	\textbf{Conservative}: Stall all (safe, slow). \textbf{Aggressive}: Assume independent (fast, may need recovery). \textbf{Intelligent}: Predict dependencies.
+\end{definition}
+
+\begin{definition}
+	\textbf{Load/Store Queue (LSQ)}: Tracks uncommitted memory ops.
+	\textbf{Store-to-Load Forwarding}: Search LSQ for matching address, copy data directly to load.
+\end{definition}
+
+\subsection{Superscalar Execution}
+
+\begin{definition}
+	$N$-\textbf{Superscalar}: Issue $N$ instructions per cycle. Orthogonal to OoO (can be in-order superscalar or OoO superscalar). Main challenge: finding $N$ independent instructions.
+\end{definition}
+
+\subsection{Branch Prediction}
+
+\begin{remark}
+	Mispredictions drastically reduce IPC in deep pipelines. Modern processors target 95\%+ accuracy.
+\end{remark}
+
+\subsubsection{Static Prediction}
+
+\begin{definition}
+	\textbf{Always Taken / Not-Taken}: Simple, low accuracy.
+	\textbf{BTFN}: Backward Taken, Forward Not-Taken (exploits loops).
+	\textbf{Profile/Program/Programmer-based}: Compile-time heuristics or hints (\texttt{likely()}/\texttt{unlikely()}).
+\end{definition}
+
+\subsubsection{Dynamic Prediction}
+
+\begin{definition}
+	\textbf{Branch Target Buffer (BTB)}: Cache of recent branch target addresses.
+	\textbf{Return Address Stack (RAS)}: Push on call, pop on ret ($>$95\% accuracy with 8 entries).
+\end{definition}
+
+\begin{definition}
+	\textbf{Last-Time}: Predict same as last outcome (1-bit). Good for long loops, poor for short/alternating.
+	\textbf{Two-Bit Counter (Bimodal)}: Changes prediction only after 2 consecutive mispredictions (hysteresis). $\sim$85--90\% accuracy.
+\end{definition}
+
+\begin{definition}
+	\textbf{Two-Level Prediction}: Use history to correlate outcomes.
+	\textbf{GHR} (Global History Register): Recent outcomes of different branches.
+	\textbf{LHR} (Local History Register): Past outcomes of same branch.
+	\textbf{Gshare}: XOR GHR with PC to index Pattern History Table (reduces interference).
+\end{definition}
+
+\begin{important}
+	\textbf{Tournament Predictor}: Multiple predictors run in parallel; meta-predictor selects the most accurate one.
+	\textbf{Biased branch filtering}: Route heavily biased branches to simple predictors, save complex predictor capacity.
+\end{important}
+
+\subsubsection{Advanced Predictors}
+
+\begin{definition}
+	\textbf{Perceptron}: Single-layer neural net (adder tree + sign). 95\%+ accuracy, but only learns linearly separable functions.
+	\textbf{TAGE}: Multiple tables with geometric history lengths. State-of-the-art (97\%+).
+\end{definition}
+
+\subsubsection{Alternative Control Flow}
+
+\begin{definition}
+	\textbf{Delayed Branching}: $N$ delay-slot instructions execute unconditionally. Keeps pipeline full but ties ISA to pipeline depth.
+	\textbf{Predicated Execution (CMOV)}: Execute both paths, commit only if predicate true. Eliminates mispredictions but wastes energy.
+\end{definition}

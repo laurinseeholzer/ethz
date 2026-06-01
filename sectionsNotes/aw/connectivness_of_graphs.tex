@@ -1,89 +1,89 @@
 \section{Connectivness of Graphs}
 
 \begin{definition}
-    Let $G = (V, E)$ be a graph, $u, v \in V, u \neq v$. $u$ and $v$ are called \textbf{connected} if there is a $u-v$-path in $G$.
+	Let $G = (V, E)$ be a graph, $u, v \in V, u \neq v$. $u$ and $v$ are called \textbf{connected} if there is a $u-v$-path in $G$.
 \end{definition}
 
 \begin{definition}
-    A graph $G = (V, E)$ is called \textbf{connected} if $\forall u, v \in V, u \neq v$ a $u-v$-path in $G$ exists.
+	A graph $G = (V, E)$ is called \textbf{connected} if $\forall u, v \in V, u \neq v$ a $u-v$-path in $G$ exists.
 \end{definition}
 
 \begin{definition}
-    Let $G = (V, E)$ be a graph, $u, v \in V, u \neq v$. $u$ and $v$ are called \textbf{$k$-connected} if $|V|\ge k+1$ and
-    $$\forall X \subseteq V \setminus \{u, v\} \text{ with } |X| \lt k, u \text{ and } v \text{ are connected in } G[V \setminus X]$$
+	Let $G = (V, E)$ be a graph, $u, v \in V, u \neq v$. $u$ and $v$ are called \textbf{$k$-connected} if $|V|\ge k+1$ and
+	$$\forall X \subseteq V \setminus \{u, v\} \text{ with } |X| \lt k, u \text{ and } v \text{ are connected in } G[V \setminus X]$$
 \end{definition}
 
 \begin{definition}
-    A graph $G = (V, E)$ is called \textbf{$k$-connected} if $|V| \gt k$ and
-    $$\forall X \subseteq V \text{ with } |X| \lt k, G[V \setminus X] \text{ is connected}$$
+	A graph $G = (V, E)$ is called \textbf{$k$-connected} if $|V| \gt k$ and
+	$$\forall X \subseteq V \text{ with } |X| \lt k, G[V \setminus X] \text{ is connected}$$
 \end{definition}
 
 \begin{definition}
-    Let $G = (V, E)$ be a graph, $u, v \in V$ and $X \subseteq V \setminus \{u, v\}$. $X$ is called a \textbf{$u-v$-separator} if $u$ and $v$ are in different connected components of $G[V \setminus X]$.
+	Let $G = (V, E)$ be a graph, $u, v \in V$ and $X \subseteq V \setminus \{u, v\}$. $X$ is called a \textbf{$u-v$-separator} if $u$ and $v$ are in different connected components of $G[V \setminus X]$.
 \end{definition}
 
 \begin{remark}
-    More generally one can say that if a Graph $G$ contians a vertex $v$ stuch that $deg(v) \lt k$, then $G$ can
-    not be $k$-connected.
+	More generally one can say that if a Graph $G$ contians a vertex $v$ stuch that $deg(v) \lt k$, then $G$ can
+	not be $k$-connected.
 \end{remark}
 
 \begin{theorem}
-    \textbf{Menger's Theorem (Vertex Version)}: Let $G = (V, E)$ be a graph and $u, v \in V$. Every $u-v$-separator $X$ has size $\mid X \mid \geq k$ iff there are $k$ inernally vertexdisjoint $u-v$-paths. 
+	\textbf{Menger's Theorem (Vertex Version)}: Let $G = (V, E)$ be a graph and $u, v \in V$. Every $u-v$-separator $X$ has size $\mid X \mid \geq k$ iff there are $k$ inernally vertexdisjoint $u-v$-paths.
 \end{theorem}
 
 \begin{theorem}
-    \textbf{Menger's Theorem (All Vertices Version)}: A graph $G$ is $k$-connected iff. $\forall u, v \in V, u \neq v$ there are $k$ internally vertex-disjoint $u-v$-paths.
+	\textbf{Menger's Theorem (All Vertices Version)}: A graph $G$ is $k$-connected iff. $\forall u, v \in V, u \neq v$ there are $k$ internally vertex-disjoint $u-v$-paths.
 \end{theorem}
 
 \begin{definition}
-    A graph $G = (V, E)$ is called \textbf{$k$-edge-connected} iff
-    $$\forall X \subseteq E \text{ with } |X| \lt k, (V, E \setminus X) \text{ is connected}$$
+	A graph $G = (V, E)$ is called \textbf{$k$-edge-connected} iff
+	$$\forall X \subseteq E \text{ with } |X| \lt k, (V, E \setminus X) \text{ is connected}$$
 \end{definition}
 
 \begin{theorem}
-    \textbf{Menger's Theorem (Edge Version)}: A graph $G$ is $k$-edge-connected iff. $\forall u, v \in V, u \neq v$ there are $k$ edge-disjoint $u-v$-paths.
+	\textbf{Menger's Theorem (Edge Version)}: A graph $G$ is $k$-edge-connected iff. $\forall u, v \in V, u \neq v$ there are $k$ edge-disjoint $u-v$-paths.
 \end{theorem}
 
 \begin{remark}
-    The following always holds:
-    $$\text{Vertex Connectivity} \le \text{Edge Connectivity} \le \text{Minimum Degree } \delta(G)$$
+	The following always holds:
+	$$\text{Vertex Connectivity} \le \text{Edge Connectivity} \le \text{Minimum Degree } \delta(G)$$
 \end{remark}
 
 \subsection{Specialcase $k=1$}
 
 \begin{definition}
-    Let $G = (V, E)$ be a connected graph.
-    \begin{itemize}
-        \item A vertex $v \in V$ is called a \textbf{cut vertex} (Artikulationsknoten) iff. $G[V \setminus \{v\}]$ is disconnected.
-        \item An edge $e \in E$ is called a \textbf{cut edge} (Brücke) iff. $(V, E \setminus \{e\})$ is disconnected.
-    \end{itemize}
+	Let $G = (V, E)$ be a connected graph.
+	\begin{itemize}
+		\item A vertex $v \in V$ is called a \textbf{cut vertex} (Artikulationsknoten) iff. $G[V \setminus \{v\}]$ is disconnected.
+		\item An edge $e \in E$ is called a \textbf{cut edge} (Brücke) iff. $(V, E \setminus \{e\})$ is disconnected.
+	\end{itemize}
 \end{definition}
 
 \begin{lemma}
-    If $e = \{x, y\} \in E$ is a cut edge, then $\text{deg}(x) = 1$ or $x$ is a cut vertex (analogously for $y$).
+	If $e = \{x, y\} \in E$ is a cut edge, then $\text{deg}(x) = 1$ or $x$ is a cut vertex (analogously for $y$).
 \end{lemma}
 
 \begin{definition}
-    \textbf{Blocks}: We define an equivalence relation $\sim$ on $E$ by:
-    $$e \sim f \iff e=f \lor \exists \text{ cycle containing } e \text{ and } f$$
-    The equivalence classes are called \textbf{blocks}.
+	\textbf{Blocks}: We define an equivalence relation $\sim$ on $E$ by:
+	$$e \sim f \iff e=f \lor \exists \text{ cycle containing } e \text{ and } f$$
+	The equivalence classes are called \textbf{blocks}.
 \end{definition}
 
 \begin{remark}
-    Note that two blocks can share at most one vertex, more over this vertex has to be a cut vertex.
+	Note that two blocks can share at most one vertex, more over this vertex has to be a cut vertex.
 \end{remark}
 
 \begin{definition}
-    \textbf{Block Graph}: The block graph of a connected graph $G$ is a bipartite graph $T = (A \cup B, E_T)$ where:
-    \begin{itemize}
-        \item $A = \{\text{cut vertices of } G\}$
-        \item $B = \{\text{blocks of } G\}$
-        \item Edge $\{a, b\} \in E_T \iff a$ is incident to an edge in block $b$.
-    \end{itemize}
+	\textbf{Block Graph}: The block graph of a connected graph $G$ is a bipartite graph $T = (A \cup B, E_T)$ where:
+	\begin{itemize}
+		\item $A = \{\text{cut vertices of } G\}$
+		\item $B = \{\text{blocks of } G\}$
+		\item Edge $\{a, b\} \in E_T \iff a$ is incident to an edge in block $b$.
+	\end{itemize}
 \end{definition}
 
 \begin{theorem}
-    If $G$ is connected, the block graph of $G$ is a tree.
+	If $G$ is connected, the block graph of $G$ is a tree.
 \end{theorem}
 
 \subsection{Finding Cut Vertices and Bridges (DFS \& Low Values)}
@@ -91,71 +91,71 @@
 To find cut vertices and bridges efficiently in linear time $O(|V| + |E|)$, we use a modified \textbf{Depth-First Search (DFS)} to compute a spanning forest (or tree $T$ if $G$ is connected) and assign two numbers to each vertex: a DFS number $\text{dfs}[v]$ and a low-value $\text{low}[v]$.
 
 \begin{definition}
-    During DFS, the edges of $G$ are classified into:
-    \begin{itemize}
-        \item \textbf{Tree edges}: Edges in the DFS spanning tree $T$ traversed to discover new vertices.
-        \item \textbf{Back edges} (Restkanten): Edges in $G \setminus T$ that connect a vertex to one of its ancestors in the DFS tree.
-    \end{itemize}
+	During DFS, the edges of $G$ are classified into:
+	\begin{itemize}
+		\item \textbf{Tree edges}: Edges in the DFS spanning tree $T$ traversed to discover new vertices.
+		\item \textbf{Back edges} (Restkanten): Edges in $G \setminus T$ that connect a vertex to one of its ancestors in the DFS tree.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
-    For every vertex $v \in V$, the low-value $\text{low}[v]$ is defined as:
-    \begin{align*}
-        \text{low}[v] \coloneqq \min \Big\{ \text{dfs}[u] \;\Big|\; & u \text{ is reachable from } v \text{ by a path consisting of} \\
-        & \text{any number of tree edges followed by at most one back edge} \Big\}
-    \end{align*}
-    It can be recursively computed as:
-    $$\text{low}[v] = \min \left\{ \text{dfs}[v], \min_{\{v,w\} \in E_{\text{back}}} \text{dfs}[w], \min_{\{v,w\} \in E_{\text{tree}}, w \text{ child of } v} \text{low}[w] \right\}$$
+	For every vertex $v \in V$, the low-value $\text{low}[v]$ is defined as:
+	\begin{align*}
+		\text{low}[v] \coloneqq \min \Big\{ \text{dfs}[u] \;\Big|\; & u \text{ is reachable from } v \text{ by a path consisting of}           \\
+		                                                            & \text{any number of tree edges followed by at most one back edge} \Big\}
+	\end{align*}
+	It can be recursively computed as:
+	$$\text{low}[v] = \min \left\{ \text{dfs}[v], \min_{\{v,w\} \in E_{\text{back}}} \text{dfs}[w], \min_{\{v,w\} \in E_{\text{tree}}, w \text{ child of } v} \text{low}[w] \right\}$$
 \end{definition}
 
 \begin{theorem}
-    \textbf{Characterization of Cut Vertices and Bridges}:
-    Let $T$ be a DFS tree of a connected graph $G$ started at root $s$.
-    \begin{itemize}
-        \item The root $s$ is a \textbf{cut vertex} iff $s$ has at least two children in $T$.
-        \item A vertex $v \neq s$ is a \textbf{cut vertex} iff there exists a child $w$ of $v$ in $T$ such that:
-        $$\text{low}[w] \ge \text{dfs}[v]$$
-        \item A tree edge $\{v, w\}$ (where $w$ is a child of $v$) is a \textbf{bridge} (cut edge) iff:
-        $$\text{low}[w] > \text{dfs}[v]$$
-    \end{itemize}
+	\textbf{Characterization of Cut Vertices and Bridges}:
+	Let $T$ be a DFS tree of a connected graph $G$ started at root $s$.
+	\begin{itemize}
+		\item The root $s$ is a \textbf{cut vertex} iff $s$ has at least two children in $T$.
+		\item A vertex $v \neq s$ is a \textbf{cut vertex} iff there exists a child $w$ of $v$ in $T$ such that:
+		      $$\text{low}[w] \ge \text{dfs}[v]$$
+		\item A tree edge $\{v, w\}$ (where $w$ is a child of $v$) is a \textbf{bridge} (cut edge) iff:
+		      $$\text{low}[w] > \text{dfs}[v]$$
+	\end{itemize}
 \end{theorem}
 
 \begin{algorithm}
-#DFS-Visit(G, v)
-#Computes low values and identifies cut vertices recursively.
+	#DFS-Visit(G, v)
+	#Computes low values and identifies cut vertices recursively.
 
-1. num := num + 1
-2. dfs[v] := num
-3. low[v] := dfs[v]
-4. isArtVert[v] := false
-5. for each neighbor w of v do:
-    if dfs[w] = 0 then:
-        T := T U {(v, w)}
-        val := DFS-Visit(G, w)
-        if val >= dfs[v] then:
-            isArtVert[v] := true
-        low[v] := min(low[v], val)
-    else if {v, w} not in T then:
-        low[v] := min(low[v], dfs[w])
-6. return low[v]
+	1. num := num + 1
+	2. dfs[v] := num
+	3. low[v] := dfs[v]
+	4. isArtVert[v] := false
+	5. for each neighbor w of v do:
+	if dfs[w] = 0 then:
+	T := T U {(v, w)}
+	val := DFS-Visit(G, w)
+	if val >= dfs[v] then:
+	isArtVert[v] := true
+	low[v] := min(low[v], val)
+	else if {v, w} not in T then:
+	low[v] := min(low[v], dfs[w])
+	6. return low[v]
 \end{algorithm}
 
 \begin{algorithm}
-#DFS(G, s)
-#Main driver to find all cut vertices and bridges of a connected graph.
+	#DFS(G, s)
+	#Main driver to find all cut vertices and bridges of a connected graph.
 
-1. for each vertex v in V:
-    dfs[v] := 0
-2. num := 0
-3. T := empty set
-4. DFS-Visit(G, s)
-5. if s has >= 2 children in T then:
-    isArtVert[s] := true
-   else:
-    isArtVert[s] := false
+	1. for each vertex v in V:
+	dfs[v] := 0
+	2. num := 0
+	3. T := empty set
+	4. DFS-Visit(G, s)
+	5. if s has >= 2 children in T then:
+	isArtVert[s] := true
+	else:
+	isArtVert[s] := false
 \end{algorithm}
 
 \begin{theorem}
-    For any connected graph $G = (V, E)$ stored as adjacency lists, all cut vertices and bridges can be computed in time $O(|V| + |E|)$ and space $O(|V|)$.
+	For any connected graph $G = (V, E)$ stored as adjacency lists, all cut vertices and bridges can be computed in time $O(|V| + |E|)$ and space $O(|V|)$.
 \end{theorem}
 

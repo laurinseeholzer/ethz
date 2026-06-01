@@ -2,140 +2,140 @@
 
 \subsection{Metal-Oxide-Semiconductor Transistors}
 \begin{definition}
-An \textbf{n-type} MOS transistor acts as a switch that is \textbf{closed (ON)} when the Gate voltage is High ($1$) and \textbf{open (OFF)} when the Gate voltage is Low ($0$). It is efficient at passing a logic $0$ (strong 0) but inefficient at passing a logic $1$ (weak 1).
+	An \textbf{n-type} MOS transistor acts as a switch that is \textbf{closed (ON)} when the Gate voltage is High ($1$) and \textbf{open (OFF)} when the Gate voltage is Low ($0$). It is efficient at passing a logic $0$ (strong 0) but inefficient at passing a logic $1$ (weak 1).
 \end{definition}
 
 \begin{definition}
-A \textbf{p-type} MOS transistor is the dual of nMOS. It is \textbf{closed (ON)} when the Gate voltage is Low ($0$) and \textbf{open (OFF)} when the Gate voltage is High ($1$). It is efficient at passing a logic $1$ (strong 1) but inefficient at passing a logic $0$ (weak 0).
+	A \textbf{p-type} MOS transistor is the dual of nMOS. It is \textbf{closed (ON)} when the Gate voltage is Low ($0$) and \textbf{open (OFF)} when the Gate voltage is High ($1$). It is efficient at passing a logic $1$ (strong 1) but inefficient at passing a logic $0$ (weak 0).
 \end{definition}
 
 \begin{definition}
-In \textbf{Complementary MOS (CMOS)} logic, transistors are organized into two networks:
-\begin{itemize}
-    \item \textbf{Pull-Up Network (PUN):} Built with pMOS to connect the output to $V_{DD}$ (1).
-    \item \textbf{Pull-Down Network (PDN):} Built with nMOS to connect the output to Ground (0).
-\end{itemize}
-This ensures the output is always driven strongly to either $1$ or $0$ without drawing significant static power.
+	In \textbf{Complementary MOS (CMOS)} logic, transistors are organized into two networks:
+	\begin{itemize}
+		\item \textbf{Pull-Up Network (PUN):} Built with pMOS to connect the output to $V_{DD}$ (1).
+		\item \textbf{Pull-Down Network (PDN):} Built with nMOS to connect the output to Ground (0).
+	\end{itemize}
+	This ensures the output is always driven strongly to either $1$ or $0$ without drawing significant static power.
 \end{definition}
 
 \begin{example}
-The simplest CMOS gate is the NOT gate. It consists of one pMOS in the PUN and one nMOS in the PDN, both connected to the same input $A$.
-$$Y = \overline{A}$$
+	The simplest CMOS gate is the NOT gate. It consists of one pMOS in the PUN and one nMOS in the PDN, both connected to the same input $A$.
+	$$Y = \overline{A}$$
 \end{example}
 
 \subsection{Logic Gates}
 
 \begin{definition}
-\textbf{NOT:} The simplest gate; it flips the input.
-\begin{itemize}
-    \item \textbf{Logic:} $Y = \overline{A}$
-    \item \textbf{Transistors:} 2 (1 pMOS, 1 nMOS)
-\end{itemize}
+	\textbf{NOT:} The simplest gate; it flips the input.
+	\begin{itemize}
+		\item \textbf{Logic:} $Y = \overline{A}$
+		\item \textbf{Transistors:} 2 (1 pMOS, 1 nMOS)
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
-\textbf{NAND:} Outputs 0 only if both inputs are 1.
-\begin{itemize}
-    \item \textbf{Logic:} $Y = \overline{A \cdot B}$
-    \item \textbf{Transistors:} 4 (2 pMOS parallel, 2 nMOS series)
-\end{itemize}
+	\textbf{NAND:} Outputs 0 only if both inputs are 1.
+	\begin{itemize}
+		\item \textbf{Logic:} $Y = \overline{A \cdot B}$
+		\item \textbf{Transistors:} 4 (2 pMOS parallel, 2 nMOS series)
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
-\textbf{NOR:} Outputs 1 only if both inputs are 0.
-\begin{itemize}
-    \item \textbf{Logic:} $Y = \overline{A + B}$
-    \item \textbf{Transistors:} 4 (2 pMOS series, 2 nMOS parallel)
-\end{itemize}
+	\textbf{NOR:} Outputs 1 only if both inputs are 0.
+	\begin{itemize}
+		\item \textbf{Logic:} $Y = \overline{A + B}$
+		\item \textbf{Transistors:} 4 (2 pMOS series, 2 nMOS parallel)
+	\end{itemize}
 \end{definition}
 
 \begin{remark}
-\textbf{AND/OR} are typically implemented as NAND/NOR followed by an inverter because inverting gates are more natural in CMOS. (\textbf{NAND/NOR} are universally used because they are efficient to build with 4 transistors for 2 inputs.)
+	\textbf{AND/OR} are typically implemented as NAND/NOR followed by an inverter because inverting gates are more natural in CMOS. (\textbf{NAND/NOR} are universally used because they are efficient to build with 4 transistors for 2 inputs.)
 \end{remark}
 
 \begin{remark}
-\textbf{XOR/XNOR:} Used for comparisons and parity.
-\begin{itemize}
-    \item \textbf{XOR:} $Y = A \oplus B$ (1 if inputs are \textbf{different})
-    \item \textbf{XNOR:} $Y = \overline{A \oplus B}$ (1 if inputs are the \textbf{same})
-\end{itemize}
+	\textbf{XOR/XNOR:} Used for comparisons and parity.
+	\begin{itemize}
+		\item \textbf{XOR:} $Y = A \oplus B$ (1 if inputs are \textbf{different})
+		\item \textbf{XNOR:} $Y = \overline{A \oplus B}$ (1 if inputs are the \textbf{same})
+	\end{itemize}
 \end{remark}
 
 \begin{definition}
-\textbf{Buffer:} The output equals the input ($Y = A$). It is used for signal amplification or delay and is physically implemented as two NOT gates in series.
+	\textbf{Buffer:} The output equals the input ($Y = A$). It is used for signal amplification or delay and is physically implemented as two NOT gates in series.
 \end{definition}
 
 \subsection{Boolean Algebra}
 
 \begin{definition}
-Boolean algebra (and therfore logic gates) follow specific mathematical rules:
-\begin{itemize}
-    \item \textbf{Identity:} $A \cdot 1 = A$ and $A + 0 = A$
-    \item \textbf{Complement:} $A \cdot \overline{A} = 0$ and $A + \overline{A} = 1$
-    \item \textbf{Distributive:} $A \cdot (B + C) = (A \cdot B) + (A \cdot C)$
-\end{itemize}
+	Boolean algebra (and therfore logic gates) follow specific mathematical rules:
+	\begin{itemize}
+		\item \textbf{Identity:} $A \cdot 1 = A$ and $A + 0 = A$
+		\item \textbf{Complement:} $A \cdot \overline{A} = 0$ and $A + \overline{A} = 1$
+		\item \textbf{Distributive:} $A \cdot (B + C) = (A \cdot B) + (A \cdot C)$
+	\end{itemize}
 \end{definition}
 
 \begin{theorem}
-\textbf{DeMorgan's theorems} allow for the conversion between AND/OR and inverted logic:
-$$\text{Law 1: } \overline{A \cdot B} = \overline{A} + \overline{B}$$
-$$\text{Law 2: } \overline{A + B} = \overline{A} \cdot \overline{B}$$
+	\textbf{DeMorgan's theorems} allow for the conversion between AND/OR and inverted logic:
+	$$\text{Law 1: } \overline{A \cdot B} = \overline{A} + \overline{B}$$
+	$$\text{Law 2: } \overline{A + B} = \overline{A} \cdot \overline{B}$$
 \end{theorem}
 
 \begin{important}
-A set of gates is \textbf{logically complete} if any Boolean function can be realized using only those gates. The most common complete sets are $\{AND, OR, NOT\}$, $\{NAND\}$, and $\{NOR\}$.
+	A set of gates is \textbf{logically complete} if any Boolean function can be realized using only those gates. The most common complete sets are $\{AND, OR, NOT\}$, $\{NAND\}$, and $\{NOR\}$.
 \end{important}
 
 \begin{definition}
-\textbf{Minterm}: A product (AND) term containing all input variables in either true or complemented form.
-\textbf{Sum of Products (SOP)}: A function expressed as the OR of minterms for which the output is 1.
+	\textbf{Minterm}: A product (AND) term containing all input variables in either true or complemented form.
+	\textbf{Sum of Products (SOP)}: A function expressed as the OR of minterms for which the output is 1.
 \end{definition}
 
 \begin{algorithm}
-To simplify logic using a Karnaugh Map (K-Map)
+	To simplify logic using a Karnaugh Map (K-Map)
 
-1. Map the truth table values into a grid where adjacent cells differ by only one bit (Gray code).
-2. Circle groups of 2^n adjacent 1s (rectangular blocks).
-3. Each circle represents a simplified product term where variables that change within the circle are eliminated.
+	1. Map the truth table values into a grid where adjacent cells differ by only one bit (Gray code).
+	2. Circle groups of 2^n adjacent 1s (rectangular blocks).
+	3. Each circle represents a simplified product term where variables that change within the circle are eliminated.
 \end{algorithm}
 
 
 \subsection{Combinational Logic}
 
 \begin{definition}
-Combinational Logic is a circuit where the output is a pure function of the current inputs. It has no memory of past states.
+	Combinational Logic is a circuit where the output is a pure function of the current inputs. It has no memory of past states.
 \end{definition}
 
 \subsubsection{Combinational Building Blocks}
 
 \begin{definition}
-An $n$-to-$2^n$ \textbf{decoder} interprets an $n$-bit binary input and sets exactly one of its $2^n$ outputs to $1$. It is primarily used for memory addressing and instruction decoding.
+	An $n$-to-$2^n$ \textbf{decoder} interprets an $n$-bit binary input and sets exactly one of its $2^n$ outputs to $1$. It is primarily used for memory addressing and instruction decoding.
 \end{definition}
 
 \begin{definition}
-A \textbf{Multiplexer} uses select lines ($S$) to choose which data input ($D$) is routed to the single output ($Y$). For $N$ inputs, $log_2 N$ select lines are required.
+	A \textbf{Multiplexer} uses select lines ($S$) to choose which data input ($D$) is routed to the single output ($Y$). For $N$ inputs, $log_2 N$ select lines are required.
 \end{definition}
 
 \begin{example}
-A MUX can implement any logic function by treating its inputs as a \textbf{Lookup Table (LUT)}. By wiring the data inputs to constants ($0$ or $1$) and using variables as select signals, the MUX reproduces the truth table.
+	A MUX can implement any logic function by treating its inputs as a \textbf{Lookup Table (LUT)}. By wiring the data inputs to constants ($0$ or $1$) and using variables as select signals, the MUX reproduces the truth table.
 \end{example}
 
 \begin{definition}
-A \textbf{Full Adder} is the building block of arithmetic units. It takes inputs $A, B$, and a carry-in $C_{in}$, producing:
-$$\text{Sum: } S = A \oplus B \oplus C_{in}$$
-$$\text{Carry-out: } C_{out} = (A \cdot B) + (C_{in} \cdot (A \oplus B))$$
+	A \textbf{Full Adder} is the building block of arithmetic units. It takes inputs $A, B$, and a carry-in $C_{in}$, producing:
+	$$\text{Sum: } S = A \oplus B \oplus C_{in}$$
+	$$\text{Carry-out: } C_{out} = (A \cdot B) + (C_{in} \cdot (A \oplus B))$$
 \end{definition}
 
 \begin{important}
-An $n$-bit \textbf{Ripple Carry Adder (RCA)} is constructed by chaining $n$ Full Adders. The $C_{out}$ of one stage becomes the $C_{in}$ of the next. The critical path (speed bottleneck) is the "ripple" effect as the carry bit travels from the LSB to the MSB.
+	An $n$-bit \textbf{Ripple Carry Adder (RCA)} is constructed by chaining $n$ Full Adders. The $C_{out}$ of one stage becomes the $C_{in}$ of the next. The critical path (speed bottleneck) is the "ripple" effect as the carry bit travels from the LSB to the MSB.
 \end{important}
 
 \begin{lemma}
-A \textbf{Tri-state buffer} has three possible output states: $0, 1$, and \textbf{High-Z} (High Impedance). When the enable signal is $0$, the buffer is electrically disconnected. This allows multiple components to share a single \textbf{Bus} wire.
+	A \textbf{Tri-state buffer} has three possible output states: $0, 1$, and \textbf{High-Z} (High Impedance). When the enable signal is $0$, the buffer is electrically disconnected. This allows multiple components to share a single \textbf{Bus} wire.
 \end{lemma}
 
 \begin{example}
-A \textbf{Programmable Logic Array (PLA)} is a structured logic device consisting of a programmable \textbf{AND-plane} (creating minterms) and a programmable \textbf{OR-plane} (summing the minterms). It is a physical implementation of the Sum-of-Products (SOP) form.
+	A \textbf{Programmable Logic Array (PLA)} is a structured logic device consisting of a programmable \textbf{AND-plane} (creating minterms) and a programmable \textbf{OR-plane} (summing the minterms). It is a physical implementation of the Sum-of-Products (SOP) form.
 \end{example}
 
 \subsection{Sequential Logic}
@@ -143,99 +143,99 @@ A \textbf{Programmable Logic Array (PLA)} is a structured logic device consistin
 \subsubsection{Fundamental Building Blocks}
 
 \begin{definition}
-Unlike combinational logic, where the output depends solely on current inputs, sequential logic produces outputs based on both current and past input values. These circuits incorporate storage elements to maintain a "state".
+	Unlike combinational logic, where the output depends solely on current inputs, sequential logic produces outputs based on both current and past input values. These circuits incorporate storage elements to maintain a "state".
 \end{definition}
 
 \begin{definition}
-The most basic storage element consists of two inverters connected in a feedback loop. It has two stable states ($Q=1$ or $Q=0$) and a potential metastable state where outputs oscillate.
+	The most basic storage element consists of two inverters connected in a feedback loop. It has two stable states ($Q=1$ or $Q=0$) and a potential metastable state where outputs oscillate.
 \end{definition}
 
 \begin{definition}
-A Reset-Set (R-S) latch is typically built from cross-coupled NAND gates. 
-\begin{itemize}
-    \item \textbf{Set ($S=0$):} Forces the output $Q$ to $1$.
-    \item \textbf{Reset ($R=0$):} Forces the output $Q$ to $0$.
-    \item \textbf{Forbidden ($S=0, R=0$):} This state is invalid as it breaks the $Q = \overline{Q'}$ invariant and can lead to metastability.
-\end{itemize}
+	A Reset-Set (R-S) latch is typically built from cross-coupled NAND gates.
+	\begin{itemize}
+		\item \textbf{Set ($S=0$):} Forces the output $Q$ to $1$.
+		\item \textbf{Reset ($R=0$):} Forces the output $Q$ to $0$.
+		\item \textbf{Forbidden ($S=0, R=0$):} This state is invalid as it breaks the $Q = \overline{Q'}$ invariant and can lead to metastability.
+	\end{itemize}
 \end{definition}
 
 
 \begin{definition}
-The Gated D Latch adds a Write Enable ($WE$) signal to an R-S latch to control when data is stored. When $WE=1$, the output $Q$ follows the data input $D$; otherwise, it holds the previous value ($Q_{prev}$).
+	The Gated D Latch adds a Write Enable ($WE$) signal to an R-S latch to control when data is stored. When $WE=1$, the output $Q$ follows the data input $D$; otherwise, it holds the previous value ($Q_{prev}$).
 \end{definition}
 
 
 \begin{important}
-Latches are "transparent" while their enable signal is high, meaning any change in $D$ immediately propagates to $Q$. This is undesirable for state registers in synchronous systems because next-state values could overwrite current-state values before the cycle ends.
+	Latches are "transparent" while their enable signal is high, meaning any change in $D$ immediately propagates to $Q$. This is undesirable for state registers in synchronous systems because next-state values could overwrite current-state values before the cycle ends.
 \end{important}
 
 \begin{definition}
-A D Flip-Flop solves the transparency problem by using a master-slave configuration of two D latches. It is \textbf{edge-triggered}, capturing the value of $D$ only at the rising edge of the clock ($0 \rightarrow 1$ transition) and maintaining it for the entire cycle.
+	A D Flip-Flop solves the transparency problem by using a master-slave configuration of two D latches. It is \textbf{edge-triggered}, capturing the value of $D$ only at the rising edge of the clock ($0 \rightarrow 1$ transition) and maintaining it for the entire cycle.
 \end{definition}
 
 
 \subsubsection{Timing and the Clock}
 
 \begin{definition}
-\begin{itemize}
-    \item \textbf{Asynchronous:} State transitions occur immediately in response to inputs with no global coordination.
-    \item \textbf{Synchronous:} State transitions are synchronized to a global \textbf{clock} signal and occur at fixed units of time.
-\end{itemize}
+	\begin{itemize}
+		\item \textbf{Asynchronous:} State transitions occur immediately in response to inputs with no global coordination.
+		\item \textbf{Synchronous:} State transitions are synchronized to a global \textbf{clock} signal and occur at fixed units of time.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
-\textbf{Clock (CLK):} A periodic signal alternating between $0$ and $1$ that triggers state transitions across all sequential elements in a system. The clock period must be long enough to accommodate the worst-case delay of the combinational logic.
+	\textbf{Clock (CLK):} A periodic signal alternating between $0$ and $1$ that triggers state transitions across all sequential elements in a system. The clock period must be long enough to accommodate the worst-case delay of the combinational logic.
 \end{definition}
 
 \begin{important}
-Standard synchronous registers use \textbf{rising-clock-edge} triggered flip-flops. This ensures that the state changes only once per clock cycle, making system behavior predictable and easier to design than level-triggered latch-based systems.
+	Standard synchronous registers use \textbf{rising-clock-edge} triggered flip-flops. This ensures that the state changes only once per clock cycle, making system behavior predictable and easier to design than level-triggered latch-based systems.
 \end{important}
 
 \subsubsection{Finite State Machines (FSM)}
 
 \begin{definition}
-\textbf{Finite State Machine (FSM):} A discrete-time model of a stateful system consisting of a finite number of states, external inputs, external outputs, state transitions, and output logic. 
+	\textbf{Finite State Machine (FSM):} A discrete-time model of a stateful system consisting of a finite number of states, external inputs, external outputs, state transitions, and output logic.
 \end{definition}
 
 \begin{theorem}
-FSMs are categorized by how they generate outputs:
-\begin{itemize}
-    \item \textbf{Moore FSM:} Outputs depend \textbf{only} on the current state.
-    \item \textbf{Mealy FSM:} Outputs depend on \textbf{both} the current state and the current inputs.
-\end{itemize}
+	FSMs are categorized by how they generate outputs:
+	\begin{itemize}
+		\item \textbf{Moore FSM:} Outputs depend \textbf{only} on the current state.
+		\item \textbf{Mealy FSM:} Outputs depend on \textbf{both} the current state and the current inputs.
+	\end{itemize}
 \end{theorem}
 
 \begin{remark}
-Every FSM implementation consists of three parts:
-\begin{enumerate}
-    \item \textbf{State Register:} Sequential circuit storing the current state.
-    \item \textbf{Next State Logic:} Combinational circuit determining the next state based on current state and inputs.
-    \item \textbf{Output Logic:} Combinational circuit generating system outputs.
-\end{enumerate}
+	Every FSM implementation consists of three parts:
+	\begin{enumerate}
+		\item \textbf{State Register:} Sequential circuit storing the current state.
+		\item \textbf{Next State Logic:} Combinational circuit determining the next state based on current state and inputs.
+		\item \textbf{Output Logic:} Combinational circuit generating system outputs.
+	\end{enumerate}
 \end{remark}
 
 \begin{example}
-States must be represented as binary values. Common methods include:
-\begin{itemize}
-    \item \textbf{Binary Encoding:} Uses the minimum number of bits ($log_2(\text{states})$); minimizes flip-flops but may lead to complex combinational logic.
-    \item \textbf{One-Hot Encoding:} Uses one bit per state; simplifies next-state logic but maximizes flip-flop usage.
-    \item \textbf{Output Encoding:} Uses the output signals themselves as the state bits; minimizes output logic.
-\end{itemize}
+	States must be represented as binary values. Common methods include:
+	\begin{itemize}
+		\item \textbf{Binary Encoding:} Uses the minimum number of bits ($log_2(\text{states})$); minimizes flip-flops but may lead to complex combinational logic.
+		\item \textbf{One-Hot Encoding:} Uses one bit per state; simplifies next-state logic but maximizes flip-flop usage.
+		\item \textbf{Output Encoding:} Uses the output signals themselves as the state bits; minimizes output logic.
+	\end{itemize}
 \end{example}
 
 \subsubsection{Memory and Registers}
 
 \begin{definition}
-\textbf{Register:} A structure that stores multiple bits (e.g., 4 or 32 bits) by grouping D flip-flops together with a common clock or write-enable signal.
+	\textbf{Register:} A structure that stores multiple bits (e.g., 4 or 32 bits) by grouping D flip-flops together with a common clock or write-enable signal.
 \end{definition}
 
 \begin{definition}
-\textbf{Memory:} An organization of storage locations indexed by addresses. 
-\begin{itemize}
-    \item \textbf{Address Space:} The total number of unique locations ($2^n$ for $n$ address bits).
-    \item \textbf{Addressability:} The number of bits stored at each location.
-    \item \textbf{Hardware:} Uses an **Address Decoder** to select a location and a **Multiplexer** to route the selected data to the output.
-\end{itemize}
+	\textbf{Memory:} An organization of storage locations indexed by addresses.
+	\begin{itemize}
+		\item \textbf{Address Space:} The total number of unique locations ($2^n$ for $n$ address bits).
+		\item \textbf{Addressability:} The number of bits stored at each location.
+		\item \textbf{Hardware:} Uses an **Address Decoder** to select a location and a **Multiplexer** to route the selected data to the output.
+	\end{itemize}
 \end{definition}
 
 \subsection{Timing}
@@ -243,64 +243,64 @@ States must be represented as binary values. Common methods include:
 \subsubsection{Combinational Circuit Timing}
 
 \begin{definition}
-The timing behavior of a combinational circuit is bounded by two parameters:
-\begin{itemize}
-    \item \textbf{Propagation Delay ($t_{pd}$):} The \textbf{maximum} time from when an input changes until the output has reached its final value (longest path).
-    \item \textbf{Contamination Delay ($t_{cd}$):} The \textbf{minimum} time from when an input changes until the output \textbf{starts} to change (shortest path).
-\end{itemize}
+	The timing behavior of a combinational circuit is bounded by two parameters:
+	\begin{itemize}
+		\item \textbf{Propagation Delay ($t_{pd}$):} The \textbf{maximum} time from when an input changes until the output has reached its final value (longest path).
+		\item \textbf{Contamination Delay ($t_{cd}$):} The \textbf{minimum} time from when an input changes until the output \textbf{starts} to change (shortest path).
+	\end{itemize}
 \end{definition}
 
 \begin{remark}
-Transistors take finite time to switch due to capacitance, resistance, and the finite speed of light. Actual delays vary based on temperature, supply voltage, circuit aging, and whether the signal is rising or falling.
+	Transistors take finite time to switch due to capacitance, resistance, and the finite speed of light. Actual delays vary based on temperature, supply voltage, circuit aging, and whether the signal is rising or falling.
 \end{remark}
 
 \begin{example}
-A \textbf{glitch} occurs when a single input transition causes multiple transitions on the output before it settles. This is caused by different paths through the logic having different delays. While often ignored in steady-state logic, glitches can be fixed by adding redundant "consensus terms" in a K-map to cover transitions between prime implicants.
+	A \textbf{glitch} occurs when a single input transition causes multiple transitions on the output before it settles. This is caused by different paths through the logic having different delays. While often ignored in steady-state logic, glitches can be fixed by adding redundant "consensus terms" in a K-map to cover transitions between prime implicants.
 \end{example}
 
 \subsubsection{Sequential Circuit Timing}
 
 \begin{definition}
-For a flip-flop to reliably sample data at the rising clock edge, the input $D$ must be stable within the \textbf{aperture time} ($t_a = t_{setup} + t_{hold}$):
-\begin{itemize}
-    \item \textbf{Setup Time ($t_{setup}$):} The time \textbf{before} the clock edge that data must be stable.
-    \item \textbf{Hold Time ($t_{hold}$):} The time \textbf{after} the clock edge that data must remain stable.
-\end{itemize}
+	For a flip-flop to reliably sample data at the rising clock edge, the input $D$ must be stable within the \textbf{aperture time} ($t_a = t_{setup} + t_{hold}$):
+	\begin{itemize}
+		\item \textbf{Setup Time ($t_{setup}$):} The time \textbf{before} the clock edge that data must be stable.
+		\item \textbf{Hold Time ($t_{hold}$):} The time \textbf{after} the clock edge that data must remain stable.
+	\end{itemize}
 \end{definition}
 
 \begin{important}
-If the setup or hold time is violated, the flip-flop may enter a \textbf{metastable} state where the output is stuck between 0 and 1 before eventually settling non-deterministically. This can cause system failure.
+	If the setup or hold time is violated, the flip-flop may enter a \textbf{metastable} state where the output is stuck between 0 and 1 before eventually settling non-deterministically. This can cause system failure.
 \end{important}
 
 \begin{definition}
-\begin{itemize}
-    \item \textbf{Propagation Clock-to-Q Delay ($t_{pcq}$):} The \textbf{maximum} time after the clock edge until the output $Q$ is stable.
-    \item \textbf{Contamination Clock-to-Q Delay ($t_{ccq}$):} The \textbf{minimum} time after the clock edge until $Q$ \textbf{starts} to change.
-\end{itemize}
+	\begin{itemize}
+		\item \textbf{Propagation Clock-to-Q Delay ($t_{pcq}$):} The \textbf{maximum} time after the clock edge until the output $Q$ is stable.
+		\item \textbf{Contamination Clock-to-Q Delay ($t_{ccq}$):} The \textbf{minimum} time after the clock edge until $Q$ \textbf{starts} to change.
+	\end{itemize}
 \end{definition}
 
 \begin{theorem}
-To ensure a synchronous system operates correctly, two conditions must be met:
-\begin{itemize}
-    \item \textbf{Setup Time Constraint:} The clock period $T_c$ must be long enough for the signal to propagate through the critical path:
-    $$T_c \geq t_{pcq} + t_{pd} + t_{setup}$$
-    This determines the \textbf{maximum operating frequency} ($f_{max} = 1/T_{c,min}$).
-    \item \textbf{Hold Time Constraint:} The signal must not reach the next flip-flop too quickly (shortest path):
-    $$t_{ccq} + t_{cd} > t_{hold}$$
-    If violated, data "shuffles" through multiple flip-flops in one cycle. This \textbf{cannot} be fixed by slowing the clock.
-\end{itemize}
+	To ensure a synchronous system operates correctly, two conditions must be met:
+	\begin{itemize}
+		\item \textbf{Setup Time Constraint:} The clock period $T_c$ must be long enough for the signal to propagate through the critical path:
+		      $$T_c \geq t_{pcq} + t_{pd} + t_{setup}$$
+		      This determines the \textbf{maximum operating frequency} ($f_{max} = 1/T_{c,min}$).
+		\item \textbf{Hold Time Constraint:} The signal must not reach the next flip-flop too quickly (shortest path):
+		      $$t_{ccq} + t_{cd} > t_{hold}$$
+		      If violated, data "shuffles" through multiple flip-flops in one cycle. This \textbf{cannot} be fixed by slowing the clock.
+	\end{itemize}
 \end{theorem}
 
 \subsubsection{Clock Skew and Performance}
 
 \begin{definition}
-\textbf{Clock skew} ($t_{skew}$) is the time difference between the arrival of the clock signal at two different flip-flops. It is caused by the physical delay of the clock distribution network.
+	\textbf{Clock skew} ($t_{skew}$) is the time difference between the arrival of the clock signal at two different flip-flops. It is caused by the physical delay of the clock distribution network.
 \end{definition}
 
 \begin{important}
-Clock skew worsens both timing constraints:
-\begin{itemize}
-    \item \textbf{Setup:} $T_c \geq t_{pcq} + t_{pd} + t_{setup} + t_{skew}$ (effectively increases required period).
-    \item \textbf{Hold:} $t_{ccq} + t_{cd} > t_{hold} + t_{skew}$ (effectively increases required min delay).
-\end{itemize}
+	Clock skew worsens both timing constraints:
+	\begin{itemize}
+		\item \textbf{Setup:} $T_c \geq t_{pcq} + t_{pd} + t_{setup} + t_{skew}$ (effectively increases required period).
+		\item \textbf{Hold:} $t_{ccq} + t_{cd} > t_{hold} + t_{skew}$ (effectively increases required min delay).
+	\end{itemize}
 \end{important}

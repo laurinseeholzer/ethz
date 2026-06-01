@@ -1,0 +1,112 @@
+\section{Memory}
+
+\begin{remark}
+	Memory is the \textbf{limiting factor} in computation (time, space, energy). Robustness decreases with capacity (e.g., RowHammer).
+\end{remark}
+
+\begin{definition}
+	\textbf{Memory types} (cost/performance trade-offs):
+	FlipFlops (tens of T/bit), SRAM (6T/bit, fast, no refresh), DRAM (1T+1C, cheap, needs refresh), Storage (1T, non-volatile, slow).
+\end{definition}
+
+\subsection{Organization of Memory}
+
+\begin{definition}
+	Memory is an array of cells with addressing and output logic, divided into \textbf{banks} for concurrent access.
+\end{definition}
+
+\begin{definition}
+	\textbf{DRAM Hierarchy}: Channels $\to$ DIMMs $\to$ Ranks $\to$ Chips $\to$ Banks $\to$ Rows/Columns. A \textbf{row-buffer} holds an activated row; \textbf{row hit} (fast) vs. \textbf{row miss} (slow, needs precharge + activate).
+\end{definition}
+
+\subsection{Memory Technologies}
+
+\begin{definition}
+	\textbf{SRAM}: 6 transistors (cross-coupled inverters), fast, no refresh.
+	\textbf{DRAM}: 1 transistor + capacitor, cheap, needs periodic refresh.
+	\textbf{PCM}: Chalcogenide glass (amorphous/crystalline), non-volatile, dense, but slow, energy hungry, limited endurance.
+\end{definition}
+
+\subsection{Memory Hierarchy}
+
+\begin{remark}
+	Can't have fast \textit{and} large memory $\to$ hierarchy: small fast caches + large slow RAM. Intelligent data movement gives near-ideal performance.
+\end{remark}
+
+\begin{definition}
+	\textbf{Data Locality}:
+	\textbf{Temporal}: Recently accessed $\to$ likely accessed again.
+	\textbf{Spatial}: Nearby data $\to$ likely accessed soon.
+\end{definition}
+
+\subsection{Cache}
+
+\begin{definition}
+	\textbf{Cache mapping}: Direct Mapped (1 location per address), Set Associative (one of $N$ ways per set), Fully Associative (any location).
+\end{definition}
+
+\begin{definition}
+	\textbf{Replacement}: Random, FIFO, LRU, LFU.
+	\textbf{Belady's OPT}: Evict line used furthest in future (optimal misses, not realizable).
+\end{definition}
+
+\begin{definition}
+	\textbf{Write Policy}: Write-Back (cache only, dirty bit), Write-Through (cache + main memory).
+	\textbf{Cache Compression}: Store base address + offsets to reduce space.
+\end{definition}
+
+\subsubsection{Prefetching}
+
+\begin{definition}
+	\textbf{Prefetching}: Fetch data before needed to hide latency. Mispredictions don't affect correctness.
+	\textbf{Metrics}: Accuracy (used/sent), Coverage (prefetched misses/all misses), Timeliness, Cache Pollution.
+\end{definition}
+
+\begin{definition}
+	\textbf{Hardware Prefetchers}: Stride (per-PC tracking), Memory-Region-Based, Stream Buffers (stride=1).
+	\textbf{Software Prefetching}: Compiler-inserted instructions (limited portability).
+	\textbf{Runahead Execution}: On long-latency miss, checkpoint state and speculatively execute ahead to generate prefetches. Enables memory-level parallelism without large ROB. Cannot handle pointer-chasing ($\to$ AVD Prediction).
+\end{definition}
+
+\begin{remark}
+	\textbf{Modern}: Pythia (RL-based offset selection), Hermes (Perceptron predicts off-chip loads).
+	\textbf{Multi-core}: Prefetching can cause cache/bus/DRAM contention across cores; needs throttling.
+\end{remark}
+
+\subsection{Virtual Memory}
+
+\begin{definition}
+	\textbf{Virtual Memory}: Each process gets illusion of private, large address space. VA $\to$ PA translation via page tables. Provides isolation between processes.
+\end{definition}
+
+\begin{lemma}
+	\textbf{Address Translation}: VA split into VPN + Page Offset. Only VPN translated to PPN; offset unchanged.
+\end{lemma}
+
+\begin{definition}
+	\textbf{Page Table}: Per-process, stored in physical memory.
+	\textbf{PTE}: Contains PPN + status bits (Present, R/W, User/Supervisor).
+	\textbf{Multi-level}: Only first-level permanently in memory (x86-64: 4 levels).
+\end{definition}
+
+\begin{definition}
+	\textbf{TLB}: Hardware cache of recent PTEs. Speeds up translation.
+	\textbf{TLB miss}: Hardware walker (x86) or OS exception (MIPS).
+\end{definition}
+
+\begin{definition}
+	\textbf{CLOCK Replacement}: Circular list with reference (R) bit. Clears R-bits during traversal, replaces first page with R=0 (approximates LRU).
+\end{definition}
+
+\subsubsection{Memory Protection}
+
+\begin{remark}
+	\textbf{Access Control}: Permission bits in PTE. x86 uses 4 protection rings (Ring 0: kernel, Ring 3: user). Violations $\to$ hardware exception.
+	\textbf{RowHammer}: Induce bit flips in adjacent rows; can flip PTE bits to gain full memory access.
+\end{remark}
+
+\begin{lemma}
+	\textbf{Cache-VM Interaction}:
+	\textbf{Virtually Addressed}: Fast but has Homonyms (same VA, different PA) and Synonyms (different VA, same PA).
+	\textbf{Physically Addressed}: No aliasing but needs TLB lookup before cache access.
+\end{lemma}

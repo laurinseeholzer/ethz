@@ -1,606 +1,606 @@
 \section{Randomized Algorithms}
 
 \begin{definition}
-    A \textbf{Randomized Algorithm} is an algorithm that instead of being a function $A(I)$ with input $I$ is a function $A(I, R)$ With a source of randomness $R$.
+	A \textbf{Randomized Algorithm} is an algorithm that instead of being a function $A(I)$ with input $I$ is a function $A(I, R)$ With a source of randomness $R$.
 \end{definition}
 
 \begin{remark}
-    Sources of randomness $R$ can be random bits, random integers, etc. obtained from physical phenomena or pseudo-random number generators.
+	Sources of randomness $R$ can be random bits, random integers, etc. obtained from physical phenomena or pseudo-random number generators.
 \end{remark}
 
 \begin{definition}
-    A \textbf{Monte Carlo Algorithm} is a randomized algorithm that is always fast, but the result is not always correct (with a certain probability).
+	A \textbf{Monte Carlo Algorithm} is a randomized algorithm that is always fast, but the result is not always correct (with a certain probability).
 \end{definition}
 
 \begin{definition}
-    A \textbf{Las Vegas Algorithm} is a randomized algorithm that always returns the correct result, but the running time might be large (with a certain probability).
+	A \textbf{Las Vegas Algorithm} is a randomized algorithm that always returns the correct result, but the running time might be large (with a certain probability).
 \end{definition}
 
 
 \begin{remark}
-    If we consider the las vegas algorithm that returns $???$ after a certain time limit $T$ then we have a version of Las Vegas algorithm that always terminates with a bounded runtime $T$ and can be convertet to both standard Las Vegas or Monte Carlo algorithms.
+	If we consider the las vegas algorithm that returns $???$ after a certain time limit $T$ then we have a version of Las Vegas algorithm that always terminates with a bounded runtime $T$ and can be convertet to both standard Las Vegas or Monte Carlo algorithms.
 \end{remark}
 
 \begin{remark}
-    Observe that if we run the above algorithm until we get an actual result and not $???$, we have a standard Las Vegas Algorithm. Further note that if we just return a random result when we get $???$, we have a Monte Carlo Algorithm.
+	Observe that if we run the above algorithm until we get an actual result and not $???$, we have a standard Las Vegas Algorithm. Further note that if we just return a random result when we get $???$, we have a Monte Carlo Algorithm.
 \end{remark}
 
 \subsection{Reduction of Error probability}
 
 \begin{theorem}
-    Let $A$ be a randomized algorithm which never returns a false result but might return $???$ where
-    $$P[A(I) \, \text{is correct}] \geq \epsilon$$
-    Then $\forall \delta \gt 0$ the algorithm $A_\delta$, which calls $A$ until we get a correct value or until we get $N = {\epsilon}^{-1} \ln(\delta^{-1})$ times $???$, offers
-    $$P[A_\delta(I) \, \text{is correct}] \geq 1 - \delta$$
+	Let $A$ be a randomized algorithm which never returns a false result but might return $???$ where
+	$$P[A(I) \, \text{is correct}] \geq \epsilon$$
+	Then $\forall \delta \gt 0$ the algorithm $A_\delta$, which calls $A$ until we get a correct value or until we get $N = {\epsilon}^{-1} \ln(\delta^{-1})$ times $???$, offers
+	$$P[A_\delta(I) \, \text{is correct}] \geq 1 - \delta$$
 \end{theorem}
 
 \begin{remark}
-    To reduce the probability of error to a constant factor we only need a constant amount of extra iterations.
+	To reduce the probability of error to a constant factor we only need a constant amount of extra iterations.
 \end{remark}
 
 \begin{important}
-    Generally it is \textbf{not possible to reduce the probability of error for monte-carlo} algorithm, except for algorithms that only have \textbf{one sided error} or an \textbf{error probability of $\lt \frac{1}{2}$}.
+	Generally it is \textbf{not possible to reduce the probability of error for monte-carlo} algorithm, except for algorithms that only have \textbf{one sided error} or an \textbf{error probability of $\lt \frac{1}{2}$}.
 \end{important}
 
 \begin{theorem}
-    Let $A$ be a randomized algorithm which always returns $true$ or $false$ where
-    $$P[A(I) \, true] = 1, \text{if I is a true-instance}$$ 
-    $$P[A(I) \, false] \geq \epsilon, \text{if I is a false-instance}$$ 
-    Then $\forall \delta \gt 0$ the algorithm $A_\delta$, which calls $A$ until we $false$ or until we get $N = {\epsilon}^{-1} \ln(\delta^{-1})$ times $true$, offers
-    $$P[A_\delta(I) \, \text{is correct}] \geq 1 - \delta$$
+	Let $A$ be a randomized algorithm which always returns $true$ or $false$ where
+	$$P[A(I) \, true] = 1, \text{if I is a true-instance}$$
+	$$P[A(I) \, false] \geq \epsilon, \text{if I is a false-instance}$$
+	Then $\forall \delta \gt 0$ the algorithm $A_\delta$, which calls $A$ until we $false$ or until we get $N = {\epsilon}^{-1} \ln(\delta^{-1})$ times $true$, offers
+	$$P[A_\delta(I) \, \text{is correct}] \geq 1 - \delta$$
 \end{theorem}
 
 \begin{theorem}
-    Let $\epsilon \gt 0$ and $A$ a randomized algorithm, which always returns $true$ or $false$ with
-    $$P[A(I) \, \text{is correct}] \geq \frac{1}{2} + \epsilon$$
-    Then $\forall \delta \gt 0$ the algorithm $A_\delta$, which calls $A$ $N = 4{\epsilon}^{-2} \ln(\delta^{-1})$ times and returns the majority answer, offers
-    $$P[A_\delta(I) \, \text{is correct}] \geq 1 - \delta$$
+	Let $\epsilon \gt 0$ and $A$ a randomized algorithm, which always returns $true$ or $false$ with
+	$$P[A(I) \, \text{is correct}] \geq \frac{1}{2} + \epsilon$$
+	Then $\forall \delta \gt 0$ the algorithm $A_\delta$, which calls $A$ $N = 4{\epsilon}^{-2} \ln(\delta^{-1})$ times and returns the majority answer, offers
+	$$P[A_\delta(I) \, \text{is correct}] \geq 1 - \delta$$
 \end{theorem}
 
 \subsection{Optimization problems}
 
 \begin{remark}
-    We assume we have an algorithm that always returns a valid solution but not necessarily an optimal one.
+	We assume we have an algorithm that always returns a valid solution but not necessarily an optimal one.
 \end{remark}
 
 \begin{example}
-    We want to find an algorithm that finds a solution which is at least as good as the expected value of the solution of the given algorithm.
+	We want to find an algorithm that finds a solution which is at least as good as the expected value of the solution of the given algorithm.
 \end{example}
 
 \begin{theorem}
-    Let $\epsilon \gt 0$ and $A$ be a randomized algorithm for an optimization problem where 
-    $$P[A(I) \geq f(I)] \geq  \epsilon$$
-    then $\forall \delta \gt 0$ the algorithm $A_\delta$, which calls $A$ $N = \frac{1}{\epsilon^2} \ln(\delta^{-1})$ times and returns the best solution found, offers
-    $$P[A_\delta(I) \geq f(I)] \geq 1 - \delta$$
+	Let $\epsilon \gt 0$ and $A$ be a randomized algorithm for an optimization problem where
+	$$P[A(I) \geq f(I)] \geq  \epsilon$$
+	then $\forall \delta \gt 0$ the algorithm $A_\delta$, which calls $A$ $N = \frac{1}{\epsilon^2} \ln(\delta^{-1})$ times and returns the best solution found, offers
+	$$P[A_\delta(I) \geq f(I)] \geq 1 - \delta$$
 \end{theorem}
 
 \subsection{Primality Testing}
 
 \begin{definition}
-    \textbf{Primality Testing Problem}: Given $n \in \mathbb{N}$, decide if $n$ is prime (i.e., has no divisors in $\{2, \dots, n-1\}$). 
-    This is heavily used in cryptography (e.g. RSA) to generate large random prime numbers securely.
+	\textbf{Primality Testing Problem}: Given $n \in \mathbb{N}$, decide if $n$ is prime (i.e., has no divisors in $\{2, \dots, n-1\}$).
+	This is heavily used in cryptography (e.g. RSA) to generate large random prime numbers securely.
 \end{definition}
 
 \begin{remark}
-    \textbf{History of Primality Tests}:
-    \begin{itemize}
-        \item \textbf{Sieve of Eratosthenes} (200BC): Finds all primes $\leq n$ (not polynomial time).
-        \item \textbf{Miller-Rabin} (1976): Monte-Carlo algorithm with one-sided error (always correct for primes).
-        \item \textbf{Solovay-Strassen} (1977): Alternative Monte-Carlo algorithm.
-        \item \textbf{Adleman-Huang} (1987): Monte-Carlo algorithm, always correct for non-primes.
-        \item \textbf{AKS} (Agrawal-Kayal-Saxena, 2002): First deterministic algorithm in polynomial time.
-    \end{itemize}
+	\textbf{History of Primality Tests}:
+	\begin{itemize}
+		\item \textbf{Sieve of Eratosthenes} (200BC): Finds all primes $\leq n$ (not polynomial time).
+		\item \textbf{Miller-Rabin} (1976): Monte-Carlo algorithm with one-sided error (always correct for primes).
+		\item \textbf{Solovay-Strassen} (1977): Alternative Monte-Carlo algorithm.
+		\item \textbf{Adleman-Huang} (1987): Monte-Carlo algorithm, always correct for non-primes.
+		\item \textbf{AKS} (Agrawal-Kayal-Saxena, 2002): First deterministic algorithm in polynomial time.
+	\end{itemize}
 \end{remark}
 
 \begin{algorithm}
-    //Euclid Primality Test
-    Choose a [1...n-1] uniformly at random. 
-    If ggT(a, n) = 1:
-        return ``Prime''
-    else 
-        return ``Not Prime''
+	//Euclid Primality Test
+	Choose a [1...n-1] uniformly at random.
+	If ggT(a, n) = 1:
+	return ``Prime''
+	else
+	return ``Not Prime''
 \end{algorithm}
 
 \begin{remark}
-    This is an extremely naive algorithm:
-    \begin{itemize}
-        \item If $n$ is prime: Output is always correct.
-        \item If $n$ is not prime: False output ``Prime'' with probability $\frac{|Z_n^*|}{n-1} \approx 1 - \frac{1}{\sqrt{n}}$, which is unfortunately very high.
-    \end{itemize}
+	This is an extremely naive algorithm:
+	\begin{itemize}
+		\item If $n$ is prime: Output is always correct.
+		\item If $n$ is not prime: False output ``Prime'' with probability $\frac{|Z_n^*|}{n-1} \approx 1 - \frac{1}{\sqrt{n}}$, which is unfortunately very high.
+	\end{itemize}
 \end{remark}
 
 \begin{proof}
-    For a composite number $n$, the worst-case scenario (which maximizes the number of coprimes) occurs when $n = p^2$ for some prime $p$.
-    
-    In this case, the number of coprimes is:
-    $$ \varphi(n) = p(p-1) = n - \sqrt{n} $$
+	For a composite number $n$, the worst-case scenario (which maximizes the number of coprimes) occurs when $n = p^2$ for some prime $p$.
 
-    The probability of falsely picking an $a$ that is coprime to $n$ is therefore:
-    $$ P(\text{False ``Prime''}) = \frac{\varphi(n)}{n-1} \approx \frac{n - \sqrt{n}}{n} = 1 - \frac{1}{\sqrt{n}} $$
+	In this case, the number of coprimes is:
+	$$ \varphi(n) = p(p-1) = n - \sqrt{n} $$
+
+	The probability of falsely picking an $a$ that is coprime to $n$ is therefore:
+	$$ P(\text{False ``Prime''}) = \frac{\varphi(n)}{n-1} \approx \frac{n - \sqrt{n}}{n} = 1 - \frac{1}{\sqrt{n}} $$
 \end{proof}
 
 \begin{definition}
-    \textbf{Euler's Totient Function} $\varphi(n) = |Z_n^*|$: Number of integers in $\{1, \dots, n-1\}$ that are coprime to $n$. 
-    If $n$ is prime, $\varphi(n) = n-1$.
+	\textbf{Euler's Totient Function} $\varphi(n) = |Z_n^*|$: Number of integers in $\{1, \dots, n-1\}$ that are coprime to $n$.
+	If $n$ is prime, $\varphi(n) = n-1$.
 \end{definition}
 
 \begin{theorem}
-    \textbf{Theorem of Lagrange}: If $H$ is a subgroup of $G$, then $|H|$ divides $|G|$. \\
-    \textbf{Fermat's Little Theorem}: If $n$ is prime, then for all $a \in \{1, \dots, n-1\}$, $a^{n-1} \equiv 1 \pmod n$.
+	\textbf{Theorem of Lagrange}: If $H$ is a subgroup of $G$, then $|H|$ divides $|G|$. \\
+	\textbf{Fermat's Little Theorem}: If $n$ is prime, then for all $a \in \{1, \dots, n-1\}$, $a^{n-1} \equiv 1 \pmod n$.
 \end{theorem}
 
 
 \begin{algorithm}
-    \textbf{Fermat Test}: Choose $a \in \{1, \dots, n-1\}$ uniformly at random. If $a^{n-1} \bmod n = 1$, return ``Prime'', else ``Not Prime''.
+	\textbf{Fermat Test}: Choose $a \in \{1, \dots, n-1\}$ uniformly at random. If $a^{n-1} \bmod n = 1$, return ``Prime'', else ``Not Prime''.
 \end{algorithm}
 
 \begin{remark}
-    \begin{itemize}
-        \item If $n$ is prime: Output is always correct.
-        \item If $n$ is not prime: False output ``Prime'' with probability $\leq \frac{1}{2}$, \textit{unless} $n$ is a \textbf{Carmichael Number}.
-    \end{itemize}
+	\begin{itemize}
+		\item If $n$ is prime: Output is always correct.
+		\item If $n$ is not prime: False output ``Prime'' with probability $\leq \frac{1}{2}$, \textit{unless} $n$ is a \textbf{Carmichael Number}.
+	\end{itemize}
 \end{remark}
 
 \begin{definition}
-    A \textbf{Carmichael Number} is a composite number $n$ where $a^{n-1} \equiv 1 \pmod n$ holds for all $a$ coprime to $n$, causing the Fermat test to almost always improperly return ``Prime'' (e.g. $561 = 3 \times 11 \times 17$).
+	A \textbf{Carmichael Number} is a composite number $n$ where $a^{n-1} \equiv 1 \pmod n$ holds for all $a$ coprime to $n$, causing the Fermat test to almost always improperly return ``Prime'' (e.g. $561 = 3 \times 11 \times 17$).
 \end{definition}
-    
-\begin{proof}
-    Let $PB_n$ be the set of ``false witnesses'' (numbers that incorrectly pass the test):
-    $$ PB_n = \{a \in Z_n^* \mid a^{n-1} \equiv 1 \pmod n\} $$
 
-    This set forms a subgroup of $Z_n^*$ because it is closed under multiplication: 
-    $$ \text{If } a, b \in PB_n, \text{ then } (ab)^{n-1} = a^{n-1} b^{n-1} \equiv 1 \pmod n $$
-    
-    By Lagrange's theorem, if $n$ is not a Carmichael number (meaning $PB_n \neq Z_n^*$), then $PB_n$ is a strict subgroup. The theorem states that its size $|PB_n|$ must cleanly divide the size of the parent group $|Z_n^*|$.
-    
-    Because $PB_n$ is a strict subgroup, the maximum possible size of this subgroup is exactly half the group:
-    $$ |PB_n| \leq \frac{|Z_n^*|}{2} \leq \frac{n-1}{2} $$
-    Meaning at most half of the elements in the test space will incorrectly evaluate to true.
+\begin{proof}
+	Let $PB_n$ be the set of ``false witnesses'' (numbers that incorrectly pass the test):
+	$$ PB_n = \{a \in Z_n^* \mid a^{n-1} \equiv 1 \pmod n\} $$
+
+	This set forms a subgroup of $Z_n^*$ because it is closed under multiplication:
+	$$ \text{If } a, b \in PB_n, \text{ then } (ab)^{n-1} = a^{n-1} b^{n-1} \equiv 1 \pmod n $$
+
+	By Lagrange's theorem, if $n$ is not a Carmichael number (meaning $PB_n \neq Z_n^*$), then $PB_n$ is a strict subgroup. The theorem states that its size $|PB_n|$ must cleanly divide the size of the parent group $|Z_n^*|$.
+
+	Because $PB_n$ is a strict subgroup, the maximum possible size of this subgroup is exactly half the group:
+	$$ |PB_n| \leq \frac{|Z_n^*|}{2} \leq \frac{n-1}{2} $$
+	Meaning at most half of the elements in the test space will incorrectly evaluate to true.
 \end{proof}
 
 \begin{definition}
-    \textbf{Miller-Rabin Certificate}: Let $n>2$ be odd. Write $n-1 = 2^k d$ with $d$ odd. If $n$ is prime and $a \in \{1, \dots, n-1\}$, then either:
-    $$ a^d \equiv 1 \pmod n \quad \text{or} \quad \exists i \in \{0, \dots, k-1\}: a^{2^i d} \equiv n-1 \pmod n $$
-    If this condition \textbf{fails}, $a$ is a \textit{Miller-Rabin Certificate} proving $n$ is strictly not prime.
+	\textbf{Miller-Rabin Certificate}: Let $n>2$ be odd. Write $n-1 = 2^k d$ with $d$ odd. If $n$ is prime and $a \in \{1, \dots, n-1\}$, then either:
+	$$ a^d \equiv 1 \pmod n \quad \text{or} \quad \exists i \in \{0, \dots, k-1\}: a^{2^i d} \equiv n-1 \pmod n $$
+	If this condition \textbf{fails}, $a$ is a \textit{Miller-Rabin Certificate} proving $n$ is strictly not prime.
 \end{definition}
 
 \begin{algorithm}
-    //Miller-Rabin Test
-    Choose a at random. 
-    Check if the certificate condition holds.
+	//Miller-Rabin Test
+	Choose a at random.
+	Check if the certificate condition holds.
 \end{algorithm}
 
 \begin{remark}
-    \begin{itemize}
-        \item If $n$ is prime: Output is always correct.
-        \item If $n$ is not prime: False output ``Prime'' with probability $\leq \frac{1}{4}$ (even for Carmichael numbers). This means repeating the test $k$ times drops error probability to $\leq 4^{-k}$. 
-    \end{itemize}
+	\begin{itemize}
+		\item If $n$ is prime: Output is always correct.
+		\item If $n$ is not prime: False output ``Prime'' with probability $\leq \frac{1}{4}$ (even for Carmichael numbers). This means repeating the test $k$ times drops error probability to $\leq 4^{-k}$.
+	\end{itemize}
 \end{remark}
 
 \begin{proof}
-    If $n$ is prime, $\mathbb{Z}_n$ forms a mathematical field. In a field, the equation $x^2 = 1$ has exactly two roots ($1$ and $-1$):
-    $$ x=1 \quad \text{and} \quad x=-1 \equiv (n-1) \pmod n $$
-    
-    By Fermat's little theorem $a^{n-1} \equiv 1 \pmod n$. We can rewrite this exponent using $n-1 = 2^k d$ as:
-    $$ a^{2^k d} \equiv 1 \pmod n $$
-    
-    If we repeatedly take square roots of this value, the sequence must hit $-1$ before it hits $1$, unless it was $1$ from the very beginning ($a^d \equiv 1$). If the sequence does not follow this rule, the field properties are violated, and thus $n$ cannot be prime.
-    
-    While it rigorously holds that the false output probability is tightly bounded at $\leq \frac{1}{4}$, the full mathematical proof leverages the Chinese Remainder Theorem to show the non-witnesses form a strict subgroup bounded to one-quarter the size.
+	If $n$ is prime, $\mathbb{Z}_n$ forms a mathematical field. In a field, the equation $x^2 = 1$ has exactly two roots ($1$ and $-1$):
+	$$ x=1 \quad \text{and} \quad x=-1 \equiv (n-1) \pmod n $$
+
+	By Fermat's little theorem $a^{n-1} \equiv 1 \pmod n$. We can rewrite this exponent using $n-1 = 2^k d$ as:
+	$$ a^{2^k d} \equiv 1 \pmod n $$
+
+	If we repeatedly take square roots of this value, the sequence must hit $-1$ before it hits $1$, unless it was $1$ from the very beginning ($a^d \equiv 1$). If the sequence does not follow this rule, the field properties are violated, and thus $n$ cannot be prime.
+
+	While it rigorously holds that the false output probability is tightly bounded at $\leq \frac{1}{4}$, the full mathematical proof leverages the Chinese Remainder Theorem to show the non-witnesses form a strict subgroup bounded to one-quarter the size.
 \end{proof}
 
 \subsection{Sorting and Selecting}
 
 \begin{theorem}
-    The expected runtime of randomized quicksort is $O(n \log n)$ or more specifically
-    $$\mathbb{E}[T_{1,n}] \leq 2(n+1)\ln(n) + O(n)$$
+	The expected runtime of randomized quicksort is $O(n \log n)$ or more specifically
+	$$\mathbb{E}[T_{1,n}] \leq 2(n+1)\ln(n) + O(n)$$
 \end{theorem}
 
 \begin{proof}
-    Let $T_{\ell,r}$ denote the (random) number of comparisons performed during a call to $QuickSort(A, \ell, r)$. We want to show that
-    $$E[T_{1,n}] \le 2(n + 1) \ln n + O(n)$$
-    For $\ell \ge r$, $T_{\ell,r} = 0$. For $\ell < r$, using Theorem 2.32 and the linearity of expectation, we have
-    $$E(T_{\ell,r}) = \sum_{i=\ell}^{r} \Pr[t = i] \cdot (r - \ell + E[T_{\ell,i-1}] + E[T_{i+1,r}])$$
-    $$= \frac{1}{r - \ell + 1} \cdot \sum_{i=0}^{r-\ell} (r - \ell + E[T_{\ell,\ell+i-1}] + E[T_{\ell+i+1,r}])$$
-    Here, we used the fact that $t$ is uniformly distributed over $\{\ell, \dots, r\}$—this follows directly from the assumption that the elements of $A$ are distinct.
-    Looking more closely at the recursion shown above, we see that the expected value $E[T_{\ell,r}]$ does not depend on $r$ and $\ell$ individually, but only on the number of elements to be sorted, $n = r - \ell + 1$. This observation motivates the following recursive definition of the sequence $t_n$:
-    $$t_n = \begin{cases} 0, & \text{if } n \le 1 \\ \frac{1}{n} \sum_{i=0}^{n-1} (n - 1 + t_i + t_{n-i-1}), & \text{if } n \ge 2 \end{cases}$$
-    By induction on $r - \ell$, it is easy to see that for all $\ell, r$, the equation $E[T_{\ell,r}] = t_{r-\ell+1}$ holds. In the following, we derive an upper bound for $t_n$. For all $n \ge 3$, by definition:
-    $$n \cdot t_n = \sum_{i=0}^{n-1} (n - 1 + t_i + t_{n-i-1})$$
-    and similarly:
-    $$(n - 1) \cdot t_{n-1} = \sum_{i=0}^{n-2} (n - 2 + t_i + t_{n-i-2})$$
-    Subtracting the second equation from the first, we obtain:
-    $$n \cdot t_n - (n - 1) \cdot t_{n-1} = 2(n - 1) + 2t_{n-1}$$
-    and therefore:
-    $$t_n = \frac{n + 1}{n} \cdot t_{n-1} + \frac{2(n - 1)}{n} \le \frac{n + 1}{n} \cdot t_{n-1} + 2$$
-    We now use induction again (this time on $n$) to show that for all $n \ge 2$:
-    $$t_n \le 2 \sum_{i=3}^{n+1} \frac{n+1}{i}$$
-    For $n = 2$, it follows from the definition of $t_n$ that $t_2 = 1 \le 2 = \sum_{i=3}^{3} 2$. For $n \ge 3$, we can use the inequality $t_n \le \frac{n+1}{n} \cdot t_{n-1} + 2$ derived above along with the induction hypothesis to verify the validity of the inequality for all $n \ge 3$. 
-    Since $\sum_{i=1}^{n} \frac{1}{i} = H_n = \ln n + O(1)$, it follows in particular that:
-    $$E[T_{1,n}] = t_n \le 2(n + 1) \ln n + O(n)$$
+	Let $T_{\ell,r}$ denote the (random) number of comparisons performed during a call to $QuickSort(A, \ell, r)$. We want to show that
+	$$E[T_{1,n}] \le 2(n + 1) \ln n + O(n)$$
+	For $\ell \ge r$, $T_{\ell,r} = 0$. For $\ell < r$, using Theorem 2.32 and the linearity of expectation, we have
+	$$E(T_{\ell,r}) = \sum_{i=\ell}^{r} \Pr[t = i] \cdot (r - \ell + E[T_{\ell,i-1}] + E[T_{i+1,r}])$$
+	$$= \frac{1}{r - \ell + 1} \cdot \sum_{i=0}^{r-\ell} (r - \ell + E[T_{\ell,\ell+i-1}] + E[T_{\ell+i+1,r}])$$
+	Here, we used the fact that $t$ is uniformly distributed over $\{\ell, \dots, r\}$—this follows directly from the assumption that the elements of $A$ are distinct.
+	Looking more closely at the recursion shown above, we see that the expected value $E[T_{\ell,r}]$ does not depend on $r$ and $\ell$ individually, but only on the number of elements to be sorted, $n = r - \ell + 1$. This observation motivates the following recursive definition of the sequence $t_n$:
+	$$t_n = \begin{cases} 0, & \text{if } n \le 1 \\ \frac{1}{n} \sum_{i=0}^{n-1} (n - 1 + t_i + t_{n-i-1}), & \text{if } n \ge 2 \end{cases}$$
+	By induction on $r - \ell$, it is easy to see that for all $\ell, r$, the equation $E[T_{\ell,r}] = t_{r-\ell+1}$ holds. In the following, we derive an upper bound for $t_n$. For all $n \ge 3$, by definition:
+	$$n \cdot t_n = \sum_{i=0}^{n-1} (n - 1 + t_i + t_{n-i-1})$$
+	and similarly:
+	$$(n - 1) \cdot t_{n-1} = \sum_{i=0}^{n-2} (n - 2 + t_i + t_{n-i-2})$$
+	Subtracting the second equation from the first, we obtain:
+	$$n \cdot t_n - (n - 1) \cdot t_{n-1} = 2(n - 1) + 2t_{n-1}$$
+	and therefore:
+	$$t_n = \frac{n + 1}{n} \cdot t_{n-1} + \frac{2(n - 1)}{n} \le \frac{n + 1}{n} \cdot t_{n-1} + 2$$
+	We now use induction again (this time on $n$) to show that for all $n \ge 2$:
+	$$t_n \le 2 \sum_{i=3}^{n+1} \frac{n+1}{i}$$
+	For $n = 2$, it follows from the definition of $t_n$ that $t_2 = 1 \le 2 = \sum_{i=3}^{3} 2$. For $n \ge 3$, we can use the inequality $t_n \le \frac{n+1}{n} \cdot t_{n-1} + 2$ derived above along with the induction hypothesis to verify the validity of the inequality for all $n \ge 3$.
+	Since $\sum_{i=1}^{n} \frac{1}{i} = H_n = \ln n + O(1)$, it follows in particular that:
+	$$E[T_{1,n}] = t_n \le 2(n + 1) \ln n + O(n)$$
 \end{proof}
 
 \begin{theorem}
-    The expected runtime of randomized quickselect is $O(n)$.
+	The expected runtime of randomized quickselect is $O(n)$.
 \end{theorem}
 
 \begin{proof}
-    When we execute $QuickSelect(A, 1, n, k)$, it results in a random number $N$ of calls of the form $Partition(A, \ell_i, r_i, p)$ for a (likewise random) sequence
-    $$ (\ell_0, r_0, k_0), (\ell_1, r_1, k_1), \dots, (\ell_N, r_N, k_N) $$
-    with $(\ell_0, r_0, k_0) = (1, n, k)$. In this process, either $(\ell_{i+1}, r_{i+1}) = (\ell_i, t-1)$ or $(\ell_{i+1}, r_{i+1}) = (t + 1, r_i)$, where $t$ is a random variable uniformly distributed on $\{\ell_i, \dots, r_i\}$ (because the elements of $A$ are pairwise distinct). The runtime of a call to $QuickSelect(A, 1, n, k)$, measured by the number of comparisons of elements in $A$, is:
-    $$T = \sum_{i=0}^{N} (r_i - \ell_i)$$
-    because each call $Partition(A, \ell_i, r_i, p)$ requires exactly $r_i - \ell_i$ comparisons. We now define $N_j$ as the number of calls to $QuickSelect$ for which $(3/4)^j n < r_i - \ell_i + 1 \le (3/4)^{j-1} n$ holds. Then it certainly follows that:
-    $$T \le \sum_{j=1}^{\infty} N_j \cdot (3/4)^{j-1} n$$
-    due to the linearity of expectation, we have:
-    $$E[T] \le n \cdot \sum_{j=1}^{\infty} E[N_j] \cdot (3/4)^{j-1}$$
-    What can we say about $E[N_j]$? To determine this, we consider that the number of elements to be processed is reduced from $r_i - \ell_i + 1$ to at most $\frac{3}{4}(r_i - \ell_i + 1)$ whenever we choose one of the middle $\frac{1}{2}(r_i - \ell_i + 1)$ elements as the pivot. In other words: with every choice of a pivot element, there is a probability of at least $1/2$ that the number of elements is reduced by at least a factor of $3/4$. Therefore, $E[N_j] \le 2$ for all $j \ge 1$, and thus:
-    $$E[T] \le 2n \sum_{j=1}^{\infty} (3/4)^{j-1} = 2n \cdot \frac{1}{1 - 3/4} = 8n$$
-    The expected runtime of $QuickSelect(A, 1, n, k)$ is indeed linear, as claimed.
+	When we execute $QuickSelect(A, 1, n, k)$, it results in a random number $N$ of calls of the form $Partition(A, \ell_i, r_i, p)$ for a (likewise random) sequence
+	$$ (\ell_0, r_0, k_0), (\ell_1, r_1, k_1), \dots, (\ell_N, r_N, k_N) $$
+	with $(\ell_0, r_0, k_0) = (1, n, k)$. In this process, either $(\ell_{i+1}, r_{i+1}) = (\ell_i, t-1)$ or $(\ell_{i+1}, r_{i+1}) = (t + 1, r_i)$, where $t$ is a random variable uniformly distributed on $\{\ell_i, \dots, r_i\}$ (because the elements of $A$ are pairwise distinct). The runtime of a call to $QuickSelect(A, 1, n, k)$, measured by the number of comparisons of elements in $A$, is:
+	$$T = \sum_{i=0}^{N} (r_i - \ell_i)$$
+	because each call $Partition(A, \ell_i, r_i, p)$ requires exactly $r_i - \ell_i$ comparisons. We now define $N_j$ as the number of calls to $QuickSelect$ for which $(3/4)^j n < r_i - \ell_i + 1 \le (3/4)^{j-1} n$ holds. Then it certainly follows that:
+	$$T \le \sum_{j=1}^{\infty} N_j \cdot (3/4)^{j-1} n$$
+	due to the linearity of expectation, we have:
+	$$E[T] \le n \cdot \sum_{j=1}^{\infty} E[N_j] \cdot (3/4)^{j-1}$$
+	What can we say about $E[N_j]$? To determine this, we consider that the number of elements to be processed is reduced from $r_i - \ell_i + 1$ to at most $\frac{3}{4}(r_i - \ell_i + 1)$ whenever we choose one of the middle $\frac{1}{2}(r_i - \ell_i + 1)$ elements as the pivot. In other words: with every choice of a pivot element, there is a probability of at least $1/2$ that the number of elements is reduced by at least a factor of $3/4$. Therefore, $E[N_j] \le 2$ for all $j \ge 1$, and thus:
+	$$E[T] \le 2n \sum_{j=1}^{\infty} (3/4)^{j-1} = 2n \cdot \frac{1}{1 - 3/4} = 8n$$
+	The expected runtime of $QuickSelect(A, 1, n, k)$ is indeed linear, as claimed.
 \end{proof}
 
 \subsection{Duplicate Detection}
 
 \begin{definition}
-    We are given a sequence of data-elements $A_i \in \Sigma^*$ where $\Sigma$ is a set of size n. Determine if there are any duplicates in $A$.
+	We are given a sequence of data-elements $A_i \in \Sigma^*$ where $\Sigma$ is a set of size n. Determine if there are any duplicates in $A$.
 \end{definition}
 
 \begin{remark}
-    We could sort the sequence in $O(n log n)$ and check for duplicates in $O(n)$. But what if the data elements are too large to efficiently sort them?
+	We could sort the sequence in $O(n log n)$ and check for duplicates in $O(n)$. But what if the data elements are too large to efficiently sort them?
 \end{remark}
 
 \begin{algorithm}
-S = [A1, A2 ... An];
-X = [(hash(A1), 1), (hash(A2), 2), ... (hash(An), n)];
-Duplicates = [];
-X.sortByHashValue();
+	S = [A1, A2 ... An];
+	X = [(hash(A1), 1), (hash(A2), 2), ... (hash(An), n)];
+	Duplicates = [];
+	X.sortByHashValue();
 
-for every block of elements with the same hash value do: 
-    if block.size > 1:
-        For every pair (Ai, Aj) in block do:
-            if Ai.data == Aj.data:
-                Duplicates.add((Ai.data, Aj.data));
-return Duplicates;
+	for every block of elements with the same hash value do:
+	if block.size > 1:
+	For every pair (Ai, Aj) in block do:
+	if Ai.data == Aj.data:
+	Duplicates.add((Ai.data, Aj.data));
+	return Duplicates;
 \end{algorithm}
 
 \begin{remark}
-    Note that we have to check each pair in their block as our hash function guarantees that same datavalues recieve same hash values but not necessarily uniquely.
+	Note that we have to check each pair in their block as our hash function guarantees that same datavalues recieve same hash values but not necessarily uniquely.
 \end{remark}
 
 \begin{theorem}
-    The expected number of actual data comparisons is $O(\#duplicates) + O(1)$.
+	The expected number of actual data comparisons is $O(\#duplicates) + O(1)$.
 \end{theorem}
 
 \begin{proof}
-    
+
 \end{proof}
 
 \subsection{Floyd-Cycle Detection}
 
 \begin{definition}
-    Given an array $A[1, \dots, n]$ where $A[i] \in \{1, \dots, n\}$ find two indices $i \neq j$ such that $A[i] = A[j]$.
+	Given an array $A[1, \dots, n]$ where $A[i] \in \{1, \dots, n\}$ find two indices $i \neq j$ such that $A[i] = A[j]$.
 \end{definition}
 
 \begin{remark}
-    We want to solve this problem wiht $O(n)$ expected runtime and $O(1)$ extra space.
+	We want to solve this problem wiht $O(n)$ expected runtime and $O(1)$ extra space.
 \end{remark}
 
 \begin{remark}
-    \textbf{Idea:} We can model this as a directed graph with nodes $1 \dots n$ and edges $i \to A[i]$.
+	\textbf{Idea:} We can model this as a directed graph with nodes $1 \dots n$ and edges $i \to A[i]$.
 \end{remark}
 
 \begin{lemma}
-    There exists a $t \in \mathbb{N}$ such that $X_t = X_{2t}$ if there are duplicates in $A$.
+	There exists a $t \in \mathbb{N}$ such that $X_t = X_{2t}$ if there are duplicates in $A$.
 \end{lemma}
 
 \begin{proof}
-    Assume there are duplicates in $A$ hence there is a cycle in the graph. Let $r = \lfloor \frac{k}{l} \rfloor \cdot l - k \geq 0$ with $l$ the length of a cycle and $k$ the length of the path before the cycle starts (tail). Observe that $X_{k+r} = X_{2(k+r)}$ furhter 
-    $$k + r = \lfloor \frac{k}{l} \rfloor l \lt (\frac{k}{l}+1)l = k+l \leq n$$
-    Thus $t=k+r$ is an itteration index where the sequence repeats itself. Therfore if we find such $t$ then $X_t = X_{2t}$ and the two corresponding array entries must be equal.
+	Assume there are duplicates in $A$ hence there is a cycle in the graph. Let $r = \lfloor \frac{k}{l} \rfloor \cdot l - k \geq 0$ with $l$ the length of a cycle and $k$ the length of the path before the cycle starts (tail). Observe that $X_{k+r} = X_{2(k+r)}$ furhter
+	$$k + r = \lfloor \frac{k}{l} \rfloor l \lt (\frac{k}{l}+1)l = k+l \leq n$$
+	Thus $t=k+r$ is an itteration index where the sequence repeats itself. Therfore if we find such $t$ then $X_t = X_{2t}$ and the two corresponding array entries must be equal.
 \end{proof}
 
 \begin{algorithm}
-tortoise = A[n]
-hare = A[A[n]]
-t = 1
+	tortoise = A[n]
+	hare = A[A[n]]
+	t = 1
 
-while tortoise != hare:
-    tortoise = A[tortoise]
-    hare = A[A[hare]]
-    t += 1
+	while tortoise != hare:
+	tortoise = A[tortoise]
+	hare = A[A[hare]]
+	t += 1
 
-hare = n
-while hare != tortoise:
-    i = hare;
-    j = tortoise;
-    hare = A[hare]
-    tortoise = A[tortoise]
+	hare = n
+	while hare != tortoise:
+	i = hare;
+	j = tortoise;
+	hare = A[hare]
+	tortoise = A[tortoise]
 
-return i, j
+	return i, j
 \end{algorithm}
 
 \begin{remark}
-    Observe that this algorithm only uses $O(1)$ extra space.
+	Observe that this algorithm only uses $O(1)$ extra space.
 \end{remark}
 
 \begin{lemma}
-    Let $t\leq n$ with $X_t = X_{2t}$ then $X_{t+k} = X_{k}$ holds for all $k \geq 0$.
+	Let $t\leq n$ with $X_t = X_{2t}$ then $X_{t+k} = X_{k}$ holds for all $k \geq 0$.
 \end{lemma}
 
 \begin{proof}
-    We know $X_t = X_{2t}$ and thus $2t = t+p*l$ for some $p \in \mathbb{N}$ hence $t=p*l$ holds and finally $X_{t+k} = X_{k+l*p} = X_{k}$ holds by induction.
+	We know $X_t = X_{2t}$ and thus $2t = t+p*l$ for some $p \in \mathbb{N}$ hence $t=p*l$ holds and finally $X_{t+k} = X_{k+l*p} = X_{k}$ holds by induction.
 \end{proof}
 
 \subsection{Long-Path Problem}
 
 \begin{definition}
-    Given a graph $G = (V,E)$ and some $B \in \mathbb{N}$. Decide whether there exists a path of length $B$ in $G$.
+	Given a graph $G = (V,E)$ and some $B \in \mathbb{N}$. Decide whether there exists a path of length $B$ in $G$.
 \end{definition}
 
 \begin{theorem}
-    If there exists an algorithm for the long-path problem with $t(n)$ time, then we can decide in $t(2n -2) + O(n^2)$ time if a given graph is Hamiltonian.
+	If there exists an algorithm for the long-path problem with $t(n)$ time, then we can decide in $t(2n -2) + O(n^2)$ time if a given graph is Hamiltonian.
 \end{theorem}
 
 \begin{proof}
-    We construct a new graph $G'$ with $n' \leq 2n-2$ such that
-    $$G \text{ hamiltonian } \iff G' \text{ has a path of length } n$$
-    Let $v \in V$ be an arbitrary vertex of $G$. We construct $G'$ by replacing edges $e = (v, w) \in E$ with edges $(w, w')$ where $w'$ is a copy of $w$ and removing $v$.
-    Observe that if $G$ has a Hamiltonian cycle, this cycle includes $v$ hence in $G'$ this corresponds to a path of length $n$ namely $w_i', w_i, \dots w_j, w_j'$ for some $w_i, w_j$ adjacent to $v$.
-    Further observe that if $G'$ has a path of length $n$ then all vertices in that path are distinct and have degree $\geq 2$ hence they must be the $n$ vertices in $G$ (as the added vertices have degree $1$). Hence the end and start vertices of that path correspond to two distinct vertices adjacent to $v$ in $G$ and removing these two vertices and the edges from that path yields a Hamiltonian cycle in $G$.
-    Thus we have shown
-    $$G \text{ hamiltonian } \iff G' \text{ has a path of length } n$$ 
+	We construct a new graph $G'$ with $n' \leq 2n-2$ such that
+	$$G \text{ hamiltonian } \iff G' \text{ has a path of length } n$$
+	Let $v \in V$ be an arbitrary vertex of $G$. We construct $G'$ by replacing edges $e = (v, w) \in E$ with edges $(w, w')$ where $w'$ is a copy of $w$ and removing $v$.
+	Observe that if $G$ has a Hamiltonian cycle, this cycle includes $v$ hence in $G'$ this corresponds to a path of length $n$ namely $w_i', w_i, \dots w_j, w_j'$ for some $w_i, w_j$ adjacent to $v$.
+	Further observe that if $G'$ has a path of length $n$ then all vertices in that path are distinct and have degree $\geq 2$ hence they must be the $n$ vertices in $G$ (as the added vertices have degree $1$). Hence the end and start vertices of that path correspond to two distinct vertices adjacent to $v$ in $G$ and removing these two vertices and the edges from that path yields a Hamiltonian cycle in $G$.
+	Thus we have shown
+	$$G \text{ hamiltonian } \iff G' \text{ has a path of length } n$$
 \end{proof}
 
 \begin{definition}
-    A \textbf{colorful path} in a k-edge-colored graph $G$ is a path where every edge has a different color.  
+	A \textbf{colorful path} in a k-edge-colored graph $G$ is a path where every edge has a different color.
 \end{definition}
 
 \begin{remark}
-    Instead of finding a path of length $k$ we look for a colorful path with at least $k$ colors. For this we define 
-    $$P_i(v) \coloneqq \{ S\subset [k] | |S|=i+1 \text{ and } \exists\text{ path } v_0=v, e_1, \dots e_{i+1}, v_{i+1}\text{ with edge colors }S \}$$
-    if for a $v \in V$ we have $P_{k-1}(v) \neq \emptyset$ we found a colorful path with $k$ colors. We compute for all $v \in V$ the set $P_i(v)$ for $i=0 \dots k-1$.
+	Instead of finding a path of length $k$ we look for a colorful path with at least $k$ colors. For this we define
+	$$P_i(v) \coloneqq \{ S\subset [k] | |S|=i+1 \text{ and } \exists\text{ path } v_0=v, e_1, \dots e_{i+1}, v_{i+1}\text{ with edge colors }S \}$$
+	if for a $v \in V$ we have $P_{k-1}(v) \neq \emptyset$ we found a colorful path with $k$ colors. We compute for all $v \in V$ the set $P_i(v)$ for $i=0 \dots k-1$.
 \end{remark}
 
 \begin{lemma}
-    We can compute $P_i$ dynamically using base case 
-    $$P_0(v) = \{ \{c(v)\} \}$$
-    and reccurence
-    $$P_i(v) = \bigcup_{u \in N(v)} \{S \cup \{c(v)\} | S \in P_{i-1}(u) \land c(v) \notin S \}$$
+	We can compute $P_i$ dynamically using base case
+	$$P_0(v) = \{ \{c(v)\} \}$$
+	and reccurence
+	$$P_i(v) = \bigcup_{u \in N(v)} \{S \cup \{c(v)\} | S \in P_{i-1}(u) \land c(v) \notin S \}$$
 \end{lemma}
 
 \begin{algorithm}
-colorful(G, i):
+	colorful(G, i):
 
-for all v in V do:
-    P[i][v] = {}
-    for all u in N(v) do:
-        for all S in P[i-1][u] do:
-            if c(v,u) not in S then
-                P[i][v].add(S union {c(v,u)})
+	for all v in V do:
+	P[i][v] = {}
+	for all u in N(v) do:
+	for all S in P[i-1][u] do:
+	if c(v,u) not in S then
+	P[i][v].add(S union {c(v,u)})
 \end{algorithm}
 
 \begin{theorem}
-    The runtime of the above algorithm is bounded by $O(2^k \cdot k \cdot m)$.
+	The runtime of the above algorithm is bounded by $O(2^k \cdot k \cdot m)$.
 \end{theorem}
 
 \begin{proof}
-    $$\sum_{i=1}^{k-1} O(\text{colorful(G, i)})$$
-    $$ = \sum_{i=1}^{k-1} O(\sum_{v \in V} deg(v) \cdot \max_{u \in N(v)} |P_{i-1}(v)|)$$
-    $$ = \sum_{i=1}^{k-1} O(m \cdot \binom{k}{i} \cdot i)$$ 
-    $$ = O(2^k  \cdot k \cdot m)$$
+	$$\sum_{i=1}^{k-1} O(\text{colorful(G, i)})$$
+	$$ = \sum_{i=1}^{k-1} O(\sum_{v \in V} deg(v) \cdot \max_{u \in N(v)} |P_{i-1}(v)|)$$
+	$$ = \sum_{i=1}^{k-1} O(m \cdot \binom{k}{i} \cdot i)$$
+	$$ = O(2^k  \cdot k \cdot m)$$
 \end{proof}
 
 \begin{remark}
-    Assume $G$ contains a $k-1$ long path $P$
-    $$P[\exists \text{coloful path of length of length k-1 }]$$
-    $$ \geq P[ \text{P is colorful} ]$$  
-    $$ \geq \frac{k!}{k^k} \geq e^{-k}$$
+	Assume $G$ contains a $k-1$ long path $P$
+	$$P[\exists \text{coloful path of length of length k-1 }]$$
+	$$ \geq P[ \text{P is colorful} ]$$
+	$$ \geq \frac{k!}{k^k} \geq e^{-k}$$
 \end{remark}
 
 \begin{theorem}
-    The monte carlo algorithm (Repeated $\lambda e^k$ times)has a runtime of $O(\lambda \cdot (2e)^k \cdot k \cdot m)$ and a probability of error $e^{-\lambda}$
+	The monte carlo algorithm (Repeated $\lambda e^k$ times)has a runtime of $O(\lambda \cdot (2e)^k \cdot k \cdot m)$ and a probability of error $e^{-\lambda}$
 \end{theorem}
 
 \subsection{Minimum cut in Multigraphs}
 
 \begin{definition}
-    \textbf{Minimum Edge Cut Problem: } Given a multigraph $G=(V,E)$ determine the cardinality $\mu(G)$ of a minimum edge cut in $G$.
+	\textbf{Minimum Edge Cut Problem: } Given a multigraph $G=(V,E)$ determine the cardinality $\mu(G)$ of a minimum edge cut in $G$.
 \end{definition}
 
 \begin{definition}
-    A \textbf{multigraph} $G$ is an undirected, unweighted graph whith possibly multiple edges between two vertices.
+	A \textbf{multigraph} $G$ is an undirected, unweighted graph whith possibly multiple edges between two vertices.
 \end{definition}
 
 \begin{definition}
-    An \textbf{Edge Cut} is a set of edges $C \subseteq E$ such that $G \setminus C$ is disconnected.
+	An \textbf{Edge Cut} is a set of edges $C \subseteq E$ such that $G \setminus C$ is disconnected.
 \end{definition}
 
 \begin{remark}
-    This problem is equivalent to finding a Partition $S \cup T = V$ such that the number of edges between $S$ and $T$ is minimized.
+	This problem is equivalent to finding a Partition $S \cup T = V$ such that the number of edges between $S$ and $T$ is minimized.
 \end{remark}
 
 \begin{lemma}
-    Observe that the following holds:
-    $$2 |E| = \sum_{v \in V} deg(v) \quad \text{ and } \quad \mu(G) \leq mindeg(v)$$ 
+	Observe that the following holds:
+	$$2 |E| = \sum_{v \in V} deg(v) \quad \text{ and } \quad \mu(G) \leq mindeg(v)$$
 \end{lemma}
 
 \begin{theorem}
-    Using maxflow we can dtermine the global min cut in $O(n^4\log n)$ time.
+	Using maxflow we can dtermine the global min cut in $O(n^4\log n)$ time.
 \end{theorem}
 
 \begin{proof}
-    We can find the global min cut by selecting an arbitrary vertes $s$ which must be on one side of the min cut. Then we iterate over all $t \in V \setminus \{s\}$ and determine the min cut between $s$ and $t$ in time $O(nm \log n)$. This will lead us to an alogrithm of $O(n^2 m  \log n) \leq O(n^4 \log n)$
+	We can find the global min cut by selecting an arbitrary vertes $s$ which must be on one side of the min cut. Then we iterate over all $t \in V \setminus \{s\}$ and determine the min cut between $s$ and $t$ in time $O(nm \log n)$. This will lead us to an alogrithm of $O(n^2 m  \log n) \leq O(n^4 \log n)$
 \end{proof}
 
 \begin{definition}
-    \textbf{Edge Contraction: } Let $G=(V,E)$ be a graph. Edge contraction operates on an edge $(u,v) \in E$ and merges the two vertices $u$ and $v$ into a single vertex $w$. All edges incident to $u$ or $v$ are now incident to $w$.
+	\textbf{Edge Contraction: } Let $G=(V,E)$ be a graph. Edge contraction operates on an edge $(u,v) \in E$ and merges the two vertices $u$ and $v$ into a single vertex $w$. All edges incident to $u$ or $v$ are now incident to $w$.
 \end{definition}
 
 \begin{theorem}
-    Using edge contractions we can find a global min cut in $O(n^4 \log n)$ with a success probability of $\frac{1}{n}$.
+	Using edge contractions we can find a global min cut in $O(n^4 \log n)$ with a success probability of $\frac{1}{n}$.
 \end{theorem}
 
 \begin{proof}
-    Observe that contracting an edge $(u,v) \in E$ only increses the min cut if the edge is part of the min cut, else the min cut remains the same. Hence we can contract $n-2$ times and get a graph with $2$ vertices where the min cut is exactly the degree of the vertices. 
-    The probability of choosing an edge which is part of the min cut is at most 
-    $$P[e \in C_{min}] = \frac{\mu(G)}{|E|} \leq \frac{2 |E|}{n |E|} = \frac{2}{n}$$
-    Now observe that for $n \geq 3$ we have
-    $$P[\mu(G_n) = \mu(G_{n-1})] \geq (1 - \frac{2}{n}) P[\mu(G_{n-1}) = \mu(G_{n-2})]$$
-    Hence
-    $$P[\mu(G) = \mu(G_2)] \geq \frac{n-2}{n}\cdot\frac{n-3}{n-1}\cdot\frac{n-4}{n-2}\cdot\dots\cdot\frac{3}{5}\cdot\frac{2}{4}\cdot\frac{1}{3}\cdot1 = \frac{2}{n(n-1)} = \binom{n}{2}^{-1}$$
+	Observe that contracting an edge $(u,v) \in E$ only increses the min cut if the edge is part of the min cut, else the min cut remains the same. Hence we can contract $n-2$ times and get a graph with $2$ vertices where the min cut is exactly the degree of the vertices.
+	The probability of choosing an edge which is part of the min cut is at most
+	$$P[e \in C_{min}] = \frac{\mu(G)}{|E|} \leq \frac{2 |E|}{n |E|} = \frac{2}{n}$$
+	Now observe that for $n \geq 3$ we have
+	$$P[\mu(G_n) = \mu(G_{n-1})] \geq (1 - \frac{2}{n}) P[\mu(G_{n-1}) = \mu(G_{n-2})]$$
+	Hence
+	$$P[\mu(G) = \mu(G_2)] \geq \frac{n-2}{n}\cdot\frac{n-3}{n-1}\cdot\frac{n-4}{n-2}\cdot\dots\cdot\frac{3}{5}\cdot\frac{2}{4}\cdot\frac{1}{3}\cdot1 = \frac{2}{n(n-1)} = \binom{n}{2}^{-1}$$
 \end{proof}
 
 \begin{theorem}
-    By repeating the above algorithm $\lambda \binom{n}{2}$ times and returning the smalles value we get a success probability of $1 - e^{-\lambda}$. Let $\lambda = \ln n$ we get a failure prob of $\frac{1}{n}$. 
+	By repeating the above algorithm $\lambda \binom{n}{2}$ times and returning the smalles value we get a success probability of $1 - e^{-\lambda}$. Let $\lambda = \ln n$ we get a failure prob of $\frac{1}{n}$.
 \end{theorem}
 
 \subsubsection{Bootstrapping}
 
 \begin{remark}
-    Observe that the probability of picking the wrong edge grows with each step hence the last few steps are critical and the probability of failure is dominated by the last few steps.
+	Observe that the probability of picking the wrong edge grows with each step hence the last few steps are critical and the probability of failure is dominated by the last few steps.
 \end{remark}
 
 \begin{theorem}
-    We can stop the contraction process early at $|G| = t$ in $O(n(n-t))$ and compute the rest using $\lambda = 1$ in $O(t^4)$ to reduce error in the last few steps. By repeting this $\lambda \frac{n(n-1)}{t(t-1)}\frac{e}{1-e}$ and setting $t=\sqrt{n}$ we get a total runtime of $O(\lambda n^3)$ with an error probability of $e^{-\lambda}$.
+	We can stop the contraction process early at $|G| = t$ in $O(n(n-t))$ and compute the rest using $\lambda = 1$ in $O(t^4)$ to reduce error in the last few steps. By repeting this $\lambda \frac{n(n-1)}{t(t-1)}\frac{e}{1-e}$ and setting $t=\sqrt{n}$ we get a total runtime of $O(\lambda n^3)$ with an error probability of $e^{-\lambda}$.
 \end{theorem}
 
 \subsection{Small Enclosing Disk Problem}
 
 \begin{definition}
-    Given a finite set $P \subset \mathbb{R}^2$ find the smallest disk/circle $C_P$ such that $P \subset C_P$
+	Given a finite set $P \subset \mathbb{R}^2$ find the smallest disk/circle $C_P$ such that $P \subset C_P$
 \end{definition}
 
 \begin{lemma}
-    For every set $P$ there exists a certificate $C(P)$ of three points such that the disk defined by the points in $C(P)$ is $C_P$.
+	For every set $P$ there exists a certificate $C(P)$ of three points such that the disk defined by the points in $C(P)$ is $C_P$.
 \end{lemma}
 
 \begin{remark}
-    The brutforce approach tries every combination $Q$ of three points in $O(n^3)$ time and checks in $O(n)$ if $P \subseteq Q(P)$.
+	The brutforce approach tries every combination $Q$ of three points in $O(n^3)$ time and checks in $O(n)$ if $P \subseteq Q(P)$.
 \end{remark}
 
 \begin{remark}
-    Another idea would be to choose $Q$ randomly and check if $P \subseteq Q(P)$. This still leads to a $O(n^4)$ randomized algorithm.
+	Another idea would be to choose $Q$ randomly and check if $P \subseteq Q(P)$. This still leads to a $O(n^4)$ randomized algorithm.
 \end{remark}
 
 \begin{theorem}
-    By doubling the number of copies of points $p_i \notin Q$ every iteration we get a randomized algorithm which finds the smallest enclosing disk in $O(n \log n)$ expected time.
+	By doubling the number of copies of points $p_i \notin Q$ every iteration we get a randomized algorithm which finds the smallest enclosing disk in $O(n \log n)$ expected time.
 \end{theorem}
 
 \begin{proof}
-    The Sampling Lemma states that for a multiset $P'$ of size $N$ and a random subset $R$ of size $r$, the expected number of points outside the disk $C(R)$ is bounded by:
-    $$\mathbb{E}[|P' \setminus C^{\bullet}(R)|] \le 3 \frac{N-r}{r+1} \le 3 \frac{N}{r+1}$$
+	The Sampling Lemma states that for a multiset $P'$ of size $N$ and a random subset $R$ of size $r$, the expected number of points outside the disk $C(R)$ is bounded by:
+	$$\mathbb{E}[|P' \setminus C^{\bullet}(R)|] \le 3 \frac{N-r}{r+1} \le 3 \frac{N}{r+1}$$
 
-    Since we use $r=11$ in every round, the total number of points $X_k$ in the multiset after $k$ rounds grows only moderately in expectation:
-    $$\mathbb{E}[X_k] \le (1 + \frac{3}{11+1})^k \cdot n = (\frac{5}{4})^k \cdot n$$
+	Since we use $r=11$ in every round, the total number of points $X_k$ in the multiset after $k$ rounds grows only moderately in expectation:
+	$$\mathbb{E}[X_k] \le (1 + \frac{3}{11+1})^k \cdot n = (\frac{5}{4})^k \cdot n$$
 
-    At the same time, there exists a small basis $B \subseteq P$ with $|B| \le 3$ that defines the optimal disk $C(P)$. As long as the algorithm has not terminated ($T \ge k$), at least one point from $B$ must be outside $C(Q)$ and thus be doubled in each round. By the pigeonhole principle, after $k$ rounds, at least one point in $B$ must have been doubled at least $k/3$ times:
-        $$X_k \ge 2^{k/3}$$
+	At the same time, there exists a small basis $B \subseteq P$ with $|B| \le 3$ that defines the optimal disk $C(P)$. As long as the algorithm has not terminated ($T \ge k$), at least one point from $B$ must be outside $C(Q)$ and thus be doubled in each round. By the pigeonhole principle, after $k$ rounds, at least one point in $B$ must have been doubled at least $k/3$ times:
+	$$X_k \ge 2^{k/3}$$
 
-    By combining these two bounds, we can bound the probability that the algorithm is still running after $k$ rounds:
-    $$2^{k/3} \cdot Pr[T \ge k] \le \mathbb{E}[X_k] \le (\frac{5}{4})^k \cdot n$$
-    $$Pr[T \ge k] \le \left( \frac{5}{4 \cdot 2^{1/3}} \right)^k \cdot n \approx 0.993^k \cdot n$$
-        
-    Since this probability decreases exponentially as $k$ increases, the expected number of rounds is $E[T] = O(\log n)$. Given that each round takes $O(n)$ time to check all points, the total expected runtime is:
-    $$\mathbb{E}[\text{runtime}] = O(n \log n)$$
+	By combining these two bounds, we can bound the probability that the algorithm is still running after $k$ rounds:
+	$$2^{k/3} \cdot Pr[T \ge k] \le \mathbb{E}[X_k] \le (\frac{5}{4})^k \cdot n$$
+	$$Pr[T \ge k] \le \left( \frac{5}{4 \cdot 2^{1/3}} \right)^k \cdot n \approx 0.993^k \cdot n$$
+
+	Since this probability decreases exponentially as $k$ increases, the expected number of rounds is $E[T] = O(\log n)$. Given that each round takes $O(n)$ time to check all points, the total expected runtime is:
+	$$\mathbb{E}[\text{runtime}] = O(n \log n)$$
 \end{proof}
 
 
 \subsection{Convex Hull}
 
 \begin{definition}
-    The \textbf{Convex Hull} $\mathcal{CH}(P)$ of a finite set of points $P \subset \mathbb{R}^2$ is the intersection of all convex sets containing $P$. Equivalently, it is the set of all convex combinations of points in $P$:
-    $$ \mathcal{CH}(P) = \left\{ \sum_{i=1}^{|P|} \lambda_i p_i \;\middle|\; p_i \in P, \lambda_i \ge 0, \sum_{i=1}^{|P|} \lambda_i = 1 \right\} $$
+	The \textbf{Convex Hull} $\mathcal{CH}(P)$ of a finite set of points $P \subset \mathbb{R}^2$ is the intersection of all convex sets containing $P$. Equivalently, it is the set of all convex combinations of points in $P$:
+	$$ \mathcal{CH}(P) = \left\{ \sum_{i=1}^{|P|} \lambda_i p_i \;\middle|\; p_i \in P, \lambda_i \ge 0, \sum_{i=1}^{|P|} \lambda_i = 1 \right\} $$
 \end{definition}
 
 \begin{definition}
-    A directed segment $\vec{pq}$ for $p, q \in P$ is a \textbf{border edge} of $\mathcal{CH}(P)$ if and only if all other points in $P \setminus \{p, q\}$ lie on the same side (e.g., strictly to the left) of the directed line passing through $p$ and $q$.
+	A directed segment $\vec{pq}$ for $p, q \in P$ is a \textbf{border edge} of $\mathcal{CH}(P)$ if and only if all other points in $P \setminus \{p, q\}$ lie on the same side (e.g., strictly to the left) of the directed line passing through $p$ and $q$.
 \end{definition}
 
 \begin{definition}
-    For a directed line passing through points $p = (x_p, y_p)$ and $q = (x_q, y_q)$, a point $r = (x_r, y_r)$ is located to the \textbf{left} or \textbf{right} of $\vec{pq}$ according to the sign of the 2D cross product:
-    $$ \text{CCW}(p, q, r) = (x_q - x_p)(y_r - y_p) - (y_q - y_p)(x_r - x_p) $$
-    If $\text{CCW}(p, q, r) > 0$, $r$ lies strictly to the left of $\vec{pq}$ (counter-clockwise orientation). If $\text{CCW}(p, q, r) < 0$, $r$ lies strictly to the right (clockwise orientation). If $\text{CCW}(p, q, r) = 0$, the points are collinear.
+	For a directed line passing through points $p = (x_p, y_p)$ and $q = (x_q, y_q)$, a point $r = (x_r, y_r)$ is located to the \textbf{left} or \textbf{right} of $\vec{pq}$ according to the sign of the 2D cross product:
+	$$ \text{CCW}(p, q, r) = (x_q - x_p)(y_r - y_p) - (y_q - y_p)(x_r - x_p) $$
+	If $\text{CCW}(p, q, r) > 0$, $r$ lies strictly to the left of $\vec{pq}$ (counter-clockwise orientation). If $\text{CCW}(p, q, r) < 0$, $r$ lies strictly to the right (clockwise orientation). If $\text{CCW}(p, q, r) = 0$, the points are collinear.
 \end{definition}
 
 \begin{theorem}
-    Given a vertex $p \in P$ that is guaranteed to be on the boundary of $\mathcal{CH}(P)$, the next vertex $q \in P$ on the convex hull can be found in $\mathcal{O}(n)$ time. This is achieved by finding a point $q$ such that for all $r \in P \setminus \{p, q\}$, we have $\text{CCW}(p, q, r) > 0$ (all points lie to the left).
+	Given a vertex $p \in P$ that is guaranteed to be on the boundary of $\mathcal{CH}(P)$, the next vertex $q \in P$ on the convex hull can be found in $\mathcal{O}(n)$ time. This is achieved by finding a point $q$ such that for all $r \in P \setminus \{p, q\}$, we have $\text{CCW}(p, q, r) > 0$ (all points lie to the left).
 \end{theorem}
 
 \begin{remark}
-    \textbf{Initialization:} The point $p_0 \in P$ with the minimum $y$-coordinate (and minimum $x$-coordinate in case of a tie) is an extremal point of $P$ and is therefore guaranteed to be a vertex of $\mathcal{CH}(P)$.
+	\textbf{Initialization:} The point $p_0 \in P$ with the minimum $y$-coordinate (and minimum $x$-coordinate in case of a tie) is an extremal point of $P$ and is therefore guaranteed to be a vertex of $\mathcal{CH}(P)$.
 \end{remark}
 
 \begin{theorem}
-    The \textbf{Gift Wrapping Algorithm (Jarvis March)} iteratively finds the next border edge, computing the convex hull of $P$ in $\mathcal{O}(nh)$ time, where $h$ is the number of vertices on the convex hull.
+	The \textbf{Gift Wrapping Algorithm (Jarvis March)} iteratively finds the next border edge, computing the convex hull of $P$ in $\mathcal{O}(nh)$ time, where $h$ is the number of vertices on the convex hull.
 \end{theorem}
 
 \begin{proof}
-    The algorithm starts with an extremal point $p_0$. In each step, it finds the point $q$ that forms the smallest angle with the current edge (i.e., the point "most to the right"). By the geometric definition of a convex hull, the segment $\vec{pq}$ must be a border edge because all other points lie to the left of it. The algorithm terminates when it wraps back around to $p_0$, successfully tracing the entire boundary.
-    
-    We must perform $h$ iterations to find all vertices of the convex hull. In each iteration, we scan through all $n$ points in $P$ to find the one that forms the smallest angle with the current edge. The angle comparison (via cross product) takes $\mathcal{O}(1)$ time. Thus, the total time complexity is $\mathcal{O}(h \cdot n)$.
+	The algorithm starts with an extremal point $p_0$. In each step, it finds the point $q$ that forms the smallest angle with the current edge (i.e., the point "most to the right"). By the geometric definition of a convex hull, the segment $\vec{pq}$ must be a border edge because all other points lie to the left of it. The algorithm terminates when it wraps back around to $p_0$, successfully tracing the entire boundary.
+
+	We must perform $h$ iterations to find all vertices of the convex hull. In each iteration, we scan through all $n$ points in $P$ to find the one that forms the smallest angle with the current edge. The angle comparison (via cross product) takes $\mathcal{O}(1)$ time. Thus, the total time complexity is $\mathcal{O}(h \cdot n)$.
 \end{proof}
 
 \begin{codeexample}
-p = min_x(min_y(P))
-hull = empty_list()
+	p = min_x(min_y(P))
+	hull = empty_list()
 
-do {
-    hull.add(p)
-    q = any_point_in(P) != p
-    for r in P {
-        if r on the right side of p-q:
-            q = r
-    }
-    p = q
-} while p != hull[0]
+	do {
+			hull.add(p)
+			q = any_point_in(P) != p
+			for r in P {
+					if r on the right side of p-q:
+					q = r
+				}
+			p = q
+		} while p != hull[0]
 \end{codeexample}
 
-\subsection{Reachable Vertices}  
+\subsection{Reachable Vertices}
 
 \begin{definition}
-    Given a directed graph $G=(V, E)$, for each vertex $v \in V$, calculate the number of reachable vertices $n_v = |R(v)|$, where $R(v) = \{ u \in V \mid u \text{ is reachable from } v \}$.
+	Given a directed graph $G=(V, E)$, for each vertex $v \in V$, calculate the number of reachable vertices $n_v = |R(v)|$, where $R(v) = \{ u \in V \mid u \text{ is reachable from } v \}$.
 \end{definition}
 
 \begin{remark}
-    For an undirected graph, this is simply the size of the connected component. It can be solved in $O(n+m)$ by first identifying components via DFS and then counting their sizes.
+	For an undirected graph, this is simply the size of the connected component. It can be solved in $O(n+m)$ by first identifying components via DFS and then counting their sizes.
 \end{remark}
 
 \begin{remark}
-    The problem is not efficiently solvable for directed graphs in the worst case, as an exact solution takes $O(n(n+m))$. Improving this to sub-quadratic time likely contradicts the Strong Exponential Time Hypothesis. Thus, we seek an approximate solution in near-linear time.
+	The problem is not efficiently solvable for directed graphs in the worst case, as an exact solution takes $O(n(n+m))$. Improving this to sub-quadratic time likely contradicts the Strong Exponential Time Hypothesis. Thus, we seek an approximate solution in near-linear time.
 \end{remark}
 
-\begin{algorithm}  
-\\Subroutine: Minimum Reachable Value
-\\To enable approximation, we use a subroutine that finds 
-\\the smallest value r_u among all reachable vertices u for every v
+\begin{algorithm}
+	\\Subroutine: Minimum Reachable Value
+	\\To enable approximation, we use a subroutine that finds
+	\\the smallest value r_u among all reachable vertices u for every v
 
-V = V.sort(ascending, r_v)
-min[v] = \infty
-for v_i in V:
-    if min[v_i] == \infty:
-        DFSREV(v_i)
-        min[u] = r_{v_i} \\for all u in R(v_i)
+	V = V.sort(ascending, r_v)
+	min[v] = \infty
+	for v_i in V:
+	if min[v_i] == \infty:
+	DFSREV(v_i)
+	min[u] = r_{v_i} \\for all u in R(v_i)
 
 \end{algorithm}
 
 \subsubsection{Approximation Algorithm}
 
 \begin{remark}
-    The core idea is to assign each vertex $v$ a random variable $r_v \sim \text{Uniform}([0,1])$. The minimum value $x_v = \min_{u \in R(v)} r_u$ among $n_v$ such variables is roughly $1/n_v$ in expectation.
+	The core idea is to assign each vertex $v$ a random variable $r_v \sim \text{Uniform}([0,1])$. The minimum value $x_v = \min_{u \in R(v)} r_u$ among $n_v$ such variables is roughly $1/n_v$ in expectation.
 \end{remark}
 
-\begin{theorem} 
-    \textbf{Algorithm:} Repeat the process $l = \lceil 2 \log_2(2n/\delta) \rceil$ times. In each iteration, compute $x_{i,v}$ using the subroutine. The estimate $\tilde{n}_v$ is the reciprocal of the median of these $x_{i,v}$ values, which achieves an approximation in $O((n \log n + m) \log(n/\delta))$ time.
+\begin{theorem}
+	\textbf{Algorithm:} Repeat the process $l = \lceil 2 \log_2(2n/\delta) \rceil$ times. In each iteration, compute $x_{i,v}$ using the subroutine. The estimate $\tilde{n}_v$ is the reciprocal of the median of these $x_{i,v}$ values, which achieves an approximation in $O((n \log n + m) \log(n/\delta))$ time.
 \end{theorem}
 
 \begin{theorem}
-    With probability $\ge 1-\delta$, the estimate satisfies $n_v/20 \le \tilde{n}_v \le 20n_v$ for all $v$.
+	With probability $\ge 1-\delta$, the estimate satisfies $n_v/20 \le \tilde{n}_v \le 20n_v$ for all $v$.
 \end{theorem}
 
 \begin{theorem}
-    By increasing the iterations $l$ to $O(\frac{1}{\epsilon^2} \log(\frac{n}{\delta}))$, a $(1 \pm \epsilon)$-approximation can be achieved.
+	By increasing the iterations $l$ to $O(\frac{1}{\epsilon^2} \log(\frac{n}{\delta}))$, a $(1 \pm \epsilon)$-approximation can be achieved.
 \end{theorem}
 
-\begin{remark}  
-    This algorithmic approach (using minima of random variables) is also used in the \textit{count-distinct} problem (e.g., HyperLogLog) to estimate the number of unique elements in data streams.
+\begin{remark}
+	This algorithmic approach (using minima of random variables) is also used in the \textit{count-distinct} problem (e.g., HyperLogLog) to estimate the number of unique elements in data streams.
 \end{remark}
