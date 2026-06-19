@@ -20,15 +20,45 @@
 \end{theorem}
 
 \begin{theorem}
-    \textbf{Basic Antiderivatives}:
-    $$\int x^p \, dx = \frac{x^{p+1}}{p+1} + C \quad (p \neq -1)$$
-    $$\int \frac{1}{x} \, dx = \ln|x| + C$$
-    $$\int e^x \, dx = e^x + C$$
-    $$\int a^x \, dx = \frac{a^x}{\ln(a)} + C$$
-    $$\int \sin(x) \, dx = -\cos(x) + C$$
-    $$\int \cos(x) \, dx = \sin(x) + C$$
-    $$\int \frac{1}{1+x^2} \, dx = \arctan(x) + C$$
+    \textbf{Common Antiderivatives}:
+    \begin{center}
+    \scriptsize
+    \setlength{\tabcolsep}{2pt}
+    \begin{tabular}{|l|l||l|l|}
+    \hline
+    $f(x)$ & $\int f(x) dx$ & $f(x)$ & $\int f(x) dx$ \\ \hline
+    $x^p$ & $\frac{x^{p+1}}{p+1}$ ($p \ne -1$) & $\frac{1}{x}$ & $\ln|x|$ \\ \hline
+    $e^x$ & $e^x$ & $a^x$ & $\frac{a^x}{\ln a}$ \\ \hline
+    $\sin x$ & $-\cos x$ & $\cos x$ & $\sin x$ \\ \hline
+    $\tan x$ & $-\ln|\cos x|$ & $\frac{1}{\cos^2 x}$ & $\tan x$ \\ \hline
+    $\sinh x$ & $\cosh x$ & $\cosh x$ & $\sinh x$ \\ \hline
+    $\frac{1}{1+x^2}$ & $\arctan x$ & $\frac{1}{\sqrt{1-x^2}}$ & $\arcsin x$ \\ \hline
+    $\frac{1}{\sqrt{x^2+1}}$ & $\text{arsinh } x$ & $\frac{1}{\sqrt{x^2-1}}$ & $\text{arcosh } x$ \\ \hline
+    $\ln x$ & $x \ln x - x$ & $\frac{1}{x^2-1}$ & $\frac{1}{2}\ln|\frac{x-1}{x+1}|$ \\ \hline
+    \end{tabular}
+    \end{center}
 \end{theorem}
+
+\begin{remark}
+    \textbf{Integration Tricks:}
+    \begin{itemize}
+        \item \textbf{Partial Fraction Decomposition:} For $\int \frac{P(x)}{Q(x)}dx$. If $\deg P \ge \deg Q$, use polynomial division first.
+        \begin{itemize}
+            \item Simple real root: $(ax+b) \to \frac{A}{ax+b}$
+            \item Repeated real root: $(ax+b)^k \to \frac{A_1}{ax+b} + \frac{A_2}{(ax+b)^2} + \dots + \frac{A_k}{(ax+b)^k}$
+            \item Irreducible quadratic: $(ax^2+bx+c) \to \frac{Ax+B}{ax^2+bx+c}$
+        \end{itemize}
+        \item \textbf{Weierstrass Substitution:} For integrals of $R(\sin x, \cos x)$, let $t = \tan(x/2)$.
+        \item \textbf{Square Completion:} For $\sqrt{ax^2+bx+c}$, complete the square to get $\sqrt{u^2 \pm k^2}$.
+        \item \textbf{Substitution Patterns:}
+        \begin{itemize}
+            \item $\sqrt{a^2-x^2} \to x = a \sin \theta$ or $x = a \cos \theta$
+            \item $\sqrt{a^2+x^2} \to x = a \tan \theta$ or $x = a \sinh u$
+            \item $\sqrt{x^2-a^2} \to x = a \sec \theta$ or $x = a \cosh u$
+        \end{itemize}
+        \item \textbf{Symmetry:} $\int_{-a}^a f(x)dx = 0$ if $f$ is odd, and $2\int_0^a f(x)dx$ if $f$ is even.
+    \end{itemize}
+\end{remark}
 
 \begin{theorem}
     \textbf{Integration by Parts}: For differentiable functions $f(x)$ and $g(x)$ we have:
@@ -112,3 +142,23 @@
     $$\int_{a}^{b} f'(x)g(x) \, dx$$
     $$= \Big[ f(x)g(x) \Big]_{a}^{b} - \int_{a}^{b} f(x)g'(x) \, dx$$
 \end{lemma}
+\subsection{Exam Strategy: Leibniz's Rule}
+\begin{gather*}
+    \frac{d}{dx} \int_{a(x)}^{b(x)} f(t,x) \, dt = f(b(x),x)b'(x) \\
+    - f(a(x),x)a'(x) + \int_{a(x)}^{b(x)} \frac{\partial f}{\partial x} \, dt
+\end{gather*}
+
+\subsection{Geometric Applications}
+\begin{itemize}
+    \item \textbf{Area between curves:} $A = \int_a^b |f(x) - g(x)| dx$.
+    \item \textbf{Rotational Volume (around x-axis):} $V = \pi \int_a^b (f(x))^2 dx$.
+    \item \textbf{Rotational Volume (around y-axis):} $V = 2\pi \int_a^b x f(x) dx$.
+    \item \textbf{Arc Length:} $L = \int_a^b \sqrt{1 + (f'(x))^2} dx$.
+\end{itemize}
+
+\subsection{Convergence of Improper Integrals}
+\begin{itemize}
+    \item \textbf{p-test (to infinity):} $\int_1^\infty \frac{1}{x^p} dx$ converges if $p > 1$ (diverges if $p \le 1$).
+    \item \textbf{p-test (to zero):} $\int_0^1 \frac{1}{x^p} dx$ converges if $p < 1$ (diverges if $p \ge 1$).
+    \item \textbf{Comparison Test:} If $0 \le f(x) \le g(x)$, then $\int g$ conv $\implies \int f$ conv.
+\end{itemize}

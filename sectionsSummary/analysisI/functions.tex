@@ -155,3 +155,39 @@
     $$\exists x_{min}, x_{max} \in I \text{ such that }$$
     $$ f(x_{min}) \leq f(x) \leq f(x_{max}) \quad \forall x \in I$$
 \end{theorem}
+
+\subsection{Trigonometric Identities}
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Category} & \textbf{Formula} \\ \hline
+Pythagoras & $\sin^2 x + \cos^2 x = 1$ \\
+& $1 + \tan^2 x = \frac{1}{\cos^2 x}$ \\ \hline
+Addition & $\sin(x \pm y) = \sin x \cos y \pm \cos x \sin y$ \\
+& $\cos(x \pm y) = \cos x \cos y \mp \sin x \sin y$ \\
+& $\tan(x \pm y) = \frac{\tan x \pm \tan y}{1 \mp \tan x \tan y}$ \\ \hline
+Double Angle & $\sin(2x) = 2 \sin x \cos x$ \\
+& $\cos(2x) = \cos^2 x - \sin^2 x$ \\
+& $\phantom{\cos(2x)} = 2 \cos^2 x - 1 = 1 - 2 \sin^2 x$ \\ \hline
+Half Angle & $\sin^2 x = \frac{1 - \cos(2x)}{2}$ \\
+& $\cos^2 x = \frac{1 + \cos(2x)}{2}$ \\ \hline
+Subst. trick & $\tan(x/2) = t \implies$ \\
+& $\sin x = \frac{2t}{1+t^2}, \cos x = \frac{1-t^2}{1+t^2}$ \\
+& $dx = \frac{2dt}{1+t^2}$ \\ \hline
+Prod-to-Sum & $\sin x \sin y = \frac{1}{2}(\cos(x-y) - \cos(x+y))$ \\
+& $\cos x \cos y = \frac{1}{2}(\cos(x-y) + \cos(x+y))$ \\
+& $\sin x \cos y = \frac{1}{2}(\sin(x+y) + \sin(x-y))$ \\ \hline
+\end{tabular}
+\end{center}
+
+\subsection{Hyperbolic Functions}
+\begin{itemize}
+    \item $\cosh x = \frac{e^x + e^{-x}}{2}, \quad \sinh x = \frac{e^x - e^{-x}}{2}$
+    \item $\tanh x = \frac{\sinh x}{\cosh x} = \frac{e^x - e^{-x}}{e^x + e^{-x}}$
+    \item $\cosh^2 x - \sinh^2 x = 1$
+    \item $\sinh(2x) = 2 \sinh x \cosh x, \quad \cosh(2x) = \cosh^2 x + \sinh^2 x$
+    \item $(\sinh x)' = \cosh x, \quad (\cosh x)' = \sinh x, \quad (\tanh x)' = \frac{1}{\cosh^2 x}$
+    \item $\text{arsinh}(x) = \ln(x + \sqrt{x^2+1}), \quad \text{arcosh}(x) = \ln(x + \sqrt{x^2-1})$
+\end{itemize}

@@ -49,18 +49,24 @@
 \subsection{Derivation rules}
 
 \begin{theorem}
-    For functions $f(x)$ we have
-    $$f(x) = a x^p \quad \implies \quad f'(x) = a p x^{p-1}$$
-    $$f(x) = a^x \quad \implies \quad f'(x) = \ln(a) \cdot a^x$$
-    $$f(x) = \sin(x) \quad \implies \quad f'(x) = \cos(x)$$
-    $$f(x) = \cos(x) \quad \implies \quad f'(x) = -\sin(x)$$
-    $$f(x) = \tan(x) \quad \implies \quad f'(x) = \frac{1}{\cos^2(x)}$$
-    $$f(x) = \sinh(x) \quad \implies \quad f'(x) = \cosh(x)$$
-    $$f(x) = \cosh(x) \quad \implies \quad f'(x) = \sinh(x)$$
-    $$f(x) = \ln(x) \quad \implies \quad f'(x) = \frac{1}{x}$$
-    $$f(x) = \arcsin(x) \quad \implies \quad f'(x) = \frac{1}{\sqrt{1-x^2}}$$
-    $$f(x) = \arccos(x) \quad \implies \quad f'(x) = -\frac{1}{\sqrt{1-x^2}}$$
-    $$f(x) = \arctan(x) \quad \implies \quad f'(x) = \frac{1}{1+x^2}$$
+    \textbf{Common Derivatives}:
+    \begin{center}
+    \scriptsize
+    \setlength{\tabcolsep}{2pt}
+    \begin{tabular}{|l|l||l|l|}
+    \hline
+    $f(x)$ & $f'(x)$ & $f(x)$ & $f'(x)$ \\ \hline
+    $x^p$ & $p x^{p-1}$ & $\ln|x|$ & $1/x$ \\ \hline
+    $e^x$ & $e^x$ & $a^x$ & $a^x \ln a$ \\ \hline
+    $\sin x$ & $\cos x$ & $\cos x$ & $-\sin x$ \\ \hline
+    $\tan x$ & $1+\tan^2 x$ & $\cot x$ & $-(1+\cot^2 x)$ \\
+    & $= \cos^{-2} x$ & & $= -\sin^{-2} x$ \\ \hline
+    $\sinh x$ & $\cosh x$ & $\cosh x$ & $\sinh x$ \\ \hline
+    $\arcsin x$ & $\frac{1}{\sqrt{1-x^2}}$ & $\arccos x$ & $\frac{-1}{\sqrt{1-x^2}}$ \\ \hline
+    $\arctan x$ & $\frac{1}{1+x^2}$ & $\log_a x$ & $\frac{1}{x \ln a}$ \\ \hline
+    $\text{arsinh } x$ & $\frac{1}{\sqrt{1+x^2}}$ & $\text{arcosh } x$ & $\frac{1}{\sqrt{x^2-1}}$ \\ \hline
+    \end{tabular}
+    \end{center}
 \end{theorem}
 
 \begin{theorem}
@@ -174,7 +180,7 @@
     $$P_n(x)$$
     $$= \sum_{k=0}^n \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k$$
     $$R(x)$$
-    $$= \frac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1} \quad \text{for some } \xi \in (x_0, x) \text{ or } (x, x_0)$$
+    $$= \frac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1} \quad (\xi \text{ between } x_0, x)$$
 \end{theorem}
 
 \begin{definition}
@@ -184,14 +190,33 @@
 \end{definition}
 
 \begin{theorem}
-    \textbf{Standard Taylor Series}: The following converge for all $x \in \mathbb{R}$:
-    $$e^x = \sum_{k=0}^\infty \frac{x^k}{k!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \dots$$
-    $$\sin{x} = \sum_{k=0}^\infty (-1)^k \frac{x^{2k+1}}{(2k+1)!} = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \dots$$
-    $$\cos{x} = \sum_{k=0}^\infty (-1)^k \frac{x^{2k}}{(2k)!} = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \dots$$
+    \textbf{Standard Taylor Series (at $x=0$):}
+    \begin{center}
+    \scriptsize
+    \setlength{\tabcolsep}{2pt}
+    \begin{tabularx}{\columnwidth}{|l|>{\hsize=1.25\hsize\raggedright\arraybackslash}X|>{\hsize=0.75\hsize\raggedright\arraybackslash}X|c|}
+    \hline
+    \textbf{Func.} & \textbf{Series} & \textbf{First Terms} & \textbf{Rad} \\ \hline
+    $e^x$ & $\sum_{n=0}^\infty \frac{x^n}{n!}$ & $1+x+\frac{x^2}{2}+\dots$ & $\infty$ \\ \hline
+    $\sin x$ & $\sum_{n=0}^\infty \frac{(-1)^n x^{2n+1}}{(2n+1)!}$ & $x-\frac{x^3}{6}+\dots$ & $\infty$ \\ \hline
+    $\cos x$ & $\sum_{n=0}^\infty \frac{(-1)^n x^{2n}}{(2n)!}$ & $1-\frac{x^2}{2}+\dots$ & $\infty$ \\ \hline
+    $\frac{1}{1-x}$ & $\sum_{n=0}^\infty x^n$ & $1+x+x^2+\dots$ & $1$ \\ \hline
+    $\ln(1+x)$ & $\sum_{n=1}^\infty \frac{(-1)^{n-1} x^n}{n}$ & $x-\frac{x^2}{2}+\dots$ & $1$ \\ \hline
+    $\arctan x$ & $\sum_{n=0}^\infty \frac{(-1)^n x^{2n+1}}{2n+1}$ & $x-\frac{x^3}{3}+\dots$ & $1$ \\ \hline
+    $(1+x)^\alpha$ & $\sum_{n=0}^\infty \binom{\alpha}{n} x^n$ & $1+\alpha x+\dots$ & $1$ \\ \hline
+    $\sinh x$ & $\sum_{n=0}^\infty \frac{x^{2n+1}}{(2n+1)!}$ & $x+\frac{x^3}{6}+\dots$ & $\infty$ \\ \hline
+    $\cosh x$ & $\sum_{n=0}^\infty \frac{x^{2n}}{(2n)!}$ & $1+\frac{x^2}{2}+\dots$ & $\infty$ \\ \hline
+    \end{tabularx}
+    \end{center}
 \end{theorem}
 
 \begin{important}
-    Not all infinitely differentiable functions have a Taylor series expansion that converges to the function itself. For example, $\ln(1+x)$, $\frac{1}{1-x}$, and $(1+x)^p$ only converge for $-1 \lt x \lt 1$.
+    \textbf{Radii of Convergence for additional Taylor Series:}
+    \begin{itemize}
+        \item \textbf{Logarithm:} $\ln(1+x) = \sum_{n=1}^\infty \frac{(-1)^{n-1}}{n} x^n$ (for $x \in (-1, 1]$)
+        \item \textbf{Geometric:} $\frac{1}{1-x} = \sum_{n=0}^\infty x^n$ (for $|x| < 1$)
+        \item \textbf{Binomial:} $(1+x)^\alpha = 1 + \alpha x + \frac{\alpha(\alpha-1)}{2!} x^2 + \dots$ (for $|x| < 1$)
+    \end{itemize}
 \end{important}
 
 \begin{theorem}
@@ -211,3 +236,28 @@
     $$\int f(x) \, dx$$
     $$= \sum_{n=0}^\infty \int a_n x^n \, dx$$
 \end{theorem}
+\subsection{Exam Strategy: Piecewise Functions}
+To check continuity and differentiability at $x_0$:
+\begin{enumerate}
+    \item \textbf{Continuity:} Check if $\lim_{x \to x_0^+} f(x) = \lim_{x \to x_0^-} f(x) = f(x_0)$.
+    \item \textbf{Differentiability:} If continuous, check if $\lim_{h \searrow 0} \frac{f(x_0+h)-f(x_0)}{h} = \lim_{h \nearrow 0} \frac{f(x_0+h)-f(x_0)}{h}$.
+    \item \textbf{Shortcut:} If $f'(x)$ exists for $x \neq x_0$ and $\lim_{x \to x_0} f'(x) = L$ exists, then $f'(x_0) = L$.
+\end{enumerate}
+
+\subsection{Exam Strategy: Limits - Taylor vs. L'Hôpital}
+\begin{itemize}
+    \item \textbf{Use Taylor when:} The expression has complicated products, powers, or nested functions (e.g., $e^{\sin x} - 1$).
+    \item \textbf{Use L'Hôpital when:} The expression is a simple fraction $\frac{0}{0}$ or $\frac{\infty}{\infty}$ and derivatives are easy.
+    \item \textbf{Important Continuous Limits:}
+        \begin{itemize}
+            \item $\lim_{x \to 0} \frac{\sin(x)}{x} = 1$
+            \item $\lim_{x \to 0} \frac{1-\cos(x)}{x^2} = \frac{1}{2}$
+            \item $\lim_{x \to \infty} \left(1+\frac{a}{x}\right)^x = e^a$
+        \end{itemize}
+    \item \textbf{L'Hôpital Algebraic Conversions:}
+        \begin{itemize}
+            \item $0 \cdot \infty \to$ rewrite as $\frac{1}{\infty^0}$ or $\frac{1}{0^\infty}$ (i.e. $\frac{f}{1/g}$ or $\frac{g}{1/f}$).
+            \item $\infty - \infty \to$ combine into a single fraction.
+            \item $1^\infty, 0^0, \infty^0 \to$ use $L = \lim f(x)^{g(x)} \implies \ln(L) = \lim [g(x)\ln(f(x))]$.
+        \end{itemize}
+\end{itemize}

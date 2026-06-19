@@ -38,19 +38,25 @@
 \subsection{First-Order ODEs}
 
 \begin{theorem}
-    For an ODE of the form $y' = f(x)g(y)$, we can separate variables:
-    $$\frac{dy}{dx} = f(x)g(y)$$
-    $$\implies \int \frac{1}{g(y)} \, dy = \int f(x) \, dx + C$$
+    \textbf{Separation of Variables:} For $y' = f(x)g(y) \implies \int \frac{dy}{g(y)} = \int f(x)dx + C$.
 \end{theorem}
 
 \begin{theorem}
-    If $y' = f(ax + by + c)$, substitute $u = ax + by + c$. Since $u' = a + b y'$, this yields the separable ODE:
-    $$u' = a + b f(u)$$
+    \textbf{Linear First-Order ODE:} $y' + p(x)y = q(x)$.
+    \textbf{Integrating Factor Method:} 
+    1. Calculate $F(x) = \exp\left(\int p(x)dx\right)$.
+    2. Multiply ODE by $F(x)$: $(y F(x))' = q(x)F(x)$.
+    3. Integrate: $y(x) = \frac{1}{F(x)} \left(\int q(x)F(x)dx + C\right)$.
 \end{theorem}
 
 \begin{theorem}
-    If $y' = g\left(\frac{y}{x}\right)$, substitute $u = \frac{y}{x}$. Since $y' = u' x + u$, this yields the separable ODE:
-    $$u' x = g(u) - u$$
+    \textbf{Bernoulli ODE:} $y' + p(x)y = q(x)y^n$ ($n \neq 0, 1$).
+    \textbf{Trick:} Substitute $u = y^{1-n} \implies u' = (1-n)y^{-n}y'$.
+    This transforms the ODE into the linear form: $\frac{u'}{1-n} + p(x)u = q(x)$.
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Homogeneous substitution:} $y' = f(y/x)$. Substitute $u = y/x \implies y = ux, y' = u'x + u$.
 \end{theorem}
 
 \subsection{Linear ODEs of n-th Order}
@@ -90,19 +96,25 @@
     The general solution of $a_n y^{(n)} + \dots + a_0 y = s(x)$ is $y(x) = y_h(x) + y_p(x)$, where $y_h$ is the general homogeneous solution and $y_p$ is a particular solution.
 \end{lemma}
 
-\subsubsection{Method of Undetermined Coefficients (Ansatz)}
-
-\begin{theorem}
-    \textbf{Method of Undetermined Coefficients}: For right-hand side $s(x)$, choose the particular Ansatz $y_p(x)$ (without resonance):
-    \begin{itemize}
-        \item \textbf{Polynomial $P_m(x)$}: 
-        $$y_p(x) = C_m x^m + \dots + C_1 x + C_0$$
-        \item \textbf{Exponential $A e^{k x}$}: 
-        $$y_p(x) = C e^{k x}$$
-        \item \textbf{Trig $A \sin(\omega x) + B \cos(\omega x)$}: 
-        $$y_p(x) = C_1 \sin(\omega x) + C_2 \cos(\omega x)$$
-    \end{itemize}
-\end{theorem}
+\subsubsection{Method of Undetermined Coefficients (Ansatz Table)}
+For $ay'' + by' + cy = s(x)$, if no resonance:
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Source $s(x)$} & \textbf{Ansatz $y_p(x)$} \\ \hline
+$P_n(x)$ (Polyn.) & $Q_n(x) = $ \\
+& $A_n x^n + \dots + A_0$ \\ \hline
+$A e^{kx}$ & $B e^{kx}$ \\ \hline
+$A \sin(\omega x)$ & $C \sin(\omega x)$ \\
+$+ B \cos(\omega x)$ & $+ D \cos(\omega x)$ \\ \hline
+$e^{\alpha x} P_n(x)$ & $e^{\alpha x} Q_n(x)$ \\ \hline
+$e^{\alpha x} \sin(\beta x)$ & $e^{\alpha x} (C \cos(\beta x)$ \\
+& $+ D \sin(\beta x))$ \\ \hline
+\end{tabular}
+\end{center}
+\textbf{Resonance Rule:} If the standard Ansatz $y_p(x)$ contains a solution to the homogeneous equation, multiply the \textit{entire} Ansatz by $x$ (or $x^2$ for double roots).
 
 \begin{important}
     \textbf{Resonance}: If the term $e^{kx}$ or $e^{i\omega x}$ in $s(x)$ matches an $m$-fold root of the characteristic polynomial $p(\lambda)$, multiply the standard Ansatz $y_p(x)$ by $x^m$.
@@ -122,3 +134,21 @@
     An \textbf{Initial Value Problem (IVP)} specifies conditions at a single point $x_0$ (e.g. $y(x_0) = y_0$, $y'(x_0) = y_1$).
     A \textbf{Boundary Value Problem (BVP)} specifies conditions at multiple points (e.g. $y(a) = y_a$, $y(b) = y_b$).
 \end{definition}
+\subsection{Exam Strategy: ODE Solver Workflow}
+\begin{enumerate}
+    \item \textbf{Can I separate?} $y' = f(x)g(y)$.
+    \item \textbf{Is it linear 1st order?} $y' + p(x)y = q(x) \to$ Integrating factor $e^{\int p}$.
+    \item \textbf{Is it 2nd order linear with constant coeffs?} $ay'' + by' + cy = s(x)$.
+        \begin{itemize}
+            \item Solve char. eq. $a\lambda^2 + b\lambda + c = 0$.
+            \item Particular solution: Match $s(x)$ with Ansatz table (check for resonance!).
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Exam Strategy: Constrained Extrema}
+To find extrema of $f(x,y)$ s.t. $g(x,y)=0$:
+\begin{enumerate}
+    \item Set up system $\nabla f = \lambda \nabla g$ and $g = 0$.
+    \item Solve for $x, y, \lambda$.
+    \item \textbf{Don't forget the boundary!} If the region is a disk $x^2+y^2 \le 1$, check interior $\nabla f = 0$ AND boundary $x^2+y^2=1$.
+\end{enumerate}

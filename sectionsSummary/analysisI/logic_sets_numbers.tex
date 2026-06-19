@@ -11,11 +11,13 @@
 \end{definition}
 
 \begin{definition}
-    \textbf{Quantifiers} are short hand notation for making statements about predicates.
-    $$\forall x \in \mathbb{R}: P(x) \quad \iff \quad \text{for all} x \in \mathbb{R} \text{ holds } P(x)$$
-    $$\exists x \in \mathbb{R}: P(x) \quad \iff \quad \text{there exists} x \in \mathbb{R} \text{ s.t. } P(x)$$
-    $$\exists ! x \in \mathbb{R}: P(x) \quad \iff \quad \text{there exists exactly one} x \in \mathbb{R} \text{ s.t. } P(x)$$
-    $$\nexists x \in \mathbb{R}: P(x) \quad \iff \quad \text{there exists no} x \in \mathbb{R} \text{ s.t. } P(x)$$
+    \textbf{Quantifiers} for predicates:
+    \begin{itemize}
+        \item $\forall x \in \mathbb{R}: P(x)$ (for all $x$ holds $P(x)$)
+        \item $\exists x \in \mathbb{R}: P(x)$ (there exists $x$ s.t. $P(x)$)
+        \item $\exists ! x \in \mathbb{R}: P(x)$ (exists exactly one $x$)
+        \item $\nexists x \in \mathbb{R}: P(x)$ (exists no $x$ s.t. $P(x)$)
+    \end{itemize}
 \end{definition}
 
 \begin{important}
@@ -208,17 +210,12 @@
 \end{definition}
 
 \begin{definition}
-    A \textbf{vector space} has to satisfy the following axioms:
-    Commutativity: 
-    $$x + y = y + x$$
-    Associativity: 
-    $$x + (y + z) = (x + y) + z$$
-    Identity element: 
-    $$\exists e \in X \quad \text{s.t. } x + e = x \quad \forall x \in X$$
-    Inverse element: 
-    $$\forall x \in X \exists x^{-1} \in X \quad \text{s.t. } x + x^{-1} = e$$
-    Distributivity: 
-    $$x \cdot (y + z) = x \cdot y + x \cdot z$$
+    A \textbf{vector space} must satisfy the following axioms: \\
+    Commutativity: $x + y = y + x$ \\
+    Associativity: $x + (y + z) = (x + y) + z$ \\
+    Identity: $\exists e \in X \text{ s.t. } x + e = x \quad \forall x \in X$ \\
+    Inverse: $\forall x \in X \exists x^{-1} \in X \text{ s.t. } x + x^{-1} = e$ \\
+    Distributivity: $x \cdot (y + z) = x \cdot y + x \cdot z$
 \end{definition}
 
 \begin{definition}
@@ -330,3 +327,37 @@
 \begin{theorem}
     The \textbf{fundamental theorem of algebra} states that every polynomial of degree $n \geq 1$ has exactly $n$ roots in $\mathbb{C}$ (counting multiplicity). These roots appear in konplex-conjugate pairs.
 \end{theorem}
+\subsection{Landau Notation (Asymptotics)}
+\begin{definition}
+    Let $f, g$ be functions.
+    \begin{itemize}
+        \item $f(x) = O(g(x))$ as $x \to x_0$ iff $\exists C, \delta > 0$ s.t. $|f(x)| \le C|g(x)|$ for $|x-x_0| < \delta$.
+        \item $f(x) = o(g(x))$ as $x \to x_0$ iff $\lim_{x \to x_0} \frac{f(x)}{g(x)} = 0$.
+        \item $f(x) \sim g(x)$ as $x \to x_0$ iff $\lim_{x \to x_0} \frac{f(x)}{g(x)} = 1$.
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    \textbf{Useful for Taylor:} $f(x) = P_n(x) + O(|x-x_0|^{n+1})$.
+\end{remark}
+
+\subsection{Exam Strategy: Sets and Topology}
+\begin{itemize}
+    \item \textbf{Open:} Every point is an interior point (ball $B_\epsilon(x) \subset A$). Check: Is the boundary excluded?
+    \item \textbf{Closed:} Complement is open OR contains all limit points. Check: Is the boundary included?
+    \item \textbf{Bounded:} $A \subset B_R(0)$ for some $R$.
+    \item \textbf{Compact:} In $\mathbb{R}^n$, compact $\iff$ closed and bounded.
+    \item \textbf{Supremum/Infimum Tips:} 
+        \begin{itemize}
+            \item For $A = \{a_n : n \in \mathbb{N}\}$, check if $a_n$ is monotonic. If $a_n \nearrow L$, then $\sup A = L$, $\inf A = a_1$.
+            \item If $a_n$ oscillates, check even/odd indices separately.
+        \end{itemize}
+\end{itemize}
+
+\subsection{Exam Strategy: Complex Equations}
+\begin{itemize}
+    \item \textbf{Circles:} $|z - z_0| = R$ is a circle of radius $R$ around $z_0$.
+    \item \textbf{Lines:} $|z - a| = |z - b|$ is the perpendicular bisector of $a$ and $b$.
+    \item \textbf{Polynomials:} If $P(z)=0$ and coefficients are real, then $z \in \mathbb{C}$ is a root $\implies \bar{z}$ is also a root.
+    \item \textbf{Roots of Unity Sum:} $\sum_{k=0}^{n-1} z_k = 0$ for $n > 1$.
+\end{itemize}

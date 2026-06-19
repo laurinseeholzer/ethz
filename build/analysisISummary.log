@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2026.5.3)  31 MAY 2026 14:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2026.5.3)  19 JUN 2026 15:15
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -758,61 +758,80 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <8> on input line 10.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <6> on input line 10.
-
-Overfull \hbox (5.84091pt too wide) detected at line 15
-\OMS/lmsy/m/n/8 8\OML/lmm/m/it/8 x \OMS/lmsy/m/n/8 2 \U/msb/m/n/8 R \OT1/lmr/m/n/8 : \OML/lmm/m/it/8 P\OT1/lmr/m/n/8 (\OML/lmm/m/it/8 x\OT1/lmr/m/n/8 )   \OMS/lmsy/m/n/8 ([])   []\OML/lmm/m/it/8 x \OMS/lmsy/m/n/8 2 \U/msb/m/n/8 R[]\OML/lmm/m/it/8 P\OT1/lmr/m/n/8 (\OML/lmm/m/it/8 x\OT1/lmr/m/n/8 )
- []
-
-
-Overfull \hbox (19.15877pt too wide) detected at line 16
-\OMS/lmsy/m/n/8 9\OML/lmm/m/it/8 x \OMS/lmsy/m/n/8 2 \U/msb/m/n/8 R \OT1/lmr/m/n/8 : \OML/lmm/m/it/8 P\OT1/lmr/m/n/8 (\OML/lmm/m/it/8 x\OT1/lmr/m/n/8 )   \OMS/lmsy/m/n/8 ([])   []\OML/lmm/m/it/8 x \OMS/lmsy/m/n/8 2 \U/msb/m/n/8 R[]\OML/lmm/m/it/8 P\OT1/lmr/m/n/8 (\OML/lmm/m/it/8 x\OT1/lmr/m/n/8 )
- []
-
-
-Overfull \hbox (66.38182pt too wide) detected at line 17
-\OMS/lmsy/m/n/8 9\OT1/lmr/m/n/8 !\OML/lmm/m/it/8 x \OMS/lmsy/m/n/8 2 \U/msb/m/n/8 R \OT1/lmr/m/n/8 : \OML/lmm/m/it/8 P\OT1/lmr/m/n/8 (\OML/lmm/m/it/8 x\OT1/lmr/m/n/8 )   \OMS/lmsy/m/n/8 ([])   []\OML/lmm/m/it/8 x \OMS/lmsy/m/n/8 2 \U/msb/m/n/8 R[]\OML/lmm/m/it/8 P\OT1/lmr/m/n/8 (\OML/lmm/m/it/8 x\OT1/lmr/m/n/8 )
- []
-
-
-Overfull \hbox (30.68665pt too wide) detected at line 18
-\U/msb/m/n/8 @\OML/lmm/m/it/8 x \OMS/lmsy/m/n/8 2 \U/msb/m/n/8 R \OT1/lmr/m/n/8 : \OML/lmm/m/it/8 P\OT1/lmr/m/n/8 (\OML/lmm/m/it/8 x\OT1/lmr/m/n/8 )   \OMS/lmsy/m/n/8 ([])   []\OML/lmm/m/it/8 x \OMS/lmsy/m/n/8 2 \U/msb/m/n/8 R[]\OML/lmm/m/it/8 P\OT1/lmr/m/n/8 (\OML/lmm/m/it/8 x\OT1/lmr/m/n/8 )
- []
-
-[1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}]) (./sectionsSummary/analysisI/sequences_series.tex [2{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]) (./sectionsSummary/analysisI/functions.tex [3]) (./sectionsSummary/analysisI/differential_calculus.tex [4]
-Overfull \hbox (34.36578pt too wide) detected at line 177
-\OT1/lmr/m/n/8 = [](\OML/lmm/m/it/8 x \OMS/lmsy/m/n/8 ^^@ \OML/lmm/m/it/8 x[]\OT1/lmr/m/n/8 )[] []\OML/lmm/m/it/8 ^^X \OMS/lmsy/m/n/8 2 \OT1/lmr/m/n/8 (\OML/lmm/m/it/8 x[]; x\OT1/lmr/m/n/8 )[](\OML/lmm/m/it/8 x; x[]\OT1/lmr/m/n/8 )
- []
-
-
-Overfull \hbox (14.46054pt too wide) detected at line 189
-[] \OML/lmm/m/it/8 x \OT1/lmr/m/n/8 = [](\OMS/lmsy/m/n/8 ^^@\OT1/lmr/m/n/8 1)[][] = \OML/lmm/m/it/8 x \OMS/lmsy/m/n/8 ^^@ [] \OT1/lmr/m/n/8 + [] \OMS/lmsy/m/n/8 ^^@ [] \OT1/lmr/m/n/8 + [] 
- []
-
-) (./sectionsSummary/analysisI/integration.tex [5]) (./sectionsSummary/analysisI/differential_equations.tex
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 28.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 16.
  (/usr/share/texlive/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [6{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
-Underfull \hbox (badness 5939) in paragraph at lines 119--119
+) [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}]) (./sectionsSummary/analysisI/sequences_series.tex [2{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]
+Underfull \hbox (badness 10000) in paragraph at lines 103--103
+[]|\OT1/lmr/m/n/5 (+20) Alt.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--103
+[]|\OT1/lmr/m/n/5 (+20) Conv $ \OMS/lmsy/m/n/5 ([])
+ []
+
+
+Underfull \hbox (badness 5787) in paragraph at lines 103--103
+[]|$[] \OML/lmm/m/it/5 b[]$ \OT1/lmr/m/n/5 (+20) conv $ =[]\OMS/lmsy/m/n/5 )
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--103
+[]|$[] \OML/lmm/m/it/5 b[]$ \OT1/lmr/m/n/5 (+20) div $ =[]\OMS/lmsy/m/n/5 )
+ []
+
+) (./sectionsSummary/analysisI/functions.tex [3]
+Underfull \hbox (badness 10000) in paragraph at lines 191--192
+[]$\OT1/lmr/m/n/8 (+20) ([] \OML/lmm/m/it/8 x\OT1/lmr/m/n/8 (+20) )[] = [] \OML/lmm/m/it/8 x;  \OT1/lmr/m/n/8 (+20) ([] \OML/lmm/m/it/8 x\OT1/lmr/m/n/8 (+20) )[] =
+ []
+
+[4]) (./sectionsSummary/analysisI/differential_calculus.tex [5]
+Underfull \hbox (badness 10000) in paragraph at lines 216--217
+[]\OT1/lmr/bx/n/8 (+20) Logarithm: $[]\OT1/lmr/m/n/8 (+20) (1 + \OML/lmm/m/it/8 x\OT1/lmr/m/n/8 (+20) ) =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 243--244
+[]\OT1/lmr/bx/n/8 (+20) Differentiability: \OT1/lmr/m/n/8 (+20) If con-tin-u-ous,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 243--244
+\OT1/lmr/m/n/8 (+20) check if $[][] [] =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 261--262
+[]$\OT1/lmr/m/n/8 (+20) 1[]\OML/lmm/m/it/8 ; \OT1/lmr/m/n/8 (+20) 0[]\OML/lmm/m/it/8 ; \OMS/lmsy/m/n/8 1[] !$ \OT1/lmr/m/n/8 (+20) use $\OML/lmm/m/it/8 L \OT1/lmr/m/n/8 (+20) =
+ []
+
+) (./sectionsSummary/analysisI/integration.tex
+Underfull \hbox (badness 10000) in paragraph at lines 52--53
+[]\OT1/lmr/bx/n/8 (+20) Square Com-ple-tion: \OT1/lmr/m/n/8 (+20) For
+ []
+
+[6]) (./sectionsSummary/analysisI/differential_equations.tex [7]
+Underfull \hbox (badness 5939) in paragraph at lines 131--131
 |[]\OT1/lmr/bx/n/10 (+20) Initial Value Prob-lems and
  []
 
-) [7] (build/analysisISummary.aux) ) 
+) [8] (build/analysisISummary.aux) ) 
 Here is how much of TeX's memory you used:
- 24056 strings out of 476041
- 499498 string characters out of 5793175
- 1940388 words of memory out of 6000000
- 43904 multiletter control sequences out of 15000+600000
- 546333 words of font info for 149 fonts, out of 8000000 for 9000
+ 24087 strings out of 476041
+ 499900 string characters out of 5793175
+ 1947388 words of memory out of 6000000
+ 43915 multiletter control sequences out of 15000+600000
+ 554337 words of font info for 160 fonts, out of 8000000 for 9000
  1137 hyphenation exceptions out of 8191
- 106i,10n,107p,1035b,1138s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on build/analysisISummary.pdf (7 pages, 292011 bytes).
+ 106i,13n,107p,1035b,1198s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmri8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
+Output written on build/analysisISummary.pdf (8 pages, 374901 bytes).
 PDF statistics:
- 114 PDF objects out of 1000 (max. 8388607)
- 73 compressed objects within 1 object stream
+ 127 PDF objects out of 1000 (max. 8388607)
+ 81 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 16397 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 20493 words of extra memory for PDF output out of 20736 (max. 10000000)
 

@@ -62,15 +62,58 @@
 
 \begin{remark}
     Important limits:
-    $$\lim_{n \to \infty} \frac{\ln n}{n} = 0$$
-    $$\lim_{n \to \infty} n^{1/n} = 1$$
-    $$\lim_{n \to \infty} x^{1/n} = 1 \quad (x \gt 0)$$
-    $$\lim_{n \to \infty} \left(1 + \frac{x}{n}\right)^n = e^x$$
-    $$\lim_{n \to \infty} \frac{x^n}{n!} = 0$$
+    \begin{itemize}
+        \item $\lim_{n \to \infty} \frac{\ln n}{n} = 0$
+        \item $\lim_{n \to \infty} n^{1/n} = 1$
+        \item $\lim_{n \to \infty} x^{1/n} = 1 \quad (x \gt 0)$
+        \item $\lim_{n \to \infty} \left(1 + \frac{x}{n}\right)^n = e^x$
+        \item $\lim_{n \to \infty} \frac{x^n}{n!} = 0$
+        \item $\lim_{n \to \infty} \frac{n^k}{a^n} = 0 \quad (a \gt 1)$
+        \item $\lim_{n \to \infty} \frac{\log_a n}{n^k} = 0 \quad (a \gt 1, k \gt 0)$
+        \item $\lim_{n \to \infty} \frac{a^n}{n!} = 0$
+        \item $\lim_{n \to \infty} \frac{n!}{n^n} = 0$
+    \end{itemize}
 \end{remark}
 
 \begin{theorem}
+    \textbf{Growth Hierarchy:} For $x \to \infty$ or $n \to \infty$:
+    \begin{gather*}
+        \ln(\ln n) \ll \ln n \ll n^\epsilon \ll n^k \\
+        \ll a^n \ll n! \ll n^n \quad (\epsilon, k > 0, a > 1)
+    \end{gather*}
+\end{theorem}
+
+\subsection{Convergence Tests for Series}
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\begin{tabularx}{\columnwidth}{|l|X|X|}
+\hline
+\textbf{Test} & \textbf{Condition} & \textbf{Conclusion} \\ \hline
+Null seq. & $\lim a_n \neq 0$ & Divergent \\ \hline
+Geometric & $\sum q^n$ & $|q| < 1$ Conv, sum $\frac{1}{1-q}$ \\ \hline
+Harmonic & $\sum \frac{1}{n^s}$ & $s > 1$ Conv, $s \le 1$ Div \\ \hline
+Ratio & $\lim |a_{n+1}/a_n| = \rho$ & $\rho < 1$ Conv, $\rho > 1$ Div \\ \hline
+Root & $\lim |a_n|^{1/n} = \rho$ & $\rho < 1$ Conv, $\rho > 1$ Div \\ \hline
+Leibniz & Alt. $\sum (-1)^n b_n, b_n \searrow 0$ & Convergent \\ \hline
+Integral & $a_n = f(n), f \ge 0, \searrow$ & Conv $\iff \int_1^\infty f(x)dx$ conv \\ \hline
+Comp. I & $|a_n| \le b_n$ & $\sum b_n$ conv $\implies \sum a_n$ abs. conv \\ \hline
+Comp. II & $a_n \ge b_n \ge 0$ & $\sum b_n$ div $\implies \sum a_n$ div \\ \hline
+\end{tabularx}
+\end{center}
+
+\begin{theorem}
     \textbf{Sandwich-Theorem:} If $a_n \le b_n \le c_n$ for $n \ge N_0$, and $\lim a_n = \lim c_n = L$, then $\lim b_n = L$.
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Useful Inequalities (for Sandwich Theorem \& Bounding):}
+    \begin{itemize}
+        \item \textbf{Bernoulli's Inequality:} $(1+x)^n \ge 1+nx$ (for $x \ge -1$ and $n \in \mathbb{N}$)
+        \item \textbf{Reverse Triangle Inequality:} $\big| |x| - |y| \big| \le |x-y|$
+        \item \textbf{Trigonometric Bounding:} $\sin(x) \le x \le \tan(x)$ (for $x \in (0, \pi/2)$)
+    \end{itemize}
 \end{theorem}
 
 \begin{definition}
@@ -172,3 +215,12 @@
 \begin{theorem}
     Every power series has a \textbf{convergence radius} $R$, with the \textbf{interval of convergence} $(a-R, a+R)$. $R$ is computed by the formula $R = \frac{1}{\limsup |c_n|^{1/n}}$.
 \end{theorem}
+\subsection{Exam Strategy: Sequence \& Series Convergence}
+\begin{itemize}
+    \item \textbf{Type $\frac{\ln^\alpha n}{n^\beta}$:} Converges for $\beta > 0$ (any $\alpha$), or $\beta=0, \alpha < 0$.
+    \item \textbf{Type $\sum \frac{1}{n \ln^\alpha n}$ (Bertrand):} Converges $\iff \alpha > 1$.
+    \item \textbf{Finding $\limsup / \liminf$:} List accumulation points. If $a_n$ is defined piecewise or with $(-1)^n$, look at sub-sequences.
+    \item \textbf{Radius of Convergence $R$:} Use $R = \lim |\frac{c_n}{c_{n+1}}|$ or $R = \frac{1}{\lim \sqrt[n]{|c_n|}} \in [0, \infty]$. 
+        \item \textbf{Boundary Check:} Always check $|x-x_0|=R$ separately. Use Leibniz or Comparison.
+    \item \textbf{Telescoping Series:} Write $a_n = b_n - b_{n+1}$. Partial sum $S_N = b_1 - b_{N+1}$.
+\end{itemize}
