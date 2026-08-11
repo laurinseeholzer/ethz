@@ -1,6 +1,8 @@
 \section{Differential Equations}
 
-\subsection{Modelling and Definitions}
+\subsection{Theory}
+
+\subsubsection{Modelling and Definitions}
 
 \begin{remark}
     \textbf{Modelling Process}: To derive an ODE from a physical scenario:
@@ -35,7 +37,7 @@
     \textbf{Picard-Lindelöf (Existence and Uniqueness)}: If $f(x, y)$ is continuous and Lipschitz continuous with respect to $y$, then the IVP $y' = f(x, y)$ with $y(x_0) = y_0$ has a unique solution in some interval around $x_0$.
 \end{theorem}
 
-\subsection{First-Order ODEs}
+\subsubsection{First-Order ODEs}
 
 \begin{theorem}
     \textbf{Separation of Variables:} For $y' = f(x)g(y) \implies \int \frac{dy}{g(y)} = \int f(x)dx + C$.
@@ -59,7 +61,7 @@
     \textbf{Homogeneous substitution:} $y' = f(y/x)$. Substitute $u = y/x \implies y = ux, y' = u'x + u$.
 \end{theorem}
 
-\subsection{Linear ODEs of n-th Order}
+\subsubsection{Linear ODEs of n-th Order}
 
 \begin{theorem}
     \textbf{Superposition Principle}: If $y_1$ and $y_2$ solve a linear homogeneous ODE, then for any $C_1, C_2 \in \mathbb{R}$:
@@ -90,11 +92,27 @@
     \end{itemize}
 \end{theorem}
 
-\subsection{Inhomogeneous Linear ODEs}
+\subsubsection{Inhomogeneous Linear ODEs}
 
 \begin{lemma}
     The general solution of $a_n y^{(n)} + \dots + a_0 y = s(x)$ is $y(x) = y_h(x) + y_p(x)$, where $y_h$ is the general homogeneous solution and $y_p$ is a particular solution.
 \end{lemma}
+
+\begin{theorem}
+    \textbf{Variation of Constants (First-Order Linear ODE)}: For $y' + p(x)y = q(x)$, the general solution is:
+    $$y(x) = e^{-P(x)} \left( \int q(x) e^{P(x)} \, dx + C \right)$$
+    where $P(x) = \int p(x) \, dx$ is an antiderivative of $p(x)$.
+\end{theorem}
+
+\subsubsection{Initial Value Problems and Boundary-Value Problems}
+
+\begin{definition}
+    An \textbf{Initial Value Problem (IVP)} specifies conditions at a single point $x_0$ (e.g. $y(x_0) = y_0$, $y'(x_0) = y_1$).
+    A \textbf{Boundary Value Problem (BVP)} specifies conditions at multiple points (e.g. $y(a) = y_a$, $y(b) = y_b$).
+\end{definition}
+
+
+\subsection{Lookup Tables}
 
 \subsubsection{Method of Undetermined Coefficients (Ansatz Table)}
 For $ay'' + by' + cy = s(x)$, if no resonance:
@@ -120,35 +138,10 @@ $e^{\alpha x} \sin(\beta x)$ & $e^{\alpha x} (C \cos(\beta x)$ \\
     \textbf{Resonance}: If the term $e^{kx}$ or $e^{i\omega x}$ in $s(x)$ matches an $m$-fold root of the characteristic polynomial $p(\lambda)$, multiply the standard Ansatz $y_p(x)$ by $x^m$.
 \end{important}
 
-\subsubsection{Variation of Constants}
 
-\begin{theorem}
-    \textbf{Variation of Constants (First-Order Linear ODE)}: For $y' + p(x)y = q(x)$, the general solution is:
-    $$y(x) = e^{-P(x)} \left( \int q(x) e^{P(x)} \, dx + C \right)$$
-    where $P(x) = \int p(x) \, dx$ is an antiderivative of $p(x)$.
-\end{theorem}
+\subsection{Exam Strategies}
 
-\subsection{Initial Value Problems and Boundary-Value Problems}
-
-\begin{definition}
-    An \textbf{Initial Value Problem (IVP)} specifies conditions at a single point $x_0$ (e.g. $y(x_0) = y_0$, $y'(x_0) = y_1$).
-    A \textbf{Boundary Value Problem (BVP)} specifies conditions at multiple points (e.g. $y(a) = y_a$, $y(b) = y_b$).
-\end{definition}
-\subsection{Exam Strategy: ODE Solver Workflow}
-\begin{enumerate}
-    \item \textbf{Can I separate?} $y' = f(x)g(y)$.
-    \item \textbf{Is it linear 1st order?} $y' + p(x)y = q(x) \to$ Integrating factor $e^{\int p}$.
-    \item \textbf{Is it 2nd order linear with constant coeffs?} $ay'' + by' + cy = s(x)$.
-        \begin{itemize}
-            \item Solve char. eq. $a\lambda^2 + b\lambda + c = 0$.
-            \item Particular solution: Match $s(x)$ with Ansatz table (check for resonance!).
-        \end{itemize}
-\end{enumerate}
-
-\subsection{Exam Strategy: Constrained Extrema}
-To find extrema of $f(x,y)$ s.t. $g(x,y)=0$:
-\begin{enumerate}
-    \item Set up system $\nabla f = \lambda \nabla g$ and $g = 0$.
-    \item Solve for $x, y, \lambda$.
-    \item \textbf{Don't forget the boundary!} If the region is a disk $x^2+y^2 \le 1$, check interior $\nabla f = 0$ AND boundary $x^2+y^2=1$.
-\end{enumerate}
+\subsubsection{ODE Solver Workflow}
+\textbf{1. Can I separate?} $y' = f(x)g(y)$. \\
+\textbf{2. Is it linear 1st order?} $y' + p(x)y = q(x) \to$ Integrating factor $e^{\int p}$. \\
+\textbf{3. Is it 2nd order linear with constant coeffs?} $ay'' + by' + cy = s(x)$. Solve char. eq. $a\lambda^2 + b\lambda + c = 0$. Particular solution: Match $s(x)$ with Ansatz table (check for resonance!).

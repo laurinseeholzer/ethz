@@ -1,6 +1,8 @@
 \section{Integration}
 
-\subsection{Indefinite Integrals and Techniques}
+\subsection{Theory}
+
+\subsubsection{Indefinite Integrals and Techniques}
 
 \begin{definition}
     Functions $F: I \to \mathbb{R}$ such that $F'(x) = f(x)$ for all $x \in (a, b)$ are called \textbf{antiderivatives} of $f$.
@@ -20,47 +22,6 @@
 \end{theorem}
 
 \begin{theorem}
-    \textbf{Common Antiderivatives}:
-    \begin{center}
-    \scriptsize
-    \setlength{\tabcolsep}{2pt}
-    \begin{tabular}{|l|l||l|l|}
-    \hline
-    $f(x)$ & $\int f(x) dx$ & $f(x)$ & $\int f(x) dx$ \\ \hline
-    $x^p$ & $\frac{x^{p+1}}{p+1}$ ($p \ne -1$) & $\frac{1}{x}$ & $\ln|x|$ \\ \hline
-    $e^x$ & $e^x$ & $a^x$ & $\frac{a^x}{\ln a}$ \\ \hline
-    $\sin x$ & $-\cos x$ & $\cos x$ & $\sin x$ \\ \hline
-    $\tan x$ & $-\ln|\cos x|$ & $\frac{1}{\cos^2 x}$ & $\tan x$ \\ \hline
-    $\sinh x$ & $\cosh x$ & $\cosh x$ & $\sinh x$ \\ \hline
-    $\frac{1}{1+x^2}$ & $\arctan x$ & $\frac{1}{\sqrt{1-x^2}}$ & $\arcsin x$ \\ \hline
-    $\frac{1}{\sqrt{x^2+1}}$ & $\text{arsinh } x$ & $\frac{1}{\sqrt{x^2-1}}$ & $\text{arcosh } x$ \\ \hline
-    $\ln x$ & $x \ln x - x$ & $\frac{1}{x^2-1}$ & $\frac{1}{2}\ln|\frac{x-1}{x+1}|$ \\ \hline
-    \end{tabular}
-    \end{center}
-\end{theorem}
-
-\begin{remark}
-    \textbf{Integration Tricks:}
-    \begin{itemize}
-        \item \textbf{Partial Fraction Decomposition:} For $\int \frac{P(x)}{Q(x)}dx$. If $\deg P \ge \deg Q$, use polynomial division first.
-        \begin{itemize}
-            \item Simple real root: $(ax+b) \to \frac{A}{ax+b}$
-            \item Repeated real root: $(ax+b)^k \to \frac{A_1}{ax+b} + \frac{A_2}{(ax+b)^2} + \dots + \frac{A_k}{(ax+b)^k}$
-            \item Irreducible quadratic: $(ax^2+bx+c) \to \frac{Ax+B}{ax^2+bx+c}$
-        \end{itemize}
-        \item \textbf{Weierstrass Substitution:} For integrals of $R(\sin x, \cos x)$, let $t = \tan(x/2)$.
-        \item \textbf{Square Completion:} For $\sqrt{ax^2+bx+c}$, complete the square to get $\sqrt{u^2 \pm k^2}$.
-        \item \textbf{Substitution Patterns:}
-        \begin{itemize}
-            \item $\sqrt{a^2-x^2} \to x = a \sin \theta$ or $x = a \cos \theta$
-            \item $\sqrt{a^2+x^2} \to x = a \tan \theta$ or $x = a \sinh u$
-            \item $\sqrt{x^2-a^2} \to x = a \sec \theta$ or $x = a \cosh u$
-        \end{itemize}
-        \item \textbf{Symmetry:} $\int_{-a}^a f(x)dx = 0$ if $f$ is odd, and $2\int_0^a f(x)dx$ if $f$ is even.
-    \end{itemize}
-\end{remark}
-
-\begin{theorem}
     \textbf{Integration by Parts}: For differentiable functions $f(x)$ and $g(x)$ we have:
     $$\int f'(x)g(x) \, dx$$
     $$= f(x)g(x) - \int f(x)g'(x) \, dx$$
@@ -73,7 +34,7 @@
     where $F$ is an antiderivative of $f$ and $u = g(x)$.
 \end{theorem}
 
-\subsection{The Definite Integral (Riemann Integral)}
+\subsubsection{The Definite Integral (Riemann Integral)}
 
 \begin{definition}
     Let $U$ and $L$ denote the upper and lower sums of a bounded function $f$. Then $f$ is called \textbf{Riemann-integrable} iff $\inf U = \sup L$. The value of the definite integral $\int_a^b f(x) \, dx$ is then this common value.
@@ -103,7 +64,7 @@
     $$F(x) = \int_{a}^{x} f(y) \, dy + C$$
 \end{theorem}
 
-\subsection{Sequences of Functions and Integrals}
+\subsubsection{Sequences of Functions and Integrals}
 
 \begin{definition}
     Let $(f_n)_{n \in \mathbb{N}_0}$ be a sequence of functions.
@@ -116,11 +77,14 @@
 
 \begin{theorem}
     \textbf{Swapping Limit and Integral}: If a sequence of integrable functions $(f_n)$ converges \textbf{uniformly} to $f$ on $[a,b]$, then the limit function $f$ is also integrable, and:
-    $$\int_a^b f(x) \, dx$$
-    $$= \lim_{n \to \infty} \int_a^b f_n(x) \, dx$$
+    $$\int_a^b f(x) \, dx = \lim_{n \to \infty} \int_a^b f_n(x) \, dx$$
 \end{theorem}
 
-\subsection{Definite Integration Techniques}
+\begin{theorem}
+    \textbf{Weierstrass M-Test}: If $|f_n(x)| \le M_n$ for all $x \in D$ and the series $\sum M_n$ converges, then $\sum f_n(x)$ converges uniformly on $D$.
+\end{theorem}
+
+\subsubsection{Definite Integration Techniques}
 
 \begin{lemma}
     If $F: [a,b] \to \mathbb{R}$ is continuously differentiable, then:
@@ -142,23 +106,118 @@
     $$\int_{a}^{b} f'(x)g(x) \, dx$$
     $$= \Big[ f(x)g(x) \Big]_{a}^{b} - \int_{a}^{b} f(x)g'(x) \, dx$$
 \end{lemma}
-\subsection{Exam Strategy: Leibniz's Rule}
+
+\subsubsection{Geometric Applications}
+\textbf{Area between curves:} $A = \int_a^b |f(x) - g(x)| dx$. \\
+\textbf{Rotational Volume (x-axis):} $V = \pi \int_a^b (f(x))^2 dx$. \\
+\textbf{Rotational Volume (y-axis):} $V = 2\pi \int_a^b x f(x) dx$. \\
+\textbf{Arc Length:} $L = \int_a^b \sqrt{1 + (f'(x))^2} dx$.
+
+\subsubsection{Convergence of Improper Integrals}
+\textbf{p-test (to infinity):} $\int_1^\infty \frac{1}{x^p} dx$ converges if $p > 1$ (div. $p \le 1$). \\
+\textbf{p-test (to zero):} $\int_0^1 \frac{1}{x^p} dx$ converges if $p < 1$ (div. $p \ge 1$). \\
+\textbf{Comparison Test:} If $0 \le f(x) \le g(x)$, then $\int g$ conv $\implies \int f$ conv.
+
+\subsection{Lookup Tables}
+
+\subsubsection{Common Antiderivatives}
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{2pt}
+\begin{tabularx}{\columnwidth}{|>{\hsize=0.6\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|}
+\hline
+$f(x)$ & $\int f(x) dx$ \\ \hline
+$x^p, p \ne -1$ & $\frac{x^{p+1}}{p+1}$ \\ \hline
+$\frac{1}{x}$ & $\ln|x|$ \\ \hline
+$e^x$ & $e^x$ \\ \hline
+$a^x$ & $\frac{a^x}{\ln a}$ \\ \hline
+$\sin x$ & $-\cos x$ \\ \hline
+$\cos x$ & $\sin x$ \\ \hline
+$\tan x$ & $-\ln|\cos x|$ \\ \hline
+$\cot x$ & $\ln|\sin x|$ \\ \hline
+$\frac{1}{\cos^2 x} = \sec^2 x$ & $\tan x$ \\ \hline
+$\frac{-1}{\sin^2 x} = -\csc^2 x$ & $\cot x$ \\ \hline
+$\sinh x$ & $\cosh x$ \\ \hline
+$\cosh x$ & $\sinh x$ \\ \hline
+$\frac{1}{1+x^2}$ & $\arctan x$ \\ \hline
+$\frac{1}{\sqrt{1-x^2}}$ & $\arcsin x$ \\ \hline
+$\frac{1}{\sqrt{x^2+1}}$ & $\text{arsinh } x$ \\ \hline
+$\frac{1}{\sqrt{x^2-1}}$ & $\text{arcosh } x$ \\ \hline
+$\ln x$ & $x \ln x - x$ \\ \hline
+$\log_a x$ & $\frac{x \ln x - x}{\ln a}$ \\ \hline
+$\frac{1}{a^2+x^2}$ & $\frac{1}{a}\arctan\frac{x}{a}$ \\ \hline
+$\frac{1}{a^2-x^2}$ & $\frac{1}{2a}\ln|\frac{a+x}{a-x}|$ \\ \hline
+$\arcsin x$ & $x\arcsin x + \sqrt{1-x^2}$ \\ \hline
+$\arccos x$ & $x\arccos x - \sqrt{1-x^2}$ \\ \hline
+$\arctan x$ & $x\arctan x - \frac{1}{2}\ln(1+x^2)$ \\ \hline
+$\sec^2 x$ & $\tan x$ \\ \hline
+$\csc^2 x$ & $-\cot x$ \\ \hline
+$\sec x \tan x$ & $\sec x$ \\ \hline
+$\csc x \cot x$ & $-\csc x$ \\ \hline
+$\sec x$ & $\ln|\sec x + \tan x|$ \\ \hline
+$\csc x$ & $\ln|\csc x - \cot x|$ \\ \hline
+$\tanh x$ & $\ln(\cosh x)$ \\ \hline
+$\coth x$ & $\ln|\sinh x|$ \\ \hline
+$\frac{1}{\sqrt{a^2-x^2}}$ & $\arcsin(\frac{x}{a})$ \\ \hline
+$\frac{1}{\sqrt{x^2+a^2}}$ & $\ln(x+\sqrt{x^2+a^2})$ \\ \hline
+$\frac{1}{\sqrt{x^2-a^2}}$ & $\ln|x+\sqrt{x^2-a^2}|$ \\ \hline
+$\sin^2 x$ & $\frac{x}{2} - \frac{\sin(2x)}{4}$ \\ \hline
+$\cos^2 x$ & $\frac{x}{2} + \frac{\sin(2x)}{4}$ \\ \hline
+$\tan^2 x$ & $\tan x - x$ \\ \hline
+$\cot^2 x$ & $-\cot x - x$ \\ \hline
+$x e^x$ & $e^x(x-1)$ \\ \hline
+$x \sin x$ & $\sin x - x \cos x$ \\ \hline
+$x \cos x$ & $\cos x + x \sin x$ \\ \hline
+$\ln^2 x$ & $x(\ln^2 x - 2\ln x + 2)$ \\ \hline
+$e^{ax}\sin bx$ & $\frac{e^{ax}(a\sin bx - b\cos bx)}{a^2+b^2}$ \\ \hline
+$e^{ax}\cos bx$ & $\frac{e^{ax}(a\cos bx + b\sin bx)}{a^2+b^2}$ \\ \hline
+$\sqrt{a^2-x^2}$ & $\frac{x\sqrt{a^2-x^2} + a^2\arcsin\frac{x}{a}}{2}$ \\ \hline
+$\sqrt{x^2+a^2}$ & $\frac{x\sqrt{x^2+a^2} + a^2\text{arsinh}\frac{x}{a}}{2}$ \\ \hline
+\end{tabularx}
+\end{center}
+
+\subsubsection{Integration Tricks}
+\textbf{Partial Fraction Decomposition:} For $\int \frac{P(x)}{Q(x)}dx$. If $\deg P \ge \deg Q$, use polynomial division first. \\
+\textbf{Simple real root:} $(ax+b) \to \frac{A}{ax+b}$. \textbf{Repeated real root:} $(ax+b)^k \to \frac{A_1}{ax+b} + \dots + \frac{A_k}{(ax+b)^k}$. \textbf{Irreducible quadratic:} $(ax^2+bx+c) \to \frac{Ax+B}{ax^2+bx+c}$. \\
+\textbf{Weierstrass Substitution:} For integrals of $R(\sin x, \cos x)$, let $t = \tan(x/2)$. \\
+\textbf{Square Completion:} For $\sqrt{ax^2+bx+c}$, complete the square to get $\sqrt{u^2 \pm k^2}$. \\
+\textbf{Substitution Patterns:} $\sqrt{a^2-x^2} \to x = a \sin \theta$ or $x = a \cos \theta$. $\sqrt{a^2+x^2} \to x = a \tan \theta$ or $x = a \sinh u$. $\sqrt{x^2-a^2} \to x = a \sec \theta$ or $x = a \cosh u$. \\
+\textbf{Symmetry:} $\int_{-a}^a f(x)dx = 0$ if $f$ is odd, and $2\int_0^a f(x)dx$ if $f$ is even.
+
+
+\subsection{Most Common Proofs}
+
+\subsubsection{Proof Outline: Riemann Integrability}
+\textbf{Goal:} Show $f$ is Riemann integrable on $[a,b]$. \\
+\textbf{Criterion:} $\forall \epsilon > 0$, $\exists$ a partition $P$ such that $U(f, P) - L(f, P) < \epsilon$. \\
+\textbf{Step 1:} Choose an equidistant partition $P_n = \{x_0, \dots, x_n\}$ with $\Delta x = \frac{b-a}{n}$. \\
+\textbf{Step 2:} Find the supremum $M_i$ and infimum $m_i$ of $f$ on each subinterval $[x_{i-1}, x_i]$. \\
+\textbf{Step 3:} Express the difference: $U(f, P_n) - L(f, P_n) = \sum_{i=1}^n (M_i - m_i) \Delta x$. \\
+\textbf{Step 4:} Bound $(M_i - m_i)$. If $f$ is monotonically increasing, sum telescopes: $\sum_{i=1}^n (f(x_i) - f(x_{i-1})) = f(b) - f(a)$. \\
+\textbf{Step 5:} In monotonic case, $U - L = (f(b)-f(a))\frac{b-a}{n}$. Choose $n$ large enough so this is $< \epsilon$.
+
+\subsubsection{Proof Outline: Fundamental Theorem of Calculus}
+\textbf{Goal:} Show $\frac{d}{dx} \int_a^x f(t) dt = f(x)$ for continuous $f$. \\
+\textbf{Step 1:} Let $F(x) = \int_a^x f(t) dt$. Evaluate difference quotient $\frac{F(x+h)-F(x)}{h}$. \\
+\textbf{Step 2:} By additivity, $F(x+h) - F(x) = \int_a^{x+h} f(t) dt - \int_a^x f(t) dt = \int_x^{x+h} f(t) dt$. \\
+\textbf{Step 3:} By Mean Value Theorem for Integrals (since $f$ is continuous), $\exists c_h \in [x, x+h]$ s.t. $\int_x^{x+h} f(t) dt = f(c_h)h$. \\
+\textbf{Step 4:} Thus, the difference quotient simplifies to $\frac{f(c_h)h}{h} = f(c_h)$. \\
+\textbf{Step 5:} As $h \to 0$, interval $[x, x+h]$ shrinks to $x$, so $c_h \to x$. By continuity of $f$, $\lim_{h \to 0} f(c_h) = f(x)$. Thus $F'(x) = f(x)$.
+
+\subsubsection{Proof Outline: Integrability of continuous functions}
+\textbf{Goal:} Continuous $f$ on $[a,b]$ is Riemann integrable. \\
+\textbf{Step 1:} By Heine-Cantor theorem, continuous $f$ on compact $[a,b]$ is uniformly continuous. \\
+\textbf{Step 2:} Let $\epsilon > 0$. $\exists \delta > 0$ s.t. $\forall x, y \in [a,b]$, $|x-y| < \delta \implies |f(x)-f(y)| < \frac{\epsilon}{b-a}$. \\
+\textbf{Step 3:} Choose partition $P = \{x_0, \dots, x_n\}$ of $[a,b]$ with mesh size $< \delta$. \\
+\textbf{Step 4:} For each subinterval, supremum $M_i$ and infimum $m_i$ are attained at $c_i, d_i$ (EVT). \\
+\textbf{Step 5:} Since $|c_i - d_i| < \delta$, we have $M_i - m_i = f(c_i) - f(d_i) < \frac{\epsilon}{b-a}$. \\
+\textbf{Step 6:} $U(f,P) - L(f,P) = \sum_{i=1}^n (M_i - m_i)\Delta x_i < \frac{\epsilon}{b-a} \sum_{i=1}^n \Delta x_i = \epsilon$. Thus $f$ is Riemann integrable.
+
+
+\subsection{Exam Strategies}
+
+\subsubsection{Leibniz's Rule}
 \begin{gather*}
     \frac{d}{dx} \int_{a(x)}^{b(x)} f(t,x) \, dt = f(b(x),x)b'(x) \\
     - f(a(x),x)a'(x) + \int_{a(x)}^{b(x)} \frac{\partial f}{\partial x} \, dt
 \end{gather*}
-
-\subsection{Geometric Applications}
-\begin{itemize}
-    \item \textbf{Area between curves:} $A = \int_a^b |f(x) - g(x)| dx$.
-    \item \textbf{Rotational Volume (around x-axis):} $V = \pi \int_a^b (f(x))^2 dx$.
-    \item \textbf{Rotational Volume (around y-axis):} $V = 2\pi \int_a^b x f(x) dx$.
-    \item \textbf{Arc Length:} $L = \int_a^b \sqrt{1 + (f'(x))^2} dx$.
-\end{itemize}
-
-\subsection{Convergence of Improper Integrals}
-\begin{itemize}
-    \item \textbf{p-test (to infinity):} $\int_1^\infty \frac{1}{x^p} dx$ converges if $p > 1$ (diverges if $p \le 1$).
-    \item \textbf{p-test (to zero):} $\int_0^1 \frac{1}{x^p} dx$ converges if $p < 1$ (diverges if $p \ge 1$).
-    \item \textbf{Comparison Test:} If $0 \le f(x) \le g(x)$, then $\int g$ conv $\implies \int f$ conv.
-\end{itemize}
