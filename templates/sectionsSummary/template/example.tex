@@ -1,0 +1,62 @@
+\section{Number Theory}
+
+\subsection{Core Concepts}
+
+\begin{definition}[Modular Arithmetic]
+    Let $a, b \in \mathbb{Z}$ and $n \in \mathbb{Z}^+$. We say $a \equiv b \pmod n$ if $n \mid (a-b)$.
+\end{definition}
+
+\begin{theorem}[Euler's Totient]
+    If $a$ and $n$ are coprime, then:
+    $$ a^{\varphi(n)} \equiv 1 \pmod n $$
+\end{theorem}
+
+\subsection{Key Proofs \& Lemmas}
+
+\begin{lemma}[Euclid's Lemma]
+    If a prime $p$ divides $ab$, then $p \mid a$ or $p \mid b$.
+\end{lemma}
+
+\begin{remark}
+    Notice the breathing room beneath the section lines now. It creates a clean visual separation without eating up too much vertical space.
+\end{remark}
+
+\begin{important}
+    The section line is slightly thicker (0.8pt) than the subsection line (0.3pt).
+\end{important}
+
+\section{Applications}
+
+\subsection{Cryptography Basics}
+
+\begin{example}
+    Find $7^2 \pmod 5$. \\
+    Since $7 \equiv 2 \pmod 5$, we have:
+    $$ 7^2 \equiv 2^2 \equiv 4 \pmod 5 $$
+\end{example}
+
+\begin{codeexample}[language=Python]
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+\end{codeexample}
+
+\begin{algorithm}[language=C]
+int factorial(int n) {
+    if (n == 0) return 1;
+    return n * factorial(n - 1);
+}
+\end{algorithm}
+
+\section{Miscellaneous}
+
+% Dummy text to show how columns flow
+\textbf{Filling the rest of the columns:} \\
+\lipsum[1]
+
+\begin{theorem}
+    Notice this unlabeled block simply says "Thm. 8." 
+\end{theorem}
+
+\lipsum[2]

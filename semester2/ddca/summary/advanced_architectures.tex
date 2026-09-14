@@ -1,0 +1,68 @@
+\section{Advanced Architectures}
+
+\subsection{VLIW Architectures}
+
+\begin{definition}
+	\textbf{VLIW}: Multiple independent operations packed into one long instruction word, executed by multiple PEs. \textbf{Compiler} ensures independence (no HW dependency checking). Reduces portability (binary tied to HW).
+\end{definition}
+
+\begin{definition}
+	\textbf{Trace Scheduling}: Find most frequent path, schedule to maximize parallelism.
+	\textbf{Superblocks}: Single entry, multiple exits via tail duplication.
+\end{definition}
+
+\subsection{SIMD Architectures}
+
+\begin{definition}
+	\textbf{SIMD}: Same instruction on multiple data.
+	\textbf{Array Processor}: Multiple PEs simultaneously.
+	\textbf{Vector Processor}: Same PE, consecutive time steps (pipelined). Needs regular data and high memory bandwidth.
+\end{definition}
+
+\begin{definition}
+	\textbf{Vector Registers}: Store multiple elements.
+	\textbf{Stride}: Distance between consecutive addresses.
+	\textbf{Memory Banks}: Concurrent access to independent addresses.
+\end{definition}
+
+\subsection{Systolic Arrays}
+
+\begin{definition}
+	Grid of PEs with rhythmic data flow. Each PE processes and passes to neighbors. Avoids reloading; efficient for regular computations (matrix multiply, convolution). Not a standard pipeline: non-linear, multi-dimensional flow.
+\end{definition}
+
+\subsection{GPU Architectures}
+
+\subsubsection{SIMT}
+
+\begin{definition}
+	\textbf{SIMT}: One instruction issued to thread group, each with own data/registers/PC. Threads can diverge (HW serializes branches, worst case $1/32$ throughput).
+\end{definition}
+
+\subsubsection{GPU Organization}
+
+\begin{definition}
+	\textbf{SM}: CUDA cores + registers + shared memory + warp schedulers.
+	\textbf{Warp}: 32 threads in lock-step.
+	\textbf{Thread Block}: Warps on same SM sharing shared memory.
+	\textbf{Grid}: All thread blocks for a kernel.
+\end{definition}
+
+\begin{theorem}
+	\textbf{Warp advantages}: Amortized control, latency hiding, memory coalescing.
+	\textbf{Warp disadvantages}: Divergence, uncoalesced access, register pressure, tail effects.
+\end{theorem}
+
+\subsubsection{Latency Hiding}
+
+\begin{definition}
+	\textbf{FGMT}: Switch warps every cycle. To hide latency $L$: $N_{warps} \geq L / (\text{arith. ops between mem accesses})$. GPU tolerates latency through parallelism.
+\end{definition}
+
+\subsubsection{GPU Memory}
+
+\begin{remark}
+	Registers ($\sim$1cy), Shared/L1 ($\sim$20--30cy), L2 ($\sim$100--200cy), Global/HBM ($\sim$400--800cy).
+	\textbf{Coalescing}: Contiguous warp accesses $\to$ single wide DRAM transaction.
+	\textbf{Bank Conflicts}: Same-bank accesses serialized; avoid by padding.
+\end{remark}

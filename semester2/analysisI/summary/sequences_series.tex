@@ -1,0 +1,287 @@
+\section{Sequences and Series}
+
+\subsection{Theory}
+
+\begin{definition}
+    A \textbf{sequence} (Folge) $(a_n)_{n \in \mathbb{N}_0}$ is an infinite list of numbers, mathematically a mapping $f: \mathbb{N}_0 \to X$. It can be given explicitly or recursively  as
+    $$a_n = f(n) \quad \text{or} \quad a_n = g(a_{n-1}, a_{n-2}, \dots)$$
+\end{definition}
+
+\begin{definition}
+    A sequence $(a_n)$ is called \textbf{convergent} with limit $L \in \mathbb{R}$ if:
+    $$\forall \epsilon \gt 0 \exists N \gt 0 \quad \text{ s.t. }$$
+    $$\forall n \gt N : |a_n - L| \lt \epsilon$$
+    Written as $\lim_{n \to \infty} a_n = L$.If no such $L$ exists, the sequence is \textbf{divergent}. 
+\end{definition}
+
+\begin{remark}
+    A special case of divergent sequences are sequences which diverge to $\pm \infty$. Their limits are called \textbf{improper limits}.
+\end{remark}
+
+\begin{theorem}
+    The limit of a sequence is unique aslong as it exists.
+\end{theorem}
+
+\begin{theorem}
+    Any subsequence $(a_{n_k})_{k \in \mathbb{N}_0}$ of a convergent sequence converges to the same limit $L$.
+\end{theorem}
+
+\begin{definition}
+    An \textbf{accumulation point} $A \in \mathbb{R}$ of a sequence fulfills:
+    $$\forall \epsilon \gt 0 \forall N \in \mathbb{N}_0 \exists n \ge N$$
+    $$|a_n - A| \lt \epsilon$$
+\end{definition}
+
+
+\begin{theorem}
+    $A$ is an accumulation point $\quad \iff \quad$ there exists a convergent subsequence with limit $A$.
+\end{theorem}
+
+\begin{theorem}
+    Every convergent sequence has exactly one accumulation point (its limit).
+\end{theorem}
+
+\begin{definition}
+    A sequence is \textbf{upper (lower) bounded} if there exists $M$ such that $|a_n| \le (\geq) M \quad \forall n \in \mathbb{N}_0$.
+\end{definition}
+
+\begin{theorem}
+    Every convergent sequence is bounded.
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Bolzano-Weierstrass Theorem:} Every bounded sequence has an accumulation point.
+\end{theorem}
+
+\begin{theorem}
+    Limit arithmetic: For $\lim a_n = K$, $\lim b_n = L$ and $C \in \mathbb{R}$:
+    $$\lim (a_n \pm b_n) = K \pm L$$
+    $$\lim (C \cdot a_n \cdot b_n) = C \cdot K \cdot L$$
+    $$\lim (a_n / b_n) = K / L$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Sandwich-Theorem:} If $a_n \le b_n \le c_n$ for $n \ge N_0$, and $\lim a_n = \lim c_n = L$, then $\lim b_n = L$.
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Useful Inequalities (for Sandwich Theorem \& Bounding):}
+    \textbf{Bernoulli's Inequality:} $(1+x)^n \ge 1+nx$ (for $x \ge -1$ and $n \in \mathbb{N}$).
+    \textbf{Reverse Triangle Inequality:} $\big| |x| - |y| \big| \le |x-y|$.
+    \textbf{Trigonometric Bounding:} $\sin(x) \le x \le \tan(x)$ (for $x \in (0, \pi/2)$).
+\end{theorem}
+
+\begin{definition}
+    A sequence is \textbf{monotonically increasing (decreasing)} if $a_n \le (\geq) a_m$ for $m \gt n$.
+\end{definition}
+
+\begin{theorem}
+    \textbf{Monotone Convergence Theorem:} Every bounded monotonic sequence converges to its supremum (infimum).
+\end{theorem}
+
+\begin{definition}
+    The limit of the supremum is called \textbf{limes superior} and denoted as:
+    $$\limsup_{n \to \infty} a_n = \lim_{n \to \infty} \sup_{k \ge n} a_k$$
+    The limit of the infimum is called \textbf{limes inferior} and denoted as:
+    $$\liminf_{n \to \infty} a_n = \lim_{n \to \infty} \inf_{k \ge n} a_k$$
+\end{definition}
+
+\begin{definition}
+    A sequence is a \textbf{Cauchy sequence} iff 
+    $$\forall \epsilon \gt 0 \exists N \in \mathbb{N} \text{ such that }$$
+    $$\forall m, n \ge N : |a_n - a_m| \lt \epsilon$$
+\end{definition}
+
+\begin{theorem}
+    Every Cauchy sequence is bounded.
+\end{theorem}
+
+\begin{theorem}
+    A sequence of real numbers converges iff it is a cauchy sequence.
+\end{theorem}
+
+\begin{remark}
+    \textbf{Important limits (for $n \to \infty$):} \\
+    $\lim \frac{\ln n}{n} = 0$ \\
+    $\lim n^{1/n} = 1$, $\lim x^{1/n} = 1 \quad (x \gt 0)$ \\
+    $\lim \left(1 + \frac{x}{n}\right)^n = e^x$, $\lim \left(1 + \frac{1}{n}\right)^n = e$ \\
+    $\lim \sqrt{n^2+n} - n = \frac{1}{2}$ \\
+    $\lim \frac{n^k}{a^n} = 0 \quad (a \gt 1)$ \\
+    $\lim \frac{\log_a n}{n^k} = 0 \quad (a \gt 1, k \gt 0)$ \\
+    $\lim \frac{a^n}{n!} = \lim \frac{x^n}{n!} = 0$ \\
+    $\lim \frac{n!}{n^n} = 0$
+\end{remark}
+
+\begin{theorem}
+    \textbf{Growth Hierarchy:} For $x \to \infty$ or $n \to \infty$:
+    \begin{gather*}
+        \ln(\ln n) \ll \ln n \ll n^\epsilon \ll n^k \\
+        \ll a^n \ll n! \ll n^n \quad (\epsilon, k > 0, a > 1)
+    \end{gather*}
+\end{theorem}
+
+\subsubsection{Series}
+
+\begin{definition}
+    A \textbf{series} is an infinite sum $\sum_{i=0}^\infty a_i$ of the terms of a sequence $(a_n)$.
+\end{definition}
+
+\begin{definition}
+    A series is said to converge iff the sequence of partialsums converges.
+    $$\sum_{i=0}^\infty a_i = \lim_{n \to \infty} \sum_{i=0}^n a_i$$
+\end{definition}
+
+\begin{remark}
+    \textbf{Some important series values:} \\
+    \textbf{Geometric:} $\sum_{n=0}^\infty x^n = \frac{1}{1-x}$ (for $|x| < 1$). \\
+    \textbf{Shifted Geometric:} $\sum_{k=m}^\infty q^k = \frac{q^m}{1-q}$ (for $|q| < 1, m \ge 0$). \\
+    \textbf{Basel Problem:} $\sum_{n=1}^\infty \frac{1}{n^2} = \frac{\pi^2}{6}$. \\
+    \textbf{Alternating Harmonic:} $\sum_{n=1}^\infty \frac{(-1)^{n+1}}{n} = \ln(2)$. \\
+    \textbf{Leibniz Formula:} $\sum_{n=0}^\infty \frac{(-1)^n}{2n+1} = \frac{\pi}{4}$. \\
+    \textbf{p-Series:} $\sum_{n=1}^\infty \frac{1}{n^p}$ converges iff $p > 1$.
+\end{remark}
+
+\begin{theorem}
+    \textbf{Necessary condition for convergence:} for $\sum_{i=0}^\infty a_i$ to converge we need $\lim_{n \to \infty} a_n = 0$ i.e. it is a null sequence.
+\end{theorem}
+
+\begin{theorem}
+    For \textbf{series with non-negative terms} $a_n \ge 0$, the sequence of partial sums is monotonically increasing and \textbf{converges iff it is bounded.}
+\end{theorem}
+
+\begin{definition}
+    A series is \textbf{absolutely convergent} if $\sum |a_n|$ converges. A \textbf{conditionally convergent} series converges, but not absolutely.
+\end{definition}
+
+\begin{theorem}
+    \textbf{Riemann's rearrangement theorem:}
+    Let $\sum a_n$ be a conditionally convergent series. Then for any $x \in \mathbb{R}$, there exists a rearrangement of the series that converges to $x$.
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Comparison test} (Vergleichskriterium): If $c_n \le b_n \le a_n$ for $n \ge N$:
+    If $\sum a_n$ converges, then $\sum b_n$ converges (\textbf{Majorantenkriterium}).
+    If $\sum c_n$ diverges, then $\sum b_n$ diverges (\textbf{Minorantenkriterium}).
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Leibniz Criterion}: For an alternating series $\sum (-1)^n a_n$ with a monotonically decreasing null sequence $(a_n)$, the series converges.
+    \textbf{Error Bound}: The error of the $n$-th partial sum $S_n$ is bounded by the next term: $|S - S_n| \le a_{n+1}$.
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Cauchy Criterion:} The series $\sum a_n$ converges iff 
+    $$\forall \epsilon \gt 0 \exists N \in \mathbb{N} \text{ such that }$$
+    $$\forall m, n \ge N : |\sum_{k=n}^m a_k| \lt \epsilon$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Root Criterion} (Wurzelkriterium): Let $\rho = \limsup \sqrt[n]{|a_n|}$. If $\rho \lt 1$, abs conv; if $\rho \gt 1$, div.
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Ratio Criterion} (Quotientenkriterium): Let $\rho = \lim \left| \frac{a_{n+1}}{a_n} \right|$. If $\rho \lt 1$, abs conv; if $\rho \gt 1$, div.
+\end{theorem}
+
+\begin{definition}
+    A \textbf{power series} (Potenzreihe) centered at $a$ has the form 
+    $$\sum_{k=0}^\infty c_k(x-a)^k$$
+\end{definition}
+
+\begin{theorem}
+    Every power series has a \textbf{convergence radius} $R$, with the \textbf{interval of convergence} $(a-R, a+R)$. $R$ is computed by the formula $R = \frac{1}{\limsup |c_n|^{1/n}}$.
+\end{theorem}
+
+\subsection{Lookup Tables}
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\begin{tabularx}{\columnwidth}{|l|X|X|}
+\hline
+\textbf{Test} & \textbf{Condition} & \textbf{Conclusion} \\ \hline
+Null seq. & $\lim a_n \neq 0$ & Divergent \\ \hline
+Geometric & $\sum q^n$ & $|q| < 1$ Conv, sum $\frac{1}{1-q}$ \\ \hline
+Harmonic & $\sum \frac{1}{n^s}$ & $s > 1$ Conv, $s \le 1$ Div \\ \hline
+Ratio & $\lim |a_{n+1}/a_n| = \rho$ & $\rho < 1$ Conv, $\rho > 1$ Div \\ \hline
+Root & $\lim |a_n|^{1/n} = \rho$ & $\rho < 1$ Conv, $\rho > 1$ Div \\ \hline
+Leibniz & Alt. $\sum (-1)^n b_n, b_n \searrow 0$ & Convergent \\ \hline
+Integral & $a_n = f(n), f \ge 0, \searrow$ & Conv $\iff \int_1^\infty f(x)dx$ conv \\ \hline
+Comp. I & $|a_n| \le b_n$ & $\sum b_n$ conv $\implies \sum a_n$ abs. conv \\ \hline
+Comp. II & $a_n \ge b_n \ge 0$ & $\sum b_n$ div $\implies \sum a_n$ div \\ \hline
+\end{tabularx}
+\end{center}
+
+\subsubsection{Common Sequence Limits}
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{2pt}
+\begin{tabularx}{\columnwidth}{|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\raggedright\arraybackslash}X|}
+\hline
+$\lim n^{1/n}$ & $1$ \\ \hline
+$\lim \frac{\ln n}{n}$ & $0$ \\ \hline
+$\lim x^{1/n}$ ($x>0$) & $1$ \\ \hline
+$\lim (1+\frac{x}{n})^n$ & $e^x$ \\ \hline
+$\lim (\sqrt{n^2+n}-n)$ & $1/2$ \\ \hline
+$\lim \frac{a^n}{n!}$ & $0$ \\ \hline
+$\lim (1-\frac{1}{n})^n$ & $1/e$ \\ \hline
+$\lim (1+\frac{a}{n})^n$ & $e^a$ \\ \hline
+$\lim n(\sqrt[n]{x}-1)$ & $\ln x$ \\ \hline
+$\lim n \ln(1+\frac{x}{n})$ & $x$ \\ \hline
+$\lim \sqrt[n]{a^n+b^n}$ & $\max(a,b)$ \\ \hline
+$\lim (1+\frac{x}{n^2})^n$ & $1$ \\ \hline
+$\lim \frac{\sqrt[n]{n!}}{n}$ & $1/e$ \\ \hline
+$\lim \frac{n!}{(n/e)^n \sqrt{2\pi n}}$ & $1$ \\ \hline
+$\lim n \sin(\frac{x}{n})$ & $x$ \\ \hline
+$\lim n \tan(\frac{x}{n})$ & $x$ \\ \hline
+$\lim \cos(\frac{x}{n})^n$ & $1$ \\ \hline
+$\lim \cos(\frac{x}{\sqrt{n}})^n$ & $e^{-x^2/2}$ \\ \hline
+$\lim \sum_{k=1}^n \frac{1}{k} - \ln n$ & $\gamma \approx 0.577$ \\ \hline
+$\lim \frac{\sin(1/n)}{1/n}$ & $1$ \\ \hline
+$\lim (1+\frac{a}{n})^{bn}$ & $e^{ab}$ \\ \hline
+$\lim \frac{n^k}{e^n}$ ($k>0$) & $0$ \\ \hline
+$\lim n^p a^n$ ($|a|<1$) & $0$ \\ \hline
+$\lim \frac{\ln(n^k)}{n}$ & $0$ \\ \hline
+\end{tabularx}
+\end{center}
+
+\subsection{Most Common Proofs}
+
+\subsubsection{Proof Outline: Uniqueness of limits}
+\textbf{Goal:} If $a_n \to L_1$ and $a_n \to L_2$, then $L_1 = L_2$. \\
+\textbf{Step 1:} Assume $L_1 \neq L_2$. Let $\epsilon = \frac{|L_1 - L_2|}{2} > 0$. \\
+\textbf{Step 2:} $\exists N_1$ s.t. $\forall n > N_1: |a_n - L_1| < \epsilon$. \\
+\textbf{Step 3:} $\exists N_2$ s.t. $\forall n > N_2: |a_n - L_2| < \epsilon$. \\
+\textbf{Step 4:} For $n > \max(N_1, N_2)$, $|L_1 - L_2| = |L_1 - a_n + a_n - L_2| \le |L_1 - a_n| + |a_n - L_2| < 2\epsilon = |L_1 - L_2|$. \\
+\textbf{Step 5:} This yields a contradiction. Thus $L_1 = L_2$.
+
+\subsubsection{Proof Outline: Algebraic rules for limits}
+\textbf{Goal:} If $a_n \to a$ and $b_n \to b$, then $\lim (a_n + b_n) = a + b$ and $\lim(a_n b_n) = ab$. \\
+\textbf{Sum Rule:} Let $\epsilon > 0$. Use triangle inequality: $|(a_n - a) + (b_n - b)| \le |a_n - a| + |b_n - b|$. Since $a_n \to a, b_n \to b$, choose $N$ s.t. for $n > N$, both differences are $< \epsilon/2$. Thus $|(a_n+b_n) - (a+b)| < \epsilon$. \\
+\textbf{Product Rule:} Let $\epsilon > 0$. Add and subtract $a_n b$: $|a_n b_n - ab| = |a_n b_n - a_n b + a_n b - ab| \le |a_n||b_n - b| + |b||a_n - a|$. Since $(a_n)$ converges, it is bounded by $M$. Choose $N$ s.t. $|b_n - b| < \frac{\epsilon}{2M}$ and $|a_n - a| < \frac{\epsilon}{2(|b|+1)}$. The sum is then $< \epsilon$.
+
+\subsubsection{Proof Outline: Monotone convergence theorem}
+\textbf{Goal:} Every bounded monotonically increasing sequence $(a_n)$ converges. \\
+\textbf{Step 1:} Let $S = \{a_n : n \in \mathbb{N}\}$. $S$ is bounded above, so $L = \sup(S)$ exists. \\
+\textbf{Step 2:} Let $\epsilon > 0$. $L - \epsilon$ is not an upper bound of $S$. \\
+\textbf{Step 3:} Thus $\exists N$ s.t. $a_N > L - \epsilon$. \\
+\textbf{Step 4:} Since $(a_n)$ is monotonically increasing, $\forall n \ge N$, $L - \epsilon < a_N \le a_n \le L < L + \epsilon$. \\
+\textbf{Step 5:} Thus $|a_n - L| < \epsilon$, meaning $a_n \to L$.
+
+\subsubsection{Proof Outline: Bolzano-Weierstrass Theorem}
+\textbf{Goal:} Every bounded sequence $(a_n)$ has a convergent subsequence. \\
+\textbf{Interval Bisection:} $(a_n)$ is bounded, so it lies in $I_0 = [a, b]$. Halve $I_0$. One subinterval must contain infinitely many terms; call it $I_1$. Pick $a_{n_1} \in I_1$. Halve $I_1$ to find $I_2$ with infinitely many terms, pick $a_{n_2} \in I_2$ with $n_2 > n_1$. Repeat to get nested intervals $I_k$ with lengths $\frac{b-a}{2^k} \to 0$ and a subsequence $a_{n_k}$. By completeness, $\bigcap I_k = \{L\}$. Since $a_{n_k} \in I_k$, $a_{n_k} \to L$.
+
+\subsubsection{Proof Outline: Cauchy Criterion}
+\textbf{Goal:} A sequence is convergent iff it is a Cauchy sequence. \\
+\textbf{Convergent implies Cauchy:} Assume $a_n \to L$. For large $n, m$, $|a_n - a_m| = |a_n - L + L - a_m| \le |a_n - L| + |L - a_m| < \epsilon/2 + \epsilon/2 = \epsilon$. \\
+\textbf{Cauchy implies Convergent:} Assume $(a_n)$ is Cauchy. It must be bounded (choose $\epsilon=1 \implies |a_n - a_N| < 1$). By Bolzano-Weierstrass, it has a convergent subsequence $a_{n_k} \to L$. Then $|a_n - L| \le |a_n - a_{n_k}| + |a_{n_k} - L|$. The Cauchy property bounds the first term, and subsequence convergence bounds the second, so $a_n \to L$.
+
+\subsection{Exam Strategies}
+
+\textbf{Type $\frac{\ln^\alpha n}{n^\beta}$:} Converges for $\beta > 0$ (any $\alpha$), or $\beta=0, \alpha < 0$. \\
+\textbf{Type $\sum \frac{1}{n \ln^\alpha n}$ (Bertrand):} Converges $\iff \alpha > 1$. \\
+\textbf{Finding $\limsup / \liminf$:} List accumulation points. If $a_n$ is defined piecewise or with $(-1)^n$, look at sub-sequences. \\
+\textbf{Radius of Convergence $R$:} Use $R = \lim |\frac{c_n}{c_{n+1}}|$ or $R = \frac{1}{\lim \sqrt[n]{|c_n|}} \in [0, \infty]$. \\
+\textbf{Boundary Check:} Always check $|x-x_0|=R$ separately. Use Leibniz or Comparison. \\
+\textbf{Telescoping Series:} Write $a_n = b_n - b_{n+1}$. Partial sum $S_N = b_1 - b_{N+1}$.

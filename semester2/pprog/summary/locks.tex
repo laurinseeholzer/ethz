@@ -1,0 +1,178 @@
+\section{Locks}
+
+\subsection{Hardware Support for Parallelism}
+
+\begin{remark}
+\textbf{Software algorithms} such as Bakery or Filter locks have \textbf{linear space complexity} $O(n)$, making them impractical for large numbers of processes.
+\end{remark}
+
+\begin{remark}
+Modern architectures offer \textbf{atomic instructions} that allow for operations to happen in a single atomic step. This allows mutex-implementation with \textbf{constant space complexity} $O(1)$ and can be used for lock-free programming.
+\end{remark}
+
+\subsubsection{Typical Hardware Instructions}
+
+\begin{definition}
+    \begin{itemize}
+        \item \textbf{Compare and Swap (CAS):} Atomically compares the value of a memory location with a given value. If equal, updates the memory location with a new value. Otherwise, does nothing.
+        \item \textbf{Test and Set (TAS):} Atomically reads the value of a memory location and sets it to 1.
+        \item \textbf{Load Linked / Store Conditional (LL/SC):} LL reads the value and sets a ``link''. SC writes only if the link is still valid (no other writes since LL).
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+\textbf{Java} offers these via the classes \textbf{AtomicInteger}, \textbf{AtomicLong}, etc.
+\end{remark}
+
+\subsubsection{Locks using atomic operations}
+
+\textbf{TAS Lock:} \texttt{while(state.getAndSet(true));} \\
+Causes high cache coherence traffic (continuous atomic updates).
+
+\textbf{TATAS Lock:} Spin on \textit{read} before trying \textit{write}.
+\begin{codeexample}
+public void lock() {
+    do { while (state.get()); } 
+    while (state.getAndSet(true));
+}
+\end{codeexample}
+
+\begin{remark}
+    \textbf{Backoff Strategy:} E.g., exponential wait after failed acquire, significantly reduces cache traffic and contention.
+\end{remark}
+
+\subsection{Locking Algorithms}
+
+Properties for correct Lock (Mutex) execution:
+\begin{itemize}
+    \item \textbf{Mutual Exclusion:} $\le 1$ process in critical section (CS).
+    \item \textbf{Deadlock Free:} 1+ processes trying $\implies 1$ eventually succeeds.
+    \item \textbf{Starvation Free:} Every trying process eventually succeeds.
+\end{itemize}
+
+\subsubsection{State Space Diagrams}
+
+\begin{definition}
+    \textbf{State Space Diagram:} Tracks every concurrent configuration. States are tuples $[p, q, want_p, want_q]$. Used to prove lock correctness:
+    \begin{itemize}
+        \item \textbf{No Mutex:} Reachable state where both processes are in the CS.
+        \item \textbf{Deadlock:} A state with no outgoing transitions where threads are stuck.
+        \item \textbf{Starvation:} An execution path where one thread never reaches the CS.
+    \end{itemize}
+\end{definition}
+
+\subsubsection{Attempts to mutual exclusion}
+
+\begin{remark}
+\textbf{Attempt 1} (check then set flag): Both threads may see 0 and both enter CS $\implies$ No mutex.
+\textbf{Attempt 2} (set flag then check): Both threads may set flag to 1 and spin forever $\implies$ Deadlock.
+\textbf{Attempt 3} (turn variable): Does not guarantee reset if thread crashes, enforces strict alternation $\implies$ Not correct.
+\end{remark}
+
+\subsubsection{Successful Algorithms}
+
+\begin{definition}
+    \textbf{Atomic register:} Operations occur at a single instant. Event $A \prec B$ (precedes) if execution intervals don't overlap.
+\end{definition}
+
+\textbf{Peterson's Algorithm (2 Processes)}:
+Combines flags and a \textit{victim} tie-breaker. Guarantees Mutex, Deadlock Freedom, and Starvation Freedom.
+\begin{codeexample}
+wantp = true;
+victim = 1; // "Give way" to other thread
+while (wantq && victim == 1); // spin
+/* CS */ wantp = false;
+\end{codeexample}
+
+\begin{theorem}
+    Peterson's Algorithm provides Mutual Exclusion, Deadlock Freedom, and Starvation Freedom using only atomic registers.
+\end{theorem}
+
+\begin{remark}
+    \textbf{N-Processes:}
+    \textbf{Filter Lock}: $N-1$ levels, uses Peterson's at each level to block 1 victim.
+    \textbf{Bakery Algorithm}: Threads take ticket $> $ all outstanding. Wait for lowest number.
+\end{remark}
+
+\begin{theorem}
+    If $S$ is a read/write system with at least two processes and $S$ solves mutual exclusion with deadlock freedom, then $S$ must have at least as many variables as processes.
+\end{theorem}
+
+\subsection{Locking Strategies}
+
+\subsubsection{Fine-Grained Locking}
+
+\begin{remark}
+Instead of locking everything coarse-grained (the whole data structure) we can lock individual parts of it. This is called \textbf{fine-grained locking} and allows for higher concurrency.
+\end{remark}
+
+\subsubsection{Read-Write Locks}
+
+\begin{definition}
+A \textbf{read-write lock} allows fair access to resources by allowing one writer (every N reads) or multiple readers at the same time.
+\end{definition}
+
+\begin{remark}
+To implement a RWL we need to keep track of the number of readers waiting, the number of writers waiting and the number of reads a writer has to wait for (ensures fairness).
+\end{remark}
+
+\subsubsection{Optimistic Locking}
+
+\begin{definition}
+\textbf{Optimistic Locking:} Traverse a data structure without locking and only lock the nodes of interest. If upon locking the nodes have been modified and locks on predecessor/successor are no longer valid, restart the operation.
+\end{definition}
+
+\begin{remark}
+Less overhead on locking but might require multiple traversals if there is high contention.
+\end{remark}
+
+\subsubsection{Lazy Locking}
+
+\begin{definition}
+\textbf{Lazy locking:} Data-elements are not immediately updated but rather marked as deleted (or inserted) and only physically updated later. This saves the overhead of multiple traversals.
+\end{definition}
+
+\subsubsection{Lock-Free Data Structures}
+
+\begin{remark}
+Using atomic operations (mostly CAS) we can implement data structures without locks.
+\end{remark}
+
+\begin{codeexample}
+class ConcurrentCounter {
+    private AtomicLong value = new AtomicLong(0);
+    
+    public void increment() {
+        long expected;
+        do {
+            expected = value.get();
+        } while (!value.compareAndSet(expected, expected + 1));
+    }
+}
+\end{codeexample}
+
+\begin{definition}
+\textbf{Lock-Free:} System wide progress is guaranteed. At least one process can always make progress. A lock-free algorithm is always deadlock free.
+\end{definition}
+
+\begin{definition}
+\textbf{Wait-Free:} Any operation on the data structure will terminate in a bounded number of steps.
+\end{definition}
+
+\subsubsection{The ABA Problem}
+
+\begin{important}
+The \textbf{ABA problem} is a common issue in lock-free programming where an atomic operation (like CAS) succeeds because the value has changed twice (A $\to$ B $\to$ A), making it appear unchanged. This can lead to incorrect program states.
+\end{important}
+
+\begin{example}
+Pop element $a$ from a stack, store in pool. Push $b$, then push $a$ again (same address from pool). A thread that read the top before the pop and now checks with CAS will not notice the stack changed.
+\end{example}
+
+\begin{definition}
+\textbf{Tagged Pointers:} Increment a \textbf{tag} along with the pointer in CAS to detect up to $2^k$ changes where $k$ is the number of tag bits.
+\end{definition}
+
+\begin{definition}
+\textbf{Hazard Pointers:} Each thread stores addresses of nodes it is currently accessing. Other threads check hazard pointers before modifying/reclaiming nodes.
+\end{definition}

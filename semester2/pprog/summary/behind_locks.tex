@@ -1,0 +1,33 @@
+\section{Behind Locks}
+
+Properties for correct Lock (Mutex) execution:
+\begin{itemize}
+    \item \textbf{Mutual Exclusion:} $\le 1$ process in critical section (CS).
+    \item \textbf{Deadlock Free:} 1+ processes trying $\implies 1$ eventually succeeds.
+    \item \textbf{Starvation Free:} Every trying process eventually succeeds.
+\end{itemize}
+
+\begin{definition}
+    \textbf{State Space Diagram:} Tracks every concurrent configuration. States are tuples $[p, q, want_p, want_q]$. Used to prove lock correctness (find states with No Mutex, Deadlock, Starvation).
+\end{definition}
+
+\begin{definition}
+    \textbf{Atomic register:} Operations occur at a single instant. Event $A \prec B$ (precedes) if execution intervals don't overlap.
+\end{definition}
+
+\subsection{Mutual Exclusion Algorithms}
+
+\textbf{Peterson's Algorithm (2 Processes)}:
+Combines flags and a \textit{victim} tie-breaker. Guarantees Mutex, Deadlock Freedom, and Starvation Freedom.
+\begin{codeexample}
+wantp = true;
+victim = 1; // "Give way" to other thread
+while (wantq && victim == 1); // spin
+/* CS */ wantp = false;
+\end{codeexample}
+
+\begin{remark}
+    \textbf{N-Processes:}
+    \textbf{Filter Lock}: $N-1$ levels, uses Peterson's at each level to block 1 victim.
+    \textbf{Bakery Algorithm}: Threads take ticket $> $ all outstanding. Wait for lowest number.
+\end{remark}

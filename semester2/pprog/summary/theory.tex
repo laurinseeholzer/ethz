@@ -1,0 +1,170 @@
+\section{Concurrency Theory}
+
+\subsection{Linearizability}
+
+\begin{definition}
+A \textbf{history} is a partially ordered set of invocations and responses of operations in a distributed program.
+\end{definition}
+
+\begin{definition}
+A history $H$ is \textbf{linearizable} if it can be extended to a history $G$ by
+\begin{itemize}
+    \item appending zero or more responses to pending invocations that took effect
+    \item discarding zero or more pending invocations that did not take effect
+\end{itemize}
+such that $G$ is equivalent to a legal sequential history $S$ with $\to_G \subseteq \to_S$.
+\end{definition}
+
+\begin{theorem}
+History $H$ is linearizable $\iff$ for every object $x$, $H | x$ is linearizable.
+\end{theorem}
+
+\begin{remark}
+Linearizability is a \textbf{local property}: it can be proven in isolation for each object and then composed.
+\end{remark}
+
+\subsection{Sequential Consistency}
+
+\begin{definition}
+A history $H$ is \textbf{sequentially consistent} if it can be extended to a history $G$ by
+\begin{itemize}
+    \item appending zero or more responses to pending invocations that took effect
+    \item discarding zero or more pending invocations that did not take effect
+\end{itemize}
+such that $G$ is equivalent to a legal sequential history $S$ (no real-time order constraint, only program order of each thread).
+\end{definition}
+
+\begin{theorem}
+Sequential consistency is \textbf{not a local property}, thus we lose composability.
+\end{theorem}
+
+\begin{remark}
+\textbf{Quiescence consistency} requires non-overlapping methods to take effect in real-time order (periods of quiescence separate operations).
+\end{remark}
+
+\subsection{Consensus}
+
+\begin{definition}
+A \textbf{consensus object} has a function $decide(value)$ that returns the same value for all threads, where the value is one of the values $v_i$ proposed by the threads.
+\end{definition}
+
+\begin{definition}
+The \textbf{Consensus Number} is the maximum number of nodes that can solve consensus validly, sequentially consistently and wait-free.
+\end{definition}
+
+\begin{theorem}
+\textbf{Consensus Numbers:}
+\begin{itemize}
+    \item Atomic Registers: consensus number $= 1$
+    \item Test-and-Set, Get-and-Set: consensus number $= 2$
+    \item Compare-and-Swap (CAS): consensus number $= \infty$
+\end{itemize}
+\end{theorem}
+
+\begin{remark}
+\textbf{CAS has infinite consensus number} because we can implement a valid, sequentially consistent, and wait-free consensus object using CAS:
+\end{remark}
+
+\begin{codeexample}
+class CASConsensus {
+    private final int FIRST = -1;
+    private AtomicInteger r = AtomicInteger(FIRST);
+    private AtomicIntegerArray proposed;
+
+    public int decide(int value) {
+        int i = ThreadID.get();
+        proposed.set(i, value);
+        if (r.compareAndSet(FIRST, i)) {
+            return proposed.get(i);
+        } else {
+            return proposed.get(r.get());
+        }
+    }
+}
+\end{codeexample}
+
+\begin{remark}
+There is \textbf{no wait-free FIFO Queue using atomic registers}: a wait-free FIFO Queue can solve 2-consensus, contradicting the consensus number of 1 for atomic registers.
+\end{remark}
+
+\subsection{Transactional Memory}
+
+\begin{remark}
+Synchronization with locks is hard to implement, not composable and pessimistic. The idea behind TM is to remove the burden from the programmer and let the system enforce synchronization.
+\end{remark}
+
+\begin{definition}
+In transactional memory the programmer declares sections of code as \textbf{atomic} (a \textbf{transaction}), and the system ensures this code block takes effect atomically.
+\end{definition}
+
+\begin{lemma}
+Transactions run isolated, consistent and atomic: other threads can only observe the start or end state. \textbf{HTM} offers fast execution at limited size, \textbf{STM} offers larger transactions at higher cost.
+\end{lemma}
+
+\begin{definition}
+For each transaction: the \textbf{read set} is the set of variables read, the \textbf{write set} is the set of variables written.
+\end{definition}
+
+\begin{remark}
+Conflicts occur when the write set of transaction $A$ overlaps with the read or write set of transaction $B$.
+\end{remark}
+
+\begin{remark}
+TM can be implemented in hardware (\textbf{HTM}, using cache coherence infrastructure) or software (\textbf{STM}).
+\end{remark}
+
+\begin{definition}
+\textbf{Weak isolation} only isolates transactions from each other.
+\textbf{Strong isolation} isolates transactions from each other and from operations outside the transaction.
+\end{definition}
+
+\begin{definition}
+\textbf{Flat Nesting}: inner transactions are invisible to the outside; if an inner transaction aborts, the outer transaction aborts too.
+\end{definition}
+
+\subsection{Distributed Memory and Message Passing}
+
+\begin{remark}
+Shared mutable data is difficult to handle. Alternative: local mutable data where threads send data to each other via \textbf{message passing}.
+\end{remark}
+
+\begin{definition}
+\textbf{Message Passing} can be:
+\begin{itemize}
+    \item \textbf{Synchronous}: Sender blocks until the message is received.
+    \item \textbf{Asynchronous}: Fire and forget (messages are buffered).
+\end{itemize}
+\end{definition}
+
+\begin{definition}
+\textbf{MPI (Message Passing Interface)}: Standard for distributed memory programming. Processes are grouped into \textbf{communicators}, each with a unique \textbf{process rank}.
+\end{definition}
+
+\begin{definition}
+Message passing operations can be:
+\begin{itemize}
+    \item \textbf{Blocking}: Operation blocks until data is safely sent/received.
+    \item \textbf{Non-blocking}: Returns immediately, allowing overlap between computation and communication.
+\end{itemize}
+\end{definition}
+
+\begin{definition}
+MPI collective operations:
+\begin{itemize}
+    \item \textbf{Barrier}: Synchronize all processes
+    \item \textbf{Broadcast}: Send data from one process to all
+    \item \textbf{Reduce}: Perform operation on data from all processes, result to one process
+    \item \textbf{Scatter}: Distribute data in chunks from one process to all
+    \item \textbf{Gather}: Collect data chunks from all processes into one
+\end{itemize}
+\end{definition}
+
+\subsubsection{Actor Model}
+
+\begin{definition}
+\textbf{Actor Model}: A model of distributed computing where actors are the fundamental units of computation. Actors communicate by sending messages.
+\end{definition}
+
+\begin{remark}
+Actors are isolated from each other and can only communicate by sending messages. This eliminates the need for locks or other synchronization primitives.
+\end{remark}

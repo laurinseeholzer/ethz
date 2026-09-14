@@ -1,0 +1,214 @@
+\section{Concurrency Theory}
+
+\subsection{Linearizability}
+
+\begin{definition}
+    A \textbf{history} is a partially ordered set of invocations and responses of operations that appear in a distributed program. 
+\end{definition}
+
+\begin{definition}
+    A history $H$ is \textbf{linearizable} if it can be extended to a history $G$ by
+    \begin{itemize}
+        \item appending zero or more responses to pending invocations that took effect
+        \item discarding zero or more pending invocations that did not take affect
+    \end{itemize}
+    such that $G$ is equivalent to a legal sequantial history $S$ with $\to_G \subseteq \to_S$.
+\end{definition}
+
+\begin{remark}
+    Note that $\to_G$ is a total order of the operations in $G$ that satisfies the leagal sequential order of $S$.
+\end{remark}
+
+\begin{theorem}
+    History $H$ is linearizable $\iff$ for every object $x$ $H | x$ is linearizable.
+\end{theorem}
+
+\begin{remark}
+    The consequence of this theorem is that linearizability can be proven in isolation for each object and then composed.
+\end{remark}
+
+\subsection{Sequential Consistency}
+
+\begin{definition}
+    A history $H$ is \textbf{sequentially consistent} if it can be extended to a history $G$ by
+    \begin{itemize}
+        \item appending zero or more responses to pending invocations that took effect
+        \item discarding zero or more pending invocations that did not take affect
+    \end{itemize}
+    such that $G$ is equivalent to a legal sequential history $S$.
+\end{definition}
+
+\begin{remark}
+    Sequential consitancy does not require the preservation of the real-time order and only has to respect program order of each thread.
+\end{remark}
+
+\begin{theorem}
+    Sequential consitency is not a local property thus we lose composability.
+\end{theorem}
+
+\begin{remark}
+    Another idea: Programs should respect real-time order of algorithms separated by periods of quiescence. Quiescence consitency requires non-overlapping methods to take effect in real-time order.
+\end{remark}
+
+\subsection{Consensus}
+
+\begin{definition}
+    A \textbf{consensus object} has a function $decide(value)$ that can be invoked by multiple threads and returns the same value for all threads where value is one of the values $v_i$ proposed by the threads.
+\end{definition}
+
+\begin{remark}
+    The consensus object allows threads to agree on a single and valid output value.
+\end{remark}
+
+\begin{definition}
+    The \textbf{Consensus Number} is the maximum number of nodes that can solve consensus validly, sequentially consitent and wait-free.
+\end{definition}
+
+\begin{theorem}
+    Atmoic Registers have a consensus number of 1 while Test and Set and Get and Set have consensus number of 2 and Compare and Swap has an infinite consensus number.
+\end{theorem}
+
+\begin{proof}
+    \textbf{CAS has infinite consensus number:}
+    This can be proven by implementing a valid, sequentially consitent and wait-free consensus object using compare and swap.
+\end{proof}
+
+\begin{codeexample}
+class CASConsensus {
+    private final int FIRST = -1;
+    private AtomicInteger r = AtomicInteger(FIRST);
+    private AtomicIntegerArray proposed;
+
+    public int decide(int value) {
+        int i = ThreadID.get();
+        proposed.set(i, value);
+        if (r.compareAndSet(FIRST, i)) {
+            return proposed.get(i);
+        } else {
+            return proposed.get(r.get());
+        }
+    }
+}
+\end{codeexample}
+
+\begin{example}
+    Lets prove that there is no wait free implementation of a FIFO Queue using atomic registers.
+\end{example}
+
+\begin{proof}
+    Assume there is a wait free implementation. Then i can use the FIFO Queue to solve $n=2$ consensus which is a contradiction as atomic registers have a consensus number of 1.
+\end{proof}
+
+\begin{remark}
+    We can solve consensu with FIFO Queue by setting $q[0] = 1$ and $q[1] = 0$ if $p_1$ wants to output 1 and $p_2$ wants to output 0, then they both try to dequeue the value who ever gets the value $1$ will win and the other will lose. 
+\end{remark}
+
+\subsection{Transactional Memory}
+
+\begin{remark}
+    Note that synchronization with locks is hard to implement, not composable and pessimistic.
+\end{remark}
+
+\begin{remark}
+    The idea behind transactional memory is to remove the burden of synchronization from the programmer and make the hardware (HTM) or the underlaying software (STM) responsible to enforce synchronization where declared/needed.
+\end{remark}
+
+\begin{definition}
+    In transactional memory the programer can declare sections of his code as \textbf{atomic} and leave it to the system and hardware to ensure this code block takes effect atomically (also called a \textbf{transaction}).
+\end{definition}
+
+\begin{lemma}
+    Transactions run isolated and are consitent and atomic, thus other threads can only observe the start or the end state of the transaction. Where HTM offers fast execution at limited size while STM might offer larger transactions at higher time/enery consumption.
+\end{lemma}
+
+\begin{definition}
+    In TM we define for each transaction the \textbf{read set} of read variables during the transaction and the \textbf{write set} of written variables during the transaction.
+\end{definition}
+
+\begin{remark}
+    Conflicts can occure when the write set of transation $A$ overlaps with the read or write set of transaction $B$.
+\end{remark}
+
+\begin{remark}
+    Transactional Memory can be implemented on a Hardware level (HTM) (often using the existing cache coherence infrastructure) or on the Software level (STM).
+\end{remark}
+
+\begin{definition}
+    In STM we have to distinguish between \textbf{Weak isolation} and \textbf{strong isolation}.
+    \begin{itemize}
+        \item \textbf{Weak isolation} only isolates Transactions from each other.
+        \item \textbf{Strong isolation} isolates Transactions from each other and from operations outside the transaction.
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    STMs are still actively being developed. There is a lot of reseach happening in the field of Hybrid (STM and HTM) implementations.
+\end{remark}
+
+\begin{definition}
+    \textbf{Nesting} in a TM implementation referes to how transactions in transactions behave (ex. if an inner transaction aborts).
+\end{definition}
+
+\begin{definition}
+    \textbf{Flat Nesting} is the simplest form of nesting where:
+    \begin{itemize}
+        \item inner transactions are invisible to the outside world
+        \item if an inner transaction aborts the outer transaction aborts
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    We will use Scala's Software Transactional Memory (STM) to implement and demonstrate our ideas.
+\end{remark}
+
+
+\subsection{Distributed Memory and Message Passing}
+
+\begin{remark}
+    Shared mutable data is difficult to handle. A possible solution is functional programming. Alternatively, we can use local mutable data where threads send data to each other via message passing.
+\end{remark}
+
+\begin{definition}
+    \textbf{Message Passing} can be either synchronous or asynchronous:
+    \begin{itemize}
+        \item \textbf{Synchronous}: Sender blocks until the message is received.
+        \item \textbf{Asynchronous}: Fire and forget (messages are buffered).
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    In contrast to shared memory, distributed memory architectures rely on isolated mutability.
+\end{remark}
+
+\begin{definition}
+    \textbf{MPI (Message Passing Interface)} is a standard for distributed memory programming. Processes are grouped into \textbf{communicators}, and each process is assigned a unique identifier called a \textbf{process rank}.
+\end{definition}
+
+\begin{definition}
+    Message passing operations can be:
+    \begin{itemize}
+        \item \textbf{Blocking}: The operation blocks until the data is safely sent/received.
+        \item \textbf{Non-blocking}: The operation returns immediately, allowing for overlap between computation and communication.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    Apart from send/receive operations MPI offers:
+    \begin{itemize}
+        \item \textbf{Barriers} to synchronize processes
+        \item \textbf{Broadcast} to send data from one process to all processes
+        \item \textbf{Reduce} to perform operations on the data from all processes and return the result to one process
+        \item \textbf{Scatter} to send data from one process distributed in chunks to all processes
+        \item \textbf{Gather} to receive data from all processes distributed in chunks and combine and send it to one process
+    \end{itemize}
+\end{definition}
+
+\subsubsection{Actor Model}
+
+\begin{definition}
+    \textbf{Actor Model} is a model of distributed computing where actors are the fundamental units of computation. Actors communicate with each other by sending messages.
+\end{definition}
+
+\begin{remark}
+    Actors are isolated from each other and can only communicate with each other by sending messages. This eliminates the need for locks or other synchronization primitives.
+\end{remark}

@@ -1,0 +1,341 @@
+\section{Differential calculus}
+
+\subsection{Theory}
+
+\begin{definition}
+    The \textbf{average rate of change} of a function $f$ in the domain between $a$ and $a + h$ :=
+    $$\frac{\Delta y}{\Delta x} = \frac{f(a+h)-f(a)}{h}$$
+    and also called the \textbf{difference quotient}.
+\end{definition}
+
+\begin{definition}
+    The \textbf{derivative} $f'$ of a function $f$ at the coordinate $a$ :=
+    $$\lim_{h \to 0}\frac{f(a+h)-f(a)}{h} = \lim_{b \to a}\frac{f(b)-f(a)}{b-a}$$
+    $$ = \frac{df}{dx}\vert_{x=a} = f'(a)$$
+\end{definition}
+
+\begin{remark}
+    The derivative $f'(a)$ can geometrically interpreted as the incline/decline of the graph of $f$ at the point $(a, f(a))$.
+\end{remark}
+
+\begin{definition}
+    If for a function $f$ at the coordinate $a$ the derivative $f'(a)$ exists then $f$ is called \textbf{differentiable} at $a$. If $f$ is differentiable for every $a \in \mathbb{D}$ then $f$ is called differentiable.
+\end{definition}
+
+\begin{theorem}
+    \textbf{Differentiability in Landau Notation:} A function $f$ is differentiable at $x_0$ iff there exists $K \in \mathbb{R}$ such that $f(x) - f(x_0) - K(x - x_0) = o(|x - x_0|)$ as $x \to x_0$. The constant $K$ is exactly $f'(x_0)$.
+\end{theorem}
+
+\begin{lemma}
+    If $f$ is differentiable at $x_0$ then $f$ is continuous at $x_0$.
+\end{lemma}
+
+\begin{definition}
+    If the limit 
+    $$\lim_{h>0 \to 0}\frac{f(a+h)-f(a)}{h}$$
+    exists then we call it the \textbf{right-sided derivative} (or the left-sided derivative analogue)
+\end{definition}
+
+\begin{definition}
+    For a function $f$ we can iteratively define higher derivatives for $n \in \mathbb{N}_0$
+    $$f^{(1)} = f', f^{(2)} = f'', \dots f^{(n+1)} = (f^{(n)})'$$
+    if $f^{(n)}$ exists we call it $n$\textbf{-times differentiable}.
+\end{definition}
+
+\begin{definition}
+    if $f^{(n)}$ is continuous we call $f$ $n$\textbf{-times continuous differentiable}. The set of all $n$-times continuous differentiable functions on $D$ is denoted as $C^n(D)$
+\end{definition}
+
+\begin{definition}
+    If for a function $f$ and some $x_0 \in \mathbb{D}$ and $\delta \gt 0$ we have
+    $$f(x_0) \geq (\leq) f(x) \quad \forall x \in \mathbb{D} \cap (x_0 - \delta, x_0 + \delta)$$
+    then $x_0$ is called a \textbf{local maximum (minimum)}.
+\end{definition}
+
+\subsubsection{Derivation rules}
+
+\begin{theorem}
+    \textbf{Sum Rule:} For the $n$-th derivative of a sum:
+    $$(f + g)^{(n)} = f^{(n)} + g^{(n)}$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{General Leibniz Rule (Product):} The $n$-th derivative of a product is given by:
+    $$(f \cdot g)^{(n)} = \sum_{k=0}^{n} \binom{n}{k} f^{(n-k)} g^{(k)}$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Chain Rule:} For the composition of functions:
+    $$(f \circ g)'(x)$$
+    $$= f'(g(x)) \cdot g'(x)$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Quotient Rule:} For $g(x) \neq 0$:
+    $$\left(\frac{f}{g}\right)'$$
+    $$= \frac{f'g - fg'}{g^2}$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Inverse Functions:} If $f$ is differentiable and injective:
+    $$(f^{-1})'(x)$$
+    $$= \frac{1}{f'(f^{-1}(x))}$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Logarithmic Differentiation:} To differentiate $h(x) = f(x)^{g(x)}$, rewrite it as $h(x) = e^{g(x) \ln(f(x))}$. The derivative is:
+    $$h'(x) = f(x)^{g(x)} \left[ g'(x)\ln(f(x)) + g(x)\frac{f'(x)}{f(x)} \right]$$
+\end{theorem}
+
+\subsubsection{Bernoulli-L'Hopital}
+
+\begin{theorem}
+    Let $I \subset \mathbb{R}$ be an interval, $f: I \to \mathbb{R}$, and let $x_0$ be a local extremum of $f$. Then one of the following holds:
+    1) $x_0$ is an endpoint of $I$. 
+    2) $f$ is not differentiable at $x_0$. 
+    3) $f$ is differentiable at $x_0$ and $f'(x_0) = 0$.
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Rolle's Theorem}: Let $a \lt b$ with $f(a) = f(b)$, and let $f:[a, b] \to \mathbb{R}$ be continuous on $[a, b]$ and differentiable on $(a, b)$. Then $\exists \xi \in (a, b)$ with
+    $$f'(\xi) = 0$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Mean-Value-Theorem}: Let $a \lt b$, and let $f:[a, b] \to \mathbb{R}$ be continuous on $[a, b]$ and differentiable on $(a, b)$. Then $\exists \xi \in (a, b)$ with
+    $$f'(\xi) = \frac{f(b)-f(a)}{b-a}$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Cauchy's Mean-Value-Theorem}: Let $a \lt b$, and let $f, g:[a, b] \to \mathbb{R}$ be continuous on $[a, b]$ and differentiable on $(a, b)$. Then $\exists \xi \in (a, b)$ with
+    $$\frac{f(b)-f(a)}{g(b)-g(a)}$$
+    $$= \frac{f'(\xi)}{g'(\xi)}$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Bernoulli-L'Hopital's Rule:} Let $f, g: I \to \mathbb{R}$ be differentiable functions on $(a, b)$ and let $x_0 \in (a, b)$. If $g(x) \neq 0$ and $g'(x) \neq 0$ for all $x \in (a, b)$. If
+    $$\lim_{x \to x_0} |f(x)| = \lim_{x \to x_0} |g(x)| \in \{ 0, \infty \}$$
+    $$\text{and} \quad \exists L = \lim_{x \to x_0} \frac{f'(x)}{g'(x)}$$
+    then
+    $$\lim_{x \to x_0} \frac{f(x)}{g(x)} = \lim_{x \to x_0} \frac{f'(x)}{g'(x)} = L$$
+\end{theorem}
+
+\subsubsection{Convex and Concave graphs}
+
+\begin{definition}
+    A function $f: I \to \mathbb{R}$ is called \textbf{convex} iff $\forall a, b \in I \forall t \in (0, 1)$
+    $$f((1-t)a + bt) \leq (1-t) f(a) + t f(b)$$
+\end{definition}
+
+\begin{definition}
+    A function $f: I \to \mathbb{R}$ is called \textbf{concave} iff $\forall a, b \in I \forall t \in (0, 1)$
+    $$f((1-t)a + bt) \geq (1-t) f(a) + t f(b)$$
+\end{definition}
+
+\begin{theorem}
+    Let $(a, b) \subset \mathbb{R}$ and $f: (a, b) \to \mathbb{R}$ be differentiable. Then $\forall x$
+    $$f'(x) \geq 0 \quad \iff \quad f \text{ is increasing}$$
+\end{theorem}
+
+\begin{theorem}
+    Let $(a, b) \subset \mathbb{R}$ and $f: (a, b) \to \mathbb{R}$ be differentiable. Then
+    $$f \text{ is convex} \quad \iff \quad f' \text{ is increasing}$$
+\end{theorem}
+
+\begin{theorem}
+    Let $(a, b) \subset \mathbb{R}$ and $f: (a, b) \to \mathbb{R}$ be twice differentiable. Then
+    $$f \text{ is convex} \quad \iff \quad f'' \geq 0$$
+\end{theorem}
+
+\subsubsection{Taylor Series}
+
+\begin{lemma}
+    We can locally approximate the graph of $f$ at $x_0$ with the tangent line $t(x)$:
+    $$f(x) \approx t(x)$$
+    $$= f(x_0) + f'(x_0)(x-x_0)$$
+\end{lemma}
+
+\begin{lemma}
+    To even more accurately approximate the function $f$ we can add further terms to the tangent line expansion:
+    $$f(x) \approx t(x)$$
+    $$= f(x_0) + f'(x_0)(x-x_0) + \frac{f''(x_0)}{2}(x-x_0)^2$$
+\end{lemma}
+
+\begin{theorem}
+    \textbf{Taylor's Theorem}: Let $f: (a, b) \to \mathbb{R}$ be $n+1$ times differentiable. Then 
+    $$f(x) = P_n(x) + R(x)$$
+    with $P_n(x)$ the Taylor polynomial of degree $n$ and $R(x)$ the remainder term:
+    $$P_n(x)$$
+    $$= \sum_{k=0}^n \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k$$
+    $$R(x)$$
+    $$= \frac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1} \quad (\xi \text{ between } x_0, x)$$
+\end{theorem}
+
+\begin{definition}
+    The \textbf{Taylor series expansion} of an infinitely differentiable function $f: (a, b) \to \mathbb{R}$ at $x_0$ is given by:
+    $$f(x)$$
+    $$= \sum_{k=0}^\infty \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k$$
+\end{definition}
+
+\begin{theorem}
+    Let $f(x) = \sum_{n=0}^\infty a_n x^n$ and $g(x) = \sum_{n=0}^\infty b_n x^n$ be two power series with radius of convergence $R$. Then:
+    $$f(x)g(x)$$
+    $$= \sum_{n=0}^\infty \left(\sum_{k=0}^n a_k b_{n-k}\right) x^n$$
+\end{theorem}
+
+\begin{theorem}
+    Let $f(x) = \sum_{n=0}^\infty a_n x^n$ be a power series with radius of convergence $R$. Then:
+    $$f'(x)$$
+    $$= \sum_{n=1}^\infty n a_n x^{n-1}$$
+\end{theorem}
+
+\begin{theorem}
+    Let $f(x) = \sum_{n=0}^\infty a_n x^n$ be a power series with radius of convergence $R$. Then:
+    $$\int f(x) \, dx$$
+    $$= \sum_{n=0}^\infty \int a_n x^n \, dx$$
+\end{theorem}
+
+\subsection{Lookup Tables}
+
+\subsubsection{Common Derivatives}
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{2pt}
+\begin{tabularx}{\columnwidth}{|>{\hsize=0.8\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|}
+\hline
+$f(x)$ & $f'(x)$ \\ \hline
+$x^p$ & $p x^{p-1}$ \\ \hline
+$\ln|x|$ & $1/x$ \\ \hline
+$e^x$ & $e^x$ \\ \hline
+$a^x$ & $a^x \ln a$ \\ \hline
+$\sin x$ & $\cos x$ \\ \hline
+$\cos x$ & $-\sin x$ \\ \hline
+$\tan x$ & $1+\tan^2 x = \sec^2 x$ \\ \hline
+$\cot x$ & $-(1+\cot^2 x) = -\csc^2 x$ \\ \hline
+$\sec x$ & $\sec x \tan x$ \\ \hline
+$\csc x$ & $-\csc x \cot x$ \\ \hline
+$\sinh x$ & $\cosh x$ \\ \hline
+$\cosh x$ & $\sinh x$ \\ \hline
+$\arcsin x$ & $\frac{1}{\sqrt{1-x^2}}$ \\ \hline
+$\arccos x$ & $\frac{-1}{\sqrt{1-x^2}}$ \\ \hline
+$\arctan x$ & $\frac{1}{1+x^2}$ \\ \hline
+$\text{arccot } x$ & $\frac{-1}{1+x^2}$ \\ \hline
+$\log_a x$ & $\frac{1}{x \ln a}$ \\ \hline
+$x^x$ & $x^x(1+\ln x)$ \\ \hline
+$\text{arsinh } x$ & $\frac{1}{\sqrt{1+x^2}}$ \\ \hline
+$\text{arcosh } x$ & $\frac{1}{\sqrt{x^2-1}}$ \\ \hline
+$\text{artanh } x$ & $\frac{1}{1-x^2}$ \\ \hline
+$\text{arcoth } x$ & $\frac{1}{1-x^2}$ \\ \hline
+$\tanh x$ & $\text{sech}^2 x$ \\ \hline
+$\coth x$ & $-\text{csch}^2 x$ \\ \hline
+$\text{sech } x$ & $-\text{sech } x \tanh x$ \\ \hline
+$\text{csch } x$ & $-\text{csch } x \coth x$ \\ \hline
+$\sqrt{x}$ & $\frac{1}{2\sqrt{x}}$ \\ \hline
+$\frac{1}{x}$ & $-\frac{1}{x^2}$ \\ \hline
+$x \ln x$ & $\ln x + 1$ \\ \hline
+$\ln(\ln x)$ & $\frac{1}{x \ln x}$ \\ \hline
+$|x|$ & $\frac{x}{|x|} = \text{sgn}(x)$ \\ \hline
+$\log_x(a)$ & $-\frac{\ln a}{x (\ln x)^2}$ \\ \hline
+$e^{ax}$ & $a e^{ax}$ \\ \hline
+$a^{cx}$ & $c a^{cx} \ln a$ \\ \hline
+$\sin(ax)$ & $a \cos(ax)$ \\ \hline
+$\cos(ax)$ & $-a \sin(ax)$ \\ \hline
+$\sin^2 x$ & $\sin(2x)$ \\ \hline
+$\cos^2 x$ & $-\sin(2x)$ \\ \hline
+$\arcsin(\frac{x}{a})$ & $\frac{1}{\sqrt{a^2-x^2}}$ \\ \hline
+$\arctan(\frac{x}{a})$ & $\frac{a}{a^2+x^2}$ \\ \hline
+$\text{arcsec } x$ & $\frac{1}{|x|\sqrt{x^2-1}}$ \\ \hline
+$\text{arccsc } x$ & $\frac{-1}{|x|\sqrt{x^2-1}}$ \\ \hline
+$W(x)$ & $\frac{W(x)}{x(1+W(x))}$ \\ \hline
+$\int_0^x f(t) dt$ & $f(x)$ \\ \hline
+\end{tabularx}
+\end{center}
+
+\subsubsection{Standard Taylor Series (at $x=0$)}
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\begin{tabularx}{\columnwidth}{|l|>{\hsize=1.25\hsize\raggedright\arraybackslash}X|>{\hsize=0.75\hsize\raggedright\arraybackslash}X|c|}
+\hline
+\textbf{Func.} & \textbf{Series} & \textbf{First Terms} & \textbf{Rad} \\ \hline
+$e^x$ & $\sum_{n=0}^\infty \frac{x^n}{n!}$ & $1+x+\frac{x^2}{2}+\dots$ & $\infty$ \\ \hline
+$\sin x$ & $\sum_{n=0}^\infty \frac{(-1)^n x^{2n+1}}{(2n+1)!}$ & $x-\frac{x^3}{6}+\dots$ & $\infty$ \\ \hline
+$\cos x$ & $\sum_{n=0}^\infty \frac{(-1)^n x^{2n}}{(2n)!}$ & $1-\frac{x^2}{2}+\dots$ & $\infty$ \\ \hline
+$\frac{1}{1-x}$ & $\sum_{n=0}^\infty x^n$ & $1+x+x^2+\dots$ & $1$ \\ \hline
+$\ln(1+x)$ & $\sum_{n=1}^\infty \frac{(-1)^{n-1} x^n}{n}$ & $x-\frac{x^2}{2}+\dots$ & $1$ \\ \hline
+$\arctan x$ & $\sum_{n=0}^\infty \frac{(-1)^n x^{2n+1}}{2n+1}$ & $x-\frac{x^3}{3}+\dots$ & $1$ \\ \hline
+$(1+x)^\alpha$ & $\sum_{n=0}^\infty \binom{\alpha}{n} x^n$ & $1+\alpha x+\dots$ & $1$ \\ \hline
+$\sinh x$ & $\sum_{n=0}^\infty \frac{x^{2n+1}}{(2n+1)!}$ & $x+\frac{x^3}{6}+\dots$ & $\infty$ \\ \hline
+$\cosh x$ & $\sum_{n=0}^\infty \frac{x^{2n}}{(2n)!}$ & $1+\frac{x^2}{2}+\dots$ & $\infty$ \\ \hline
+$\tan x$ & $\dots$ & $x + \frac{x^3}{3} + \frac{2x^5}{15} +\dots$ & $\pi/2$ \\ \hline
+$\arcsin x$ & $\dots$ & $x + \frac{x^3}{6} + \frac{3x^5}{40} +\dots$ & $1$ \\ \hline
+$-\ln(1-x)$ & $\sum_{n=1}^\infty \frac{x^n}{n}$ & $x + \frac{x^2}{2} + \dots$ & $1$ \\ \hline
+\end{tabularx}
+\end{center}
+
+\begin{important}
+    \textbf{Radii of Convergence for additional Taylor Series:} \\
+    \textbf{Logarithm:} $\ln(1+x) = \sum_{n=1}^\infty \frac{(-1)^{n-1}}{n} x^n$ (for $x \in (-1, 1]$). \\
+    \textbf{Geometric:} $\frac{1}{1-x} = \sum_{n=0}^\infty x^n$ (for $|x| < 1$). \\
+    \textbf{Binomial:} $(1+x)^\alpha = 1 + \alpha x + \frac{\alpha(\alpha-1)}{2!} x^2 + \dots$ (for $|x| < 1$).
+\end{important}
+
+
+\subsection{Most Common Proofs}
+
+\subsubsection{Proof Outline: Mean Value Theorem (MVT)}
+\textbf{Goal:} $\exists c \in (a,b)$ s.t. $f'(c) = \frac{f(b)-f(a)}{b-a}$. \\
+\textbf{Step 1:} Define helper $h(x) = f(x) - \left( f(a) + \frac{f(b)-f(a)}{b-a}(x-a) \right)$. \\
+\textbf{Step 2:} Verify $h(a) = 0$ and $h(b) = 0$. $h$ is continuous on $[a,b]$ and differentiable on $(a,b)$. \\
+\textbf{Step 3:} Apply Rolle's Theorem to $h(x)$: $\exists c \in (a,b)$ s.t. $h'(c) = 0$. \\
+\textbf{Step 4:} Calculate $h'(x) = f'(x) - \frac{f(b)-f(a)}{b-a}$. Setting $h'(c) = 0$ yields the MVT.
+
+\subsubsection{Proof Outline: Differentiability}
+\textbf{Goal:} Show $f(x)$ is differentiable at $x_0$. \\
+\textbf{Step 1:} Set up the limit of the difference quotient: $\lim_{h \to 0} \frac{f(x_0+h)-f(x_0)}{h}$. \\
+\textbf{Step 2:} If piecewise, compute left-sided limit ($h \nearrow 0$) and right-sided limit ($h \searrow 0$) separately. \\
+\textbf{Step 3:} Use algebraic manipulation, Taylor expansions, or L'Hôpital's rule to evaluate limits. \\
+\textbf{Step 4:} Show both one-sided limits exist and are equal. The common value is $f'(x_0)$.
+
+\subsubsection{Proof Outline: Differentiability implies continuity}
+\textbf{Goal:} If $f'(x_0)$ exists, then $f$ is continuous at $x_0$. \\
+\textbf{Step 1:} We must show $\lim_{x \to x_0} (f(x) - f(x_0)) = 0$. \\
+\textbf{Step 2:} For $x \neq x_0$, rewrite: $f(x) - f(x_0) = \frac{f(x) - f(x_0)}{x - x_0} (x - x_0)$. \\
+\textbf{Step 3:} Take $\lim_{x \to x_0}$. Because $f$ is diff. at $x_0$, $\lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0} = f'(x_0)$. \\
+\textbf{Step 4:} Also, $\lim_{x \to x_0} (x - x_0) = 0$. \\
+\textbf{Step 5:} By limit rules, the product limit is $f'(x_0) \cdot 0 = 0$. Thus $\lim_{x \to x_0} f(x) = f(x_0)$.
+
+\subsubsection{Proof Outline: Rolle's theorem}
+\textbf{Goal:} If $f$ is continuous on $[a,b]$, differentiable on $(a,b)$, and $f(a)=f(b)$, then $\exists c \in (a,b)$ with $f'(c)=0$. \\
+\textbf{Step 1:} If $f(x)$ is constant on $[a,b]$, then $f'(x) = 0$ for all $x \in (a,b)$, any $c$ works. \\
+\textbf{Step 2:} If not constant, by EVT, $f$ attains a max and min on $[a,b]$. \\
+\textbf{Step 3:} Since $f(a)=f(b)$, at least one extreme value must occur at an interior point $c \in (a,b)$. \\
+\textbf{Step 4:} By Fermat's Theorem, if a function attains a local extremum at an interior point where differentiable, its derivative there is $0$. Thus $f'(c) = 0$.
+
+
+\subsection{Exam Strategies}
+
+\subsubsection{Piecewise Functions}
+To check continuity and differentiability at $x_0$: \\
+\textbf{Continuity:} Check if $\lim_{x \to x_0^+} f(x) = \lim_{x \to x_0^-} f(x) = f(x_0)$. \\
+\textbf{Differentiability:} If continuous, check if $\lim_{h \searrow 0} \frac{f(x_0+h)-f(x_0)}{h} = \lim_{h \nearrow 0} \frac{f(x_0+h)-f(x_0)}{h}$. \\
+\textbf{Shortcut:} If $f'(x)$ exists for $x \neq x_0$ and $\lim_{x \to x_0} f'(x) = L$ exists, then $f'(x_0) = L$.
+
+\subsubsection{Limits - Taylor vs. L'Hôpital}
+\textbf{Use Taylor when:} The expression has complicated products, powers, or nested functions (e.g., $e^{\sin x} - 1$). \\
+\textbf{Use L'Hôpital when:} The expression is a simple fraction $\frac{0}{0}$ or $\frac{\infty}{\infty}$ and derivatives are easy. \\
+\textbf{Important Continuous Limits:} \\
+$\lim_{x \to 0} \frac{\sin(x)}{x} = 1$, $\lim_{x \to 0} \frac{1-\cos(x)}{x^2} = \frac{1}{2}$, $\lim_{x \to \infty} \left(1+\frac{a}{x}\right)^x = e^a$ \\
+$\lim_{x \to 0} \frac{e^x-1}{x} = 1$, $\lim_{x \to 0} \frac{\ln(1+x)}{x} = 1$, $\lim_{x \to \infty} x^{1/x} = 1$. \\
+\textbf{Equivalent Infinitesimals ($x \to 0$):} \\
+$\sin(x) \sim x$, $\tan(x) \sim x$, $e^x - 1 \sim x$, $\ln(1+x) \sim x$, $1 - \cos(x) \sim \frac{x^2}{2}$. \\
+\textbf{L'Hôpital Algebraic Conversions:} \\
+\textbf{$0 \cdot \infty$} $\to$ rewrite as $\frac{1}{\infty^0}$ or $\frac{1}{0^\infty}$ ($\frac{f}{1/g}$ or $\frac{g}{1/f}$). \\
+\textbf{$\infty - \infty$} $\to$ combine into a single fraction. \\
+\textbf{$1^\infty, 0^0, \infty^0$} $\to$ use $L = \lim f(x)^{g(x)} \implies \ln(L) = \lim [g(x)\ln(f(x))]$.
+
+\subsubsection{Constrained Extrema}
+To find extrema of $f(x,y)$ s.t. $g(x,y)=0$: \\
+\textbf{1.} Set up system $\nabla f = \lambda \nabla g$ and $g = 0$. \\
+\textbf{2.} Solve for $x, y, \lambda$. \\
+\textbf{3. Check boundary!} If region is a disk $x^2+y^2 \le 1$, check interior $\nabla f = 0$ AND boundary $x^2+y^2=1$.

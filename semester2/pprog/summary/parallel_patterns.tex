@@ -1,0 +1,169 @@
+\section{Parallel Patterns}
+
+\subsection{Divide and Conquer}
+
+\begin{definition}
+\textbf{Divide and Conquer } refers to the strategy of splitting a problem into smaller subproblems,
+                solving them recursively, and combining the results.
+\end{definition}
+
+Problems of DC with manual fork/join:
+\begin{itemize}
+    \item Poor reusability of code
+    \item Commit to a number of threads a priori and can not dynamically adjust.
+    \item Subproblems are not automatically assigned to a thread.
+\end{itemize}
+
+\begin{remark}
+Some manual fork/join fixes are: sequential-cutoffs or running one
+subproblem on the thread itself, instad of creating two new threads.
+\end{remark}
+
+\subsubsection{Executor Service}
+
+The Executor Service framework provides the way to schedule and run tasks on a thread-pool automatically.
+
+\begin{definition}
+\textbf{Runnable}: Task without return value. (Passed to \texttt{execute()} or \texttt{submit()}).
+\textbf{Callable}: Task returning \texttt{Future<T>}. (Passed to \texttt{submit()}).
+\end{definition}
+
+\begin{remark}
+\textbf{Pool Types}: \texttt{newFixedThreadPool(n)} (keeps $n$ threads), \texttt{newCachedThreadPool()} (scales dynamically).
+\end{remark}
+
+Pros and Cons of Executor service:
+\begin{itemize}
+    \item Not suited for: Recursive subproblems that depend on each other and have a deep fork-tree. (run out of threads)
+    \item Suited for: flat structures that can run independently in parallel.
+\end{itemize}
+
+\subsubsection{Fork-Join}
+
+Manages a pool of threads to solve recursive tasks using a work-stealing strategy, where threads have local task-queues
+which they work on and if empty steal from other threads.
+
+\begin{definition}
+\textbf{RecursiveTask}: Returns a result (like Callable).
+\textbf{RecursiveAction}: Does not return a result (like Runnable).
+\textbf{Key Methods}: \texttt{fork()} (async push), \texttt{join()} (wait, but steals work while waiting), \texttt{compute()} (main logic).
+\end{definition}
+
+\begin{codeexample}
+class MyTask extends RecursiveTask<Integer> {
+    int start, end;
+    MyTask(int start, int end) { this.start = start; this.end = end; }
+    
+    protected Integer compute() {
+        if (end - start <= SEQUENTIAL_CUTOFF) { 
+            return baseCase(); 
+        } else {
+            int mid = (start + end) / 2;
+            MyTask left = new MyTask(start, mid);
+            MyTask right = new MyTask(mid, end);
+            
+            left.fork(); // Async execute left half
+            int rightRes = right.compute(); // Optimize: compute right half now
+            int leftRes = left.join();      // Wait for left half
+            
+            return leftRes + rightRes;
+        } 
+    }
+}
+\end{codeexample}
+
+\begin{important}
+Make sure that every task has enough work to do (aprox. 100-10'000 ops.) (else the overhead will be larger than the parallel speedup gain)
+\end{important}
+
+\subsubsection{Task graphs}
+
+The execution of parallel programs using Fork-Join can be represented as a Task-Graph (DAG).
+
+\begin{definition}
+$T_1$ is the execution time on a sequential machine (sum of all task durations in the DAG).
+\textbf{Span} $T_{\infty}$: execution time with unlimited hardware (sum of longest dependent path in DAG).
+Max speedup is limited by $T_1 / T_{\infty}$ (Amdahl's Law).
+\end{definition}
+
+\begin{remark}
+It is the programmers responsibility to find the optimal decomposition for minimal span (balanced tree). \textbf{Fork-join guarantees optimal scheduling with minimal idle time.}
+\end{remark}
+
+\subsection{Parallel Patterns}
+
+\begin{definition}
+A \textbf{reduction} produces a single answer from a collection via an associative operator.
+\end{definition}
+
+\begin{example}
+Max, Min, Sum, Product of an array.
+\end{example}
+
+\begin{definition}
+A \textbf{map} applies a function to each elements of a collection producing an output of the same size.
+\end{definition}
+
+\begin{example}
+Vector addition: $v_i = u_i + w_i \forall i \in [1, n]$
+\end{example}
+
+\begin{remark}
+Maps and Reductions have an optimal span of $O(\log n)$.
+\end{remark}
+
+\begin{definition}
+A \textbf{stencil} extends the map pattern by using the element itself and its neighbours.  
+\end{definition}
+
+\begin{example}
+A smoothing kernel (ex. 3x3) that calculates the average value is sled over an image to smooth/blur the image.
+\end{example}
+
+\begin{remark}
+Arrays and balanced trees are usually parallelizable while linked lists are not even if the per element operation is parallelizable.
+\end{remark}
+
+\subsection{Parallel Algorithms}
+
+\subsubsection{Prefix-Sum}
+
+Prefix-Sum: Sum of first $n$ inputs.
+
+\begin{algorithm}
+upTask(); //divide problem and build tree with sums of subproblems
+downTask(); //fill in the correction values (left_sum + parent_correction)
+\end{algorithm}
+
+\begin{theorem}
+The span of the prefix sum optimization is $O(\log n)$, therefore parallelism of $\frac{n}{\log n}$.
+\end{theorem}
+
+\subsubsection{Pack}
+
+\textbf{Pack} pack all elements from an array that satisfy a certain condition into a seperate output. (by using prefix sum)
+
+\begin{algorithm}
+applyMap(); //applies a map to the input
+//results in a binary vector [1, 0, 1, 1, 0, ...]\\
+parallelPrefixSum(); //calculates the prefix sum of the binary vector\\
+//results in [1, 1, 2, 3, 3, ...]\\
+applyPackMap(); //applies another map to the result of the prefix sum\\
+//results in [0, 2, 3, ...] (indices of elements to write to output)
+\end{algorithm}
+
+\subsubsection{Quicksort}
+
+We can reduce the \textbf{limiting factor of the problem division} from a span of $O(n)$ to a span of $O(\log n)$
+using the pack-pattern.
+
+\begin{algorithm}
+applyMaps(); //apply maps for greater and smaller than pivot
+parallelPrefixSum(); //count how many smallerthan/greatherthan elements come bofore
+applyMap(); //index = numLessThan || numTotalLessThan + numGreaterThan
+\end{algorithm}
+
+We can do this by using two pack-patterns to partition the data. This leads to a partitioning of $O(\log n)$
+levels times $O(\log n)$ for prefixSum hence $O(\log^2 n)$ total span. 
+
+This means a parallelism of $\frac{n\log n}{\log^2 n} = \frac{n}{\log n}$.

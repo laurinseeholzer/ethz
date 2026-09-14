@@ -1,0 +1,233 @@
+\section{Functions}
+
+\subsection{Theory}
+
+\begin{definition}
+    A \textbf{function} $f: D \to C$ is a map from a domian $D$ to a codomain $C$ s.t. for each $x \in D$ there is exactly one $y \in C$ st. $f(x) = y$ (well defined).
+\end{definition}
+
+\begin{definition}
+    A function $f$ is called \textbf{bouned} if there exists $M \in \mathbb{R}$ such that $|f(x)| \leq(\geq) M$ for all $x \in D$.
+\end{definition}
+
+\begin{definition}
+    A function $f$ is called \textbf{injective} iff 
+    $$\forall x_1, x_2 \in A : f(x_1) = f(x_2) \implies x_1 = x_2$$
+    \textbf{surjective} iff 
+    $$\forall y \in B \exists x \in A : f(x) = y$$
+    and bijective iff $f$ is injective and surjective.
+\end{definition}
+
+\begin{definition}
+    The \textbf{restriction} of $f$ under $D' \subset \mathbb{D}$ := 
+    $$f\upharpoonleft_{D'}: D' \to C, x \mapsto f(x) \quad \forall x \in \mathbb{D}$$
+\end{definition}
+
+\begin{definition}
+    Let $f: D \to C$ and $g: C \to B$ be functions then
+    $$g \circ f: D \to B \quad \text{with}$$
+    $$g \circ f(x) = g(f(x)) \quad \forall x \in D$$
+    is called the \textbf{composition} of $f$ and $g$.
+\end{definition}
+
+\begin{definition}
+    The \textbf{identity function} $id_D: D \to D$ := $id_D(x) = x \quad \forall x \in D$.
+\end{definition}
+
+\begin{definition}
+    If a function $f: D \to C$ is bijective then there exists a unique function $f^{-1}: C \to D$ such that
+    $$ f(f^{-1}(y)) = id_C = y \quad \forall y \in C$$
+    and
+    $$ f^{-1}(f(x)) = id_D = x \quad \forall x \in D$$
+    $f^{-1}$ is called the \textbf{inverse function} of $f$.
+\end{definition}
+
+\begin{definition}
+    A function $f: \mathbb{R} \to \mathbb{R}$ is called
+    \textbf{even} iff 
+    $$\forall x \in \mathbb{R} : f(-x) = f(x)$$
+    and \textbf{odd} iff 
+    $$\forall x \in \mathbb{R} : f(-x) = -f(x)$$
+\end{definition}
+
+\begin{definition}
+    A function  $f: \mathbb{R} \to \mathbb{R}$ is called \textbf{(strictly) monotonically increasing} iff 
+    $$\forall x_1, x_2 \in \mathbb{R} : x_1 < x_2 \implies f(x_1) < f(x_2)$$
+    and \textbf{(strictly) monotonically decreasing} iff 
+    $$\forall x_1, x_2 \in \mathbb{R} : x_1 < x_2 \implies f(x_1) > f(x_2)$$
+\end{definition}
+
+\begin{theorem}
+    Every strictly monotonic function is injective.
+\end{theorem}
+
+
+\subsubsection{Limits in the context of functions}
+
+\begin{definition}
+    Let $f: \mathbb{D} \to \mathbb{R}$ be a function satisfying $\mathbb{D} \cap (x_0 - \delta, x_0 + \delta) \neq \emptyset$ for all $\delta > 0$ and $x_0 \in \mathbb{R}$. We say that $\lim_{x \to x_0} f(x) = L$ iff 
+    $$\forall \varepsilon > 0 \exists \delta > 0  \text{s.t.}$$
+    $$x \in \mathbb{D} \cap (x_0 - \delta, x_0 + \delta) \implies |f(x) - L| < \varepsilon$$
+    The limit $L$ is unique.
+\end{definition}
+
+\begin{definition}
+    A function $f: \mathbb{D} \to \mathbb{R}$ has in $x_0$ a
+    \textbf{right-sided limit} $\quad \lim_{x \searrow x_0} f(x) = \lim_{x \to x_0^+} f(x) = L$ iff 
+    $$\forall \varepsilon > 0 \exists \delta > 0  \quad \text{s.t.}$$
+    $$\forall x \in \mathbb{D} (x_0 < x < x_0 + \delta \implies |f(x) - L| < \varepsilon)$$
+\end{definition}
+
+\begin{definition}
+    A function $f: \mathbb{D} \to \mathbb{R}$ has a \textbf{limit for x approaching infinity} $\lim_{x \to \infty} f(x) = L$ iff 
+    $$\forall \varepsilon > 0 \exists M > 0 \quad \text{s.t.}$$
+    $$\forall x \in \mathbb{D} (x > M \implies |f(x) - L| < \varepsilon)$$
+\end{definition}
+
+\begin{definition}
+    A function $f: \mathbb{D} \to \mathbb{R}$ has in $x_0$ a \textbf{improper limit approaching infinity} $\lim_{x \to x_0} f(x) = \infty$ iff 
+    $$\forall N > 0 \exists \delta > 0 \quad \text{s.t.}$$
+    $$forall x \in \mathbb{D} (0 < |x - x_0| < \delta \implies f(x) > N)$$
+\end{definition}
+
+\begin{theorem}
+    Let $\lim_{x \to x_0} f(x) = K (\neq \pm \infty)$ and $\lim_{x \to x_0} g(x) = L (\neq \pm \infty)$
+    $$\lim_{x \to x_0} (f(x) + g(x)) = K + L$$
+    $$\lim_{x \to x_0} (f(x) - g(x)) = K - L$$
+    $$\lim_{x \to x_0} (f(x) g(x)) = K L$$
+    $$\lim_{x \to x_0} (f(x) / g(x)) = K / L$$
+    $$\lim_{x \to x_0} (A f(x)) = A K$$
+    $$\lim_{x \to x_0} (f(x)/g(x)) = K/L \text{if} L \neq 0$$
+\end{theorem}
+
+\subsubsection{Continuity of functions}
+
+\begin{definition}
+    A function $f: D \to \mathbb{R}$ is called \textbf{continous} at $x_0$ if
+    $$\forall \epsilon \gt 0 \exists \delta \gt 0 \text{ such that }$$
+    $$\forall x \in I (\mid x - x_0 \mid \lt \delta \implies \mid f(x) - f(c) \mid \gt \epsilon)$$
+    The function is called continuous if it is continuous at every point in its domain.
+\end{definition}
+
+\begin{definition}
+    A function $f$ is \textbf{Lipschitz continuous} if there exists $L \ge 0$ such that $|f(x) - f(y)| \le L|x - y|$ for all $x, y \in D$. \\
+    \textbf{Properties}: A bounded derivative $|f'(x)| \le L$ implies Lipschitz continuity. Lipschitz continuity strictly implies uniform continuity.
+\end{definition}
+
+\begin{remark}
+    The \textbf{intuition} behind this definition is that for any given distance $\epsilon > 0$ around $f(x_0)$, we can find a $\delta > 0$ such that for all $x \in D$ that are at least $\delta$ close to $x_0$, we have $|f(x) - f(x_0)| < \epsilon$. 
+    So for any bound on the output ($\epsilon$) there exists a bound on the input ($\delta$) such that all elements in the input bound $(x_0 - \delta, x_0 + \delta)$ are mapped to the output bound $(f(x_0) - \epsilon, f(x_0) + \epsilon)$.
+\end{remark}
+
+\begin{definition}
+    Let $f: D \to \mathbb{R}$ be a function. Then $f$ is called \textbf{left(right)-continuous} at $x_0$ if
+    $$\lim_{x \to x_0^{-(+)}} f(x) = f(x_0)$$
+\end{definition}
+
+\begin{theorem}
+    Let $f: D \subset \mathbb{D}(f) \subset \mathbb{R}$ be a function and $x_0 \in D$. $f$ is continuous at $x_0$ iff for every sequence $(x_n)_{n\in\mathbb{N}} \subset D$ with $\lim_{n\to\infty} x_n = x_0$ it holds that $\lim_{n\to\infty} f(x_n) = f(x_0)$.
+\end{theorem}
+
+\begin{remark}
+    Continuity can also be viewed in terms of intervals, where a function $f$ is continuous iff for every open interval $I \subset \mathbb{R}$ it holds that $f^{-1}(I)$ is open.
+\end{remark}
+
+\begin{lemma}
+    Let $f, g$ be continuous functions then
+    $$f+g, \quad f-g, \quad f \cdot g, \quad c \cdot f, \quad \frac{f}{g}, \quad f \circ g$$
+    are continuous
+\end{lemma}
+
+\begin{theorem}
+    Let $I$ be an interval and let $f: I \to J$ be a continuous and bijective function. Then $J$ is an interval too and the inverse function $f^{-1}: J \to I$ is continuous.
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Intermediate Value Theorem (IVT)}: Let $f: [a, b] \to \mathbb{R}$ be a continuous function. Let $c$ be a value between $f(a)$ and $f(b)$. Then there exists a $x_0 \in [a, b]$ such that $f(x_0) = c$.
+\end{theorem}
+
+\begin{lemma}
+    Let $[a, b]$ be a compact interval and let $(x_n)_{n\in\mathbb{N}} \subset [a, b]$ be a sequence. Then there exists a subsequence $(x_{n_k})_{k\in\mathbb{N}}$ such that 
+    $$ \lim_{k\to\infty} x_{n_k} = x_0 \quad \text{ for some } x_0 \in [a, b]. $$
+\end{lemma}
+
+\begin{definition}
+    Let $f: D \subset \mathbb{R} \to \mathbb{R}$ be a function
+    If for $x_0 \in D$ it holds that $f(x_0) \geq f(x) \forall x \in D$, then $f$ has a local maximum at $x_0$.
+    If for $x_0 \in D$ it holds that $f(x_0) \leq f(x) \forall x \in D$, then $f$ has a local minimum at $x_0$.
+\end{definition}
+
+\begin{theorem}
+    Let $f: I \subset \mathbb{R} \to \mathbb{R}$ be a continous function and $I$ be a compact interval. Then $f$ is bounded and attains its maximum and minimum value on $I$. Hence
+    $$\exists x_{min}, x_{max} \in I \text{ such that }$$
+    $$ f(x_{min}) \leq f(x) \leq f(x_{max}) \quad \forall x \in I$$
+\end{theorem}
+
+
+\subsection{Lookup Tables}
+
+\subsubsection{Trigonometric Identities}
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Category} & \textbf{Formula} \\ \hline
+Pythagoras & $\sin^2 x + \cos^2 x = 1$ \\
+& $1 + \tan^2 x = \frac{1}{\cos^2 x}$ \\ \hline
+Addition & $\sin(x \pm y) = \sin x \cos y \pm \cos x \sin y$ \\
+& $\cos(x \pm y) = \cos x \cos y \mp \sin x \sin y$ \\
+& $\tan(x \pm y) = \frac{\tan x \pm \tan y}{1 \mp \tan x \tan y}$ \\ \hline
+Double Angle & $\sin(2x) = 2 \sin x \cos x$ \\
+& $\cos(2x) = \cos^2 x - \sin^2 x$ \\
+& $\phantom{\cos(2x)} = 2 \cos^2 x - 1 = 1 - 2 \sin^2 x$ \\ \hline
+Half Angle & $\sin^2 x = \frac{1 - \cos(2x)}{2}$ \\
+& $\cos^2 x = \frac{1 + \cos(2x)}{2}$ \\ \hline
+Subst. trick & $\tan(x/2) = t \implies$ \\
+& $\sin x = \frac{2t}{1+t^2}, \cos x = \frac{1-t^2}{1+t^2}$ \\
+& $dx = \frac{2dt}{1+t^2}$ \\ \hline
+Prod-to-Sum & $\sin x \sin y = \frac{1}{2}(\cos(x-y) - \cos(x+y))$ \\
+& $\cos x \cos y = \frac{1}{2}(\cos(x-y) + \cos(x+y))$ \\
+& $\sin x \cos y = \frac{1}{2}(\sin(x+y) + \sin(x-y))$ \\ \hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Hyperbolic Functions}
+\textbf{Defs:} $\cosh x = \frac{e^x + e^{-x}}{2}$, $\sinh x = \frac{e^x - e^{-x}}{2}$, $\tanh x = \frac{e^x - e^{-x}}{e^x + e^{-x}}$. \\
+\textbf{Identities:} $\cosh^2 x - \sinh^2 x = 1$, $\sinh(2x) = 2 \sinh x \cosh x$, $\cosh(2x) = \cosh^2 x + \sinh^2 x$. \\
+\textbf{Derivatives:} $(\sinh x)' = \cosh x$, $(\cosh x)' = \sinh x$, $(\tanh x)' = \frac{1}{\cosh^2 x}$. \\
+\textbf{Inverses:} $\text{arsinh}(x) = \ln(x + \sqrt{x^2+1})$, $\text{arcosh}(x) = \ln(x + \sqrt{x^2-1})$.
+
+\subsection{Most Common Proofs}
+
+\subsubsection{Proof Outline: Intermediate Value Theorem (IVT)}
+\textbf{Goal:} $\exists x_0 \in [a,b]$ with $f(x_0) = c$. \\
+\textbf{Step 1:} Assume $f(a) < c < f(b)$. Define $S = \{x \in [a,b] : f(x) \le c\}$. \\
+\textbf{Step 2:} $S$ is non-empty ($a \in S$) and bounded above (by $b$). By completeness of $\mathbb{R}$, $x_0 = \sup(S)$ exists. \\
+\textbf{Step 3:} Show $f(x_0) \le c$ using continuity and a sequence in $S$ converging to $x_0$. \\
+\textbf{Step 4:} Show $f(x_0) \ge c$ using continuity and a sequence outside $S$ converging to $x_0$. Conclude $f(x_0) = c$. \\
+\textbf{Alternative:} Bisection method. Halve $[a,b]$, pick the half where $f$ changes sign across $c$. Nested intervals shrink to $x_0$.
+
+\subsubsection{Proof Outline: Continuity}
+\textbf{Goal:} Show $f$ is continuous at $x_0$. \\
+\textbf{$\epsilon-\delta$ Method:} Let $\epsilon > 0$. We need $|f(x) - f(x_0)| < \epsilon$. Manipulate $|f(x) - f(x_0)|$ to factor out $|x - x_0|$. Bound the remaining factor by $M$, assuming $|x - x_0| < 1$. Choose $\delta = \min(1, \frac{\epsilon}{M})$. Then $|x - x_0| < \delta \implies |f(x) - f(x_0)| < \epsilon$. \\
+\textbf{Sequence Method:} Let $x_n \to x_0$. Show $\lim f(x_n) = f(x_0)$ using algebraic limit theorems.
+
+\subsubsection{Proof Outline: Extreme Value Theorem}
+\textbf{Goal:} Continuous $f: [a,b] \to \mathbb{R}$ attains its max and min. \\
+\textbf{Boundedness:} Assume $f$ is not bounded above. Then $\exists x_n \in [a,b]$ with $f(x_n) > n$. By Bolzano-Weierstrass, $(x_n)$ has a convergent subsequence $x_{n_k} \to c \in [a,b]$. By continuity, $f(x_{n_k}) \to f(c)$, contradicting $f(x_{n_k}) > n_k \to \infty$. Thus $f$ is bounded above. Let $M = \sup f([a,b])$. \\
+\textbf{Attainment:} By definition of supremum, $\exists y_n \in [a,b]$ s.t. $f(y_n) \to M$. By Bolzano-Weierstrass, $y_n$ has a convergent subsequence $y_{n_k} \to d \in [a,b]$. By continuity, $f(y_{n_k}) \to f(d) = M$. Thus max is attained at $d$.
+
+\subsubsection{Proof Outline: Uniform Continuity (Heine-Cantor)}
+\textbf{Goal:} Continuous $f$ on compact $K = [a,b]$ is uniformly continuous. \\
+\textbf{Step 1:} Assume $f$ is not uniformly continuous on $K$. \\
+\textbf{Step 2:} $\exists \epsilon > 0$ s.t. for all $\delta = 1/n$, there exist $x_n, y_n \in K$ with $|x_n - y_n| < 1/n$ but $|f(x_n) - f(y_n)| \ge \epsilon$. \\
+\textbf{Step 3:} By Bolzano-Weierstrass, $(x_n)$ has convergent subsequence $x_{n_k} \to c \in K$. \\
+\textbf{Step 4:} Since $|x_{n_k} - y_{n_k}| < 1/n_k \to 0$, $y_{n_k} \to c$ as well. \\
+\textbf{Step 5:} By continuity of $f$, $f(x_{n_k}) \to f(c)$ and $f(y_{n_k}) \to f(c)$. Thus $|f(x_{n_k}) - f(y_{n_k})| \to 0$, contradicting $|f(x_{n_k}) - f(y_{n_k})| \ge \epsilon$.
+
+\subsection{Exam Strategies}
+
+\textbf{Prove and Disprove Uniform Continuity:} \\
+\textbf{To PROVE:} Use the Heine-Cantor Theorem (a continuous function on a compact interval is always uniformly continuous) or show the function is Lipschitz continuous. \\
+\textbf{To DISPROVE:} Find two sequences $x_n$ and $y_n$ such that $|x_n - y_n| \to 0$ but $|f(x_n) - f(y_n)| \ge \epsilon_0 > 0$.
