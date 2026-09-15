@@ -1,0 +1,48 @@
+\section{C Programming}
+
+\subsection{History and Toolchain}
+
+C is very fast, offers preprocessing and is close to metal. What you won't find in C are objects, classes, traits, features, methods, interfaces, fancy types, exception handling.
+
+\begin{important}
+    Most importantly C does not offer memory managment, it uses pointers that offer direct access to memory adresses.
+\end{important}
+
+\begin{codeexample}
+#include <studio.h>
+
+int main(int argc, char *argv[]) 
+{
+    printf("hello, world\n");
+    return 0;
+}
+\end{codeexample}
+
+\begin{definition}
+    \textbf{GNU gcc Toolchain:}
+\end{definition}
+
+\subsection{Control flow}
+
+\begin{codeexample}
+if (Boolean expression) Statement_when_true
+    else Statement_when_false
+
+switch (Integer expression) {
+    case Constant_1: Statement; break;
+    ...
+    default: Statement; break;
+}
+
+for (Initial; Test; Increment) Statement
+
+while (Boolean expression) Statement
+
+do Statement while (Boolean expression)
+
+goto Label
+
+printf()
+
+return (Expression)
+\end{codeexample}
