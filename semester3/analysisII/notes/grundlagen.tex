@@ -1,0 +1,69 @@
+\section{Grundlagen}
+
+\subsection{Grundlagen des $\mathbb{R}^n$}
+
+\begin{definition}
+    \textbf{Skalarprodukt:} Für $x, y \in \mathbb{R}^n$ ist das Standard-Skalarprodukt definiert als 
+    $$\langle x, y \rangle = \sum_{i=1}^{n} x_i y_i$$.
+\end{definition}
+
+\begin{definition}
+    \textbf{Euklidische Norm \& Abstand:} Die Norm ist 
+    $$|x| = \sqrt{\sum_{i=1}^{n} x_i^2}$$
+    und der Abstand zweier Punkte 
+    $$d(x,y) = |x-y|$$.
+\end{definition}
+
+\begin{theorem}
+    \textbf{Dreiecksungleichung:} Es gilt 
+    $$|x-z| \le |x-y| + |y-z| \forall x, y, z \in \mathbb{R}^n$$
+\end{theorem}
+
+\subsection{Folgen in $\mathbb{R}^n$}
+
+\begin{definition}
+    Eine \textbf{Folge} ist eine Abbildung von $\mathbb{N}$ (oder $\mathbb{N}_0$) nach $\mathbb{R}^n$, wobei das Bild $x_n$ das $n$-te Glied ist.
+\end{definition}
+
+\begin{theorem}
+    Eine Folge konvergiert gegen einen Grenzwert $y \in \mathbb{R}^n$ ($\lim_{n\to\infty} x_n = y$), wenn für jedes $\epsilon > 0$ ein $N > 0$ existiert, sodass $|x_n - y| < \epsilon$ für alle $n > N$ gilt. Andernfalls ist sie divergent.
+\end{theorem}
+
+\begin{lemma}
+    Eine Folge konvergiert genau dann, wenn sie koordinatenweise konvergiert. Ihr Grenzwert ist eindeutig.
+\end{lemma}
+
+\subsection{Topologische Grundbegriffe}
+
+\begin{definition}
+    \textbf{Offener Ball:} Der offene Ball um $x$ mit Radius $r$ ist definiert als $B_r(x) = {y \in \mathbb{R}^n \mid |x-y| < r}$.
+\end{definition}
+
+\begin{definition}
+    Eine Menge $A \subset \mathbb{R}^n$ ist \textbf{offen}, wenn jeder Punkt in $A$ einen vollständig in $A$ enthaltenen offenen Ball besitzt.
+    Eine Menge ist \textbf{abgeschlossen}, wenn ihr Komplement ($X \setminus A$) offen ist.
+\end{definition}
+
+\begin{remark}
+    Endliche Schnitte und beliebige Vereinigungen offener Mengen sind offen; endliche Vereinigungen und beliebige Schnitte abgeschlossener Mengen sind abgeschlossen.
+\end{remark}
+
+\begin{lemma}
+    $A$ ist genau dann offen, wenn für jede konvergente Folge mit Grenzwert $x \in A$ ab einem gewissen Index $N$ alle Folgenglieder in $A$ liegen.
+\end{lemma}
+
+\begin{lemma}
+    $A$ ist genau dann abgeschlossen, wenn der Grenzwert jeder konvergenten Folge, deren Glieder in $A$ liegen, ebenfalls in $A$ ist.
+\end{lemma}
+
+\begin{definition}
+    \textbf{Inneres ($A^{\circ}$):} Die Vereinigung aller offenen Mengen, die in einer Teilmenge $A \subset \mathbb{R}^n$ enthalten sind (grösste offene Teilmenge).
+\end{definition}
+
+\begin{definition}
+    \textbf{Abschluss ($\overline{A}$):} Der Schnitt aller abgeschlossenen Mengen, die die Teilmenge $A \subset \mathbb{R}^n$ enthalten (kleinste abgeschlossene Obermenge).
+\end{definition}
+
+\begin{definition}
+    Der \textbf{(topologische) Rand} ist definiert als $\overline{A} \setminus A^\circ$.
+\end{definition}

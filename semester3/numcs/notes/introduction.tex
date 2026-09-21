@@ -1,0 +1,174 @@
+\section{Introduction}
+
+\subsection{Why Numercial Methods in Computer Science}
+
+Numerical Analysis (\textit{Numerische Methoden}) focuses on developing efficient algorithms and accurate approximations to solve mathematical problems that cannot be solved analytically.
+
+\subsubsection{Approximation Strategies: Promises and Limitations}
+
+A central task in numerical methods is function approximation. Depending on the properties of the target function and the domain of interest, different representation bases are chosen:
+
+\begin{itemize}
+    \item \textbf{Taylor Polynomial Approximation:} Local polynomial approximations rely on Taylor series expansions. While effective locally, Taylor polynomials require high-order derivatives and strict smoothness assumptions ($f \in C^{m+1}$). Furthermore, convergence is strictly local around an expansion point $x_0$.
+    \item \textbf{Global Polynomial Spaces \& Projection:} To obtain global approximations without requiring derivatives, one can select a finite-dimensional subspace (e.g., polynomials up to degree $m$) spanned by a chosen basis, such as monomials $\{1, x, x^2, \dots, x^m\}$ or orthogonal polynomials. The best approximation is then found by projecting the function onto this subspace under a chosen norm (e.g., $L^2$-norm).
+    \item \textbf{Fourier Approximation:} For periodic functions, Fourier series provide a global approximation by expanding $f \in L^2(0,1)$ in terms of complex exponentials:
+    \[
+    f(t) = \sum_{k=-\infty}^{\infty} \hat{f}(k) e^{2\pi i k t}, \quad \text{where } \hat{f}(k) = \int_{0}^{1} f(t) e^{-2\pi i k t} dt
+    \]
+    Fourier approximations achieve rapid (exponential) convergence for smooth periodic functions without requiring explicit derivative calculations.
+\end{itemize}
+
+\subsubsection{Core Topics in Numerical Methods}
+
+Numerical analysis encompasses several fundamental domains aimed at constructing scalable and stable algorithms:
+
+\begin{itemize}
+    \item \textbf{Interpolation:} Constructing an approximating function that passes exactly through a given set of discrete data points $(x_j, y_j)$.
+    \item \textbf{Numerical Quadrature:} Efficiently evaluating definite integrals $\int_a^b f(t) dt$ using weighted sums at discrete node points.
+    \item \textbf{Numerical Linear Algebra:} Solving large linear systems $A\underline{x} = \underline{b}$ efficiently and stably.
+    \item \textbf{Linear Least Squares (\textit{Lineare Ausgleichsrechnung}):} Finding optimal parameters by minimizing $\|A\underline{x} - \underline{b}\|_2$ for overdetermined systems.
+    \item \textbf{Nonlinear Systems of Equations \& Least Squares:} Finding roots $\underline{f}(\underline{x}^*) = \underline{0}$ or solving non-linear optimization problems $\min_{\underline{p}} \|f(\underline{p}, \cdot) - y\|_2$.
+\end{itemize}
+
+\subsubsection{Key Design Goals in Numerical Methods}
+
+When designing numerical algorithms, the main objectives are:
+\begin{enumerate}
+    \item \textbf{Efficiency \& Time Complexity:} Minimizing computation time and floating-point operations.
+    \item \textbf{Memory Footprint:} Optimizing memory usage for large-scale calculations.
+    \item \textbf{Quantifiable Accuracy \& Convergence:} Guaranteeing and bounding errors for convergent sequences.
+    \item \textbf{Generality \& Stability:} Ensuring robustness against rounding errors and subtractive cancellation.
+\end{enumerate}
+
+\subsection{Rounding Errors}  
+
+\begin{definition} 
+    \textbf{Absolute Error:} $\|\tilde{x} - x\|$ with $\|\cdot\|$ a norm in $\mathbb{R}^n$.
+\end{definition}  
+
+\begin{definition} 
+    \textbf{Relative Error:} $\frac{\|\tilde{x} - x\|}{\|\tilde{x}\|}$ for $\tilde{x} \neq 0$, with $\|\cdot\|$ a norm in $\mathbb{R}^n$.
+\end{definition}  
+
+\subsubsection{Machine Numbers}  
+
+\begin{remark} 
+    In modern computer systems, numbers are represented as floating-point numbers using a mantissa-exponent representation.
+\end{remark}  
+
+\begin{definition} 
+    The \textbf{Mantissa-Exponent} representation of a number is $\pm M \cdot B^E$, where $M$ is the mantissa containing the significant digits and precision, $B \ge 2$ is the base (typically $2$ or $10$), and $E \in \{e_{\min}, \dots, e_{\max}\}$ is the exponent determining the scale or magnitude of the number by shifting the radix point.
+\end{definition}  
+
+\begin{example} 
+    \textbf{Cancellation in Quadratic Equations:} The polynomial $p(x) = (x-c)(x-1/c) = x^2 - (c + 1/c)x + 1$ has roots $c$ and $1/c$. When using the standard quadratic formula (\textit{Mitternachtsformel}) to calculate these roots:
+    The relative error for the smaller root $1/c$ is significantly larger than for the larger root $c$. This occurs because calculating the smaller root requires subtracting two nearly equal values ($-a$ and $\sqrt{D}$), leading to a loss of significant digits.
+\end{example}  
+
+\begin{codeexample}
+D = a**2 - 4*b
+wD = sqrt(D)
+z = ((-a + wD)/2, (-a - wD)/2)
+\end{codeexample}
+
+\begin{definition} 
+    This phenomenon is called \textbf{cancellation} (\textit{Auslöschung}). It describes how the subtraction of two nearly equal numbers dramatically amplifies relative errors, even though the error of the subtraction operation itself is negligible.
+\end{definition}  
+
+\begin{remark}
+    \textbf{Stable Alternative via Vieta's Formulas:} To avoid cancellation when solving $x^2 + ax + b = 0$, compute the numerically stable larger root $x_2$ first, and obtain the smaller root $x_1$ using $x_1 x_2 = b \implies x_1 = b / x_2$:
+\end{remark}
+
+\begin{codeexample}
+x2 = (sqrt(D) - a)/2 if a < 0 else (-sqrt(D) - a)/2
+x1 = b / x2
+\end{codeexample}
+
+\subsubsection{Numerical Differentiation}  
+
+\begin{remark} 
+    We can use the forward difference quotient to approximate local derivatives: $$f'(x) \approx \frac{f(x+h)-f(x)}{h}$$
+\end{remark}  
+
+\begin{codeexample}
+f = exp; df = exp; x = 0; h = 0.1
+for k in range(1, 21):
+    ndf = (f(x+h) - f(x)) / h
+    h *= 0.1
+\end{codeexample}  
+
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} r l }
+$\log_{10}(h)$ & \multicolumn{1}{c}{relativer Fehler} \\ \hline
+-1 & 0.\textcolor{red}{0}5170918075648 \\
+-2 & 0.\textcolor{red}{00}501670841679 \\
+-3 & 0.\textcolor{red}{000}50016670838 \\
+-4 & 0.\textcolor{red}{0000}5000166714 \\
+-5 & 0.\textcolor{red}{00000}500000696 \\
+-6 & 0.\textcolor{red}{000000}49996218 \\
+-7 & 0.\textcolor{red}{0000000}4943368 \\
+-8 & 0.\textcolor{red}{00000000}607747 \\
+-9 & 0.\textcolor{red}{00000000}8274037 \\
+-10 & 0.\textcolor{red}{00000000}8274037 \\
+-11 & 0.\textcolor{red}{00000000}8274037 \\
+-12 & 0.\textcolor{red}{0000}8890058234 \\
+-13 & 0.\textcolor{red}{000}79927783736 \\
+-14 & 0.\textcolor{red}{000}79927783736 \\
+-15 & 0.11022302462516 \\
+-16 & 1.00000000000000 \\
+\end{tabular*}  
+
+\begin{remark} 
+    Observe that the approximation error initially decreases as $h$ grows smaller, reaching optimal accuracy around $h \approx \sqrt{2 \cdot \text{eps}} \approx 10^{-8}$. However, as $h \to 0$ further, cancellation errors dominate because $f(x+h) \approx f(x)$, causing total accuracy to rapidly degrade.
+\end{remark}  
+
+\begin{theorem}
+    \textbf{Complex Step Derivative:} If $f$ is analytic, we can use a complex step to perform numerically stable differentiation without cancellation:$$f(x_0 + ih) = f(x_0) + i h f'(x_0) - \frac{h^2}{2} f''(x_0) - \frac{i h^3}{6} f'''(x_0) + \mathcal{O}(h^4)$$Taking the imaginary part yields:$$\text{Im}\left(f(x_0 + ih)\right) = h f'(x_0) - \frac{h^3}{6} f'''(x_0) + \mathcal{O}(h^5)$$$$\implies f'(x_0) = \frac{\text{Im}\left(f(x_0 + ih)\right)}{h} + \mathcal{O}(h^2) \approx \frac{\text{Im}\left(f(x_0 + ih)\right)}{h}$$Since this formulation involves no subtraction of function values, it is immune to subtractive cancellation for arbitrarily small values of $h$.
+\end{theorem}  
+
+\subsubsection{Convergence Acceleration via Richardson Extrapolation}
+
+\begin{theorem}
+    \textbf{Symmetric Difference Quotient and Error Expansion:} Using the central difference quotient $d(h) = \frac{f(x+h) - f(x-h)}{2h}$, Taylor expansion yields an error expansion containing only even powers of $h$:$$f'(x) - d(h) = c_1 h^2 + c_2 h^4 + c_3 h^6 + \dots + \mathcal{O}(h^{2n+2})$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Richardson Extrapolation:} By combining approximations evaluated at step sizes $h$ and $h/2$, the leading error term $c_1 h^2$ can be eliminated:$$d_1(h) = \frac{4 d(h/2) - d(h)}{3}$$The refined approximation $d_1(h)$ achieves an increased convergence order of $\mathcal{O}(h^4)$:$$f'(x) - d_1(h) = \tilde{c}_2 h^4 + \tilde{c}_3 h^6 + \dots$$
+\end{theorem}
+
+\begin{definition}
+    \textbf{Richardson Scheme:} Higher-order accuracy can be computed recursively using the triangular scheme ($R_{l,k}$ table) for levels $l = 0, 1, 2, \dots$ and extrapolation steps $k = 1, 2, \dots$:$$R_{l,0} = d\left(\frac{h}{2^l}\right), \quad R_{l,k} = \frac{4^k R_{l,k-1} - R_{l-1,k-1}}{4^k - 1}$$Each column $k$ increases the order of convergence such that:$$f'(x) - R_{l,k} = \mathcal{O}\left(\left(\frac{h}{2^l}\right)^{2k+2}\right)$$This allows reaching high numerical precision at significantly larger step sizes $h$, effectively suppressing rounding and cancellation errors.
+\end{definition}
+
+\subsection{Matrices \& Compute-Work}
+
+\begin{definition}
+    In NumCS we define the Compute-Work as the theoretical, asymototic number of elementary operations.
+\end{definition}
+
+\begin{remark}
+    Observe that this definition has (almost) noting to do with the actual compute-time on a chip.
+\end{remark}
+
+\begin{example}
+    \textbf{Worst case Compute-Work for Gauss-Elimination}
+    \begin{itemize}
+        \item General: $O(n^3)$
+        \item Upper Triangular: $O(n^2)$
+        \item Diagonal: $O(n)$
+    \end{itemize}
+\end{example}
+
+\begin{remark}
+    Numpy does not automatically adjust algorithms to the given inputs. We have to manually exploit the structure of ex. matrices and vectors.
+\end{remark}
+
+\begin{example}
+    Let $D$ be a diagonal matrix and let $A$ be some other matrix. Using $np.dot(D,A)$ will result in $O(n^3)$ runtime just like any normal matrix multiplication. We have to manually exploit the structure of $D$ by broadcasting the diagonal entries to a vector and then use numpy to multiply this vector by each row.
+\end{example}
+
+\begin{example}
+    Let $R = triu(AB)$ be the uppertringular matrix of the matrix product of $A, B  \in R^{p,n}$ calculating $y = Rx$ takes $O(pn^2)$ using a standard numpy implementation
+    $$y = np.triu(A @ B.T) @ x$$
+    Let $p=1$ we can represent rewrite this to $A' @ T @ B' @ x$ where $A', B'$ are diagonal matrices made from the rank one matrices $A, B$, $T$ is a uppertringular matrix filled with ones. Observe that these products can are just (reverse) partialsums we can calculate using cumulative sum in numpy in $O(n)$.
+    We can use this concept for any $p$ and get a runtime of $O(pn)$.
+\end{example}

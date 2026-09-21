@@ -18,6 +18,8 @@ Leibnitz proposed that some time in the future, mathematics will be developed en
     \textbf{Goedels incompletness:} There are mathematical statements that are true but can not possibly be proven to be so.
 \end{theorem}
 
+\subsection{Turing Machines}
+
 \begin{definition}
     \textbf{Turing-Machine (TM):} A theoretical machine consisting of an infinity strand of paper, a perfect pen and a set of rules. Every step includes reading current position, modifying it, moving left/right.
 \end{definition}
@@ -38,10 +40,35 @@ Leibnitz proposed that some time in the future, mathematics will be developed en
 \end{proof}
 
 \begin{example}
-    \textbf{Halting-problem:} Does algorithm $A$ terminate?
+    \textbf{Halting-problem:} Does algorithm $A$ terminate?\\
+    This problem seems easy at first but we can design programs that for example only terminate once they find an even number $n$ such that there are no primes $p,q$ with $n = p+q$. Solving this (finding such $n$) would solve the Goldbach-Conjecture which we currently do not know to be true/false.
 \end{example}
 
+\subsection{P vs. NP}
 
 \begin{definition}
     \textbf{P vs. NP:} The p/np problem poses the question if all in polynomial time verifiable problems (NP) have a polynomial time solution (P).
 \end{definition}
+
+\begin{definition}
+    A proiblem $A$ in NP is called \textbf{NP-Complete} if the existence of an efficient solution for $A$ implies the existance of an efficient solution of all NP problems.
+\end{definition}
+
+\subsection{Polynomial Time Reductions}
+
+\begin{definition}
+    A clique in a graph is a set of vertices sucht that they are all connected to each other.
+\end{definition}
+
+\begin{definition}
+    An independent-Set in a Graph is a set of vertices, such that none of them are connected to each other.
+\end{definition}
+
+\begin{example}
+    Assume we know "does G have a clique of size k" is NP-Coplete. How can we show that then "Does G have a stable set of size k" is also NP-Complete.
+\end{example}
+
+\begin{proof}
+    Observe that inverting a graph (Adding edges where there are none and removing edges where there are) creates a graph G' such that every clique in G is a stable Set in G' and viceversa. This lets us calculate stable sets from cliques and vice verse hence if one problem is NP-Complete both have to be.
+\end{proof}
+

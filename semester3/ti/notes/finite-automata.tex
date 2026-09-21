@@ -1,0 +1,45 @@
+\section{Finite Automata}
+
+\begin{definition}
+    \textbf{Alphabet:} finite, non-empty set.
+\end{definition}
+
+\begin{example}
+    \textbf{Examples of Alphabets:}
+    \begin{itemize}
+        \item Boolean alphabet ${0,1}$
+        \item latin alphabet ${a,b,\dots,z}$
+        \item logical alphabet ${0,a,x,(,),\dots}$
+    \end{itemize}
+\end{example}
+
+\begin{definition}
+    \textbf{Word:} A word over an alphabet $A$ is a finite sequence of symbols of $A$. 
+\end{definition}
+
+\begin{remark}
+    The lenght of a word it the number of symbols it uses. There is always an empty word of length zero.
+\end{remark}
+
+\begin{remark}
+    Words can be concatenated or rewersed to form new words.
+    $$kon(x,y) = xy$$
+    $$w = a_1 a_2 a_3 \implies w^R = a_3 a_2 a_1$$ 
+\end{remark}
+
+\begin{remark}
+    The $i$-th iteration of a word $x = ab$ is $x^i = ababab \dots ab$ the word concatenated with itself i times.
+\end{remark}
+
+\begin{remark}
+    A word $v$ is a partial-, prefix- or suffix-word of a word $w$ if $v$ is contained in $w$, $w$ begins with $v$ or ends with $v$. 
+\end{remark}
+
+\begin{remark}
+    For a words $x$ and symbol $a$ the expression $|x|_a$ describes the numnber of apperances of $a$ in $x$. 
+\end{remark}
+
+\begin{remark}
+    For an alphabet with an order imposed on its symbols ($a_1 \le a_2 \le ...$) we can define the harmonic order of its words as a lexicographic order where
+    $$ u  \le v \iff (|u| \le |v|) \lor (|u| = |v| \land u = xs_iu',v = xs_jv'. s_i\le s_j)$$ 
+\end{remark}

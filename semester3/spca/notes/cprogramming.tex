@@ -8,6 +8,8 @@ C is very fast, offers preprocessing and is close to metal. What you won't find 
     Most importantly C does not offer memory managment, it uses pointers that offer direct access to memory adresses.
 \end{important}
 
+ We'll use C99, the most commonly used variant, in this course.
+
 \begin{codeexample}
 #include <studio.h>
 
@@ -17,10 +19,6 @@ int main(int argc, char *argv[])
     return 0;
 }
 \end{codeexample}
-
-\begin{definition}
-    \textbf{GNU gcc Toolchain:}
-\end{definition}
 
 \subsection{Control flow}
 
@@ -46,3 +44,100 @@ printf()
 
 return (Expression)
 \end{codeexample}
+
+\begin{important}
+    \textbf{Don't use goto:} It's almost never a good idea, usually argued on performance.
+\end{important}
+
+\begin{remark}
+    goto can be used to break out of multiple nested loops or to cleanup nested code. 
+\end{remark}
+
+\subsection{Basic types in C}
+
+\begin{codeexample}
+    {static, const} type vairable = value;
+\end{codeexample}
+
+\begin{remark}
+    The prefix \textbf{const} before a variable ensures it can not be changed lateron.
+\end{remark}
+
+\begin{definition}
+    \textbf{Scope:} The scope of a variable in C is the Block it is definied in (lexically typed). 
+\end{definition}
+
+\begin{remark}
+    The prefix \textbf{static} before a variable definition ensures the value persists between function calls. Note that static limits the scope of a variable to the file/compilation unit.
+\end{remark}
+
+\begin{definition}
+    \textbf{Integers \& Floats:} Size of these differ from system to system
+    \begin{itemize}
+        \item \textbf{char} is always 1 Byte
+        \item \textbf{int \& float} are always 4 Bytes
+        \item \textbf{long long \& double} are always 8 Bytes
+    \end{itemize} 
+\end{definition}
+
+\begin{definition}
+    \textbf{Booleans:} Boolean values in C are integers where zero = false, non-zero = true
+\end{definition}
+
+\begin{definition}
+    \textbf{Void:} Void is a type without a value and can be used for raw memory pointers or functions without returnvalue. 
+\end{definition}
+
+\begin{definition}
+    \textbf{enums:} used to enumerate/sequentially assign values to variables. 
+\end{definition}
+
+\begin{codeexample}
+eum { ThisIsZero, ThisIsOne, ThisIsTwo} numbers;
+\end{codeexample}
+
+\subsection{Operators}
+
+\begin{codeexample}
+() []
+! ~ ++ -- + - * & (type) sizeof
+* / %
++ - 
+<< >> 
+< <= > >= 
+== != 
+& 
+^ 
+| 
+&& 
+|| 
+?:
+= += -= *= /= %= &= ^= |= <<= >>= 
+,
+\end{codeexample}
+
+\begin{remark}
+    Early termination in C means expressions such as A \& B never evaluate B if A is already evaluated to false.
+\end{remark}
+
+\begin{definition}
+    \textbf{Ternery Operator:} ternery operators allow for concise conditional assignment.
+\end{definition}
+
+\begin{codeexample}
+int a = {test}? ifTrue : ifFalse;
+\end{codeexample}
+
+\begin{definition}
+    \textbf{Assignment Operator:} In C an assignment to a variable is not just a statement its an expressison that evalueates to the value that is assigned.
+\end{definition}
+
+\begin{definition}
+    \textbf{Post- \& Pre-Increment/Decement:} As in many languages the difference between $a++$ and $++a$ is the value of the expression (before/after incrementing)
+\end{definition}
+
+\begin{important}
+    \textbf{Casting} of most types to most other types in possible in C. What exactly happens is very complicated and determined by the types involved. 
+\end{important}
+
+\subsection{Arrays}
