@@ -1,5 +1,7 @@
 \section{Finite Automata}
 
+\subsection{Symbol, Alphabets and Words}
+
 \begin{definition}
     \textbf{Alphabet:} finite, non-empty set.
 \end{definition}
@@ -17,9 +19,9 @@
     \textbf{Word:} A word over an alphabet $A$ is a finite sequence of symbols of $A$. 
 \end{definition}
 
-\begin{remark}
-    The lenght of a word it the number of symbols it uses. There is always an empty word of length zero.
-\end{remark}
+\begin{definition}
+    The \textbf{lenght} of a word it the number of symbols it uses. There is always an empty word of length zero.
+\end{definition}
 
 \begin{remark}
     Words can be concatenated or rewersed to form new words.
@@ -27,19 +29,93 @@
     $$w = a_1 a_2 a_3 \implies w^R = a_3 a_2 a_1$$ 
 \end{remark}
 
-\begin{remark}
+\begin{definition}
     The $i$-th iteration of a word $x = ab$ is $x^i = ababab \dots ab$ the word concatenated with itself i times.
-\end{remark}
+\end{definition}
 
-\begin{remark}
+\begin{definition}
     A word $v$ is a partial-, prefix- or suffix-word of a word $w$ if $v$ is contained in $w$, $w$ begins with $v$ or ends with $v$. 
-\end{remark}
+\end{definition}
 
 \begin{remark}
-    For a words $x$ and symbol $a$ the expression $|x|_a$ describes the numnber of apperances of $a$ in $x$. 
+    For a word $x$ and symbol $a$ the expression $|x|_a$ describes the numnber of apperances of $a$ in $x$. 
 \end{remark}
 
-\begin{remark}
+\begin{theorem}
     For an alphabet with an order imposed on its symbols ($a_1 \le a_2 \le ...$) we can define the harmonic order of its words as a lexicographic order where
     $$ u  \le v \iff (|u| \le |v|) \lor (|u| = |v| \land u = xs_iu',v = xs_jv'. s_i\le s_j)$$ 
+\end{theorem}
+
+\subsection{Formal Languages}
+
+\begin{definition}
+    A subset $L \subset \Sigma^*$ is called Language over the alphabet $\Sigma$
+\end{definition}
+
+\begin{definition}
+    The \textbf{complement} $L^C$ of a Language $L$ is definied as $\Sigma^* \setminus L$
+\end{definition}
+
+\begin{definition}
+    The \textbf{concatenation} of two languages $L_1, L_2$ is all the set of all $w_1w_2$ where $w_1 \in L_1, w_2 \in L_2$
+\end{definition}
+
+\begin{remark}
+    We can concatenate a Language with itself (possibly multiple times or zero)
+    $$L^0 = \{\lambda\}, L^1 = L, L^2 = LL \dots L^* = \bigcup_{i=0}^\infty L^i, L^+ = LL^*$$
 \end{remark}
+
+\begin{lemma}
+    Let $L_1,L_2, L_3$ be languages over an alphabet $\Sigma$ then
+    $$L_1L_2 \cup L_1L_3 = L_1(L_2 \cup L_3)$$
+    $$L_1(L_2 \cap L_3) \subseteq L_1L_2 \cap L_1L_3$$
+\end{lemma}
+
+\subsection{Algorithmische Probleme}
+
+\begin{remark}
+    An algorithm describes a function $\Sigma_{in}^* \to \Sigma_{out}^*$
+\end{remark}
+
+\begin{definition}
+    Let $\Sigma$ be an alphabet and $L \subseteq \Sigma^*$. The decision problem $(\Sigma,L)$ is defined (for arb $x \in Sigma^*$) as
+    $$x \in L \quad \text{or} \quad x \notin L$$
+\end{definition}
+
+\begin{remark}
+    If an algorithm A correctly decides for any $x$ then we say
+    $$A \quad \text{detects the Language} \quad L$$
+\end{remark}
+
+\subsection{Finite Automata}
+
+\begin{remark}
+    A finite automata (finite state machine) is a set of states together with state transitions on inputs with fixed boolean outputs on each state.
+\end{remark}
+
+\begin{definition}
+    \textbf{Finite Automata:} is a Quadroupel $M = (Q,\Sigma, \delta, q_0, F)$
+    \begin{itemize}
+        \item $Q$ is a finite set of states
+        \item $\Sigma$ is an alphabet (Input-alphabet)
+        \item $\delta$ is a function $Q \times \Sigma \to Q$
+        \item $q_0 \in Q$ is the starting-state
+        \item $F \subseteq Q$ is the set of accepting (true) states
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Configuration:} of an Automata is an Elment of $Q \times \Sigma^*$
+    \begin{itemize}
+        \item \textbf{Starting-Configuraiton:} $C_0 = (q_0, x) | x \in \Sigma^*$
+        \item \textbf{End-Configruation:} $C_n = (q_0, \lambda)$ where its accepting if $C_n \in F \times \{\lambda\}$ 
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    A calculation can be seen as a finite sequence of configurations $C_1, C_2 \dots$ such that for every $C_i \to_{s_M} C_{i+1}$ with steps $s_M$ in our machine $M$
+    $$(q_0, 01001) \to_{s_M} (q_x, 1001) \to_{s_M} (q_y, 001) \dots$$
+    where a step is a relation on configurations
+    $$s_M \subseteq (Q \times \Sigma^*) \times (Q \times \Sigma^*)$$ 
+\end{remark}
+
