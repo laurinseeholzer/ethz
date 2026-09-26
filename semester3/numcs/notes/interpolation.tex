@@ -12,9 +12,67 @@
 \end{remark}
 
 \begin{example}
-    If we choose $V_n$ as the set of al polynomials of degree $n$ we are calculating a polynomial interpolation of $f$.
+    If we choose $V_n$ as the set of all polynomials of degree $\le n$ we are calculating a polynomial interpolation of $f$.
 \end{example}
 
 \begin{remark}
-    Diffrente spaces and basis are possible and used for different applicaitons.
+    Different spaces and basis are possible and used for different applications.
 \end{remark}
+
+\begin{example}
+    Using $n+1$ datapoints we can solve the linear system of equations of the $n+1$ datapoints to get a polynomial of degree $n$.
+    $$a_n x_1^n + a_{n-1} x_1^{n-1} \dots a_0 = y_1$$
+    $$a_n x_2^n + a_{n-1} x_2^{n-1} \dots a_0 = y_2$$
+    $$\dots$$
+    $$a_n x_{n+1}^n + a_{n-1} x_{n+1}^{n-1} \dots a_0 = y_{n+1}$$
+\end{example}
+
+\begin{definition}
+    The matrix $A$ formed by this system of linear equations is called a \textbf{Vandermonde matrix}.
+\end{definition}
+
+\begin{remark}
+    Solving this takes $O(n^3)$ and might come with unreasonably large rounding error.
+\end{remark}
+
+\subsection{Newton}
+
+\begin{definition}
+    \textbf{Newton-Basis:} The newton basis $N_n(x)$ is 
+    $$\prod_{i=0}^{n-1} (x-x_i)$$
+\end{definition}
+
+\begin{theorem}
+    Using the newton basis we can continously increase the degree of interpolation without having to solve the whole system of equations at once.
+    $$p(x_0) = y_0 \implies p_0(x) = y_0$$
+    $$p(x_0, x_1) = p_0, y_1 \implies p_1(x) = p_0(x) + \frac{y_1 - y_0}{x_1 - x_0} (x - x_0)$$
+    $$p(x_0, x_1, x_2) = p_1, p_1, y_2 \implies p_2(x) = p_1(x) + \frac{\frac{y_2 - y_1}{x_2 - x_1} - \frac{y_1 - y_0}{x_1 - x_0}}{x_2 - x_0} (x - x_0)(x - x_1)$$
+    $$\dots$$
+\end{theorem}
+
+\begin{remark}
+    This can be interpreted as 
+    $$p_i(x) = b_1 + b_2 N_1 + b_3 N_2 + \dots$$
+    where $b_i$ is the i-th devided difference definied by the follwing recurrence relation
+    $$b_i  = f[x_0, \dots x_i] =  \frac{f[x_1, \dots x_i] - f[x_0, \dots x_{i-1}]}{x_i - x_0}$$
+    and $f[x_i] = y_i$ 
+\end{remark}
+
+\subsection{Lagrange}
+
+\begin{definition}
+    \textbf{Lagrange-polynomials} are polynomials of the form
+    $$l_i(x) = \prod_{j=0, j\neq i}^{n} \frac{x - x_j}{x_i - x_j}$$
+\end{definition}
+
+\begin{theorem}
+    Observe that for such a largrange polynomial $l_i(x)$ we have
+    $$l_i(x) = 0 \forall x_j \text{with} j\neq i$$
+    and 
+    $$l_i(x_i) = 1$$
+\end{theorem}
+
+\begin{theorem}
+    Because the because the above holds, given a set of datapoints $(x_1, y_1)  \dots (x_n, y_n)$ we can construct a polynomial that fullfilles all of the $n$ conditions
+    $$p_n(x) = \sum_{i=0}^{n} y_i l_i(x)$$
+\end{theorem}

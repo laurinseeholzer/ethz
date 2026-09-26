@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1790005827.98049 "/home/laurin/dev/ethz/semester3/numcs/numcs.tex" "build/numcs.pdf" "numcs" 1790005828.29646 0
+["pdflatex"] 1790328951.46239 "/home/laurin/dev/ethz/semester3/numcs/numcs.tex" "build/numcs.pdf" "numcs" 1790328951.7822 0
   "../../templates/templateNotes/commands.tex" 1774795684.82424 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
   "../../templates/templateNotes/packages.tex" 1789407795.44237 493 dd01896e8ca6d5605bcdf6aeec6f0cbe ""
   "../../templates/templateNotes/theorem_styles.tex" 1780227718.45916 2599 ef35b4d09ba532e85d73c0bf2d41006f ""
@@ -116,9 +116,9 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1775001600 40900 887e0dc8cac988a9e9c574af364cf837 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1789407782.43233 1044585 9b8e14c047146a4ee41992eff5a93772 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1789407760 6459128 36e8bbb64ccefd9aef38b90d70449b88 ""
-  "build/numcs.aux" 1790005828.23908 1427 b731308aa19f0982b54cd89e162d4211 "pdflatex"
-  "build/numcs.toc" 1790005828.23908 909 f21102010869574e085daf5b60e13cf9 "pdflatex"
-  "notes/interpolation.tex" 1789980141.73699 740 c082afb2a725c79f01f9840cdc7c94c7 ""
+  "build/numcs.aux" 1790328951.7185 1628 2da239671dce612ac1f64a88dabf6ae7 "pdflatex"
+  "build/numcs.toc" 1790328951.7185 1027 aff5edcac2b03c9fd1ef5811f8c889a3 "pdflatex"
+  "notes/interpolation.tex" 1790328951.31201 2925 848cab7af5eec0d237a2337b4dff73db ""
   "notes/introduction.tex" 1790005827.85255 10866 ec469e0264a1e0c1cf8fb4548fde0f10 ""
   "numcs.tex" 1789980622.41907 455 59f418fd3bd504796a66a5bf2e257213 ""
   (generated)

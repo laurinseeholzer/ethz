@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1790014741.20643 "/home/laurin/dev/ethz/semester3/analysisII/analysisII.tex" "build/analysisII.pdf" "analysisII" 1790014741.47271 0
+["pdflatex"] 1790259717.03092 "/home/laurin/dev/ethz/semester3/analysisII/analysisII.tex" "build/analysisII.pdf" "analysisII" 1790259717.43537 0
   "../../templates/templateNotes/commands.tex" 1774795684.82424 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
   "../../templates/templateNotes/packages.tex" 1789407795.44237 493 dd01896e8ca6d5605bcdf6aeec6f0cbe ""
   "../../templates/templateNotes/theorem_styles.tex" 1780227718.45916 2599 ef35b4d09ba532e85d73c0bf2d41006f ""
@@ -29,9 +29,11 @@
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb" 1248133631 32080 340ef9bf63678554ee606688e7b5339d ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb" 1248133631 30251 6afa5cb1d0204815a708a080681d4674 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1248133631 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb" 1248133631 37166 8ab3487cbe3ab49ebce74c29ea2418db ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1248133631 35469 70d41d2b9ea31d5d813066df7c99281c ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1248133631 32722 d7379af29a190c3f453aba36302ff5a9 ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1248133631 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1248133631 32626 4f5c1b83753b1dd3a97d1b399a005b4b ""
@@ -105,9 +107,9 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1789407782.43233 1044585 9b8e14c047146a4ee41992eff5a93772 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1789407760 6459128 36e8bbb64ccefd9aef38b90d70449b88 ""
   "analysisII.tex" 1789726043.23935 394 dbeb51c42f0f4865f5c76f8667ab5d2c ""
-  "build/analysisII.aux" 1790014741.42723 527 b458aed1e5e01519a22067176efaf452 "pdflatex"
-  "build/analysisII.toc" 1790014741.42723 294 173cacbf7d3879b282fcec859ccbdb1b "pdflatex"
-  "notes/grundlagen.tex" 1790014741.05223 2772 82cb4cd95c27e855d866702312d0ae3b ""
+  "build/analysisII.aux" 1790259717.33701 630 44cfe9c44347a51aace7886aae375207 "pdflatex"
+  "build/analysisII.toc" 1790259717.33701 356 97f9570628f536eee75bc9547e760442 "pdflatex"
+  "notes/grundlagen.tex" 1790259716.88995 4377 8c71c6beb87bb8fb7a91682cbee97101 ""
   (generated)
   "build/analysisII.aux"
   "build/analysisII.log"

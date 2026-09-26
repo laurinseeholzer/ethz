@@ -114,8 +114,32 @@
 
 \begin{remark}
     A calculation can be seen as a finite sequence of configurations $C_1, C_2 \dots$ such that for every $C_i \to_{s_M} C_{i+1}$ with steps $s_M$ in our machine $M$
-    $$(q_0, 01001) \to_{s_M} (q_x, 1001) \to_{s_M} (q_y, 001) \dots$$
+    $$(q_0, 01001) \vdash_{M} (q_x, 1001) \vdash_{M} (q_y, 001) \dots$$
     where a step is a relation on configurations
-    $$s_M \subseteq (Q \times \Sigma^*) \times (Q \times \Sigma^*)$$ 
+    $$\vdash_{M} \subseteq (Q \times \Sigma^*) \times (Q \times \Sigma^*)$$ 
 \end{remark}
+
+
+\begin{definition}
+    The \textbf{transitive hull of transitions} describes the calculation over multiple steps:
+    $$(q,w) \vdash_{M}^{*} (p,u) \iff (q = p \land w = u) \lor \exists k \in \mathbb{N}^{+} \text{ s.t. }$$
+    $$w = a_1 \dots a_k u \quad \text{with} \quad a_i \in \Sigma \quad \text{and}$$
+    $$\exists r_1, \dots, r_{k-1} \in Q \text{ s.t. } (q,w) \vdash_{M} (r_1, a_2 \dots a_k u) \vdash_{M} (r_2, a_3 \dots a_k u) \dots \vdash_{M} (p,u)$$
+\end{definition}
+
+\begin{definition}
+    The \textbf{extended transition function} evaluates the end state of a word over multiple transitions:
+    $$\tilde{\delta}: Q \times \Sigma^{*} \to Q$$
+    $$\tilde{\delta}(q, \lambda) = q \quad \forall q \in Q$$
+    $$\tilde{\delta}(q, wa) = \delta(\tilde{\delta} (q,w), a) \quad \forall a \in \Sigma, w \in \Sigma^{*}, q \in Q$$
+\end{definition}
+
+\begin{remark}
+    States can be grouped into equivalence classes containing all elements with the same end state. This is useful for proofs regarding the language of finite automata, which are typically done through these classes and induction.
+\end{remark}
+
+\begin{definition}
+    \textbf{Product Automata:} Used to determine the intersection or union of two finite automata, built with the state space $Q = Q_1 \times Q_2$.
+\end{definition}
+
 

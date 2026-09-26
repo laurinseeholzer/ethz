@@ -1,3 +1,60 @@
 \section{Integers}
 
-hello world
+\begin{lemma}
+    Integers in C can be represented as \textbf{signed} (using two's complement) or \textbf{unsigned} (as a standard binary string).
+\end{lemma}
+
+\begin{definition}
+    \textbf{Two's Complement:} The most significant bit (MSB) has a negative weight ($-2^{w-1}$), while all other bits have positive weights. This allows representation of both positive and negative integers. To negate a number, invert all bits and add 1 ($\sim x + 1$).
+\end{definition}
+
+\begin{lemma}
+    \textbf{Ranges ($w$ bits):}
+    \begin{itemize}
+        \item Unsigned: $0$ to $2^w - 1$
+        \item Signed: $-2^{w-1}$ to $2^{w-1} - 1$
+    \end{itemize}
+\end{lemma}
+
+\begin{lemma}
+    \textbf{Casting between signed and unsigned} does not change the underlying bit representation, only how the bits are interpreted.
+\end{lemma}
+
+\begin{remark}
+    In operations involving both a signed and an unsigned integer, the signed integer is automatically implicitly cast to unsigned.
+\end{remark}
+
+\subsection{Operations}
+
+\begin{remark}
+    Logic operations (\verb|&, |, \verb|^, ~|) operate bitwise. They behave as expected and return a signed integer if both operands are signed.
+\end{remark}
+
+\begin{definition}
+    \textbf{Shift Operations:}
+    \begin{itemize}
+        \item \textbf{Left Shift} (\verb|x << y|): Shifts bits left by $y$ positions, filling with 0s on the right. Equivalent to multiplying by $2^y$.
+        \item \textbf{Logical Right Shift} (\verb|x >> y|): Used for unsigned integers. Shifts right by $y$ positions, filling with 0s on the left.
+        \item \textbf{Arithmetic Right Shift} (\verb|x >> y|): Used for signed integers. Shifts right by $y$ positions, filling with the sign bit on the left.
+    \end{itemize}
+\end{definition}
+
+\begin{lemma}
+    \textbf{Addition:} Signed and unsigned addition are performed at the bit level identically. If the result exceeds $w$ bits, it overflows, and the extra bits are truncated.
+\end{lemma}
+
+\begin{lemma}
+    \textbf{Multiplication:} Exact multiplication requires $2w$ bits. In C, results are truncated to $w$ bits. The bit-level operations for signed and unsigned multiplication yield the same truncated bit pattern.
+\end{lemma}
+
+\begin{remark}
+    \textbf{Using Shift for Multiplication/Division:}
+    \begin{itemize}
+        \item Multiplication by a power of 2 ($x \cdot 2^y$) can be optimized as \verb|x << y|.
+        \item Division by a power of 2 ($x / 2^y$) can be optimized as \verb|x >> y|. For signed negative integers, a bias is added before shifting to round towards zero: \verb|(x + (1 << y) - 1) >> y|.
+    \end{itemize}
+\end{remark}
+
+\begin{lemma}
+    \textbf{Division:} Integer division truncates towards zero. It is an expensive operation compared to addition or multiplication.
+\end{lemma}

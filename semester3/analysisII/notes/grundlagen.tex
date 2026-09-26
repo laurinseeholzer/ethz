@@ -67,3 +67,29 @@
 \begin{definition}
     Der \textbf{(topologische) Rand} ist definiert als $\overline{A} \setminus A^\circ$.
 \end{definition}
+
+\subsection{Funktionen}
+
+\begin{definition}
+    Eine Funktion (Abbildung) ist eine Zuordnungsvorschrift, welche jedem zulässigen Input (neu: aus $\mathbb{R}^n$) genau einen Output aus dem Zielbereich (range) (neu: entweder $\mathbb{R}$ oder $\mathbb{R}^m$) zuordnet.
+\end{definition}
+
+\begin{definition}
+    Es sei $U \subseteq \mathbb{R}^n$ offen, $f : U \to \mathbb{R}^m$ eine Funktion und $\tilde{x} \in U$. Falls für jede beliebige Folge $(x_k)_{k\in\mathbb{N}_0} \subseteq U$ mit $x_k \to \tilde{x}$ ein universelles $\tilde{y} \in \mathbb{R}^m$ existiert (unabhängig von der betrachteten Folge), sodass gilt
+    $$f(x_k) \to \tilde{y}$$
+    nennen wir $\tilde{y}$ den Grenzwert von $f$ für $x_k$ gegen $\tilde{x}$ und schreiben
+    $$\lim_{x_k \to \tilde{x}} f(x_k) = \tilde{y}$$ 
+\end{definition}
+
+\begin{definition}
+    Es sei $f : \mathbb{R}^n \to \mathbb{R}^m$ eine Funktion. $f$ heisst stetig, falls für alle $\tilde{x} \in \mathbb{R}^n$ gilt:
+    $$\forall \epsilon > 0 \;\exists \delta > 0 \text{ s.t. } \|x - \tilde{x}\| \le \delta \implies \|f(x) - f(\tilde{x})\| \le \epsilon$$
+\end{definition}
+
+\begin{remark}
+    oder falls (äquivalent) für jede Folge $(x_k)_{k\in\mathbb{N}_0} \subset \mathbb{R}^n$ mit $x_k \to x$ in $\mathbb{R}^n$ die Folge $(f(x_k))_{k\in\mathbb{N}_0} \subset \mathbb{R}^m$ in $\mathbb{R}^m$ gegen $f(x)$ konvergiert.
+\end{remark}
+
+\begin{definition}
+    \textbf{Kompaktheit:} Eine Teilmenge $K \subset \mathbb{R}^n$ nennen wir kompakt, falls jede Folge $(x_s)_{s\in\mathbb{N}_0} \subset K$ in $K$ eine in $K$ konvergente Teilfolge besitzt.
+\end{definition}

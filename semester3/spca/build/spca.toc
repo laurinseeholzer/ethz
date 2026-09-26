@@ -9,3 +9,4 @@
 \contentsline {subsection}{\numberline {1.8}Assertions}{8}{}%
 \contentsline {subsection}{\numberline {1.9}Style}{8}{}%
 \contentsline {section}{\numberline {2}Integers}{9}{}%
+\contentsline {subsection}{\numberline {2.1}operations}{9}{}%
