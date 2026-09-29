@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1790418060.76758 "/home/laurin/dev/ethz/semester3/ti/ti.tex" "build/ti.pdf" "ti" 1790418061.07531 0
+["pdflatex"] 1790668163.1163 "/home/laurin/dev/ethz/semester3/ti/ti.tex" "build/ti.pdf" "ti" 1790668163.44158 0
   "../../templates/templateNotes/commands.tex" 1774795684.82424 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
   "../../templates/templateNotes/packages.tex" 1790417146.32119 516 7d64a0165295c034e7941cda1e6365a8 ""
   "../../templates/templateNotes/theorem_styles.tex" 1780227718.45916 2599 ef35b4d09ba532e85d73c0bf2d41006f ""
@@ -111,9 +111,9 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1777593600 43785 66587115382950aca692b5f6e3c2fb74 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1790331221 480835 c97dc259877a20c8c55a62e2e0308238 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1790331204 2299045 dce769549eddd3265d2be08642939f04 ""
-  "build/ti.aux" 1790418061.03688 1051 879677483bb96c13618a015b22aa65cd "pdflatex"
-  "build/ti.toc" 1790418061.03788 615 adc6dd72ca75b9f189a2e775d1fe8ee1 "pdflatex"
-  "notes/finite-automata.tex" 1790418060.33274 5597 6fbffb2fec646c689f48e545b7ac1da9 ""
+  "build/ti.aux" 1790668163.40754 1155 1449bd87e3032e7045316833eb21090f "pdflatex"
+  "build/ti.toc" 1790668163.40754 678 8ab14c6bb7f9f39cd4caec7b2c72e7f1 "pdflatex"
+  "notes/finite-automata.tex" 1790668162.52253 7265 b9db90d13f654f0e2cf074d27db034a4 ""
   "notes/introduction.tex" 1789929642.28303 3921 d3000827b1242b61e188a6092cdceae4 ""
   "ti.tex" 1789929750.82099 434 a23b35b0f9466e708247a3f0f3791cb4 ""
   (generated)

@@ -5,5 +5,6 @@
 \contentsline {section}{\numberline {2}Finite Automata}{5}{}%
 \contentsline {subsection}{\numberline {2.1}Symbol, Alphabets and Words}{5}{}%
 \contentsline {subsection}{\numberline {2.2}Formal Languages}{6}{}%
-\contentsline {subsection}{\numberline {2.3}Algorithmische Probleme}{6}{}%
+\contentsline {subsection}{\numberline {2.3}Algorithmic Problems}{6}{}%
 \contentsline {subsection}{\numberline {2.4}Finite Automata}{6}{}%
+\contentsline {subsection}{\numberline {2.5}Non-regularity}{8}{}%

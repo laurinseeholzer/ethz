@@ -76,3 +76,56 @@
     Because the because the above holds, given a set of datapoints $(x_1, y_1)  \dots (x_n, y_n)$ we can construct a polynomial that fullfilles all of the $n$ conditions
     $$p_n(x) = \sum_{i=0}^{n} y_i l_i(x)$$
 \end{theorem}
+
+\subsection{Barycentric Interpolation-formula}
+
+\begin{definition}
+    \textbf{Barycentric weights:} We define the barycentric weights $w_i$ for a set of nodes $x_0, \dots, x_n$ as
+    $$w_i = \prod_{j=0, j \neq i}^{n} \frac{1}{x_i - x_j}$$
+    and the node polynomial $\ell(x)$ as
+    $$\ell(x) = \prod_{i=0}^{n} (x - x_i)$$
+\end{definition}
+
+\begin{theorem}
+    Using these definitions, we can rewrite the Lagrange basis polynomials as $l_i(x) = \ell(x) \frac{w_i}{x - x_i}$. Substituting this into the standard Lagrange polynomial yields the \textbf{first form of the barycentric interpolation formula}:
+    $$p_n(x) = \ell(x) \sum_{i=0}^{n} \frac{w_i}{x - x_i} y_i$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Derivation of the second form:} Because an interpolating polynomial reproduces constant functions exactly, interpolating the function $f(x) = 1$ (where $y_i = 1 \forall i$) gives:
+    $$1 = \ell(x) \sum_{i=0}^{n} \frac{w_i}{x - x_i}$$
+    Dividing the first form of the barycentric formula by this identity eliminates the node polynomial $\ell(x)$ and yields the \textbf{second (or true) barycentric interpolation formula}:
+    $$p_n(x) = \frac{\sum_{i=0}^{n} \frac{w_i}{x - x_i} y_i}{\sum_{i=0}^{n} \frac{w_i}{x - x_i}}$$
+\end{theorem}
+
+\begin{remark}
+    The second form is numerically highly stable. Once the weights $w_i$ are precomputed (which takes $O(n^2)$), evaluating $p_n(x)$ at any new point $x$ takes only $O(n)$ operations. Furthermore, adding a new data point only requires updating the weights, which is much cheaper than recalculating the entire Lagrange polynomial.
+\end{remark}
+
+\subsection{Chebyshev}
+
+\begin{remark}
+    Using equidistant nodes for polynomial interpolation of high degree often leads to severe oscillations at the edges of the interval. This is known as \textbf{Runge's phenomenon}. To minimize this error, we must choose our interpolation nodes strategically.
+\end{remark}
+
+\begin{theorem}
+    The error of polynomial interpolation is given by:
+    $$f(x) - p_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} \prod_{i=0}^{n} (x - x_i)$$
+    for some $\xi$ in the interpolation interval. Since we cannot control the $(n+1)$-th derivative of the unknown function $f$, we must minimize the maximum absolute value of the node polynomial $\prod_{i=0}^{n} (x - x_i)$.
+\end{theorem}
+
+\begin{definition}
+    \textbf{Chebyshev nodes:} The roots of the Chebyshev polynomials of the first kind are called Chebyshev nodes. On the standard interval $[-1, 1]$, the $n+1$ nodes are defined as:
+    $$x_i = \cos\left(\frac{2i + 1}{2n + 2}\pi\right) \quad \text{for } i = 0, 1, \dots, n$$
+\end{definition}
+
+\begin{remark}
+    If the interpolation interval is $[a, b]$ instead of $[-1, 1]$, the nodes can be shifted and scaled using an affine transformation:
+    $$x_i^{[a,b]} = \frac{a+b}{2} + \frac{b-a}{2} x_i$$
+\end{remark}
+
+\begin{theorem}
+    Using Chebyshev nodes minimizes the maximum norm of the node polynomial on $[-1, 1]$:
+    $$\max_{x \in [-1, 1]} \left| \prod_{i=0}^{n} (x - x_i) \right| = \frac{1}{2^n}$$
+    This node placement guarantees uniform convergence for sufficiently smooth functions and effectively suppresses Runge's phenomenon by clustering the nodes closer together at the edges of the interval.
+\end{theorem}

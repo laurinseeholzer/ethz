@@ -11,3 +11,5 @@
 \contentsline {section}{\numberline {2}Interpolation}{8}{}%
 \contentsline {subsection}{\numberline {2.1}Newton}{8}{}%
 \contentsline {subsection}{\numberline {2.2}Lagrange}{9}{}%
+\contentsline {subsection}{\numberline {2.3}Barycentric Interpolation-formula}{10}{}%
+\contentsline {subsection}{\numberline {2.4}Chebyshev}{11}{}%

@@ -71,7 +71,7 @@
     $$L_1(L_2 \cap L_3) \subseteq L_1L_2 \cap L_1L_3$$
 \end{lemma}
 
-\subsection{Algorithmische Probleme}
+\subsection{Algorithmic Problems}
 
 \begin{remark}
     An algorithm describes a function $\Sigma_{in}^* \to \Sigma_{out}^*$
@@ -139,7 +139,36 @@
 \end{remark}
 
 \begin{definition}
-    \textbf{Product Automata:} Used to determine the intersection or union of two finite automata, built with the state space $Q = Q_1 \times Q_2$.
+    \textbf{Product Automata:} Used to determine the intersection, union or exclusion ($\odot$) of two finite automata (their languages), built with the state space $Q = Q_1 \times Q_2$.
+    $$M_1 = (Q_1, \Sigma, \delta_1, q_{01}, F_1), \quad M_2 = (Q_2, \Sigma, \delta_2, q_{02}, F_2)$$
+    $$\implies M = (Q_1 \times Q_2, \delta((x,y), a) = (\delta_1(x, a), \delta_2(y, a)), (q_01, q_02), F_1 \odot F_2)$$
+\end{definition}
+
+\begin{remark}
+    The correctness of this product automata can be proven by induction over the word length.
+\end{remark}
+
+\subsection{Non-regularity}
+
+\begin{definition}
+    A language $L$ is called \textbf{regular} if there exists a finite automata that accepts/detects the language $L$ and \textbf{non-reular} else.
 \end{definition}
 
 
+\begin{lemma}
+    Let $A = (Q, \Sigma, \delta, q_0, F)$ be a finite automata and let $x,y \in \Sigma^*$ such that
+    $$\tilde{\delta}(q_0,x) = \tilde{\delta}(q_0, y)$$
+    then there exists $z \in \Sigma^*$ such that
+    $$Kl[xz] = Kl[yz]$$
+\end{lemma}
+
+\begin{remark}
+    This illustrates that finite machines are finite hence can not distinguish beetween $xz$ and $yz$ once they are in a certain state $q_r$, they do not know how they got there.
+\end{remark}
+
+\begin{proof}
+    \textbf{Proof of Non-Regularity:} Let $L = \{0^n1^n | n \in \mathbb{N}\}$ and assume $L \in L_{EA}$ ($L$ is regular) hence there exists a finite automata $A$ such that $L(A) = L$.
+    Let $m = |Q|$ and observe the words $x \in \{0^n | n \leq m+1 \}$. Because this are more words than $A$ has states there exists $i \neq j \in [0, m+1] \cap \mathbb{N}$ such that
+    $$\tilde{\delta}(q_0, 0^i) = \tilde{\delta}(q_0, 0^j)$$
+    Hence by the above lemma the words $0^i1^i, 0^j1^i$ will both be accepted which contradicts the assumption that $A$ detects $L$ because $0^j1^i \notin L$.
+\end{proof}
