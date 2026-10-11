@@ -11,3 +11,7 @@
 \contentsline {subsection}{\numberline {2.6}Gesetzliche Schranken und Digital Rights Management}{7}{}%
 \contentsline {subsection}{\numberline {2.7}KI und Urheberrecht}{8}{}%
 \contentsline {subsection}{\numberline {2.8}Rechtsfolgen und Schutz ausserhalb des URG}{8}{}%
+\contentsline {section}{\numberline {3}Domain-Namen}{9}{}%
+\contentsline {subsection}{\numberline {3.1}Grundlagen und Aufbau}{9}{}%
+\contentsline {subsection}{\numberline {3.2}Vergabesystem und Akteure}{9}{}%
+\contentsline {subsection}{\numberline {3.3}Rechtliche Natur und Vergabe}{9}{}%
