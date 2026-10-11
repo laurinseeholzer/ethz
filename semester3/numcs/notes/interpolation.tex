@@ -129,3 +129,85 @@
     $$\max_{x \in [-1, 1]} \left| \prod_{i=0}^{n} (x - x_i) \right| = \frac{1}{2^n}$$
     This node placement guarantees uniform convergence for sufficiently smooth functions and effectively suppresses Runge's phenomenon by clustering the nodes closer together at the edges of the interval.
 \end{theorem}
+
+\subsection{Trigonometric Interpolation}
+
+\begin{definition} \textbf{Hilbert Space $L^2(0,1)$:} The space of square-integrable complex-valued functions on the interval $[0,1]$ is defined as:
+$$L^2(0,1) := \left\{ f: (0,1) \rightarrow \mathbb{C} \;\middle|\; \|f\|_{L^2(0,1)} = \sqrt{\langle f, f \rangle_{L^2(0,1)}} < \infty \right\}$$
+equipped with the inner product $\langle g, f \rangle_{L^2(0,1)} := \int_0^1 \overline{g(t)} f(t) \, dt$.
+\end{definition}
+
+\begin{remark} \textbf{$L^2$-Convergence:} A function $f$ is the $L^2$-limit of a sequence of functions $f_n \in L^2(0,1)$ if:
+$$\lim_{n \rightarrow \infty} \|f - f_n\|_{L^2(0,1)} = 0 \iff \lim_{n \rightarrow \infty} \int_0^1 |f(t) - f_n(t)|^2 \, dt = 0$$
+Unlike pointwise convergence, $L^2$-convergence implies that the total energy (integrated squared difference) between $f$ and $f_n$ vanishes, allowing isolated point discrepancies.
+\end{remark}
+
+\begin{theorem} The complex exponential functions $\phi_k(x) = e^{2\pi i k x}$ for $k \in \mathbb{Z}$ form a complete orthonormal basis in $L^2(0,1)$:
+$$\langle \phi_k, \phi_j \rangle_{L^2(0,1)} = \int_0^1 e^{-2\pi i k x} e^{2\pi i j x} \, dx = \begin{cases} 1, & \text{if } k = j \\ 0, & \text{if } k \neq j \end{cases}$$
+\end{theorem}
+
+\begin{definition} \textbf{Fourier Series:} Any function $f \in L^2(0,1)$ can be represented by its Fourier coefficients $\hat{f}(k)$ as:
+$$f(t) = \sum_{k=-\infty}^{\infty} \hat{f}(k) e^{2\pi i k t}$$
+where the Fourier coefficients $\hat{f}(k)$ are given by the orthogonal projection onto the basis functions:
+$$\hat{f}(k) = \int_0^1 f(t) e^{-2\pi i k t} \, dt$$
+\end{definition}
+
+\begin{remark} \textbf{Intuition \& Physical Meaning:} Analogous to decomposing a 3D vector into orthogonal coordinate axes, $f(t)$ is decomposed into pure periodic waves $e^{2\pi i k t}$ of integer frequency $k$. The magnitude $|\hat{f}(k)|$ represents the amplitude of frequency $k$, while its angle represents phase shift. Parseval's identity guarantees energy conservation:
+$$\sum_{k=-\infty}^{\infty} |\hat{f}(k)|^2 = \|f\|_{L^2(0,1)}^2$$
+\end{remark}
+
+\begin{remark} \textbf{Smoothness and Decay Rate:} The decay rate of Fourier coefficients depends directly on the smoothness of $f$. If $f^{(n)}$ is integrable ($\int_0^1 |f^{(n)}(t)| \, dt < \infty$), then:
+$$\hat{f}(k) = \mathcal{O}(k^{-n})$$
+Smoother functions yield faster coefficient decay, leading to rapid convergence of the Fourier series.
+\end{remark}
+
+\begin{remark} \textbf{Derivative of Fourier Coefficients:} The Fourier coefficients of the $n$-th derivative $f^{(n)}$ satisfy:
+$$\widehat{f^{(n)}}(k) = (2\pi i k)^n \hat{f}(k)$$
+This converts linear differential operators in the time domain into simple algebraic multiplications in the frequency domain.
+\end{remark}
+
+\begin{remark} \textbf{Gibbs Phenomenon:} At jump discontinuities, the truncated Fourier series overshoots near the edge by approximately $9\%$ of the jump size. Increasing the number of terms shifts the overshoot closer to the discontinuity but does not eliminate its amplitude.
+\end{remark}
+
+\begin{definition} \textbf{N-th Root of Unity:} The primitive $N$-th root of unity is defined as:
+$$\omega_N := \exp\left(\frac{-2\pi i}{N}\right) = \cos\left(\frac{2\pi}{N}\right) - i \sin\left(\frac{2\pi}{N}\right)$$
+The roots of unity satisfy the discrete orthogonality relation:
+$$\sum_{k=0}^{N-1} \omega_N^{kj} = \begin{cases} N, & \text{if } j \equiv 0 \pmod N \\ 0, & \text{if } j \not\equiv 0 \pmod N \end{cases}$$
+This discrete orthogonality serves as the exact algebraic analogue of the continuous inner product of complex exponentials.
+\end{definition}
+
+\begin{definition} \textbf{Discrete Fourier Transform (DFT):} Given $N$ equidistant nodes $x_l = \frac{l}{N}$ for $l = 0, \dots, N-1$, approximating the continuous Fourier coefficients $\hat{f}(k)$ via the trapezoidal rule yields the DFT:
+$$\hat{f}(k) \approx \hat{f}_N(k) = \frac{1}{N} \sum_{l=0}^{N-1} f\left(\frac{l}{N}\right) \omega_N^{kl}$$
+The transformation mapping samples $y = (f(x_0), \dots, f(x_{N-1}))^T \mapsto c = F_N y$ is performed via the Fourier matrix $F_N = (\omega_N^{ij})_{i,j=0}^{N-1}$.
+\end{definition}
+
+\begin{remark} \textbf{Fast Fourier Transform (FFT):} Using a divide-and-conquer strategy (e.g., Cooley-Tukey algorithm), the matrix-vector multiplication $F_N y$ can be evaluated in $\mathcal{O}(N \log N)$ operations instead of naive $\mathcal{O}(N^2)$.
+\end{remark}
+
+\begin{remark} \textbf{Aliasing:} Sampling $f$ at discrete nodes $x_l = \frac{l}{N}$ makes frequencies differing by integer multiples of $N$ indistinguishable, since $\omega_N^{(k + mN)l} = \omega_N^{kl}$. To avoid aliasing high frequencies into lower modes, $N$ must satisfy the Nyquist-Shannon sampling threshold relative to the highest frequency present in $f$.
+\end{remark}
+
+\begin{definition} \textbf{Trigonometric Interpolating Polynomial \& \texttt{fftshift}:} For $N$ samples $y_l = f(t_l)$ at $t_l = \frac{l}{N}$, the trigonometric polynomial $p_N(t)$ satisfying $p_N(t_l) = f(t_l)$ is expressed in symmetric frequency order:
+$$p_N(t) = \sum_{k=-N/2}^{N/2-1} \zeta_k e^{2\pi i k t}$$
+Standard FFT outputs store coefficients indexed in non-symmetric order $k \in \{0, \dots, N-1\}$. Applying \texttt{fftshift} rearranges indices from $[0, N-1]$ to symmetric frequency spectrum $[-\frac{N}{2}, \frac{N}{2}-1]$.
+\end{definition}
+
+\begin{definition} \textbf{Cyclic Convolution:} The cyclic convolution $c = a \otimes b$ of two $N$-periodic vectors $a, b \in \mathbb{C}^N$ is defined as:
+$$c_k = \sum_{n=0}^{N-1} a_n b_{(k-n) \pmod N}$$
+\end{definition}
+
+\begin{theorem} \textbf{Discrete Convolution Theorem:} The DFT converts cyclic convolution into pointwise vector multiplication:
+$$\mathcal{F}_N(a \otimes b) = \mathcal{F}_N(a) \odot \mathcal{F}_N(b)$$
+This allows evaluating cyclic convolution in $\mathcal{O}(N \log N)$ operations via:
+$$a \otimes b = \text{IFFT}(\text{FFT}(a) \cdot \text{FFT}(b))$$
+Linear convolution of length-$N$ sequences can be evaluated using cyclic convolution by zero-padding both sequences to length at least $2N-1$.
+\end{theorem}
+
+\begin{remark} \textbf{Zero-Padding for High-Resolution Evaluation:} To evaluate an interpolating trigonometric polynomial $p_N(t)$ at $M \gg N$ fine grid points:
+\begin{enumerate}
+    \item Compute $c = \text{FFT}(y)$ of size $N$ and center coefficients using \texttt{fftshift}.
+    \item Pad the frequency vector with $M - N$ zeros at the high-frequency boundaries.
+    \item Apply \texttt{ifftshift} and compute $\tilde{y} = \frac{M}{N} \text{IFFT}(\tilde{c})$ of size $M$.
+\end{enumerate}
+This yields exact evaluation of $p_N(t)$ on a fine grid without computing individual exponential sums.
+\end{remark}

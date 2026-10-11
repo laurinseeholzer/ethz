@@ -93,3 +93,78 @@
 \begin{definition}
     \textbf{Kompaktheit:} Eine Teilmenge $K \subset \mathbb{R}^n$ nennen wir kompakt, falls jede Folge $(x_s)_{s\in\mathbb{N}_0} \subset K$ in $K$ eine in $K$ konvergente Teilfolge besitzt.
 \end{definition}
+
+\subsection{Ableitungen}
+
+\begin{definition}
+    \textbf{Partielle Ableitung:} Sei $f: U \to \mathbb{R}$ eine Funktion auf einer offenen Menge $U \subset \mathbb{R}^n$ und $a \in U$. Die partielle Ableitung von $f$ nach der $i$-ten Koordinate im Punkt $a$ ist definiert als:
+    $$ \frac{\partial f}{\partial x_i}(a) = \lim_{h \to 0} \frac{f(a_1, \dots, a_i + h, \dots, a_n) - f(a)}{h} $$
+    falls dieser Grenzwert existiert. Sie beschreibt die Steigung der Funktion in Richtung der $i$-ten Basisrichtung.
+\end{definition}
+
+\begin{remark}
+    \textbf{Richtungsableitung:} Allgemeiner lässt sich die Ableitung in eine beliebige Richtung $v \in \mathbb{R}^n$ (mit $\|v\|=1$) definieren als:
+    $$ D_v f(a) = \lim_{h \to 0} \frac{f(a + h v) - f(a)}{h} $$
+    Falls $f$ in $a$ total differenzierbar ist, gilt $D_v f(a) = \nabla f(a) \cdot v$.
+\end{remark}
+
+\begin{definition}
+    \textbf{(totale) Ableitung:} Eine Funktion $f: U \to \mathbb{R}^m$ heisst (total) differenzierbar im Punkt $a \in U$, falls eine lineare Abbildung $L: \mathbb{R}^n \to \mathbb{R}^m$ existiert, sodass:
+    $$ \lim_{x \to a} \frac{\|f(x) - f(a) - L(x - a)\|}{\|x - a\|} = 0 $$
+    Die Abbildung $L$ heisst die (totale) Ableitung von $f$ in $a$, bezeichnet mit $df(a)$ oder $Df(a)$. Sie stellt die beste lineare Approximation von $f$ in der Nähe von $a$ dar.
+\end{definition}
+
+\begin{lemma}
+    \textbf{Jacobi-Matrix:} Falls $f: U \to \mathbb{R}^m$ in $a \in U$ differenzierbar ist, wird die lineare Abbildung $df(a)$ bezüglich der Standardbasen durch die $m \times n$ Jacobi-Matrix $J_f(a)$ dargestellt:
+    $$ J_f(a) = \left( \frac{\partial f_i}{\partial x_j}(a) \right)_{1 \le i \le m, 1 \le j \le n} $$
+\end{lemma}
+
+\begin{definition}
+    \textbf{Gradient:} Für eine skalarwertige differenzierbare Funktion $f: U \to \mathbb{R}$ ($m=1$) ist der Gradient von $f$ in $a$ der Spaltenvektor aller partiellen Ableitungen:
+    $$ \nabla f(a) = \left( \frac{\partial f}{\partial x_1}(a), \dots, \frac{\partial f}{\partial x_n}(a) \right)^T $$
+    Der Gradient zeigt in die Richtung des steilsten Anstiegs von $f$.
+\end{definition}
+
+\begin{theorem}
+    \textbf{Stetige Differenzierbarkeit:} Eine Funktion $f: U \to \mathbb{R}^m$ ist genau dann (total) differenzierbar und die Ableitung stetig ($f \in C^1(U, \mathbb{R}^m)$), wenn alle partiellen Ableitungen $\frac{\partial f_i}{\partial x_j}$ auf $U$ existieren und dort stetig sind.
+\end{theorem}
+
+\begin{remark}
+    \textbf{Höhere partielle Ableitungen:} Wenn die partiellen Ableitungen von $f$ selbst wieder differenzierbar sind, kann man zweite (und höhere) partielle Ableitungen bilden, notiert als:
+    $$ \frac{\partial^2 f}{\partial x_i \partial x_j} = \frac{\partial}{\partial x_i} \left( \frac{\partial f}{\partial x_j} \right) $$
+\end{remark}
+
+\begin{definition}
+    \textbf{$k$-fach stetig differenzierbar:} Eine Funktion heisst $k$-fach stetig differenzierbar (geschrieben $f \in C^k$), wenn alle partiellen Ableitungen bis zur $k$-ten Ordnung existieren und stetig sind. Ist $f$ beliebig oft differenzierbar, schreibt man $f \in C^\infty$ (glatt).
+\end{definition}
+
+\begin{theorem}
+    \textbf{Kettenregel:} Seien $f: U \to \mathbb{R}^m$ in $a \in U$ und $g: V \to \mathbb{R}^p$ (mit $f(U) \subset V$) in $f(a)$ total differenzierbar. Dann ist $g \circ f$ in $a$ differenzierbar, und es gilt für die Ableitungen (bzw. Jacobi-Matrizen):
+    $$ D(g \circ f)(a) = Dg(f(a)) \cdot Df(a) $$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Satz von Schwarz:} Ist $f: U \to \mathbb{R}$ eine zweimal stetig differenzierbare Funktion ($f \in C^2(U)$), so ist die Reihenfolge der partiellen Ableitungen irrelevant. Für alle $i, j$ gilt:
+    $$ \frac{\partial^2 f}{\partial x_i \partial x_j} = \frac{\partial^2 f}{\partial x_j \partial x_i} $$
+    Das bedeutet, die Hesse-Matrix von $f$ ist symmetrisch.
+\end{theorem}
+
+\begin{remark}
+    \textbf{Multiindex und Fakultät:} Um höhere Ableitungen in mehreren Dimensionen kompakt zu schreiben, nutzt man Multiindizes $\alpha = (\alpha_1, \dots, \alpha_n) \in \mathbb{N}_0^n$.
+    Man definiert:
+    \begin{itemize}
+        \item $|\alpha| = \alpha_1 + \dots + \alpha_n$ (Ordnung der Ableitung)
+        \item $\alpha! = \alpha_1! \cdot \alpha_2! \dots \alpha_n!$ (Fakultät)
+        \item $x^\alpha = x_1^{\alpha_1} x_2^{\alpha_2} \dots x_n^{\alpha_n}$
+        \item $\partial^\alpha f = \frac{\partial^{|\alpha|} f}{\partial x_1^{\alpha_1} \dots \partial x_n^{\alpha_n}}$
+    \end{itemize}
+\end{remark}
+
+\begin{definition}
+    \textbf{Mehrdimensionale Taylorapproximation:} Sei $f: U \to \mathbb{R}$ eine $(k+1)$-mal stetig differenzierbare Funktion. Die Taylor-Approximation (das Taylor-Polynom) $k$-ten Grades von $f$ um den Entwicklungspunkt $a \in U$ lautet in Multiindex-Notation:
+    $$ T_k(x) = \sum_{|\alpha| \le k} \frac{\partial^\alpha f(a)}{\alpha!} (x - a)^\alpha $$
+    Für $k=2$ in Matrix-Vektor-Schreibweise ist dies:
+    $$ T_2(x) = f(a) + \nabla f(a)^T (x - a) + \frac{1}{2} (x - a)^T H_f(a) (x - a) $$
+    wobei $H_f(a)$ die Hesse-Matrix von $f$ im Punkt $a$ ist.
+\end{definition}
+

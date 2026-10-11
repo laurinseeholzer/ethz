@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1790422883.27374 "/home/laurin/dev/ethz/semester3/ebr/ebr.tex" "build/ebr.pdf" "ebr" 1790422883.51238 0
+["pdflatex"] 1791214214.78639 "/home/laurin/dev/ethz/semester3/ebr/ebr.tex" "build/ebr.pdf" "ebr" 1791214215.09878 0
   "../../templates/templateNotes/commands.tex" 1774795684.82424 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
   "../../templates/templateNotes/packages.tex" 1790417146.32119 516 7d64a0165295c034e7941cda1e6365a8 ""
   "../../templates/templateNotes/theorem_styles.tex" 1780227718.45916 2599 ef35b4d09ba532e85d73c0bf2d41006f ""
@@ -104,11 +104,11 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1777593600 43785 66587115382950aca692b5f6e3c2fb74 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1790331221 480835 c97dc259877a20c8c55a62e2e0308238 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1790331204 2299045 dce769549eddd3265d2be08642939f04 ""
-  "build/ebr.aux" 1790422883.4819 862 9f054e3dfa032621c16eee3ad3a5bfb0 "pdflatex"
-  "build/ebr.toc" 1790422883.4819 508 2085172d9d4d283e94106648e6679de5 "pdflatex"
+  "build/ebr.aux" 1791214215.05436 1655 c294db1ee1b65f8b371462678a928287 "pdflatex"
+  "build/ebr.toc" 1791214215.05436 1055 6683cede64076d39ad0d4a38aa9ade0e "pdflatex"
   "ebr.tex" 1790418536.76968 435 3ba14757e7059fa98e20809b47780a07 ""
-  "notes/rechtsanwendung.tex" 1789724672.46017 3756 2a81b2ffca95db1c2c9fd2260567e084 ""
-  "notes/urheberrecht.tex" 1790422882.88033 2161 b6e62d19e5443634e931b099252580b3 ""
+  "notes/rechtsanwendung.tex" 1791214214.64436 3924 dcff3835f35abd71d0ab5a78b8c7b3a6 ""
+  "notes/urheberrecht.tex" 1791214167.31374 9584 1232250be58b628168e5b4775107945f ""
   (generated)
   "build/ebr.aux"
   "build/ebr.log"

@@ -1,0 +1,77 @@
+\section{Pointers}  
+  
+\subsection{Memory Layout and Virtual Address Space}  
+  
+\begin{definition}  
+    The operating system provides each process with its own private virtual address space. Memory is organized into specific segments:  
+    \begin{itemize}  
+        \item \textbf{Kernel Virtual Memory:} Memory at the top of the address space that is inaccessible to user code.  
+        \item \textbf{User Stack:} Dynamically created region at runtime for managing function calls, growing downward.  
+        \item \textbf{Shared Libraries \& Heap:} Memory-mapped region for shared libraries and dynamically allocated memory created via \texttt{malloc}.  
+        \item \textbf{Read/Write Segment:} Stores initialized and uninitialized global and static variables (\texttt{.data}, \texttt{.bss}) loaded from the executable.  
+        \item \textbf{Read-Only Segment:} Contains executable code and read-only constants (\texttt{.init}, \texttt{.text}, \texttt{.rodata}) loaded from the executable.  
+    \end{itemize}  
+\end{definition}  
+  
+\begin{remark}  
+    Set-up code allocates a stack frame upon entering a procedure to store local variables, return information, and temporary space. The space is deallocated by finish code upon return.  
+\end{remark}  
+  
+\subsection{Pointer Fundamentals}  
+  
+\begin{definition}  
+A pointer is a variable whose value is the virtual memory address of another variable.  
+    \begin{itemize}  
+        \item \textbf{Address-of Operator (\texttt{\&}):} Returns the memory address of a variable.  
+        \item \textbf{Dereference Operator (\texttt{*}):} Accesses or modifies the memory location referred to by a pointer.  
+        \item \textbf{Double Pointer:} A variable holding the memory address of another pointer (e.g., \texttt{int **dp}).  
+        \item \textbf{NULL Pointer:} A pointer assigned to address \texttt{0} (or \texttt{0x00000000}), representing a guaranteed invalid memory location.  
+    \end{itemize}  
+\end{definition}  
+  
+\begin{important}  
+    Any attempt to dereference a \texttt{NULL} pointer results in a segmentation fault.  
+\end{important}  
+  
+\begin{codeexample}  
+int x = 42;  
+int *p = &x;   // p holds the address of x  
+int **dp = &p; // dp holds the address of p  
+*p = 99;       // dereferences p to assign 99 to x  
+\end{codeexample}  
+  
+\subsection{Pointer Operations}  
+  
+\begin{definition}  
+    \textbf{Pointer Arithmetic:} Adding or subtracting an integer $n$ to a pointer shifts the target memory address by $n \times \text{sizeof}(\text{type})$ bytes.  
+\end{definition}
+
+\begin{definition}
+    \textbf{Casting:} Type casting a pointer reinterprets the byte-level data at that memory address according to the new type without changing the address itself.  
+\end{definition}  
+  
+\begin{codeexample}  
+int arr[3] = {1, 2, 3};  
+int *int_ptr = &arr[0];  
+int_ptr += 1; // moves forward by sizeof(int) bytes to &arr[1]  
+  
+char *char_ptr = (char *) int_ptr; // casts int* to char*  
+char_ptr += 1; // moves forward by sizeof(char) byte  
+\end{codeexample}  
+  
+\subsection{Function Pointers}  
+  
+\begin{definition}  
+    A function pointer stores the executable code address of a function, allowing functions to be passed as arguments or stored inside structures to implement polymorphism and object-oriented patterns.  
+\end{definition}  
+  
+\begin{codeexample}  
+// Pointer to a function taking (int*, char) and returning int  
+int (*func)(int *, char);  
+  
+// Example struct containing function pointers (vtable style)  
+struct file_operations {  
+ssize_t (*read) (struct file *, char *, size_t, loff_t *);  
+ssize_t (*write) (struct file *, const char *, size_t, loff_t *);  
+};  
+\end{codeexample}

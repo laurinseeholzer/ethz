@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1790676832.99972 "/home/laurin/dev/ethz/semester3/numcs/numcs.tex" "build/numcs.pdf" "numcs" 1790676833.27201 0
+["pdflatex"] 1791724691.90101 "/home/laurin/dev/ethz/semester3/numcs/numcs.tex" "build/numcs.pdf" "numcs" 1791724692.16002 0
   "../../templates/templateNotes/commands.tex" 1774795684.82424 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
   "../../templates/templateNotes/packages.tex" 1790417146.32119 516 7d64a0165295c034e7941cda1e6365a8 ""
   "../../templates/templateNotes/theorem_styles.tex" 1780227718.45916 2599 ef35b4d09ba532e85d73c0bf2d41006f ""
@@ -30,6 +30,7 @@
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm" 1136768653 1116 933a60c408fc0a863a92debe84b2d294 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm" 1136768653 1120 8b7d695260f3cff42e636090a8002094 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmti10.tfm" 1136768653 1480 aa8e34af0eb6a2941b776984cf1dfdc4 ""
+  "/usr/share/texlive/texmf-dist/fonts/tfm/public/inconsolata/ot1-zi4b-0.tfm" 1561323594 932 205ca7c5a2bd6ac4a57d1dc6ac13918b ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/inconsolata/ot1-zi4r-0.tfm" 1561323594 912 a20aa2a2ed86fa42e5ec387898cd02d6 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb" 1248133631 34811 78b52f49e893bcba91bd7581cdc144c0 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb" 1248133631 32080 340ef9bf63678554ee606688e7b5339d ""
@@ -47,6 +48,7 @@
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb" 1248133631 37944 359e864bd06cde3b1cf57bb20757fb06 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1248133631 34694 ad62b13721ee8eda1dcc8993c8bd7041 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb" 1215737283 145929 f25e56369a345c4ff583b067cd87ce8e ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4b.pfb" 1558214095 80472 80293bde06887d309938fd1de50ad188 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb" 1558214095 55526 184de5d68af8c544d6d1653244a2b006 ""
   "/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1777593600 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/share/texlive/texmf-dist/tex/generic/etexcmds/etexcmds.sty" 1576625273 7734 b98cbb34c81f667027c1e3ebdbfce34b ""
@@ -118,9 +120,9 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1777593600 43785 66587115382950aca692b5f6e3c2fb74 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1790331221 480835 c97dc259877a20c8c55a62e2e0308238 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1790331204 2299045 dce769549eddd3265d2be08642939f04 ""
-  "build/numcs.aux" 1790676833.23284 1858 c0eec099edb738cc0c084ce1a179c271 "pdflatex"
-  "build/numcs.toc" 1790676833.23384 1175 c28592cd3eda133dacc90af9f6cd0f55 "pdflatex"
-  "notes/interpolation.tex" 1790676832.50183 6187 95c58150530ea9854b0e06c4aa163d19 ""
+  "build/numcs.aux" 1791724692.12007 1979 c6e2ede5c05c26c0202786e094b656be "pdflatex"
+  "build/numcs.toc" 1791724692.12007 1255 d17716fe1b5528cf97f91cac7e957f5b "pdflatex"
+  "notes/interpolation.tex" 1791724691.41891 12893 cb1c2759cfaf36cd8f1923df6c00e08b ""
   "notes/introduction.tex" 1790005827.85255 10866 ec469e0264a1e0c1cf8fb4548fde0f10 ""
   "numcs.tex" 1789980622.41907 455 59f418fd3bd504796a66a5bf2e257213 ""
   (generated)

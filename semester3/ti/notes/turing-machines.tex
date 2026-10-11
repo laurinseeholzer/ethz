@@ -1,0 +1,132 @@
+\section{Turing Machines}
+
+\subsection{Basic Concept}
+
+\begin{remark}
+    A Turing Machine (TM) is a fundamental generalization of finite automata:
+    \begin{itemize}
+        \item \textbf{Finite Control:} Like a finite automaton, a TM possesses a finite set of internal states $Q$.
+        \item \textbf{Unbounded Memory (Tape):} Instead of a one-way read-only input, a TM has an infinite (or semi-infinite) tape divided into discrete cells, serving as both input medium and unbounded memory.
+        \item \textbf{Read/Write Head:} A movable head that can read the symbol in the current cell, overwrite it with a new symbol, and move either left ($\mathrm{L}$) or right ($\mathrm{R}$) along the tape.
+    \end{itemize}
+\end{remark}
+
+\subsection{Formal Definition}
+
+\begin{definition}
+    \textbf{Turing Machine:} A deterministic Turing Machine is a 7-tuple
+    $$
+        M = (Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject})
+    $$
+    where:
+    \begin{itemize}
+        \item $Q$ is a finite, non-empty set of states.
+        \item $\Sigma$ is a finite input alphabet.
+        \item $\Gamma$ is a finite tape alphabet such that $\Sigma \subset \Gamma$. It contains:
+              \begin{itemize}
+                  \item the \textbf{blank symbol} $\sqcup \in \Gamma \setminus \Sigma$ (representing empty cells)
+                  \item the \textbf{left-end marker} $\text{\textcent} \in \Gamma \setminus \Sigma$ (marking the left boundary of the tape)
+              \end{itemize}
+        \item $\delta$ is the transition function:
+              $$
+                  \delta : (Q \setminus \{q_{accept}, q_{reject}\}) \times \Gamma \to Q \times \Gamma \times \{\mathrm{L}, \mathrm{R}\}
+              $$
+              with the convention that upon scanning the left-end marker $\text{\textcent}$, the machine cannot overwrite it and must move right:
+              $$
+                  \delta(q, \text{\textcent}) = (p, \text{\textcent}, \mathrm{R}) \quad \text{for some } p \in Q
+              $$
+        \item $q_0 \in Q$ is the starting state.
+        \item $q_{accept} \in Q$ is the accepting halt state.
+        \item $q_{reject} \in Q$ is the rejecting halt state ($q_{accept} \neq q_{reject}$).
+    \end{itemize}
+\end{definition}
+
+\subsection{Configurations}
+
+\begin{definition}
+    \textbf{Configuration:} A configuration of a Turing Machine captures its current global state, consisting of the tape contents up to the last relevant cell, the current state $q$, and the head position.
+    Formally, the set of all configurations is:
+    $$
+        \mathrm{Konf}(M) = \{\text{\textcent}\} \cdot \Gamma^* \cdot Q \cdot \Gamma^+ \;\cup\; Q \cdot \{\text{\textcent}\} \cdot \Gamma^+
+    $$
+    In this word representation, the state symbol $q \in Q$ is written immediately to the left of the tape cell currently scanned by the read/write head:
+    \begin{itemize}
+        \item If the head scans the left-end marker $\text{\textcent}$:
+              $$
+                  C = q \text{\textcent} u \in Q \cdot \{\text{\textcent}\} \cdot \Gamma^+
+              $$
+        \item If the head scans cell $i \ge 1$ with tape prefix $\text{\textcent} u$:
+              $$
+                  C = \text{\textcent} u q v \in \{\text{\textcent}\} \cdot \Gamma^* \cdot Q \cdot \Gamma^+
+              $$
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Start Configuration:} For an input word $x \in \Sigma^*$, the start configuration is:
+    $$
+        C_0(x) = \begin{cases}
+            q_0 \text{\textcent} x \sqcup & \text{if } x \neq \lambda \\
+            q_0 \text{\textcent} \sqcup & \text{if } x = \lambda
+        \end{cases}
+    $$
+    The machine starts in state $q_0$ scanning the left-end marker $\text{\textcent}$, followed by the input $x$ and blank symbols $\sqcup$.
+\end{definition}
+
+\subsection{Computation and Steps}
+
+\begin{definition}
+    \textbf{Computation Step:} A single step is a transition relation $\vdash_M$ between configurations:
+    \begin{itemize}
+        \item \textbf{Move Right ($\mathrm{R}$):} If $\delta(q, a) = (p, b, \mathrm{R})$, then for all $u \in \Gamma^*, v \in \Gamma^+$:
+              $$
+                  u q a v \vdash_M u b p v
+              $$
+              (if $v = \lambda$, the cell is implicitly filled with $\sqcup$).
+        \item \textbf{Move Left ($\mathrm{L}$):} If $\delta(q, a) = (p, b, \mathrm{L})$, then for all $u \in \Gamma^*, c \in \Gamma, v \in \Gamma^+$:
+              $$
+                  u c q a v \vdash_M u p c b v
+              $$
+    \end{itemize}
+    We denote by $\vdash_M^*$ the reflexive and transitive closure of $\vdash_M$ (computation over multiple steps).
+\end{definition}
+
+\begin{definition}
+    \textbf{Computation (Calculation):} A computation of $M$ on input $x$ is a sequence of configurations $C_0, C_1, C_2, \dots$ where $C_0 = C_0(x)$ and $C_i \vdash_M C_{i+1}$ for all $i \ge 0$.
+    \begin{itemize}
+        \item \textbf{Halting:} The computation terminates if the machine reaches a halting state ($q_{accept}$ or $q_{reject}$), since $\delta$ is not defined for these states.
+        \item \textbf{Infinite Loop:} If no halting state is ever reached, the computation runs forever ($M$ does not terminate on $x$).
+    \end{itemize}
+\end{definition}
+
+\subsection{Recognizability and Decidability}
+
+\begin{definition}
+    \textbf{Accepted Language:} A word $x \in \Sigma^*$ is accepted by $M$ if the computation of $M$ on $x$ halts in $q_{accept}$:
+    $$
+        L(M) = \{ x \in \Sigma^* \mid C_0(x) \vdash_M^* u q_{accept} v \text{ for some } u, v \in \Gamma^* \}
+    $$
+\end{definition}
+
+\begin{definition}
+    \textbf{Decidable (Recursive) Language:} A language $L \subseteq \Sigma^*$ is called \textbf{decidable} (or \textbf{recursive}) if there exists a Turing Machine $M$ that \textbf{halts on every input} $x \in \Sigma^*$ such that:
+    $$
+        x \in L \iff M \text{ halts in } q_{accept}
+    $$
+    $$
+        x \notin L \iff M \text{ halts in } q_{reject}
+    $$
+    A Turing machine with this property is called a \textbf{decider}.
+\end{definition}
+
+\begin{definition}
+    \textbf{Turing-Recognizable (Recursively Enumerable) Language:} A language $L \subseteq \Sigma^*$ is called \textbf{Turing-recognizable} (or \textbf{recursively enumerable} / semi-decidable) if there exists a Turing Machine $M$ such that:
+    $$
+        L(M) = L
+    $$
+    For words $x \notin L$, $M$ is allowed to halt in $q_{reject}$ or loop indefinitely.
+\end{definition}
+
+\begin{remark}
+    Every decidable language is Turing-recognizable, but the converse does not hold. For example, the Halting Problem $H = \{ \langle M, w \rangle \mid M \text{ halts on } w \}$ is Turing-recognizable but undecidable.
+\end{remark}

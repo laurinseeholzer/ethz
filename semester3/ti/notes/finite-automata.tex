@@ -16,34 +16,48 @@
 \end{example}
 
 \begin{definition}
-    \textbf{Word:} A word over an alphabet $A$ is a finite sequence of symbols of $A$. 
+    \textbf{Word:} A word over an alphabet $A$ is a finite sequence of symbols
+    of $A$.
 \end{definition}
 
 \begin{definition}
-    The \textbf{lenght} of a word it the number of symbols it uses. There is always an empty word of length zero.
+    The \textbf{lenght} of a word it the number of symbols it uses. There is
+    always an empty word of length zero.
 \end{definition}
 
 \begin{remark}
     Words can be concatenated or rewersed to form new words.
-    $$kon(x,y) = xy$$
-    $$w = a_1 a_2 a_3 \implies w^R = a_3 a_2 a_1$$ 
+    $$
+        kon(x,y) = xy
+    $$
+    $$
+        w = a_1 a_2 a_3 \implies w^R = a_3 a_2 a_1
+    $$
 \end{remark}
 
 \begin{definition}
-    The $i$-th iteration of a word $x = ab$ is $x^i = ababab \dots ab$ the word concatenated with itself i times.
+    The $i$-th iteration of a word $x = ab$ is $x^i = ababab \dots ab$ the word
+    concatenated with itself i times.
 \end{definition}
 
 \begin{definition}
-    A word $v$ is a partial-, prefix- or suffix-word of a word $w$ if $v$ is contained in $w$, $w$ begins with $v$ or ends with $v$. 
+    A word $v$ is a partial-, prefix- or suffix-word of a word $w$ if $v$ is
+    contained in $w$, $w$ begins with $v$ or ends with $v$.
 \end{definition}
 
 \begin{remark}
-    For a word $x$ and symbol $a$ the expression $|x|_a$ describes the numnber of apperances of $a$ in $x$. 
+    For a word $x$ and symbol $a$ the expression $|x|_a$ describes the numnber
+    of apperances of $a$ in $x$.
 \end{remark}
 
 \begin{theorem}
-    For an alphabet with an order imposed on its symbols ($a_1 \le a_2 \le ...$) we can define the harmonic order of its words as a lexicographic order where
-    $$ u  \le v \iff (|u| \le |v|) \lor (|u| = |v| \land u = xs_iu',v = xs_jv'. s_i\le s_j)$$ 
+    For an alphabet with an order imposed on its symbols ($a_1 \le a_2 \le ...$)
+    we can define the harmonic order of its words as a lexicographic order where
+    $$
+        u \le  v
+          \iff (|u| \le |v|)
+               \lor (|u| = |v| \land u = xs_iu',v = xs_jv'. s_i \le s_j)
+    $$
 \end{theorem}
 
 \subsection{Formal Languages}
@@ -53,22 +67,34 @@
 \end{definition}
 
 \begin{definition}
-    The \textbf{complement} $L^C$ of a Language $L$ is definied as $\Sigma^* \setminus L$
+    The \textbf{complement} $L^C$ of a Language $L$ is definied as
+    $\Sigma^* \setminus L$
 \end{definition}
 
 \begin{definition}
-    The \textbf{concatenation} of two languages $L_1, L_2$ is all the set of all $w_1w_2$ where $w_1 \in L_1, w_2 \in L_2$
+    The \textbf{concatenation} of two languages $L_1, L_2$ is all the set of all
+    $w_1w_2$ where $w_1 \in L_1, w_2 \in L_2$
 \end{definition}
 
 \begin{remark}
     We can concatenate a Language with itself (possibly multiple times or zero)
-    $$L^0 = \{\lambda\}, L^1 = L, L^2 = LL \dots L^* = \bigcup_{i=0}^\infty L^i, L^+ = LL^*$$
+    $$
+        L^0 = \{\lambda\}, L^1
+            = L, L^2
+            = LL \dots L^*
+            = \bigcup_{i=0}^\infty L^i, L^+
+            = LL^*
+    $$
 \end{remark}
 
 \begin{lemma}
     Let $L_1,L_2, L_3$ be languages over an alphabet $\Sigma$ then
-    $$L_1L_2 \cup L_1L_3 = L_1(L_2 \cup L_3)$$
-    $$L_1(L_2 \cap L_3) \subseteq L_1L_2 \cap L_1L_3$$
+    $$
+        L_1L_2 \cup L_1L_3 = L_1(L_2 \cup L_3)
+    $$
+    $$
+        L_1(L_2 \cap L_3) \subseteq L_1L_2 \cap L_1L_3
+    $$
 \end{lemma}
 
 \subsection{Algorithmic Problems}
@@ -78,19 +104,25 @@
 \end{remark}
 
 \begin{definition}
-    Let $\Sigma$ be an alphabet and $L \subseteq \Sigma^*$. The decision problem $(\Sigma,L)$ is defined (for arb $x \in Sigma^*$) as
-    $$x \in L \quad \text{or} \quad x \notin L$$
+    Let $\Sigma$ be an alphabet and $L \subseteq \Sigma^*$. The decision problem
+    $(\Sigma,L)$ is defined (for arb $x \in Sigma^*$) as
+    $$
+        x \in L \quad \text{or} \quad x \notin L
+    $$
 \end{definition}
 
 \begin{remark}
     If an algorithm A correctly decides for any $x$ then we say
-    $$A \quad \text{detects the Language} \quad L$$
+    $$
+        A \quad \text{detects the Language} \quad L
+    $$
 \end{remark}
 
 \subsection{Finite Automata}
 
 \begin{remark}
-    A finite automata (finite state machine) is a set of states together with state transitions on inputs with fixed boolean outputs on each state.
+    A finite automata (finite state machine) is a set of states together with
+    state transitions on inputs with fixed boolean outputs on each state.
 \end{remark}
 
 \begin{definition}
@@ -108,67 +140,259 @@
     \textbf{Configuration:} of an Automata is an Elment of $Q \times \Sigma^*$
     \begin{itemize}
         \item \textbf{Starting-Configuraiton:} $C_0 = (q_0, x) | x \in \Sigma^*$
-        \item \textbf{End-Configruation:} $C_n = (q_0, \lambda)$ where its accepting if $C_n \in F \times \{\lambda\}$ 
+        \item \textbf{End-Configruation:} $C_n = (q_0, \lambda)$ where its
+              accepting if $C_n \in F \times \{\lambda\}$
     \end{itemize}
 \end{definition}
 
 \begin{remark}
-    A calculation can be seen as a finite sequence of configurations $C_1, C_2 \dots$ such that for every $C_i \to_{s_M} C_{i+1}$ with steps $s_M$ in our machine $M$
-    $$(q_0, 01001) \vdash_{M} (q_x, 1001) \vdash_{M} (q_y, 001) \dots$$
+    A calculation can be seen as a finite sequence of configurations
+    $C_1, C_2 \dots$ such that for every $C_i \to_{s_M} C_{i+1}$ with steps
+    $s_M$ in our machine $M$
+    $$
+        (q_0, 01001) \vdash_{M} (q_x, 1001) \vdash_{M} (q_y, 001) \dots
+    $$
     where a step is a relation on configurations
-    $$\vdash_{M} \subseteq (Q \times \Sigma^*) \times (Q \times \Sigma^*)$$ 
-\end{remark}
-
-
-\begin{definition}
-    The \textbf{transitive hull of transitions} describes the calculation over multiple steps:
-    $$(q,w) \vdash_{M}^{*} (p,u) \iff (q = p \land w = u) \lor \exists k \in \mathbb{N}^{+} \text{ s.t. }$$
-    $$w = a_1 \dots a_k u \quad \text{with} \quad a_i \in \Sigma \quad \text{and}$$
-    $$\exists r_1, \dots, r_{k-1} \in Q \text{ s.t. } (q,w) \vdash_{M} (r_1, a_2 \dots a_k u) \vdash_{M} (r_2, a_3 \dots a_k u) \dots \vdash_{M} (p,u)$$
-\end{definition}
-
-\begin{definition}
-    The \textbf{extended transition function} evaluates the end state of a word over multiple transitions:
-    $$\tilde{\delta}: Q \times \Sigma^{*} \to Q$$
-    $$\tilde{\delta}(q, \lambda) = q \quad \forall q \in Q$$
-    $$\tilde{\delta}(q, wa) = \delta(\tilde{\delta} (q,w), a) \quad \forall a \in \Sigma, w \in \Sigma^{*}, q \in Q$$
-\end{definition}
-
-\begin{remark}
-    States can be grouped into equivalence classes containing all elements with the same end state. This is useful for proofs regarding the language of finite automata, which are typically done through these classes and induction.
+    $$
+        \vdash_{M} \subseteq (Q \times \Sigma^*) \times (Q \times \Sigma^*)
+    $$
 \end{remark}
 
 \begin{definition}
-    \textbf{Product Automata:} Used to determine the intersection, union or exclusion ($\odot$) of two finite automata (their languages), built with the state space $Q = Q_1 \times Q_2$.
-    $$M_1 = (Q_1, \Sigma, \delta_1, q_{01}, F_1), \quad M_2 = (Q_2, \Sigma, \delta_2, q_{02}, F_2)$$
-    $$\implies M = (Q_1 \times Q_2, \delta((x,y), a) = (\delta_1(x, a), \delta_2(y, a)), (q_01, q_02), F_1 \odot F_2)$$
+    The \textbf{transitive hull of transitions} describes the calculation over
+    multiple steps:
+    $$
+        (q,w) \vdash_{M}^{*} (p,u)
+              \iff           (q = p \land w = u) \lor \exists k
+              \in            \mathbb{N}^{+} \text{ s.t. }
+    $$
+    $$
+        w =   a_1 \dots a_k u \quad \text{with} \quad a_i
+          \in \Sigma \quad \text{and}
+    $$
+    $$
+        \exists r_1, \dots, r_{k-1} \in        Q \text{ s.t. } (q,w)
+                                    \vdash_{M} (r_1, a_2 \dots a_k u)
+                                    \vdash_{M} (r_2, a_3 \dots a_k u) \dots
+                                    \vdash_{M} (p,u)
+    $$
+\end{definition}
+
+\begin{definition}
+    The \textbf{extended transition function} evaluates the end state of a word
+    over multiple transitions:
+    $$
+        \tilde{\delta}: Q \times \Sigma^{*} \to Q
+    $$
+    $$
+        \tilde{\delta}(q, \lambda) = q \quad \forall q \in Q
+    $$
+    $$
+        \tilde{\delta}(q, wa)
+        =   \delta(\tilde{\delta} (q,w), a) \quad \forall a
+        \in \Sigma, w
+        \in \Sigma^{*}, q
+        \in Q
+    $$
 \end{definition}
 
 \begin{remark}
-    The correctness of this product automata can be proven by induction over the word length.
+    States can be grouped into equivalence classes containing all elements with
+    the same end state. This is useful for proofs regarding the language of
+    finite automata, which are typically done through these classes and
+    induction.
+\end{remark}
+
+\begin{definition}
+    \textbf{Product Automata:} Used to determine the intersection, union or
+    exclusion ($\odot$) of two finite automata (their languages), built with the
+    state space $Q = Q_1 \times Q_2$.
+    $$
+        M_1 = (Q_1, \Sigma, \delta_1, q_{01}, F_1), \quad M_2
+            = (Q_2, \Sigma, \delta_2, q_{02}, F_2)
+    $$
+    $$
+        \implies M
+        =        (Q_1 \times Q_2, \delta((x,y), a) = (\delta_1(x, a), \delta_2(y, a)), (q_01, q_02), F_1 \odot F_2)
+    $$
+\end{definition}
+
+\begin{remark}
+    The correctness of this product automata can be proven by induction over the
+    word length.
 \end{remark}
 
 \subsection{Non-regularity}
 
 \begin{definition}
-    A language $L$ is called \textbf{regular} if there exists a finite automata that accepts/detects the language $L$ and \textbf{non-reular} else.
+    A language $L$ is called \textbf{regular} if there exists a finite automata
+    that accepts/detects the language $L$ and \textbf{non-reular} else.
 \end{definition}
 
-
 \begin{lemma}
-    Let $A = (Q, \Sigma, \delta, q_0, F)$ be a finite automata and let $x,y \in \Sigma^*$ such that
-    $$\tilde{\delta}(q_0,x) = \tilde{\delta}(q_0, y)$$
+    Let $A = (Q, \Sigma, \delta, q_0, F)$ be a finite automata and let
+    $x,y \in \Sigma^*$ such that
+    $$
+        \tilde{\delta}(q_0,x) = \tilde{\delta}(q_0, y)
+    $$
     then there exists $z \in \Sigma^*$ such that
-    $$Kl[xz] = Kl[yz]$$
+    $$
+        Kl[xz] = Kl[yz]
+    $$
 \end{lemma}
 
 \begin{remark}
-    This illustrates that finite machines are finite hence can not distinguish beetween $xz$ and $yz$ once they are in a certain state $q_r$, they do not know how they got there.
+    This illustrates that finite machines are finite hence can not distinguish
+    beetween $xz$ and $yz$ once they are in a certain state $q_r$, they do not
+    know how they got there.
 \end{remark}
 
 \begin{proof}
-    \textbf{Proof of Non-Regularity:} Let $L = \{0^n1^n | n \in \mathbb{N}\}$ and assume $L \in L_{EA}$ ($L$ is regular) hence there exists a finite automata $A$ such that $L(A) = L$.
-    Let $m = |Q|$ and observe the words $x \in \{0^n | n \leq m+1 \}$. Because this are more words than $A$ has states there exists $i \neq j \in [0, m+1] \cap \mathbb{N}$ such that
-    $$\tilde{\delta}(q_0, 0^i) = \tilde{\delta}(q_0, 0^j)$$
-    Hence by the above lemma the words $0^i1^i, 0^j1^i$ will both be accepted which contradicts the assumption that $A$ detects $L$ because $0^j1^i \notin L$.
+    \textbf{Proof of Non-Regularity:} Let $L = \{0^n1^n | n \in \mathbb{N}\}$
+    and assume $L \in L_{EA}$ ($L$ is regular) hence there exists a finite
+    automata $A$ such that $L(A) = L$. Let $m = |Q|$ and observe the words
+    $x \in \{0^n | n \leq m + 1 \}$. Because this are more words than $A$ has
+    states there exists $i \neq j \in [0, m + 1] \cap \mathbb{N}$ such that
+    $$
+        \tilde{\delta}(q_0, 0^i) = \tilde{\delta}(q_0, 0^j)
+    $$
+    Hence by the above lemma the words $0^i1^i, 0^j1^i$ will both be accepted
+    which contradicts the assumption that $A$ detects $L$ because
+    $0^j1^i \notin L$.
+\end{proof}
+
+\begin{lemma}
+    \textbf{Pumping-Lemma:} Let a language $L \in \Sigma^*$ be regular, then
+    there exists a constant $n_0 \in \mathbb{N}$ such that every word
+    $w \in \Sigma^*$ with $|w| \ge n_0$ can be taken apart into $x,y,z$ where
+    \begin{itemize}
+        \item $|yx| \le n_0$
+        \item $|x| \ge 1$
+        \item $\{yx^kz | k \in \mathbb{N} \} \subseteq L \lor \{yx^kz | k \in \mathbb{N} \} \cap L = \emptyset$
+    \end{itemize}
+\end{lemma}
+
+\begin{example}
+    $$
+        L = {0^n 1^n | n \in \mathbb{N}}
+    $$
+
+    \textbf{Proof using Pumping Lemma:} Assume $L$ regular hence there exists
+    constant $n_0$ with the properties described by the pumping lemma.
+    $$
+        w = 0^{n_0} 1^{n_0}
+    $$
+    And there exists $yxz = w$ that fulfill the properties of the pumping lemma.
+    Hence
+    $$
+        |yx| \le n_0 \quad \implies y = 0^e, x = 0^m \quad e,m \in \mathbb{N}
+    $$
+    $$
+        |x| \ge 1 \quad \implies m \ge 1
+    $$
+    $$
+        |yxz| =         n_0
+              \implies  \{0^{n_0-m+km} 1^n_0 | k \in \mathbb{N} \}
+              \subseteq L
+    $$
+    Observe that this is a contradiction as for $k = 0$ the last condition does
+    not hold.
+    $$
+        yx^0z = yz = 0^{n_0-m}1^{n_0} \notin L
+    $$
+\end{example}
+
+\subsection{Nondeterminism}
+
+\begin{important}
+    Nondeterminism has nothing to do with Non Deterministic (random) behavior.
+\end{important}
+
+\begin{definition}
+    Nondeterministic finite automata are finite automatas where the
+    transition-function $\delta$ is not well definied hence
+    $$
+        \hat{\delta}(q_k, w) = \{q_i, q_j ...\}
+    $$
+    and a
+    $$
+        w \in L \iff \exists q_l \in F \cap \{q_i, q_j ...\}
+    $$
+    Hence a word is accepted if there is at least one valid path that leads to
+    an accepting endstate
+\end{definition}
+
+\subsection{Power-set-construction}
+
+\begin{theorem}
+    \textbf{Power-Set Construction (Subset Construction):} For every
+    nondeterministic finite automaton $M = (Q_N, \Sigma, \delta_N, q_0, F_N)$,
+    there exists an equivalent deterministic finite automaton
+    $M_D = (Q_D, \Sigma, \delta_D, q_{0,D}, F_D)$ such that
+    $$
+        L(M_D) = L(M)
+    $$
+\end{theorem}
+
+\begin{definition}
+    Given an NFA $M = (Q_N, \Sigma, \delta_N, q_0, F_N)$, the equivalent DFA
+    $M_D = (Q_D, \Sigma, \delta_D, q_{0,D}, F_D)$ is constructed as follows:
+    \begin{itemize}
+        \item \textbf{States:} $Q_D = \mathcal{P}(Q_N)$ (the power set of $Q_N$,
+              i.e., every state in $M_D$ is a subset $S \subseteq Q_N$)
+        \item \textbf{Alphabet:} $\Sigma$ (identical to the NFA's alphabet)
+        \item \textbf{Start State:} $q_{0,D} = \{q_0\}$
+        \item \textbf{Transition Function:} For every $S \in Q_D$ and
+              $a \in \Sigma$:
+              $$
+                  \delta_D(S, a) = \bigcup_{q \in S} \delta_N(q, a)
+              $$
+        \item \textbf{Accepting States:} A state $S \in Q_D$ is accepting if it
+              contains at least one accepting state of $M$:
+              $$
+                  F_D = \{S \subseteq Q_N \mid S \cap F_N \neq \emptyset\}
+              $$
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    The intuition behind the construction is that the DFA tracks all possible
+    states the NFA could currently be in simultaneously.
+    While the power set has $|Q_D| = 2^{|Q_N|}$ states, in practice only the
+    states reachable from $\{q_0\}$ need to be constructed.
+    By induction on word length $|w|$, one can show that
+    $$
+        \tilde{\delta}_D(\{q_0\}, w) = \hat{\delta}_N(q_0, w)
+    $$
+    which immediately implies $w \in L(M_D) \iff w \in L(M)$.
+\end{remark}
+
+\begin{theorem}
+    \textbf{State Explosion / Exponential Lower Bound:} For every $k \in \mathbb{N}^+$,
+    let $L_k$ be the language over $\Sigma = \{0, 1\}$ defined by:
+    $$
+        L_k = \{ w \in \{0, 1\}^* \mid \text{the } k\text{-th symbol from the end of } w \text{ is } 1 \}
+    $$
+    Then:
+    \begin{enumerate}
+        \item There exists an NFA accepting $L_k$ with only $k + 1$ states.
+        \item Every DFA accepting $L_k$ requires at least $2^k$ states.
+    \end{enumerate}
+\end{theorem}
+
+\begin{example}
+    \textbf{NFA for $L_k$:} We can construct an NFA $M = (Q, \{0, 1\}, \delta, q_0, \{q_k\})$
+    with $Q = \{q_0, q_1, \dots, q_k\}$:
+    \begin{itemize}
+        \item $\delta(q_0, 0) = \{q_0\}$
+        \item $\delta(q_0, 1) = \{q_0, q_1\}$ (nondeterministically guess that this $1$ is the $k$-th symbol from the end)
+        \item $\delta(q_i, 0) = \delta(q_i, 1) = \{q_{i+1}\}$ for $1 \le i \le k - 1$
+    \end{itemize}
+    This automaton has exactly $k + 1$ states and accepts $L_k$.
+\end{example}
+
+\begin{proof}
+    \textbf{Proof ntuition for the $2^k$ DFA Lower Bound:}
+    Unlike an NFA, a deterministic automaton cannot guess when it is $k$ symbols away from the end. 
+    Since the input could stop at any time, a DFA must maintain the exact history of the last $k$ symbols seen. There are $2^k$ possible words of length $k$, so it must distinguish all of them.
 \end{proof}

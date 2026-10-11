@@ -1,0 +1,71 @@
+\section{Dynamic Memory Allocation}  
+
+\begin{definition} 
+\textbf{Static vs Automatic Memory Allocation:} Global variables are statically allocated when the program is loaded and deallocated when it exits, while function variables are automatically allocated on function call and deallocated on return.
+\end{definition}  
+
+\begin{remark} 
+Note that because automatically allocated memory is created on function calls, it is stored on the stack.
+\end{remark}  
+
+\begin{remark} 
+Often we need a larger amount of memory space that persists across multiple function calls without lasting the entire program lifetime.
+\end{remark}  
+
+\begin{definition} 
+\textbf{Dynamic Memory Allocation:} We can use allocation functions (such as \texttt{malloc}) to explicitly request dynamic memory blocks on the heap.
+\end{definition}  
+
+\begin{codeexample}
+char *a = (char *) malloc(10 * sizeof(char)); // Allocates uninitialized memory for 10 characters
+char *zeros = (char *) calloc(10, sizeof(char)); // Allocates zero-initialized memory for 10 characters
+free(a); // Frees allocated memory block
+
+zeros = (char *) realloc(zeros, 20 * sizeof(char)); // Resizes allocated memory block to 20 characters
+\end{codeexample}  
+
+\subsection{Data Structures}
+
+\begin{definition} 
+\textbf{Structured Data} is a custom type containing multiple data fields of different types. It is defined using the \texttt{struct} keyword.
+\end{definition}  
+
+\begin{codeexample}
+struct myData { 
+    int dataField; 
+    char dataName;
+};
+\end{codeexample}  
+
+\begin{definition} 
+\textbf{Unions} overlay multiple member fields in a single shared memory location. Only one member value should be stored/interpreted at a time, and C performs no runtime tracking of the active member type.
+\end{definition}  
+
+\begin{codeexample}
+union currentTime { 
+    char stringName[10]; 
+    int intTime; 
+    long longTime;
+};
+\end{codeexample}  
+
+\begin{remark} 
+We can use \texttt{typedef} to define type aliases. Mixing struct tags and typedef aliases with the same name can cause confusion.
+\end{remark}  
+
+\begin{remark} 
+Tags (e.g., \texttt{struct tag \{...\}}) belong to a separate namespace from typenames; consequently, a typename and a tag can share the same identifier.
+\end{remark}  
+
+\begin{remark} 
+Structs and pointers allow building \textbf{dynamic data structures}. Using \texttt{void} pointers allows elements to be generic.
+\end{remark}  
+
+\begin{codeexample}
+struct listNode { 
+    void *value; 
+    struct listNode *next;
+};  
+
+struct listNode *myList = NULL;
+\end{codeexample}
