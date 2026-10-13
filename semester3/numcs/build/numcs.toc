@@ -14,3 +14,7 @@
 \contentsline {subsection}{\numberline {2.3}Barycentric Interpolation-formula}{10}{}%
 \contentsline {subsection}{\numberline {2.4}Chebyshev}{11}{}%
 \contentsline {subsection}{\numberline {2.5}Trigonometric Interpolation}{12}{}%
+\contentsline {subsection}{\numberline {2.6}Piecewise Polynomial Interpolation}{15}{}%
+\contentsline {subsection}{\numberline {2.7}Piecewise Linear Interpolation}{16}{}%
+\contentsline {subsection}{\numberline {2.8}Cubic Hermite Interpolation}{17}{}%
+\contentsline {subsection}{\numberline {2.9}Spline Interpolation}{18}{}%
