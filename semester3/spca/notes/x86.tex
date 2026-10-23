@@ -1,561 +1,170 @@
 \section{Basic x86 Architecture and Assembly}
 
-\subsection{Computer Architecture and the x86-64 Model}
+\subsection{ISA and Machine State}
 
-\begin{definition} \textbf{Von Neumann Architecture:} 
-The foundational computing model consisting of three primary components interconnected by system buses:
-\begin{itemize}
-    \item \textbf{Central Processing Unit (CPU):} Contains the \textbf{Control Unit} (fetches and decodes instructions), the \textbf{Arithmetic Logic Unit (ALU)} (executes arithmetic and logical operations), and the \textbf{Register File} (ultra-fast, low-latency internal storage).
-    \item \textbf{Main Memory (RAM):} A linear sequence of byte-addressable storage holding both program instructions and runtime data.
-    \item \textbf{Input/Output (I/O) System:} Interfaces the CPU and memory with external peripherals (disks, network, user interfaces).
-\end{itemize}
+\begin{definition}
+    \textbf{ISA vs. Microarchitecture:} The \textbf{Instruction Set Architecture (ISA)} defines the programmer-visible contract between software and hardware (instructions, registers, memory model), independent of the underlying \textbf{microarchitecture} (hardware implementation like caches and pipelines).
 \end{definition}
 
-\begin{definition} \textbf{The Programmer-Visible Machine State (x86-64):} 
-From the perspective of an assembly programmer or compiler, the state of an x86-64 processor comprises:
-\begin{itemize}
-    \item \textbf{Program Counter (\texttt{\%rip}):} The instruction pointer register storing the 64-bit virtual memory address of the next instruction to be fetched and executed.
-    \item \textbf{General-Purpose Registers (GPRs):} 16 architectural 64-bit registers used to store integer data, function arguments, return values, and memory addresses.
-    \item \textbf{Condition Code Flags (\texttt{RFLAGS}):} 1-bit status registers holding information about the arithmetic outcome of the most recently executed instruction (e.g., zero, negative, overflow, carry).
-    \item \textbf{Vector / Floating-Point Registers:} Dedicated 128-bit to 512-bit registers (\texttt{\%xmm0}--\texttt{\%xmm15}, AVX \texttt{\%ymm}, \texttt{\%zmm}) for floating-point and SIMD operations.
-    \item \textbf{Virtual Memory Space:} A byte-addressable array of memory locations accessed through 64-bit virtual addresses.
-\end{itemize}
+\begin{definition}
+    \textbf{CISC vs. RISC:}
+    \begin{itemize}
+        \item \textbf{CISC (Complex Instruction Set Computer, e.g., x86):} Variable-length instructions (1--15 bytes), arithmetic instructions can access memory directly, and explicit hardware stack operations (\texttt{push}, \texttt{pop}).
+        \item \textbf{RISC (Reduced Instruction Set Computer, e.g., ARM, RISC-V):} Fixed-size 32-bit instructions, load-store architecture (only load/store instructions access memory), and larger register files.
+    \end{itemize}
 \end{definition}
 
-\begin{remark} \textbf{From C to Executable Machine Code:} 
-A high-level C program undergoes four distinct translation phases before execution:
-\begin{align*}
-\text{Source (\texttt{.c})} &\xrightarrow{\text{Preprocessor}} \text{Expanded (\texttt{.i})} \xrightarrow{\text{Compiler (\texttt{gcc -S})}} \text{Assembly (\texttt{.s})} \\
-&\xrightarrow{\text{Assembler (\texttt{as})}} \text{Object (\texttt{.o})} \xrightarrow{\text{Linker (\texttt{ld})}} \text{Executable Binary}
-\end{align*}
-Assembly code is simply a human-readable textual representation of raw binary machine code instructions. While high-level languages abstract away hardware specifics (types, variables, expressions), assembly exposes the raw reality of hardware: fixed-size registers, memory addresses, condition codes, and explicit jump instructions.
+\begin{remark}
+    \textbf{Evolution of x86:} Evolved with backward compatibility from 16-bit (\textbf{8086}) to 32-bit (\textbf{IA32}) and 64-bit (\textbf{x86-64}). Due to the 16-bit origin, Intel terminology defines a ``word'' as 16 bits (2 bytes).
 \end{remark}
 
-\subsection{Assembly Syntax: AT\&T vs. Intel}
+\begin{definition}
+    \textbf{Programmer-Visible State (x86-64):}
+    \begin{itemize}
+        \item \textbf{Program Counter (\texttt{\%rip}):} 64-bit address of the next instruction to execute.
+        \item \textbf{Register File:} 16 general-purpose 64-bit integer registers and vector registers (\texttt{\%xmm}, \texttt{\%ymm}) for floating-point/SIMD.
+        \item \textbf{Condition Codes:} Single-bit status flags (\texttt{CF}, \texttt{ZF}, \texttt{SF}, \texttt{OF}) updated by arithmetic operations.
+        \item \textbf{Memory:} Flat byte-addressable virtual address space storing code, data, and the stack.
+    \end{itemize}
+\end{definition}
 
-\begin{remark} \textbf{AT\&T Syntax vs. Intel Syntax:} 
-There are two major assembly syntax conventions for x86. The GNU toolchain on Linux (\texttt{gcc}, \texttt{as}, \texttt{gdb}, \texttt{objdump}) defaults to \textbf{AT\&T syntax}, whereas Windows and Intel documentation utilize \textbf{Intel syntax}.
+\begin{remark}
+    \textbf{Machine Data Types \& Operations:} Assembly has no aggregate types (arrays, structs). It operates only on primitive integer data (1, 2, 4, or 8 bytes), floating-point values, and untyped memory addresses. Instructions fall into three categories:
+    \begin{enumerate}
+        \item \textbf{Data movement} between registers and memory (\texttt{mov}, \texttt{push}, \texttt{pop}).
+        \item \textbf{Arithmetic and logical operations} (\texttt{add}, \texttt{sub}, \texttt{imul}, shifts, bitwise ops).
+        \item \textbf{Control transfer} (\texttt{jmp}, conditional branches \texttt{jX}, \texttt{call}, \texttt{ret}).
+    \end{enumerate}
 \end{remark}
 
-\begin{table}[htbp]
-\centering
-\renewcommand{\arraystretch}{1.2}
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{|p{3cm}|p{5.6cm}|p{5.4cm}|}
-\hline
-\textbf{Feature} & \textbf{AT\&T Syntax (GCC / Linux)} & \textbf{Intel Syntax} \\
-\hline
-\textbf{Operand Order} & \texttt{instr source, destination} & \texttt{instr destination, source} \\
-\hline
-\textbf{Register Prefix} & Prefixed with \texttt{\%} (e.g., \texttt{\%rax}) & No prefix (e.g., \texttt{rax}) \\
-\hline
-\textbf{Immediate Values} & Prefixed with \texttt{\$} (e.g., \texttt{\$42}, \texttt{\$0x10}) & Bare number (e.g., \texttt{42}, \texttt{10h}) \\
-\hline
-\textbf{Memory Deref} & \texttt{disp(base, index, scale)} & \texttt{[base + index*scale + disp]} \\
-\hline
-\textbf{Instruction Suffix} & Explicit size suffix (\texttt{b}, \texttt{w}, \texttt{l}, \texttt{q}) & Pointer prefix (\texttt{QWORD PTR}) \\
-\hline
-\textbf{Example} & \texttt{movq \$8, (\%rax, \%rdx, 4)} & \texttt{mov QWORD PTR [rax+rdx*4], 8} \\
-\hline
-\end{tabular}
-\end{table}
+\begin{remark}
+    \textbf{AT\&T Syntax (GCC/Linux default):} Operands flow from source to destination:
+    \[
+        \texttt{instr}\langle\text{size}\rangle \quad \text{Source}, \quad \text{Destination}
+    \]
+    Registers use \texttt{\%} (\texttt{\%rax}), and immediates use \texttt{\$} (\texttt{\$42}). Size suffixes: \textbf{\texttt{b}} (1B, \texttt{char}), \textbf{\texttt{w}} (2B, \texttt{short}), \textbf{\texttt{l}} (4B, \texttt{int}), \textbf{\texttt{q}} (8B, \texttt{long}/pointer).
+\end{remark}
+
+\subsection{Registers and Data Movement}
+
+\begin{definition}
+    \textbf{x86-64 General-Purpose Registers:} Lower sub-registers (32-bit, 16-bit, 8-bit) can be accessed directly:
+    \begin{center}
+        \renewcommand{\arraystretch}{1.15}
+        \setlength{\tabcolsep}{4pt}
+        \begin{tabular}{|c|c|c|c|l|}
+            \hline
+            \textbf{64-bit (\texttt{q})} & \textbf{32-bit (\texttt{l})} & \textbf{16-bit (\texttt{w})} & \textbf{8-bit (\texttt{b})} & \textbf{Convention / Role} \\
+            \hline
+            \texttt{\%rax} & \texttt{\%eax} & \texttt{\%ax} & \texttt{\%al} & Return value \\
+            \texttt{\%rbx} & \texttt{\%ebx} & \texttt{\%bx} & \texttt{\%bl} & Callee-saved \\
+            \texttt{\%rcx} & \texttt{\%ecx} & \texttt{\%cx} & \texttt{\%cl} & 4th argument, shift count \\
+            \texttt{\%rdx} & \texttt{\%edx} & \texttt{\%dx} & \texttt{\%dl} & 3rd argument \\
+            \texttt{\%rsi} & \texttt{\%esi} & \texttt{\%si} & \texttt{\%sil} & 2nd argument \\
+            \texttt{\%rdi} & \texttt{\%edi} & \texttt{\%di} & \texttt{\%dil} & 1st argument \\
+            \texttt{\%rbp} & \texttt{\%ebp} & \texttt{\%bp} & \texttt{\%bpl} & Callee-saved (frame pointer) \\
+            \texttt{\%rsp} & \texttt{\%esp} & \texttt{\%sp} & \texttt{\%spl} & Stack pointer \\
+            \texttt{\%r8}--\texttt{\%r9} & \texttt{\%r8d}--\texttt{\%r9d} & \texttt{\%r8w}--\texttt{\%r9w} & \texttt{\%r8b}--\texttt{\%r9b} & 5th and 6th arguments \\
+            \texttt{\%r10}--\texttt{\%r11} & \texttt{\%r10d}--\texttt{\%r11d} & \texttt{\%r10w}--\texttt{\%r11w} & \texttt{\%r10b}--\texttt{\%r11b} & Caller-saved scratch \\
+            \texttt{\%r12}--\texttt{\%r15} & \texttt{\%r12d}--\texttt{\%r15d} & \texttt{\%r12w}--\texttt{\%r15w} & \texttt{\%r12b}--\texttt{\%r15b} & Callee-saved \\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{definition}
 
 \begin{important}
-In this course and throughout Linux systems programming, we strictly adhere to \textbf{AT\&T syntax}:
-\[
-\textbf{Mnemonic}\langle\text{size}\rangle \quad \textbf{Source}, \quad \textbf{Destination}
-\]
-For example, in \texttt{movq \%rax, \%rbx}, the value flows from left to right: from \texttt{\%rax} into \texttt{\%rbx}.
+    \textbf{32-bit Zero-Extension:} Writing to a 32-bit register (e.g., \texttt{movl}) automatically zeroes the upper 32 bits of the 64-bit register. Writing to 8-bit or 16-bit registers preserves the upper bits.
 \end{important}
 
-\subsection{Data Sizes and Register Organization}
-
-\begin{definition} \textbf{x86-64 Data Sizes:} 
-Originating from the 16-bit 8086 processor, Intel defines a \textbf{Word} as 16 bits (2 bytes). The size suffixes and corresponding C data types are:
-\begin{itemize}
-    \item \textbf{Byte (\texttt{b}):} 8 bits (1 byte) $\longleftrightarrow$ C \texttt{char}
-    \item \textbf{Word (\texttt{w}):} 16 bits (2 bytes) $\longleftrightarrow$ C \texttt{short}
-    \item \textbf{Double Word (\texttt{l} for long):} 32 bits (4 bytes) $\longleftrightarrow$ C \texttt{int}, 32-bit integers, \texttt{float}
-    \item \textbf{Quad Word (\texttt{q}):} 64 bits (8 bytes) $\longleftrightarrow$ C \texttt{long}, 64-bit pointers (\texttt{void*}), \texttt{double}
-\end{itemize}
+\begin{definition}
+    \textbf{Memory Addressing:} The general addressing mode $D(R_b, R_i, S)$ accesses memory at:
+    \[
+        \text{Mem}[\text{Reg}[R_b] + S \cdot \text{Reg}[R_i] + D]
+    \]
+    where $D$ is a constant displacement, $R_b$ is the base register, $R_i$ is the index register (cannot be \texttt{\%rsp}), and $S \in \{1, 2, 4, 8\}$ is the scale factor.
 \end{definition}
 
-\begin{definition} \textbf{The 16 General-Purpose Registers:} 
-An x86-64 CPU provides 16 general-purpose 64-bit registers. For backward compatibility with 32-bit (IA32), 16-bit (8086), and 8-bit architectures, lower sub-portions of each register can be accessed independently:
-\end{definition}
-
-\begin{table}[htbp]
-\centering
-\renewcommand{\arraystretch}{1.15}
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{|c|c|c|c|p{6.8cm}|}
-\hline
-\textbf{64-bit (\texttt{q})} & \textbf{32-bit (\texttt{l})} & \textbf{16-bit (\texttt{w})} & \textbf{8-bit (\texttt{b})} & \textbf{Primary Convention / Purpose} \\
-\hline
-\texttt{\%rax} & \texttt{\%eax} & \texttt{\%ax} & \texttt{\%al} & Return value, Arithmetic accumulator \\
-\hline
-\texttt{\%rbx} & \texttt{\%ebx} & \texttt{\%bx} & \texttt{\%bl} & Callee-saved register \\
-\hline
-\texttt{\%rcx} & \texttt{\%ecx} & \texttt{\%cx} & \texttt{\%cl} & 4th function argument, Shift count register \\
-\hline
-\texttt{\%rdx} & \texttt{\%edx} & \texttt{\%dx} & \texttt{\%dl} & 3rd function argument, High 64-bit multiply/divide \\
-\hline
-\texttt{\%rsi} & \texttt{\%esi} & \texttt{\%si} & \texttt{\%sil} & 2nd function argument, Source index in strings \\
-\hline
-\texttt{\%rdi} & \texttt{\%edi} & \texttt{\%di} & \texttt{\%dil} & 1st function argument, Destination index \\
-\hline
-\texttt{\%rbp} & \texttt{\%ebp} & \texttt{\%bp} & \texttt{\%bpl} & Callee-saved, Optional frame pointer \\
-\hline
-\texttt{\%rsp} & \texttt{\%esp} & \texttt{\%sp} & \texttt{\%spl} & Stack pointer (points to current top of stack) \\
-\hline
-\texttt{\%r8}  & \texttt{\%r8d}  & \texttt{\%r8w}  & \texttt{\%r8b}  & 5th function argument \\
-\hline
-\texttt{\%r9}  & \texttt{\%r9d}  & \texttt{\%r9w}  & \texttt{\%r9b}  & 6th function argument \\
-\hline
-\texttt{\%r10} & \texttt{\%r10d} & \texttt{\%r10w} & \texttt{\%r10b} & Caller-saved scratch register \\
-\hline
-\texttt{\%r11} & \texttt{\%r11d} & \texttt{\%r11w} & \texttt{\%r11b} & Caller-saved scratch register \\
-\hline
-\texttt{\%r12} & \texttt{\%r12d} & \texttt{\%r12w} & \texttt{\%r12b} & Callee-saved register \\
-\hline
-\texttt{\%r13} & \texttt{\%r13d} & \texttt{\%r13w} & \texttt{\%r13b} & Callee-saved register \\
-\hline
-\texttt{\%r14} & \texttt{\%r14d} & \texttt{\%r14w} & \texttt{\%r14b} & Callee-saved register \\
-\hline
-\texttt{\%r15} & \texttt{\%r15d} & \texttt{\%r15w} & \texttt{\%r15b} & Callee-saved register \\
-\hline
-\end{tabular}
-\end{table}
-
-\begin{important} \textbf{The 32-bit Zero-Extension Rule:} 
-In x86-64, whenever an instruction generates a 32-bit register result (e.g., \texttt{movl}, \texttt{addl}, \texttt{xorl}), the CPU automatically \textbf{clears (sets to zero) the upper 32 bits} of the corresponding 64-bit register!
-\begin{itemize}
-    \item \texttt{movl \$0x12345678, \%eax} sets the entire \texttt{\%rax} to \texttt{0x0000000012345678}.
-    \item Conversely, 8-bit and 16-bit operations (\texttt{movb}, \texttt{movw}) do \textbf{not} zero the upper bits; they preserve whatever was already present in the remaining higher bits of the register.
-\end{itemize}
-\end{important}
-
-\subsection{Operand Specifiers and Memory Addressing Modes}
-
-\begin{definition} \textbf{Operand Types:} Most instructions take one or two operands classified into three types:
-\begin{enumerate}
-    \item \textbf{Immediate (\$Imm):} A constant numerical literal encoded directly into the instruction bytes (e.g., \texttt{\$42}, \texttt{\$-16}, \texttt{\$0xFF}).
-    \item \textbf{Register (\%reg):} The direct contents of one of the 16 registers (e.g., \texttt{\%rax}, \texttt{\%edx}).
-    \item \textbf{Memory Access (\dots):} The value stored in memory at a computed virtual address, denoted by parentheses representing memory dereference.
-\end{enumerate}
-\end{definition}
-
-\begin{definition} \textbf{General Addressing Form:} 
-The most general addressing mode in x86-64 computes the effective memory address using the formula:
-$$\text{Address} = \text{Imm} + [r_b] + [r_i] \times s$$
-written syntactically in AT\&T format as:
-$$\text{Imm}(r_b, r_i, s)$$
-where:
-\begin{itemize}
-    \item $\text{Imm} \in \mathbb{R}$: An optional constant offset (displacement).
-    \item $r_b$: The base register (any 64-bit general-purpose register).
-    \item $r_i$: The index register (any 64-bit register \textbf{except} \texttt{\%rsp}).
-    \item $s \in \{1, 2, 4, 8\}$: The scale factor (must be 1, 2, 4, or 8, exactly matching the byte size of primitive data types!).
-\end{itemize}
-\end{definition}
-
-\begin{table}[htbp]
-\centering
-\renewcommand{\arraystretch}{1.2}
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{|p{3.8cm}|p{3.2cm}|p{3.6cm}|p{3.2cm}|}
-\hline
-\textbf{Addressing Mode} & \textbf{Syntax} & \textbf{Effective Address} & \textbf{C Analogy} \\
-\hline
-\textbf{Absolute} & \texttt{0x400050} & \texttt{0x400050} & Global variable \\
-\hline
-\textbf{Indirect} & \texttt{(\%rax)} & \texttt{Mem[\%rax]} & \texttt{*ptr} \\
-\hline
-\textbf{Base + Displacement} & \texttt{8(\%rax)} & \texttt{Mem[\%rax + 8]} & \texttt{ptr[1]} / field \\
-\hline
-\textbf{Indexed} & \texttt{(\%rax, \%rdx)} & \texttt{Mem[\%rax + \%rdx]} & \texttt{*(ptr + i)} \\
-\hline
-\textbf{Scaled Indexed} & \texttt{(\%rax, \%rdx, 4)} & \texttt{Mem[\%rax + 4*\%rdx]} & \texttt{int\_array[i]} \\
-\hline
-\textbf{Fully Scaled with Disp} & \texttt{16(\%rax, \%rdx, 8)} & \texttt{Mem[\%rax + 8*\%rdx + 16]} & Array of structs \\
-\hline
-\end{tabular}
-\end{table}
-
-\begin{codeexample}
-// Examples of addressing in assembly
-movq (%rdi), %rax          // Dereference pointer in %rdi: rax = *rdi
-movl 8(%rdi), %eax         // Read 4-byte int at offset 8: eax = *(rdi + 8)
-movq (%rdi, %rcx, 8), %rax // Array indexing: rax = rdi[rcx] (array of 8-byte longs)
-movl -16(%rbp), %eax       // Access local variable on the stack frame
-\end{codeexample}
-
-\subsection{Data Movement Instructions}
-
-\begin{definition} \textbf{The \texttt{mov} Family:} Copies data from a source operand to a destination operand without altering the source:
-$$\texttt{mov}\langle\text{size}\rangle \quad \text{Source}, \quad \text{Destination}$$
-Available variants include \texttt{movb} (1 byte), \texttt{movw} (2 bytes), \texttt{movl} (4 bytes), and \texttt{movq} (8 bytes).
-\end{definition}
-
-\begin{important} \textbf{The Memory-to-Memory Prohibition:} 
-An x86-64 instruction \textbf{cannot} perform both a memory read and a memory write simultaneously. Therefore, an instruction of the form:
-$$\texttt{movq (\%rax), (\%rdx)} \quad \text{\textbf{IS ILLEGAL IN x86-64}}$$
-To copy data from one memory location to another, the value must first be loaded into an intermediate register:
-\begin{codeexample}
-movq (%rax), %rcx    // Load from memory into temporary register %rcx
-movq %rcx, (%rdx)    // Store from %rcx to destination memory
-\end{codeexample}
-\end{important}
-
-\begin{definition} \textbf{Extension Instructions (Moving Smaller to Larger Destinations):} 
-When moving data from a smaller source to a larger destination, the missing upper bits must be populated:
-\begin{itemize}
-    \item \textbf{Zero Extension (\texttt{movz}):} Fills remaining high-order bits with zeros (used for \textbf{unsigned} data types):
+\begin{definition}
+    \textbf{Data Movement (\texttt{mov}):} Transfers data between immediates, registers, and memory (\texttt{movb}, \texttt{movw}, \texttt{movl}, \texttt{movq}). When moving a smaller value to a larger register:
     \begin{itemize}
-        \item \texttt{movzbl} (byte to doubleword), \texttt{movzbq} (byte to quadword), \texttt{movzwq} (word to quadword).
-        \item Note: \texttt{movzlq} does not exist because standard \texttt{movl} already zeroes the upper 32 bits!
+        \item \textbf{\texttt{movz} (Zero-extension):} Fills upper bits with 0s (unsigned, e.g., \texttt{movzbl}).
+        \item \textbf{\texttt{movs} (Sign-extension):} Replicates the sign bit into upper bits (signed, e.g., \texttt{movslq}, or \texttt{cltq} for \texttt{\%eax} $\to$ \texttt{\%rax}).
     \end{itemize}
-    \item \textbf{Sign Extension (\texttt{movs}):} Replicates the most significant bit (the sign bit) into all upper bits (used for \textbf{signed} two's-complement data types):
-    \begin{itemize}
-        \item \texttt{movsbl}, \texttt{movsbq}, \texttt{movswq}, \texttt{movslq}.
-        \item Special instruction: \texttt{cltq} sign-extends \texttt{\%eax} into the entire 64-bit \texttt{\%rax}.
-    \end{itemize}
-\end{itemize}
 \end{definition}
 
-\begin{definition} \textbf{Stack Operations (\texttt{pushq} and \texttt{popq}):} 
-The runtime stack is managed by the stack pointer register \texttt{\%rsp}, which points to the current top of the stack. Because the x86 stack \textbf{grows downward} towards lower numerical memory addresses:
-\begin{itemize}
-    \item \textbf{\texttt{pushq Src}:} Pushes an 8-byte value onto the stack:
-    $$\texttt{\%rsp} \leftarrow \texttt{\%rsp} - 8, \quad \text{Mem}[\texttt{\%rsp}] \leftarrow \text{Src}$$
-    \item \textbf{\texttt{popq Dst}:} Pops the top 8-byte value from the stack into a destination register:
-    $$\text{Dst} \leftarrow \text{Mem}[\texttt{\%rsp}], \quad \texttt{\%rsp} \leftarrow \texttt{\%rsp} + 8$$
-\end{itemize}
-\end{definition}
+\begin{important}
+    \textbf{No Memory-to-Memory Transfers:} A single \texttt{mov} instruction cannot have both source and destination in memory (\texttt{movq (\%rax), (\%rdx)} is illegal); use an intermediate register instead.
+\end{important}
 
 \subsection{Arithmetic and Logical Operations}
 
-\subsubsection{Load Effective Address (\texttt{leaq})}
-
-\begin{definition} \textbf{Load Effective Address (\texttt{leaq}):} 
-The \texttt{leaq} instruction shares the exact memory-addressing syntax as \texttt{movq}, but with one crucial difference: \textbf{it does not access memory!}
-$$\texttt{leaq} \quad \text{Imm}(r_b, r_i, s), \quad \text{Dst}$$
-Instead of reading from memory, \texttt{leaq} computes the address calculation $\text{Imm} + [r_b] + [r_i] \times s$ and stores the resulting numerical value directly into \texttt{Dst}.
-\end{definition}
-
-\begin{remark} \textbf{The Dual Nature and Compiler Optimization of \texttt{leaq}:} 
-Compilers use \texttt{leaq} for two distinct purposes:
-\begin{enumerate}
-    \item \textbf{Generating Pointers:} To compute memory addresses (equivalent to the C address-of operator \texttt{\&}), such as obtaining the address of a struct field: \texttt{leaq 8(\%rdi), \%rax}.
-    \item \textbf{Fast Integer Arithmetic:} Because modern CPUs have dedicated hardware address generation units (AGUs) that compute $\text{base} + \text{index} \times \text{scale}$ in a single clock cycle, compilers hijack \texttt{leaq} to perform integer math without memory involvement.
-\end{enumerate}
-\end{remark}
-
-\begin{codeexample}
-// Fast arithmetic tricks performed by the compiler via leaq:
-leaq (%rdi, %rdi, 2), %rax   // rax = rdi + 2*rdi = 3 * x
-leaq (%rdi, %rdi, 4), %rax   // rax = rdi + 4*rdi = 5 * x
-leaq 7(%rdi, %rsi),   %rax   // rax = rdi + rsi + 7 = x + y + 7
-leaq (%rdi, %rdi, 8), %rax   // rax = rdi + 8*rdi = 9 * x
-\end{codeexample}
-
-\begin{important}
-Unlike standard arithmetic instructions (\texttt{addq}, \texttt{subq}), the \texttt{leaq} instruction \textbf{never alters condition code flags}!
-\end{important}
-
-\subsubsection{Unary and Binary Arithmetic Operations}
-
-\begin{table}[htbp]
-\centering
-\renewcommand{\arraystretch}{1.2}
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{|l|l|p{3.4cm}|p{4.7cm}|}
-\hline
-\textbf{Instruction} & \textbf{Syntax} & \textbf{Operation Performed} & \textbf{Effect on Flags} \\
-\hline
-\texttt{incq D} & \texttt{incq \%rax} & $D \leftarrow D + 1$ & Sets ZF, SF, OF (preserves CF!) \\
-\hline
-\texttt{decq D} & \texttt{decq \%rax} & $D \leftarrow D - 1$ & Sets ZF, SF, OF (preserves CF!) \\
-\hline
-\texttt{negq D} & \texttt{negq \%rax} & $D \leftarrow -D$ (two's complement) & Sets all flags \\
-\hline
-\texttt{notq D} & \texttt{notq \%rax} & $D \leftarrow \sim D$ (bitwise NOT) & Does not affect flags \\
-\hline
-\texttt{addq S, D} & \texttt{addq \%rcx, \%rax} & $D \leftarrow D + S$ & Sets all flags (CF, ZF, SF, OF) \\
-\hline
-\texttt{subq S, D} & \texttt{subq \%rcx, \%rax} & $D \leftarrow D - S$ & Sets all flags (computes $D - S$) \\
-\hline
-\texttt{imulq S, D} & \texttt{imulq \%rcx, \%rax} & $D \leftarrow D \times S$ & Sets CF, OF on overflow \\
-\hline
-\texttt{xorq S, D} & \texttt{xorq \%rax, \%rax} & $D \leftarrow D \oplus S$ & Clears CF, OF; sets ZF, SF \\
-\hline
-\texttt{andq S, D} & \texttt{andq \%rcx, \%rax} & $D \leftarrow D \ \& \ S$ & Clears CF, OF; sets ZF, SF \\
-\hline
-\texttt{orq S, D} & \texttt{orq \%rcx, \%rax} & $D \leftarrow D \mid S$ & Clears CF, OF; sets ZF, SF \\
-\hline
-\end{tabular}
-\end{table}
-
-\begin{remark} \textbf{Subtleties of \texttt{subq} and \texttt{xorq}:}
-\begin{itemize}
-    \item \textbf{Operand Order in \texttt{subq}:} Remember AT\&T order: \texttt{subq \%rcx, \%rax} computes:
-    $$\texttt{\%rax} \leftarrow \texttt{\%rax} - \texttt{\%rcx}$$
-    The second operand is the minuend (the value being subtracted from).
-    \item \textbf{Zeroing Registers:} The standard, idiomatically optimal way to zero a register is \texttt{xorl \%eax, \%eax}. This requires fewer instruction bytes than \texttt{movq \$0, \%rax} and is recognized by CPU decoders as a zero-latency register renaming operation.
-\end{itemize}
-\end{remark}
-
-\subsubsection{Shift Operations}
-
-\begin{definition} \textbf{Bit Shift Instructions:} 
-Bit shifts shift the bits of destination $D$ by a shift count $k$:
-\begin{itemize}
-    \item \textbf{Left Shift (\texttt{salq} / \texttt{shlq}):} Shifts left, zero-filling the vacated lower bits. (Equivalent to multiplying by $2^k$).
-    \item \textbf{Arithmetic Right Shift (\texttt{sarq}):} Shifts right, replicating the sign bit into vacated high-order bits. (Preserves two's complement sign for signed integer division by $2^k$).
-    \item \textbf{Logical Right Shift (\texttt{shrq}):} Shifts right, zero-filling the vacated high-order bits. (Used for unsigned division by $2^k$).
-\end{itemize}
-\end{definition}
-
-\begin{important} \textbf{The Shift Count Constraint:} 
-The shift count operand can be an immediate constant (e.g., \texttt{salq \$3, \%rax}). However, if the shift count is stored in a register, x86-64 \textbf{strictly mandates} that it must reside in the single register \texttt{\%cl} (the low 8-bit byte of \texttt{\%rcx})!
-No other register can be used as a variable shift counter. For 64-bit quadwords, only the lower 6 bits of \texttt{\%cl} are read ($0 \le k \le 63$).
-\end{important}
-
-\subsection{Control Flow: Condition Codes, Jumps, and Loops}
-
-\subsubsection{Condition Code Flags}
-
-\begin{definition} \textbf{Hardware Condition Codes (Status Flags):} 
-The CPU maintains a set of single-bit status flags updated automatically by most arithmetic instructions:
-\begin{itemize}
-    \item \textbf{CF (Carry Flag):} Set if the most recent operation generated a carry out of the most significant bit. Used to detect \textbf{unsigned overflow}.
-    \item \textbf{ZF (Zero Flag):} Set if the most recent operation yielded a result of \textbf{zero} (i.e., $\text{Result} == 0$).
-    \item \textbf{SF (Sign Flag):} Set if the most recent operation yielded a \textbf{negative} result (the most significant bit is 1).
-    \item \textbf{OF (Overflow Flag):} Set if the most recent operation caused a \textbf{signed two's-complement overflow} (e.g., adding two positive numbers yields a negative result, or subtracting a negative from positive overflows).
-\end{itemize}
-\end{definition}
-
-\subsubsection{Comparison and Testing}
-
-\begin{definition} \textbf{Comparison (\texttt{cmp}) and Test (\texttt{test}):} 
-These instructions set condition flags without modifying any data registers:
-\begin{itemize}
-    \item \textbf{\texttt{cmpq S2, S1}:} Computes the difference $S_1 - S_2$ purely to set flags. It acts identically to \texttt{subq S2, S1}, except the difference is discarded:
-    \begin{itemize}
-        \item If $S_1 == S_2$: ZF is set.
-        \item If $S_1 < S_2$ (signed): SF $\neq$ OF.
-        \item If $S_1 < S_2$ (unsigned): CF is set.
-    \end{itemize}
-    \item \textbf{\texttt{testq S2, S1}:} Computes the bitwise conjunction $S_1 \ \& \ S_2$ purely to set flags. It acts identically to \texttt{andq S2, S1}, except the result is discarded:
-    \begin{itemize}
-        \item Most commonly used with identical operands: \texttt{testq \%rax, \%rax} sets ZF if \texttt{\%rax} is zero, and SF if \texttt{\%rax} is negative.
-    \end{itemize}
-\end{itemize}
-\end{definition}
-
-\subsubsection{Reading Condition Codes (\texttt{set} Instructions)}
-
-\begin{definition} \textbf{The \texttt{set} Family:} 
-Sets a single byte destination register (e.g., \texttt{\%al}) to 1 if the specified condition holds, and 0 otherwise:
-\begin{itemize}
-    \item \texttt{sete} / \texttt{setz} ($ZF=1$): Set on equal / zero ($S_1 == S_2$).
-    \item \texttt{setne} / \texttt{setnz} ($ZF=0$): Set on not equal / non-zero ($S_1 \neq S_2$).
-    \item \textbf{Signed Comparisons:}
-    \begin{itemize}
-        \item \texttt{setl} (less: $SF \oplus OF = 1$), \texttt{setle} (less or equal: $(SF \oplus OF) \mid ZF = 1$).
-        \item \texttt{setg} (greater: $\sim(SF \oplus OF) \ \& \ \sim ZF = 1$), \texttt{setge} (greater or equal: $\sim(SF \oplus OF) = 1$).
-    \end{itemize}
-    \item \textbf{Unsigned Comparisons:}
-    \begin{itemize}
-        \item \texttt{setb} (below / carry: $CF=1$), \texttt{setbe} (below or equal: $CF \mid ZF = 1$).
-        \item \texttt{seta} (above: $\sim CF \ \& \ \sim ZF = 1$), \texttt{setae} (above or equal: $\sim CF = 1$).
-    \end{itemize}
-\end{itemize}
-\end{definition}
-
-\subsubsection{Jumps and Branching}
-
-\begin{definition} \textbf{Jump Instructions (\texttt{jmp} and \texttt{j*})}:
-Alter execution by loading a new address into the program counter \texttt{\%rip}:
-\begin{itemize}
-    \item \textbf{Unconditional Jump (\texttt{jmp Target}):} Jumps directly to \texttt{Target}. Can be direct (\texttt{jmp .L2}) or indirect via register/memory (\texttt{jmp *\%rax}).
-    \item \textbf{Conditional Jumps (\texttt{j* Target}):} Jump only if specific condition flags are set; otherwise, execution falls through to the next sequential instruction.
-\end{itemize}
-\end{definition}
-
-\begin{table}[htbp]
-\centering
-\renewcommand{\arraystretch}{1.2}
-\setlength{\tabcolsep}{6pt}
-\begin{tabular}{|l|l|l|}
-\hline
-\textbf{Jump Instruction} & \textbf{Condition Checked} & \textbf{Description} \\
-\hline
-\texttt{jmp} & None & Unconditional branch \\
-\hline
-\texttt{je} / \texttt{jz} & $ZF = 1$ & Equal / Zero ($a == b$) \\
-\hline
-\texttt{jne} / \texttt{jnz} & $ZF = 0$ & Not Equal / Not Zero ($a \neq b$) \\
-\hline
-\texttt{js} / \texttt{jns} & $SF = 1$ / $SF = 0$ & Negative / Non-negative \\
-\hline
-\texttt{jg} / \texttt{jge} & Signed: $>$ / $\ge$ & Greater / Greater or Equal \\
-\hline
-\texttt{jl} / \texttt{jle} & Signed: $<$ / $\le$ & Less / Less or Equal \\
-\hline
-\texttt{ja} / \texttt{jae} & Unsigned: $>$ / $\ge$ & Above / Above or Equal \\
-\hline
-\texttt{jb} / \texttt{jbe} & Unsigned: $<$ / $\le$ & Below / Below or Equal \\
-\hline
-\end{tabular}
-\end{table}
-
-\begin{codeexample}
-// C code:
-long max(long a, long b) {
-    if (a > b) return a;
-    else return b;
-}
-
-// Corresponding x86-64 assembly:
-max:
-    cmpq %rsi, %rdi      // Compare a (%rdi) and b (%rsi) by computing rdi - rsi
-    jle  .L_b_is_larger  // If a <= b, jump to .L_b_is_larger
-    movq %rdi, %rax      // Otherwise, return a (%rdi)
-    ret
-.L_b_is_larger:
-    movq %rsi, %rax      // Return b (%rsi)
-    ret
-\end{codeexample}
-
-\subsubsection{Conditional Moves (\texttt{cmov})}
-
-\begin{definition} \textbf{Conditional Move (\texttt{cmov}):} 
-Copies data from source to destination only if condition flags satisfy the specified predicate:
-$$\texttt{cmov}\langle\text{condition}\rangle \quad \text{Source}, \quad \text{Destination}$$
-If the condition is false, the instruction acts as a no-op (\texttt{nop}).
-\end{definition}
-
-\begin{remark} \textbf{Intuition \& Branch Prediction Optimization:} 
-Modern high-performance processors rely on deep pipelining (15--20 pipeline stages). To keep the pipeline full, the processor employs a \textbf{branch predictor} to speculate which way a conditional jump will go before the condition is evaluated.
-\begin{itemize}
-    \item When a branch is predicted correctly, execution proceeds without delay.
-    \item When a branch is \textbf{mispredicted}, the entire instruction pipeline must be flushed, throwing away partially executed instructions and costing \textbf{15--30 wasted clock cycles}.
-\end{itemize}
-A \textbf{conditional move (\texttt{cmov})} computes both potential outcomes and then conditionally selects the result using data flow rather than control flow jumps. Because there are no jump instructions, there is \textbf{zero branch misprediction penalty}!
-\end{remark}
-
-\begin{codeexample}
-// Optimizing max() with conditional move:
-max:
-    movq %rsi, %rax      // rax = b
-    cmpq %rsi, %rdi      // Compare a (%rdi) and b (%rsi)
-    cmovg %rdi, %rax     // If a > b, overwrite rax with a; else keep b
-    ret                  // Done! No branching, no pipeline stall!
-\end{codeexample}
-
-\subsection{Procedures and the Calling Convention (System V ABI)}
-
-\begin{definition} \textbf{The System V AMD64 Calling Convention:} 
-The standard Application Binary Interface (ABI) used on Linux and macOS defining how compiled functions interact, pass parameters, return values, and manage registers.
-\end{definition}
-
-\subsubsection{Argument Passing (The 6-Register Rule)}
-
-\begin{theorem} \textbf{Passing Function Arguments in Registers:} 
-Under the System V ABI, the first 6 integer or pointer arguments to a function are passed directly inside registers in strict order:
-\begin{enumerate}
-    \item 1st Argument: \texttt{\%rdi}
-    \item 2nd Argument: \texttt{\%rsi}
-    \item 3rd Argument: \texttt{\%rdx}
-    \item 4th Argument: \texttt{\%rcx}
-    \item 5th Argument: \texttt{\%r8}
-    \item 6th Argument: \texttt{\%r9}
-\end{enumerate}
-Any additional arguments (7th, 8th, etc.) are pushed onto the runtime stack in reverse order. The primary return value is returned in \texttt{\%rax} (and \texttt{\%rdx} for 128-bit results).
-\end{theorem}
-
-\begin{remark} \textbf{Mnemonic to Remember Arguments:} 
-A famous mnemonic to memorize the argument register sequence is:
-$$\textbf{rDI}ane's \quad \textbf{rSI}lk \quad \textbf{rDX}ress \quad \textbf{rCX}ost \quad \textbf{r8}9 \quad (\texttt{\%rdi}, \texttt{\%rsi}, \texttt{\%rdx}, \texttt{\%rcx}, \texttt{\%r8}, \texttt{\%r9})$$
-\end{remark}
-
-\subsubsection{Caller-Saved vs. Callee-Saved Registers}
-
-\begin{definition} \textbf{Register Preservation Roles:} 
-To ensure functions do not corrupt each other's local state, registers are strictly divided into two categories:
-\begin{itemize}
-    \item \textbf{Caller-Saved Registers (Call-Clobbered):}
-    $$\texttt{\%rax}, \quad \texttt{\%rdi}, \quad \texttt{\%rsi}, \quad \texttt{\%rdx}, \quad \texttt{\%rcx}, \quad \texttt{\%r8}, \quad \texttt{\%r9}, \quad \texttt{\%r10}, \quad \texttt{\%r11}$$
-    These registers can be freely modified by the called function (\emph{callee}). If the calling function (\emph{caller}) needs their values preserved across a \texttt{call}, the caller must save them on the stack prior to making the call.
-    
-    \item \textbf{Callee-Saved Registers (Preserved Registers):}
-    $$\texttt{\%rbx}, \quad \texttt{\%rbp}, \quad \texttt{\%r12}, \quad \texttt{\%r13}, \quad \texttt{\%r14}, \quad \texttt{\%r15}, \quad \texttt{\%rsp}$$
-    The called function (\emph{callee}) is strictly obligated to preserve these registers. If the callee intends to use any of them, it \textbf{must save their original values} (typically via \texttt{pushq}) upon entry, and \textbf{restore them} (via \texttt{popq}) before returning with \texttt{ret}.
-\end{itemize}
-\end{definition}
-
-\subsubsection{Procedure Control: \texttt{call} and \texttt{ret}}
-
-\begin{definition} \textbf{Mechanics of \texttt{call} and \texttt{ret}:} 
-Functions transfer control through the stack:
-\begin{itemize}
-    \item \textbf{\texttt{call Target}:}
-    \begin{enumerate}
-        \item Pushes the 8-byte \textbf{return address} (the memory address of the instruction immediately following the \texttt{call}) onto the stack:
-        $$\texttt{\%rsp} \leftarrow \texttt{\%rsp} - 8, \quad \text{Mem}[\texttt{\%rsp}] \leftarrow \texttt{\%rip}_{\text{next}}$$
-        \item Jumps to the target function: $\texttt{\%rip} \leftarrow \text{Target}$.
-    \end{enumerate}
-    \item \textbf{\texttt{ret}:}
-    \begin{enumerate}
-        \item Pops the return address off the top of the stack:
-        $$\texttt{\%rip} \leftarrow \text{Mem}[\texttt{\%rsp}], \quad \texttt{\%rsp} \leftarrow \texttt{\%rsp} + 8$$
-        \item Resumes execution at the retrieved address.
-    \end{enumerate}
-\end{itemize}
-\end{definition}
-
-\begin{important} \textbf{The 16-Byte Stack Alignment Requirement:} 
-The System V AMD64 ABI requires that the stack pointer \texttt{\%rsp} must be a multiple of 16 (16-byte aligned) immediately before any \texttt{call} instruction is issued. 
-When a \texttt{call} executes, it pushes the 8-byte return address, leaving \texttt{\%rsp} offset by 8 upon function entry. Functions must ensure their stack allocations preserve this 16-byte alignment before calling any sub-functions!
-\end{important}
-
-\subsection{Stack Frames, Local Storage, and Buffer Overflows}
-
-\begin{definition} \textbf{Stack Frame Anatomy:} 
-Each function invocation allocates a contiguous region of memory on the stack called a \textbf{stack frame}:
-\begin{itemize}
-    \item \textbf{Top of Frame (High Address):} 7th+ incoming arguments passed by caller, followed by the 8-byte Return Address.
-    \item \textbf{Saved Frame Pointer (\texttt{\%rbp}):} (Optional) Preserved base pointer of the caller.
-    \item \textbf{Saved Callee-Saved Registers:} Registers preserved by the function.
-    \item \textbf{Local Variables:} Local arrays or structures that cannot fit entirely inside registers.
-    \item \textbf{Outgoing Arguments (Low Address / \texttt{\%rsp}):} Space for arguments passed to called subroutines.
-\end{itemize}
+\begin{definition}
+    \textbf{Load Effective Address (\texttt{leaq S, D}):} Uses memory addressing syntax to compute the address expression of \texttt{S} and stores the \emph{value itself} into register \texttt{D} ($D \leftarrow \&S$) \textbf{without accessing memory} or modifying condition codes. Used for pointer generation and fast linear arithmetic ($x + k \cdot y + c$).
 \end{definition}
 
 \begin{codeexample}
-// Standard Function Prologue and Epilogue:
-function_example:
-    pushq %rbp              // Save caller's base pointer
-    movq %rsp, %rbp         // Set up new base pointer for current frame
-    subq $32, %rsp          // Allocate 32 bytes for local stack variables
-    
-    // ... Function Body ...
-    
-    movq %rbp, %rsp         // Deallocate local storage (or use 'leave')
-    popq %rbp               // Restore caller's base pointer
-    ret                     // Pop return address and return to caller
+movq (%rdi, %rcx, 8), %rax  // Memory read: rax = rdi[rcx] (reads 8B from memory)
+leaq (%rdi, %rcx, 8), %rax  // Address calc: rax = rdi + 8*rcx (no memory access)
+leaq (%rdi, %rdi, 2), %rax  // Fast arithmetic: rax = 3 * rdi
 \end{codeexample}
 
-\begin{definition} \textbf{Buffer Overflow (Stack Smashing):} 
-Occurs when a program writes data beyond the allocated boundary of a stack buffer (e.g., using unsafe functions like \texttt{gets()} or \texttt{strcpy()}). 
-Because the runtime stack grows downward, local buffers are located below the saved return address. Overflowing the buffer writes upwards, overwriting the saved frame pointer and the \textbf{saved return address}. When \texttt{ret} executes, the CPU pops the attacker-controlled address into \texttt{\%rip}, hijacking program control flow.
+\begin{definition}
+    \textbf{Standard Arithmetic \& Logical Instructions:}
+    \begin{itemize}
+        \item \textbf{Unary:} \texttt{incq D} ($D+1$), \texttt{decq D} ($D-1$), \texttt{negq D} ($-D$), \texttt{notq D} ($\sim D$).
+        \item \textbf{Binary:} \texttt{addq S, D} ($D \leftarrow D + S$), \texttt{subq S, D} ($D \leftarrow D - S$), \texttt{imulq S, D} ($D \leftarrow D \times S$).
+        \item \textbf{Logical:} \texttt{xorq}, \texttt{andq}, \texttt{orq}. (\texttt{xorl \%eax, \%eax} is the standard idiom to set \texttt{\%rax} $= 0$).
+        \item \textbf{Shifts:} \texttt{salq}/\texttt{shlq} (left shift), \texttt{sarq} (arithmetic right shift, sign-extends), \texttt{shrq} (logical right shift, zero-fills). Variable shift counts must be in \texttt{\%cl}.
+    \end{itemize}
 \end{definition}
 
-\begin{definition} \textbf{Modern Stack Protection Defenses:}
-\begin{itemize}
-    \item \textbf{Stack Canaries (\texttt{-fstack-protector}):} The compiler inserts a random secret value (canary) from \texttt{\%fs:40} between local stack buffers and the saved return address. Before executing \texttt{ret}, the function compares the canary against \texttt{\%fs:40}. If a buffer overflow altered the canary, the program aborts with a stack smashing crash rather than executing attacker code.
-    \item \textbf{No-Execute (NX / W\^{}X Bit):} Memory pages containing the stack are marked as read-write but strictly non-executable, preventing injected shellcode on the stack from executing.
-    \item \textbf{Address Space Layout Randomization (ASLR):} Randomizes the base addresses of the stack, heap, and shared libraries upon every execution, making it difficult for attackers to predict fixed code injection targets.
-\end{itemize}
+\subsection{Condition Codes, \texttt{setX}, and \texttt{jX}}
+
+\begin{definition}
+    \textbf{Condition Codes:} Single-bit flags set implicitly by arithmetic instructions (except \texttt{leaq}) or explicitly by comparison instructions:
+    \begin{itemize}
+        \item \textbf{CF (Carry Flag):} Unsigned overflow (carry out of MSB).
+        \item \textbf{ZF (Zero Flag):} Result is zero ($== 0$).
+        \item \textbf{SF (Sign Flag):} Result is negative ($\text{MSB} == 1$).
+        \item \textbf{OF (Overflow Flag):} Signed two's-complement overflow.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Explicit Comparisons (\texttt{cmp} and \texttt{test}):} Update condition codes without altering operands:
+    \begin{itemize}
+        \item \textbf{\texttt{cmpq S2, S1}:} Sets flags based on $S_1 - S_2$ (note AT\&T operand order: compares $S_1$ with $S_2$).
+        \item \textbf{\texttt{testq S2, S1}:} Sets flags based on $S_1 \ \& \ S_2$ (e.g., \texttt{testq \%rax, \%rax} checks if \texttt{\%rax} is $0$ or negative).
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Reading Condition Codes (\texttt{setX}) and Branching (\texttt{jX}):}
+    \begin{itemize}
+        \item \textbf{\texttt{setX D}:} Sets a single low-order byte register (e.g., \texttt{\%al}) to \texttt{1} if condition \texttt{X} holds, or \texttt{0} otherwise (follow with \texttt{movzbl \%al, \%eax} to clear upper bits).
+        \item \textbf{\texttt{jX Label}:} Conditionally jumps to \texttt{Label} if condition \texttt{X} holds (\texttt{jmp} for unconditional jump).
+    \end{itemize}
+    \begin{center}
+        \renewcommand{\arraystretch}{1.15}
+        \setlength{\tabcolsep}{6pt}
+        \begin{tabular}{|l|l|l|l|}
+            \hline
+            \textbf{Suffix (\texttt{X})} & \textbf{Condition} & \textbf{Flags Checked} & \textbf{Description} \\
+            \hline
+            \texttt{e} / \texttt{z} & $==$ / Zero & $\text{ZF}$ & Equal / Zero \\
+            \texttt{ne} / \texttt{nz} & $\neq$ / Non-zero & $\sim\text{ZF}$ & Not equal / Not zero \\
+            \texttt{s} / \texttt{ns} & $< 0$ / $\ge 0$ & $\text{SF}$ / $\sim\text{SF}$ & Negative / Non-negative \\
+            \hline
+            \texttt{g} & Signed $>$ & $\sim(\text{SF} \oplus \text{OF}) \ \& \ \sim\text{ZF}$ & Greater (signed) \\
+            \texttt{ge} & Signed $\ge$ & $\sim(\text{SF} \oplus \text{OF})$ & Greater or equal (signed) \\
+            \texttt{l} & Signed $<$ & $\text{SF} \oplus \text{OF}$ & Less (signed) \\
+            \texttt{le} & Signed $\le$ & $(\text{SF} \oplus \text{OF}) \mid \text{ZF}$ & Less or equal (signed) \\
+            \hline
+            \texttt{a} & Unsigned $>$ & $\sim\text{CF} \ \& \ \sim\text{ZF}$ & Above (unsigned) \\
+            \texttt{ae} & Unsigned $\ge$ & $\sim\text{CF}$ & Above or equal (unsigned) \\
+            \texttt{b} & Unsigned $<$ & $\text{CF}$ & Below (unsigned) \\
+            \texttt{be} & Unsigned $\le$ & $\text{CF} \mid \text{ZF}$ & Below or equal (unsigned) \\
+            \hline
+        \end{tabular}
+    \end{center}
 \end{definition}

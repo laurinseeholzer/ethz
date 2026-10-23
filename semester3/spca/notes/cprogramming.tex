@@ -1,19 +1,19 @@
-\section{C Programming}
+1   1§\section{C Programming}
 
 \subsection{History and Toolchain}
 
-C is very fast, offers preprocessing and is close to metal. What you won't find in C are objects, classes, traits, features, methods, interfaces, fancy types, exception handling.
+C is very fast, offers preprocessing and is close to metal. What you won't find in C are objects, classes, traits, features, methods, interfaces, fancy types AND exception handling.
 
 \begin{important}
     Most importantly C does not offer memory managment, it uses pointers that offer direct access to memory adresses.
 \end{important}
 
- We'll use C99, the most commonly used variant, in this course.
+We'll use C99, the most commonly used variant, in this course.
 
 \begin{codeexample}
 #include <studio.h>
 
-int main(int argc, char *argv[]) 
+int main(int argc, char *argv[])
 {
     printf("hello, world\n");
     return 0;
@@ -46,17 +46,13 @@ return (Expression)
 \end{codeexample}
 
 \begin{important}
-    \textbf{Don't use goto:} It's almost never a good idea, usually argued on performance.
+    \textbf{Don't use goto:} It's almost never a good idea, usually argued on performance. (Exception: goto can be used to break out of multiple nested loops or to cleanup nested code.)
 \end{important}
-
-\begin{remark}
-    goto can be used to break out of multiple nested loops or to cleanup nested code. 
-\end{remark}
 
 \subsection{Basic types in C}
 
 \begin{codeexample}
-    {static, const} type vairable = value;
+{static, const} type vairable = value;
 \end{codeexample}
 
 \begin{remark}
@@ -64,7 +60,7 @@ return (Expression)
 \end{remark}
 
 \begin{definition}
-    \textbf{Scope:} The scope of a variable in C is the Block it is definied in (lexically typed). 
+    \textbf{Scope:} The scope of a variable in C is the Block it is definied in (lexically typed).
 \end{definition}
 
 \begin{remark}
@@ -77,7 +73,7 @@ return (Expression)
         \item \textbf{char} is always 1 Byte
         \item \textbf{int \& float} are always 4 Bytes
         \item \textbf{long long \& double} are always 8 Bytes
-    \end{itemize} 
+    \end{itemize}
 \end{definition}
 
 \begin{definition}
@@ -85,11 +81,11 @@ return (Expression)
 \end{definition}
 
 \begin{definition}
-    \textbf{Void:} Void is a type without a value and can be used for raw memory pointers or functions without returnvalue. 
+    \textbf{Void:} Void is a type without a value and can be used for raw memory pointers or functions without returnvalue.
 \end{definition}
 
 \begin{definition}
-    \textbf{enums:} used to enumerate/sequentially assign values to variables. 
+    \textbf{enums:} used to enumerate/sequentially assign values to variables.
 \end{definition}
 
 \begin{codeexample}
@@ -102,17 +98,17 @@ eum { ThisIsZero, ThisIsOne, ThisIsTwo} numbers;
 () []
 ! ~ ++ -- + - * & (type) sizeof
 * / %
-+ - 
-<< >> 
-< <= > >= 
-== != 
-& 
-^ 
-| 
-&& 
-|| 
++ -
+<< >>
+< <= > >=
+== !=
+&
+^
+|
+&&
+||
 ?:
-= += -= *= /= %= &= ^= |= <<= >>= 
+= += -= *= /= %= &= ^= |= <<= >>=
 ,
 \end{codeexample}
 
@@ -137,13 +133,13 @@ int a = {test}? ifTrue : ifFalse;
 \end{definition}
 
 \begin{important}
-    \textbf{Casting} of most types to most other types in possible in C. What exactly happens is very complicated and determined by the types involved. 
+    \textbf{Casting} of most types to most other types in possible in C. What exactly happens is very complicated and determined by the types involved.
 \end{important}
 
 \subsection{Arrays}
 
 \begin{definition}
-    Arrays are finite vectors of variables which all have the same type. 
+    Arrays are finite vectors of variables which all have the same type.
 \end{definition}
 
 \begin{important}
@@ -172,25 +168,25 @@ char s2[6] = {'h', 'e' , 'l', 'l', 'o', 0};
     There are many libraries, to copy, compare, concatenate... strings in C. The language itself does not support any of these operations.
 \end{remark}
 
-\subsection{Preprocessing}  
-\begin{definition} 
-\textbf{Preprocessing} replaces tokens in a C source file before compilation occurs. Text replacements and macros are managed using directives beginning with \texttt{\#}.
-\end{definition}  
+\subsection{Preprocessing}
+\begin{definition}
+    \textbf{Preprocessing} replaces tokens in a C source file before compilation occurs. Text replacements and macros are managed using directives beginning with \texttt{\#}.
+\end{definition}
 
 \begin{codeexample}
 #define FOO BAZ       // Replaces FOO with BAZ
 #define BAR(x) (x+3)  // Replaces BAR(x) with (x+3)
 #undef FOO            // Undefines FOO; no replacements after this point
 #define QUX           // Defines QUX as a null string
-\end{codeexample}  
+\end{codeexample}
 
-\begin{remark} 
-Complex multi-statement macros wrap code in a \texttt{do \{ ... \} while(0)} loop to safely absorb trailing semicolons and prevent syntax errors when used in control flow statements (such as \texttt{if}-\texttt{else}).
-\end{remark}  
+\begin{remark}
+    Complex multi-statement macros wrap code in a \texttt{do \{ ... \} while(0)} loop to safely absorb trailing semicolons and prevent syntax errors when used in control flow statements (such as \texttt{if}-\texttt{else}).
+\end{remark}
 
-\begin{remark} 
-Conditional compilation directives include or exclude blocks of code based on conditions evaluated by the preprocessor:
-\end{remark}  
+\begin{remark}
+    Conditional compilation directives include or exclude blocks of code based on conditions evaluated by the preprocessor:
+\end{remark}
 
 \begin{codeexample}
 #if expression
@@ -203,46 +199,46 @@ Conditional compilation directives include or exclude blocks of code based on co
 
 #ifdef FOO     // Shorthand for #if defined(FOO)
 #ifndef BAR    // Shorthand for #if !defined(BAR)
-\end{codeexample}  
-
-\begin{remark} 
-Macro parameters can be manipulated using special operators:
-\begin{itemize}
-    \item \texttt{\#c} (Stringifying): Converts a macro parameter into a string literal.
-    \item \texttt{x \#\# y} (Token Pasting / Concatenation): Merges two tokens into a single token at compile-time.
-\end{itemize}
-\end{remark}  
-
-\begin{remark} 
-The C preprocessor provides several standard predefined macros:
-\begin{itemize}
-    \item \texttt{\_\_FILE\_\_}: Name of the current source file.
-    \item \texttt{\_\_LINE\_\_}: Current line number.
-    \item \texttt{\_\_DATE\_\_} / \texttt{\_\_TIME\_\_}: Date and time when the preprocessor runs.
-    \item \texttt{\_\_STDC\_\_} / \texttt{\_\_STDC\_VERSION\_\_}: Standard C compliance and version info.
-\end{itemize}
-\end{remark}  
-
-\subsection{Modularity}  
-
-\begin{definition} 
-\textbf{Declaration vs. Definition}:
-\begin{itemize}
-    \item A \textbf{declaration} specifies that an entity (function prototype, type, or global variable) exists somewhere without allocating memory for it.
-    \item A \textbf{definition} provides the actual implementation or reserves memory for the variable/function.
-\end{itemize}
-\end{definition}  
-
-\begin{definition} 
-A \textbf{module} consists of a public interface defined in a header file (\texttt{module.h}) containing declarations and macros, and an implementation in a source file (\texttt{module.c}) containing definitions and private declarations.
-\end{definition}  
+\end{codeexample}
 
 \begin{remark}
-Declarations can be annotated with linkage modifiers:
-\begin{itemize}
-    \item \texttt{extern}: The definition is located elsewhere (in another object module or compilation unit).
-    \item \texttt{static}: Limits the visibility/scope of a function or global variable strictly to the current compilation unit.
-\end{itemize}
+    Macro parameters can be manipulated using special operators:
+    \begin{itemize}
+        \item \texttt{\#c} (Stringifying): Converts a macro parameter into a string literal.
+        \item \texttt{x \#\# y} (Token Pasting / Concatenation): Merges two tokens into a single token at compile-time.
+    \end{itemize}
+\end{remark}
+
+\begin{remark}
+    The C preprocessor provides several standard predefined macros:
+    \begin{itemize}
+        \item \texttt{\_\_FILE\_\_}: Name of the current source file.
+        \item \texttt{\_\_LINE\_\_}: Current line number.
+        \item \texttt{\_\_DATE\_\_} / \texttt{\_\_TIME\_\_}: Date and time when the preprocessor runs.
+        \item \texttt{\_\_STDC\_\_} / \texttt{\_\_STDC\_VERSION\_\_}: Standard C compliance and version info.
+    \end{itemize}
+\end{remark}
+
+\subsection{Modularity}
+
+\begin{definition}
+    \textbf{Declaration vs. Definition}:
+    \begin{itemize}
+        \item A \textbf{declaration} specifies that an entity (function prototype, type, or global variable) exists somewhere without allocating memory for it.
+        \item A \textbf{definition} provides the actual implementation or reserves memory for the variable/function.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    A \textbf{module} consists of a public interface defined in a header file (\texttt{module.h}) containing declarations and macros, and an implementation in a source file (\texttt{module.c}) containing definitions and private declarations.
+\end{definition}
+
+\begin{remark}
+    Declarations can be annotated with linkage modifiers:
+    \begin{itemize}
+        \item \texttt{extern}: The definition is located elsewhere (in another object module or compilation unit).
+        \item \texttt{static}: Limits the visibility/scope of a function or global variable strictly to the current compilation unit.
+    \end{itemize}
 \end{remark}
 
 \begin{codeexample}
@@ -253,27 +249,27 @@ Declarations can be annotated with linkage modifiers:
 // Declarations, function prototypes, typedefs, and macros
 
 #endif // FILE_H
-\end{codeexample}  
+\end{codeexample}
 
-\subsection{Assertions}  
+\subsection{Assertions}
 
-\begin{definition} 
-An \textbf{assertion} (\texttt{assert(expression)}) is a macro that evaluates a scalar condition at runtime. If the condition evaluates to false (\texttt{0}), it prints diagnostic details (file name, line number, expression) to standard error and terminates execution via \texttt{abort()}.
-\end{definition}  
+\begin{definition}
+    An \textbf{assertion} (\texttt{assert(expression)}) is a macro that evaluates a scalar condition at runtime. If the condition evaluates to false (\texttt{0}), it prints diagnostic details (file name, line number, expression) to standard error and terminates execution via \texttt{abort()}.
+\end{definition}
 
 \begin{remark}
-Assertions are tools for developers to detect program bugs and verify invariants during development. They should not be used to catch standard runtime or user errors (such as failed file opens). Assertions can be completely disabled in production builds by defining the \texttt{NDEBUG} macro (\texttt{-DNDEBUG}).
+    Assertions are tools for developers to detect program bugs and verify invariants during development. They should not be used to catch standard runtime or user errors (such as failed file opens). Assertions can be completely disabled in production builds by defining the \texttt{NDEBUG} macro (\texttt{-DNDEBUG}).
 \end{remark}
 
-\subsection{Style}  
+\subsection{Style}
 
-\begin{remark} 
-Key guidelines for writing clean C code:
-\begin{itemize}
-    \item Maintain clear formatting and consistent indentation to highlight block structure.
-    \item Use explicit parentheses when in doubt to avoid operator precedence ambiguities.
-    \item Use descriptive names for global entities and short names for local variables.
-    \item Eliminate magic numbers using \texttt{const}, \texttt{enum}, or \texttt{\#define} constants.
-    \item Avoid function-like macros where regular inline functions suffice.
-\end{itemize}
+\begin{remark}
+    Key guidelines for writing clean C code:
+    \begin{itemize}
+        \item Maintain clear formatting and consistent indentation to highlight block structure.
+        \item Use explicit parentheses when in doubt to avoid operator precedence ambiguities.
+        \item Use descriptive names for global entities and short names for local variables.
+        \item Eliminate magic numbers using \texttt{const}, \texttt{enum}, or \texttt{\#define} constants.
+        \item Avoid function-like macros where regular inline functions suffice.
+    \end{itemize}
 \end{remark}

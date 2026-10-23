@@ -12,13 +12,9 @@
     invert all bits and add 1 ($\sim x + 1$).
 \end{definition}
 
-\begin{lemma}
-    \textbf{Ranges ($w$ bits):}
-    \begin{itemize}
-        \item Unsigned: $0$ to $2^w - 1$
-        \item Signed: $-2^{w-1}$ to $2^{w-1} - 1$
-    \end{itemize}
-\end{lemma}
+\begin{remark}
+    Unsigned integers range from $0$ to $2^w - 1$ while Signed integers range from $-2^{w-1}$ to $2^{w-1} - 1$
+\end{remark}
 
 \begin{lemma}
     \textbf{Casting between signed and unsigned} does not change the underlying
@@ -41,14 +37,14 @@
     \textbf{Shift Operations:}
     \begin{itemize}
         \item \textbf{Left Shift} (\verb|x << y|): Shifts bits left by $y$
-              positions, filling with 0s on the right. Equivalent to multiplying
-              by $2^y$.
+        positions, filling with 0s on the right. Equivalent to multiplying
+        by $2^y$.
         \item \textbf{Logical Right Shift} (\verb|x >> y|): Used for unsigned
-              integers. Shifts right by $y$ positions, filling with 0s on the
-              left.
+        integers. Shifts right by $y$ positions, filling with 0s on the
+        left.
         \item \textbf{Arithmetic Right Shift} (\verb|x >> y|): Used for signed
-              integers. Shifts right by $y$ positions, filling with the sign bit
-              on the left.
+        integers. Shifts right by $y$ positions, filling with the sign bit
+        on the left.
     \end{itemize}
 \end{definition}
 
@@ -68,11 +64,11 @@
     \textbf{Using Shift for Multiplication/Division:}
     \begin{itemize}
         \item Multiplication by a power of 2 ($x \cdot 2^y$) can be optimized as
-              \verb|x << y|.
+        \verb|x << y|.
         \item Division by a power of 2 ($x / 2^y$) can be optimized as
-              \verb|x >> y|. For signed negative integers, a bias is added
-              before shifting to round towards zero:
-              \verb|(x + (1 << y) - 1) >> y|.
+        \verb|x >> y|. For signed negative integers, a bias is added
+        before shifting to round towards zero:
+        \verb|(x + (1 << y) - 1) >> y|.
     \end{itemize}
 \end{remark}
 
