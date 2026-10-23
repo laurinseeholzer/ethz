@@ -2,7 +2,7 @@ PWD /home/laurin/dev/ethz/semester3/numcs
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
-INPUT numcs.tex
+INPUT /home/laurin/dev/ethz/semester3/numcs/numcs.tex
 OUTPUT build/numcs.log
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/article.cls
@@ -224,12 +224,10 @@ INPUT /usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.enc
 INPUT ./notes/interpolation.tex
 INPUT ./notes/interpolation.tex
 INPUT notes/interpolation.tex
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/inconsolata/ot1-zi4b-0.tfm
 INPUT ./notes/quadrature.tex
 INPUT ./notes/quadrature.tex
 INPUT notes/quadrature.tex
 INPUT build/numcs.aux
-INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4b.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb

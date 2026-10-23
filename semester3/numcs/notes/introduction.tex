@@ -122,7 +122,13 @@ $\log_{10}(h)$ & \multicolumn{1}{c}{relativer Fehler} \\ \hline
 \end{remark}  
 
 \begin{theorem}
-    \textbf{Complex Step Derivative:} If $f$ is analytic, we can use a complex step to perform numerically stable differentiation without cancellation:$$f(x_0 + ih) = f(x_0) + i h f'(x_0) - \frac{h^2}{2} f''(x_0) - \frac{i h^3}{6} f'''(x_0) + \mathcal{O}(h^4)$$Taking the imaginary part yields:$$\text{Im}\left(f(x_0 + ih)\right) = h f'(x_0) - \frac{h^3}{6} f'''(x_0) + \mathcal{O}(h^5)$$$$\implies f'(x_0) = \frac{\text{Im}\left(f(x_0 + ih)\right)}{h} + \mathcal{O}(h^2) \approx \frac{\text{Im}\left(f(x_0 + ih)\right)}{h}$$Since this formulation involves no subtraction of function values, it is immune to subtractive cancellation for arbitrarily small values of $h$.
+    \textbf{Complex Step Derivative:} If $f$ is analytic, we can use a complex step to perform numerically stable differentiation without cancellation. Using taylor approximation we get:
+    $$f(x_0 + ih) = f(x_0) + i h f'(x_0) - \frac{h^2}{2} f''(x_0) - \frac{i h^3}{6} f'''(x_0) + \mathcal{O}(h^4)$$
+    Taking the imaginary part yields:
+    $$\text{Im}\left(f(x_0 + ih)\right) = h f'(x_0) - \frac{h^3}{6} f'''(x_0) + \mathcal{O}(h^5)$$
+    hence by rearanging we get
+    $$\implies f'(x_0) = \frac{\text{Im}\left(f(x_0 + ih)\right)}{h} + \mathcal{O}(h^2) \approx \frac{\text{Im}\left(f(x_0 + ih)\right)}{h}$$
+    Since this formulation involves no subtraction of function values, it is immune to subtractive cancellation for arbitrarily small values of $h$.
 \end{theorem}  
 
 \subsubsection{Convergence Acceleration via Richardson Extrapolation}
@@ -132,7 +138,9 @@ $\log_{10}(h)$ & \multicolumn{1}{c}{relativer Fehler} \\ \hline
 \end{theorem}
 
 \begin{theorem}
-    \textbf{Richardson Extrapolation:} By combining approximations evaluated at step sizes $h$ and $h/2$, the leading error term $c_1 h^2$ can be eliminated:$$d_1(h) = \frac{4 d(h/2) - d(h)}{3}$$The refined approximation $d_1(h)$ achieves an increased convergence order of $\mathcal{O}(h^4)$:$$f'(x) - d_1(h) = \tilde{c}_2 h^4 + \tilde{c}_3 h^6 + \dots$$
+    \textbf{Richardson Extrapolation:} By combining approximations evaluated at step sizes $h$ and $h/2$, the leading error term $c_1 h^2$ can be eliminated:
+    $$f'(x) = d(h)+c_1h^2 ..., \quad f'(x) = d(\frac{h}{2}) + c_1 \frac{h}{2}^2 ... \quad \implies \quad d_1(h) = \frac{4 d(h/2) - d(h)}{3}$$
+    The refined approximation $d_1(h)$ achieves an increased convergence order of $\mathcal{O}(h^4)$:$$f'(x) - d_1(h) = \tilde{c}_2 h^4 + \tilde{c}_3 h^6 + \dots$$
 \end{theorem}
 
 \begin{definition}
@@ -141,13 +149,10 @@ $\log_{10}(h)$ & \multicolumn{1}{c}{relativer Fehler} \\ \hline
 
 \subsection{Matrices \& Compute-Work}
 
-\begin{definition}
+\begin{important}
     In NumCS we define the Compute-Work as the theoretical, asymototic number of elementary operations.
-\end{definition}
-
-\begin{remark}
     Observe that this definition has (almost) noting to do with the actual compute-time on a chip.
-\end{remark}
+\end{important}
 
 \begin{example}
     \textbf{Worst case Compute-Work for Gauss-Elimination}
@@ -158,9 +163,9 @@ $\log_{10}(h)$ & \multicolumn{1}{c}{relativer Fehler} \\ \hline
     \end{itemize}
 \end{example}
 
-\begin{remark}
+\begin{important}
     Numpy does not automatically adjust algorithms to the given inputs. We have to manually exploit the structure of ex. matrices and vectors.
-\end{remark}
+\end{important}
 
 \begin{example}
     Let $D$ be a diagonal matrix and let $A$ be some other matrix. Using $np.dot(D,A)$ will result in $O(n^3)$ runtime just like any normal matrix multiplication. We have to manually exploit the structure of $D$ by broadcasting the diagonal entries to a vector and then use numpy to multiply this vector by each row.

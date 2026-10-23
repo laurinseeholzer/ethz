@@ -8,227 +8,173 @@ where $c_j \in [a, b]$ are the \textbf{quadrature nodes} and $w_j \in \mathbb{R}
 
 \subsection{Polynomial Interpolation}
 
-\begin{definition} \textbf{Interpolatory Quadrature via Lagrange Basis:} 
-To approximate the integral of an unknown or complicated function $f(x)$, we interpolate $f$ at $n+1$ distinct nodes $c_0, c_1, \dots, c_n \in [a,b]$ with a polynomial $p_n \in \mathcal{P}_n$, and integrate $p_n$ analytically:
-$$I(f) \approx \int_a^b p_n(x) \, dx$$
-Expressing the interpolant $p_n(x)$ in the \textbf{Lagrange basis} $L_j(x) = \prod_{k \neq j} \frac{x - c_k}{c_j - c_k}$:
-$$p_n(x) = \sum_{j=0}^n f(c_j) L_j(x)$$
-Integrating term-by-term yields:
-$$\int_a^b p_n(x) \, dx = \sum_{j=0}^n \left( \int_a^b L_j(x) \, dx \right) f(c_j)$$
-Thus, the quadrature weights are uniquely determined by integrating the Lagrange basis polynomials:
-$$w_j = \int_a^b L_j(x) \, dx \quad \text{for } j = 0, 1, \dots, n$$
+\begin{definition}
+    \textbf{Interpolatory Quadrature via Lagrange Basis:} To approximate the integral of an unknown or complicated function $f(x)$, we interpolate $f$ at $n+1$ distinct nodes $c_0, c_1, \dots, c_n \in [a,b]$ with a polynomial $p_n \in \mathcal{P}_n$, and integrate $p_n$ analytically:
+    $$I(f) \approx \int_a^b p_n(x) \, dx$$
+    Expressing the interpolant $p_n(x)$ in the \textbf{Lagrange basis} $L_j(x) = \prod_{k \neq j} \frac{x - c_k}{c_j - c_k}$:
+    $$p_n(x) = \sum_{j=0}^n f(c_j) L_j(x)$$
+    Integrating term-by-term yields:
+    $$\int_a^b p_n(x) \, dx = \sum_{j=0}^n \left( \int_a^b L_j(x) \, dx \right) f(c_j)$$
+    Thus, the quadrature weights are uniquely determined by integrating the Lagrange basis polynomials:
+    $$w_j = \int_a^b L_j(x) \, dx \quad \text{for } j = 0, 1, \dots, n$$
 \end{definition}
 
-\begin{theorem} \textbf{Degree of Exactness:} 
-An interpolatory quadrature rule with $n+1$ nodes has degree of exactness at least $n$: it integrates every polynomial $p \in \mathcal{P}_n$ exactly, because polynomial interpolation reproduces polynomials of degree $\le n$ without error ($p_n \equiv p$).
-\end{theorem}
+\begin{remark}
+    An interpolatory quadrature rule with $n+1$ nodes has degree of exactness at least $n$: it integrates every polynomial $p \in \mathcal{P}_n$ exactly, because polynomial interpolation reproduces polynomials of degree $\le n$ without error ($p_n \equiv p$).
+\end{remark}
 
-\begin{important} \textbf{Runge's Phenomenon in Quadrature:} 
-Just as high-degree polynomial interpolation on \textbf{equidistant nodes} suffers from Runge's phenomenon (wild oscillations near the boundary), using equidistant nodes for high-order quadrature leads to severe instability. 
-For $n \ge 8$, the weights $w_j = \int_a^b L_j(x) dx$ begin to take on alternating negative signs, and:
-$$\sum_{j=0}^n |w_j| \xrightarrow{n \to \infty} \infty \quad \text{exponentially}$$
-Since the condition number of quadrature is $\sum |w_j|$, large opposing weights lead to \textbf{catastrophic numerical cancellation}. Therefore, high-degree polynomial interpolation on equidistant nodes should never be used for quadrature.
+\begin{important}
+    \textbf{Runge's Phenomenon in Quadrature:} Just as high-degree polynomial interpolation on \textbf{equidistant nodes} suffers from Runge's phenomenon (wild oscillations near the boundary), using equidistant nodes for high-order quadrature leads to severe instability.
+    For $n \ge 8$, the weights $w_j = \int_a^b L_j(x) dx$ begin to take on alternating negative signs, and:
+    $$\sum_{j=0}^n |w_j| \xrightarrow{n \to \infty} \infty \quad \text{exponentially}$$
+    Since the condition number of quadrature is $\sum |w_j|$, large opposing weights lead to \textbf{catastrophic numerical cancellation}. Therefore, high-degree polynomial interpolation on equidistant nodes should never be used for quadrature.
 \end{important}
 
 \subsection{Composite Quadrature Rules}
 
-\begin{definition} \textbf{Domain Partitioning ($h$-Refinement):} 
-Instead of increasing the polynomial degree $n$ over the whole interval, we keep the degree low and divide $[a,b]$ into $N$ smaller subintervals of uniform width $h = \frac{b-a}{N}$:
-$$a = x_0 < x_1 < x_2 < \dots < x_N = b, \quad \text{where } x_i = a + i h$$
-The total integral is the sum of integrals over each subinterval $[x_{i-1}, x_i]$:
-$$\int_a^b f(x) \, dx = \sum_{i=1}^N \int_{x_{i-1}}^{x_i} f(x) \, dx$$
+\begin{definition}
+    \textbf{Domain Partitioning ($h$-Refinement):} Instead of increasing the polynomial degree $n$ over the whole interval, we keep the degree low and divide $[a,b]$ into $N$ smaller subintervals of uniform width $h = \frac{b-a}{N}$:
+    $$a = x_0 < x_1 < x_2 < \dots < x_N = b, \quad \text{where } x_i = a + i h$$
+    The total integral is the sum of integrals over each subinterval $[x_{i-1}, x_i]$:
+    $$\int_a^b f(x) \, dx = \sum_{i=1}^N \int_{x_{i-1}}^{x_i} f(x) \, dx$$
 \end{definition}
 
 \subsubsection{The Midpoint Rule}
 
-\begin{definition} \textbf{Composite Midpoint Rule:} 
-Approximates each subinterval's integral by the area of a rectangle whose height is the function value at the subinterval midpoint $x_{i-1} + \frac{1}{2}h$:
-$$Q_N^{MP}(f) := h \sum_{i=1}^N f\left(x_{i-1} + \frac{1}{2}h\right)$$
+\begin{definition}
+    \textbf{Midpoint Rule:} Approximates each subinterval's integral by the area of a rectangle whose height is the function value at the subinterval midpoint $x_{i-1} + \frac{1}{2}h$:
+    $$Q_N^{MP}(f) := h \sum_{i=1}^N f\left(x_{i-1} + \frac{1}{2}h\right)$$
 \end{definition}
 
-\begin{theorem} \textbf{Midpoint Error:} 
-For $f \in C^2[a,b]$, the composite midpoint error satisfies:
-$$|I(f) - Q_N^{MP}(f)| = \frac{b-a}{24} h^2 |f''(\xi)| = \mathcal{O}(h^2) \quad \text{for some } \xi \in [a,b]$$
+\begin{theorem}
+    \textbf{Midpoint Error:} For $f \in C^2[a,b]$, the composite midpoint error satisfies:
+    $$|I(f) - Q_N^{MP}(f)| = \frac{b-a}{24} h^2 |f''(\xi)| = \mathcal{O}(h^2) \quad \text{for some } \xi \in [a,b]$$
 \end{theorem}
 
-\begin{remark} \textbf{Intuition for the Midpoint "Bonus Degree":} 
-Although the midpoint rule approximates $f$ with a degree-0 constant, it integrates linear functions $f(x) = c_1 x + c_0$ exactly! By symmetry around the midpoint $m$, the odd linear error term $(x-m)$ integrates to zero: the triangular error above the midpoint rectangle exactly cancels the triangular error below it.
+\begin{remark}
+    \textbf{Intuition for the Midpoint "Bonus Degree":} Although the midpoint rule approximates $f$ with a degree-0 constant, it integrates linear functions $f(x) = c_1 x + c_0$ exactly! By symmetry around the midpoint $m$, the odd linear error term $(x-m)$ integrates to zero: the triangular error above the midpoint rectangle exactly cancels the triangular error below it.
 \end{remark}
 
 \subsubsection{The Trapezoidal Rule}
 
-\begin{definition} \textbf{Composite Trapezoidal Rule:} 
-Approximates each subinterval's integral as the trapezoid spanned by its endpoints:
-\begin{align*}
-Q_N^{Trap}(f) &:= \sum_{i=1}^N \frac{h}{2} \Big(f(x_{i-1}) + f(x_i)\Big) \\
-&= h \left[ \frac{1}{2}f(x_0) + f(x_1) + f(x_2) + \dots + f(x_{N-1}) + \frac{1}{2}f(x_N) \right]
-\end{align*}
-Every interior node is shared between adjacent intervals and receives weight $h$, while boundary endpoints receive weight $\frac{h}{2}$.
+\begin{definition}
+    \textbf{Trapezoidal Rule:} Approximates each subinterval's integral as the trapezoid spanned by its endpoints:
+    \begin{align*}
+        Q_N^{Trap}(f) &:= \sum_{i=1}^N \frac{h}{2} \Big(f(x_{i-1}) + f(x_i)\Big) \\
+        &= h \left[ \frac{1}{2}f(x_0) + f(x_1) + f(x_2) + \dots + f(x_{N-1}) + \frac{1}{2}f(x_N) \right]
+    \end{align*}
+    Every interior node is shared between adjacent intervals and receives weight $h$, while boundary endpoints receive weight $\frac{h}{2}$.
 \end{definition}
 
-\begin{theorem} \textbf{Trapezoidal Error:} 
-For $f \in C^2[a,b]$, the composite trapezoidal error satisfies:
-$$|I(f) - Q_N^{Trap}(f)| = \frac{b-a}{12} h^2 |f''(\eta)| = \mathcal{O}(h^2) \quad \text{for some } \eta \in [a,b]$$
-Notice that the midpoint rule is \textbf{twice as accurate} as the trapezoidal rule ($\frac{1}{24}$ vs $\frac{1}{12}$) and their leading errors have opposite signs!
+\begin{theorem}
+    \textbf{Trapezoidal Error:} For $f \in C^2[a,b]$, the composite trapezoidal error satisfies:
+    $$|I(f) - Q_N^{Trap}(f)| = \frac{b-a}{12} h^2 |f''(\eta)| = \mathcal{O}(h^2) \quad \text{for some } \eta \in [a,b]$$
 \end{theorem}
 
 \subsubsection{Simpson's Rule}
 
-\begin{definition} \textbf{Composite Simpson's Rule:} 
-Interpolates $f$ with a quadratic parabola over each subinterval using the two endpoints and the midpoint, weighted as $\frac{h}{6}(1, 4, 1)$:
-$$Q_N^{Simp}(f) := \frac{h}{6} \sum_{i=1}^N \left[ f(x_{i-1}) + 4 f\left(\frac{x_{i-1}+x_i}{2}\right) + f(x_i) \right]$$
+\begin{definition}
+    \textbf{Simpson's Rule:} Interpolates $f$ with a quadratic parabola over each subinterval using the two endpoints and the midpoint, weighted as $\frac{h}{6}(1, 4, 1)$:
+    $$Q_N^{Simp}(f) := \frac{h}{6} \sum_{i=1}^N \left[ f(x_{i-1}) + 4 f\left(\frac{x_{i-1}+x_i}{2}\right) + f(x_i) \right]$$
 \end{definition}
 
-\begin{theorem} \textbf{Simpson's Error:} 
-Due to point symmetry around the midpoint, the cubic error term $(x-m)^3$ cancels out, making Simpson's rule exact for all cubic polynomials $\mathcal{P}_3$. For $f \in C^4[a,b]$:
-$$|I(f) - Q_N^{Simp}(f)| = \frac{b-a}{2880} h^4 |f^{(4)}(\xi)| = \mathcal{O}(h^4)$$
-Halving the step size $h \to \frac{h}{2}$ reduces the error by a factor of $2^4 = 16$.
+\begin{theorem}
+    \textbf{Simpson's Error:} Due to point symmetry around the midpoint, the cubic error term $(x-m)^3$ cancels out, making Simpson's rule exact for all cubic polynomials $\mathcal{P}_3$. For $f \in C^4[a,b]$:
+    $$|I(f) - Q_N^{Simp}(f)| = \frac{b-a}{2880} h^4 |f^{(4)}(\xi)| = \mathcal{O}(h^4)$$
+    Halving the step size $h \to \frac{h}{2}$ reduces the error by a factor of $2^4 = 16$.
 \end{theorem}
 
-\subsubsection{Smoothness and Periodic Boundary Properties}
+\subsubsection{Smoothness}
 
-\begin{remark} \textbf{Non-Smooth Functions Degrade Convergence:} 
-The theoretical error bounds $\mathcal{O}(h^2)$ and $\mathcal{O}(h^4)$ strictly require bounded continuous derivatives ($f \in C^2$ or $f \in C^4$).
-\begin{itemize}
-    \item If $f$ has a \textbf{kink} (continuous, but first derivative jumps, e.g. $f(x) = |x - c|$), $f''$ does not exist as a bounded function. The convergence rate of both Trapezoidal and Simpson drops to $\mathcal{O}(h^1)$.
-    \item If $f$ has a \textbf{singularity} or infinite slope (e.g. $f(x) = \sqrt{x}$ near 0), the convergence rate degrades further to $\mathcal{O}(h^{0.5})$.
-\end{itemize}
-High-order rules offer no advantage when the integrand lacks smoothness!
+\begin{remark}
+    \textbf{Non-Smooth Functions Degrade Convergence:} The theoretical error bounds $\mathcal{O}(h^2)$ and $\mathcal{O}(h^4)$ strictly require bounded continuous derivatives ($f \in C^2$ or $f \in C^4$).
+    \begin{itemize}
+        \item If $f$ has a \textbf{kink} (continuous, but first derivative jumps, e.g. $f(x) = |x - c|$), $f''$ does not exist as a bounded function. The convergence rate of both Trapezoidal and Simpson drops to $\mathcal{O}(h^1)$.
+        \item If $f$ has a \textbf{singularity} or infinite slope (e.g. $f(x) = \sqrt{x}$ near 0), the convergence rate degrades further to $\mathcal{O}(h^{0.5})$.
+    \end{itemize}
+    High-order rules offer no advantage when the integrand lacks smoothness!
 \end{remark}
 
-\begin{remark} \textbf{The Periodic Trapezoidal Miracle (Link to Fourier):} 
-If $f$ is a smooth, periodic function on $[a, b]$ with period $T = b - a$, all its boundary derivatives match:
-$$f^{(k)}(a) = f^{(k)}(b) \quad \text{for all } k = 0, 1, 2, \dots$$
-Under the \textbf{Euler-Maclaurin formula}, the error of the composite trapezoidal rule is:
-$$I(f) - Q_N^{Trap}(f) = \sum_{k=1}^m \frac{B_{2k}}{(2k)!} h^{2k} \left( f^{(2k-1)}(b) - f^{(2k-1)}(a) \right) + \mathcal{O}(h^{2m+2})$$
-Because $f^{(2k-1)}(b) - f^{(2k-1)}(a) = 0$, \textbf{all algebraic error terms vanish}! 
-Consequently, the trapezoidal rule converges \textbf{exponentially} (spectral accuracy) for analytic periodic functions:
-$$\text{Error} \le C e^{-c / h} = C e^{-c N}$$
-This explains why the trapezoidal rule is the optimal tool in trigonometric interpolation and the Discrete Fourier Transform (DFT).
-\end{remark}
 
 \subsubsection{Romberg Extrapolation}
 
-\begin{remark} \textbf{Intuition: What is Richardson Extrapolation?} 
-Suppose you have a numerical method $A(h)$ that approximates an unknown exact value $A^*$ with a known leading error power $p$:
-$$A(h) = A^* + C h^p + \mathcal{O}(h^q) \quad (q > p)$$
-If you compute the approximation at step size $h$, and then at halved step size $h/2$:
-$$A(h/2) = A^* + C \left(\frac{h}{2}\right)^p + \dots = A^* + \frac{C}{2^p} h^p + \dots$$
-We now have two equations with two unknowns ($A^*$ and the error coefficient $C$). By multiplying $A(h/2)$ by $2^p$ and subtracting $A(h)$, the $C h^p$ error term cancels out completely:
-$$2^p A(h/2) - A(h) = (2^p - 1) A^* + \mathcal{O}(h^q)$$
-$$\implies A_{\text{extrapolated}} = \frac{2^p A(h/2) - A(h)}{2^p - 1} = A(h/2) + \frac{A(h/2) - A(h)}{2^p - 1} = A^* + \mathcal{O}(h^q)$$
-\textbf{The core intuition:} By knowing the mathematical structure of the error, we can combine two relatively poor approximations to eliminate the dominant error term, creating a much higher-order method for free!
+\begin{remark}
+    textbf{Intuition:} By knowing the mathematical structure of the error, we can combine two relatively poor approximations to eliminate the dominant error term, creating a much higher-order method for free!.
 \end{remark}
 
-\begin{definition} \textbf{Romberg Extrapolation for Quadrature:} 
-Applying Richardson extrapolation to the composite trapezoidal rule is called \textbf{Romberg Integration}. 
-By the Euler-Maclaurin expansion, the trapezoidal error consists \textbf{exclusively of even powers of $h$}:
-$$T(h) = I(f) + c_2 h^2 + c_4 h^4 + c_6 h^6 + c_8 h^8 + \dots$$
-Because there are no odd powers ($h^1, h^3, h^5$), the leading error term has $p = 2$.
-\begin{enumerate}
-    \item \textbf{First extrapolation level ($p=2 \implies 2^p = 4$):}
+\begin{definition}
+    \textbf{Romberg Extrapolation for Quadrature:} Applying Richardson extrapolation to the composite trapezoidal rule is called \textbf{Romberg Integration}.
+    By the Euler-Maclaurin expansion, the trapezoidal error consists \textbf{exclusively of even powers of $h$}:
+    $$T(h) = I(f) + c_2 h^2 + c_4 h^4 + c_6 h^6 + c_8 h^8 + \dots$$
+    Note that intuitively this comes from the trapezoid being symetric hence $T(h) = T(-h)$, if there were odd terms this would not hold because of the changing sign.
+    And because there are no odd powers ($h^1, h^3, h^5$), the leading error term has $p = 2$.
     $$T_1(h/2) = \frac{4 T(h/2) - T(h)}{4 - 1} = \frac{4 T(h/2) - T(h)}{3}$$
-    This cancels the $c_2 h^2$ error term, yielding an $\mathcal{O}(h^4)$ method. 
+    This cancels the $c_2 h^2$ error term, yielding an $\mathcal{O}(h^4)$ method.
     \emph{Remarkable fact:} $T_1(h/2)$ is algebraically identical to \textbf{Simpson's rule}!
-    
-    \item \textbf{Second extrapolation level ($p=4 \implies 2^p = 16$):}
-    $$T_2(h/4) = \frac{16 T_1(h/4) - T_1(h/2)}{16 - 1} = \frac{16 T_1(h/4) - T_1(h/2)}{15} = I(f) + \mathcal{O}(h^6)$$
-    This cancels the $c_4 h^4$ error term, yielding a 6th-order method (Boole's rule).
-\end{enumerate}
 \end{definition}
-
-\begin{definition} \textbf{The Romberg Tableau:} 
-Let $h_j = \frac{b-a}{2^j}$ for $j = 0, 1, 2, \dots$. We define a triangular table of approximations $R(j, k)$:
-\begin{itemize}
-    \item \textbf{Column $k=0$:} Standard trapezoidal rule evaluations with step sizes $h_j$:
-    $$R(j, 0) := Q_{2^j}^{Trap}(f)$$
-    \item \textbf{Columns $k \ge 1$:} Successive Richardson extrapolations:
-    $$R(j, k) := \frac{4^k R(j, k-1) - R(j-1, k-1)}{4^k - 1}$$
-    which can equivalently be computed as:
-    $$R(j, k) = R(j, k-1) + \frac{R(j, k-1) - R(j-1, k-1)}{4^k - 1}$$
-\end{itemize}
-\end{definition}
-
-\begin{table}[htbp]
-\centering
-\renewcommand{\arraystretch}{1.3}
-\begin{tabular}{c|ccccc}
-$j \backslash k$ & $k=0 \; [\mathcal{O}(h^2)]$ & $k=1 \; [\mathcal{O}(h^4)]$ & $k=2 \; [\mathcal{O}(h^6)]$ & $k=3 \; [\mathcal{O}(h^8)]$ \\
-\hline
-$j=0$ & $R(0,0) = T(h)$ & & & \\
-$j=1$ & $R(1,0) = T(h/2)$ & $R(1,1)$ & & \\
-$j=2$ & $R(2,0) = T(h/4)$ & $R(2,1)$ & $R(2,2)$ & \\
-$j=3$ & $R(3,0) = T(h/8)$ & $R(3,1)$ & $R(3,2)$ & $R(3,3)$ \\
-\end{tabular}
-\end{table}
-
-\begin{remark} \textbf{Why Romberg Integration is Computationally Efficient:} 
-When halving the step size from $h$ to $h/2$, the new composite trapezoidal rule only requires evaluating $f$ at the \textbf{new midpoints}:
-$$T(h/2) = \frac{1}{2} T(h) + \frac{h}{2} \sum_{i=1}^N f\left(x_{i-1} + \frac{h}{2}\right)$$
-All previous function evaluations are completely reused! With minimal extra evaluations, Romberg's method systematically boosts accuracy from $\mathcal{O}(h^2)$ to $\mathcal{O}(h^4)$, $\mathcal{O}(h^6)$, $\mathcal{O}(h^8)$, etc.
-\end{remark}
 
 \subsubsection{High-Order Rules}
 
-\begin{remark} \textbf{Newton-Cotes Formulas (Why They Should Be Avoided):} 
-High-order Newton-Cotes rules fit a single high-degree polynomial over equidistant nodes on the entire interval. As established by Runge's phenomenon, this leads to negative weights for $n \ge 8$ and exponential divergence of condition numbers ($\sum |w_j| \to \infty$). Hence, high-degree equidistant rules are unstable and should be avoided.
+\begin{remark}
+    High-order \textbf{Newton-Cotes} rules fit a single high-degree polynomial over equidistant nodes on the entire interval. As established by Runge's phenomenon, this leads to negative weights for $n \ge 8$ and exponential divergence of condition numbers ($\sum |w_j| \to \infty$). Hence, high-degree equidistant rules are unstable and should be avoided.
 \end{remark}
 
-\begin{definition} \textbf{Gauss Quadrature (Gauss-Legendre):} 
-Instead of fixing equidistant nodes, Gauss quadrature treats \textbf{both} the $n+1$ nodes $c_j$ and the $n+1$ weights $w_j$ as free variables ($2n+2$ parameters).
-\begin{itemize}
-    \item \textbf{Maximal Exactness:} Achieves the maximum theoretically possible degree of exactness:
-    $$d = 2n + 1 \quad \iff \quad \text{Order } q = 2n + 2$$
-    \item \textbf{Orthogonality:} The nodes $c_0, \dots, c_n$ must be the $n+1$ roots of the $(n+1)$-th \textbf{Legendre polynomial} $P_{n+1}(x)$ on $[-1, 1]$.
-    \item \textbf{Positivity \& Stability:} All weights are strictly positive ($w_j > 0$), guaranteeing unconditional stability ($\sum |w_j| = b-a$).
-    \item \textbf{Drawback:} Gauss nodes are \textbf{non-nested}: the nodes for $n$ and $n+1$ do not overlap, so changing order requires throwing away all previous function evaluations.
-\end{itemize}
+\begin{definition}
+    \textbf{Gauss Quadrature (Gauss-Legendre):} Instead of fixing equidistant nodes, Gauss quadrature treats \textbf{both} the $n+1$ nodes $c_j$ and the $n+1$ weights $w_j$ as free variables ($2n+2$ parameters).
+    \begin{itemize}
+        \item \textbf{Maximal Exactness:} Achieves the maximum theoretically possible degree of exactness:
+        $$d = 2n + 1 \quad \iff \quad \text{Order } q = 2n + 2$$
+        \item \textbf{Orthogonality:} The nodes $c_0, \dots, c_n$ must be the $n+1$ roots of the $(n+1)$-th \textbf{Legendre polynomial} $P_{n+1}(x)$ on $[-1, 1]$.
+        \item \textbf{Positivity \& Stability:} All weights are strictly positive ($w_j > 0$), guaranteeing unconditional stability ($\sum |w_j| = b-a$).
+        \item \textbf{Drawback:} Gauss nodes are \textbf{non-nested}: the nodes for $n$ and $n+1$ do not overlap, so changing order requires throwing away all previous function evaluations.
+    \end{itemize}
 \end{definition}
 
-\begin{definition} \textbf{Clenshaw-Curtis Quadrature:} 
-Clenshaw-Curtis quadrature interpolates $f$ at the **Chebyshev-Gauss-Lobatto nodes** (extrema of Chebyshev polynomials, which include the endpoints):
-$$x_j = \cos\left(\frac{j\pi}{n}\right) \quad \text{for } j = 0, 1, \dots, n$$
-and integrates the Chebyshev polynomial interpolant analytically.
+\begin{definition}
+    \textbf{Clenshaw-Curtis Quadrature:} Clenshaw-Curtis quadrature interpolates $f$ at the \textbf{Chebyshev-Gauss-Lobatto nodes} (extrema of Chebyshev polynomials, which include the endpoints):
+    $$x_j = \cos\left(\frac{j\pi}{n}\right) \quad \text{for } j = 0, 1, \dots, n$$
+    and integrates the Chebyshev polynomial interpolant analytically.
 \end{definition}
 
-\begin{remark} \textbf{Key Advantages of Clenshaw-Curtis:}
-\begin{enumerate}
-    \item \textbf{Suppresses Runge's Phenomenon:} Because Chebyshev nodes cluster near the boundaries with density $\propto \frac{1}{\sqrt{1-x^2}}$, the polynomial interpolation error is well-behaved and weights remain strictly positive for all practical $n$.
-    \item \textbf{Nested Nodes:} When doubling the number of intervals $n \to 2n$, all previous nodes are retained:
-    $$x_j^{(n)} = \cos\left(\frac{j\pi}{n}\right) = \cos\left(\frac{2j\pi}{2n}\right) = x_{2j}^{(2n)}$$
-    This allows adaptive doubling without wasting any prior function evaluations!
-    \item \textbf{Fast Computation via FFT:} The quadrature weights and evaluations can be computed in only $\mathcal{O}(n \log n)$ operations using the Fast Cosine Transform (FFT).
-    \item \textbf{Near-Gaussian Performance:} In practice, for smooth functions, Clenshaw-Curtis converges almost as quickly as Gauss quadrature while offering nested convenience.
-\end{enumerate}
+\begin{remark}
+    \textbf{Key Advantages of Clenshaw-Curtis:}
+    \begin{enumerate}
+        \item \textbf{Suppresses Runge's Phenomenon:} Because Chebyshev nodes cluster near the boundaries with density $\propto \frac{1}{\sqrt{1-x^2}}$, the polynomial interpolation error is well-behaved and weights remain strictly positive for all practical $n$.
+        \item \textbf{Nested Nodes:} When doubling the number of intervals $n \to 2n$, all previous nodes are retained:
+        $$x_j^{(n)} = \cos\left(\frac{j\pi}{n}\right) = \cos\left(\frac{2j\pi}{2n}\right) = x_{2j}^{(2n)}$$
+        This allows adaptive doubling without wasting any prior function evaluations!
+        \item \textbf{Fast Computation via FFT:} The quadrature weights and evaluations can be computed in only $\mathcal{O}(n \log n)$ operations using the Fast Cosine Transform (FFT).
+        \item \textbf{Near-Gaussian Performance:} In practice, for smooth functions, Clenshaw-Curtis converges almost as quickly as Gauss quadrature while offering nested convenience.
+    \end{enumerate}
 \end{remark}
 
 \subsection{Adaptive Quadrature}
 
-\begin{remark} \textbf{Motivation for Adaptivity:} 
-When an integrand $f$ has a localized sharp spike, steep wave, or near-singularity, a uniform step size $h$ is severely wasteful. To resolve the spike, $h$ must be tiny everywhere, wasting computation in smooth regions. \textbf{Adaptive quadrature} refines $h$ only where needed.
+\begin{remark}
+    \textbf{Motivation for Adaptivity:} When an integrand $f$ has a localized sharp spike, steep wave, or near-singularity, a uniform step size $h$ is severely wasteful. To resolve the spike, $h$ must be tiny everywhere, wasting computation in smooth regions. \textbf{Adaptive quadrature} refines $h$ only where needed.
 \end{remark}
 
-\begin{definition} \textbf{Local Error Estimation via Step Halving:} 
-On any subinterval $[a, b]$ with midpoint $m = \frac{a+b}{2}$:
-\begin{itemize}
-    \item Compute a coarse estimate $I_{\text{coarse}} = Q(a, b)$ (e.g., single Simpson step of width $h = b-a$).
-    \item Compute a fine estimate $I_{\text{fine}} = Q(a, m) + Q(m, b)$ (two Simpson steps of width $h/2$).
-    \item Estimate the local truncation error:
-    $$\text{Est}(a, b) := \frac{1}{15} |I_{\text{fine}} - I_{\text{coarse}}| \approx |I(f) - I_{\text{fine}}|$$
-    (where the factor $\frac{1}{15} = \frac{1}{2^4 - 1}$ comes directly from Richardson extrapolation for Simpson's rule!).
-\end{itemize}
+\begin{definition}
+    \textbf{Local Error Estimation via Step Halving:} On any subinterval $[a, b]$ with midpoint $m = \frac{a+b}{2}$:
+    \begin{itemize}
+        \item Compute a coarse estimate $I_{\text{coarse}} = Q(a, b)$ (e.g., single Simpson step of width $h = b-a$).
+        \item Compute a fine estimate $I_{\text{fine}} = Q(a, m) + Q(m, b)$ (two Simpson steps of width $h/2$).
+        \item Estimate the local truncation error:
+        $$\text{Est}(a, b) := \frac{1}{15} |I_{\text{fine}} - I_{\text{coarse}}| \approx |I(f) - I_{\text{fine}}|$$
+        (where the factor $\frac{1}{15} = \frac{1}{2^4 - 1}$ comes directly from Richardson extrapolation for Simpson's rule!).
+    \end{itemize}
 \end{definition}
 
-\begin{definition} \textbf{Recursive Adaptive Algorithm:} 
-Given a user-specified global tolerance $\text{tol} > 0$:
-\begin{enumerate}
-    \item If $\text{Est}(a, b) \le \text{tol} \cdot \frac{b-a}{B-A}$ (where $[B, A]$ is the global domain):
-    The local error is acceptable; return $I_{\text{fine}}$.
-    \item If $\text{Est}(a, b) > \text{tol} \cdot \frac{b-a}{B-A}$:
-    Subdivide $[a, b]$ into $[a, m]$ and $[m, b]$, and recursively apply the algorithm to each half with local tolerance $\text{tol}/2$.
-\end{enumerate}
+\begin{definition}
+    \textbf{Recursive Adaptive Algorithm:} Given a user-specified global tolerance $\text{tol} > 0$:
+    \begin{enumerate}
+        \item If $\text{Est}(a, b) \le \text{tol} \cdot \frac{b-a}{B-A}$ (where $[B, A]$ is the global domain):
+        The local error is acceptable; return $I_{\text{fine}}$.
+        \item If $\text{Est}(a, b) > \text{tol} \cdot \frac{b-a}{B-A}$:
+        Subdivide $[a, b]$ into $[a, m]$ and $[m, b]$, and recursively apply the algorithm to each half with local tolerance $\text{tol}/2$.
+    \end{enumerate}
 \end{definition}
 
-\begin{remark} \textbf{Intuition:} 
-Adaptive quadrature acts like a dynamic magnifying glass: it recursively zooms in with dense evaluations around sharp spikes and steep gradients, while taking large, efficient steps across flat, smooth regions.
+\begin{remark}
+    \textbf{Intuition:} Adaptive quadrature acts like a dynamic magnifying glass: it recursively zooms in with dense evaluations around sharp spikes and steep gradients, while taking large, efficient steps across flat, smooth regions.
 \end{remark}

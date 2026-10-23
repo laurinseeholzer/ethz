@@ -4,20 +4,16 @@
     \textbf{Interpolation:} Given exact values 
     $$y_1 = f(x_1,x_2\dots), y_2 = f(x_i, x_{i+1} \dots) \dots$$
     of an unknonw function $f$ determine an interplant $\tilde{f}$ such that 
-    $$\tilde{f}(x_1, x_2, \dots) = y_1$$.
+    $$\tilde{f}(x_1, x_2, \dots) = y_1$$
 \end{definition}
 
 \begin{remark}
-    We assume $f$ to have specific properties (smooth, monotone, etc.) $f \in V$ and choose a Subspace $\tilde{f} \in V_n$ together wiht a basis $b \in V_n$
+    We assume $f$ to have specific properties (smooth, monotone, etc.) $f \in V$ and choose a Subspace $\tilde{f} \in V_n$ together wiht a basis $b \in V_n$. Different spaces and basis are possible and used for different applications.
 \end{remark}
 
 \begin{example}
     If we choose $V_n$ as the set of all polynomials of degree $\le n$ we are calculating a polynomial interpolation of $f$.
 \end{example}
-
-\begin{remark}
-    Different spaces and basis are possible and used for different applications.
-\end{remark}
 
 \begin{example}
     Using $n+1$ datapoints we can solve the linear system of equations of the $n+1$ datapoints to get a polynomial of degree $n$.
@@ -25,21 +21,18 @@
     $$a_n x_2^n + a_{n-1} x_2^{n-1} \dots a_0 = y_2$$
     $$\dots$$
     $$a_n x_{n+1}^n + a_{n-1} x_{n+1}^{n-1} \dots a_0 = y_{n+1}$$
+    Solving this takes $O(n^3)$ and might come with unreasonably large rounding error.
 \end{example}
 
 \begin{definition}
     The matrix $A$ formed by this system of linear equations is called a \textbf{Vandermonde matrix}.
 \end{definition}
 
-\begin{remark}
-    Solving this takes $O(n^3)$ and might come with unreasonably large rounding error.
-\end{remark}
-
 \subsection{Newton}
 
 \begin{definition}
     \textbf{Newton-Basis:} The newton basis $N_n(x)$ is 
-    $$\prod_{i=0}^{n-1} (x-x_i)$$
+    $$\prod_{i=0}^{n-1} (x-x_i) = (x-x_1) (x-x_2) \dots$$
 \end{definition}
 
 \begin{theorem}
@@ -48,46 +41,43 @@
     $$p(x_0, x_1) = p_0, y_1 \implies p_1(x) = p_0(x) + \frac{y_1 - y_0}{x_1 - x_0} (x - x_0)$$
     $$p(x_0, x_1, x_2) = p_1, p_1, y_2 \implies p_2(x) = p_1(x) + \frac{\frac{y_2 - y_1}{x_2 - x_1} - \frac{y_1 - y_0}{x_1 - x_0}}{x_2 - x_0} (x - x_0)(x - x_1)$$
     $$\dots$$
-\end{theorem}
-
-\begin{remark}
     This can be interpreted as 
     $$p_i(x) = b_1 + b_2 N_1 + b_3 N_2 + \dots$$
-    where $b_i$ is the i-th devided difference definied by the follwing recurrence relation
+    where $b_i$ is the i-th devided difference.
+\end{theorem}
+
+\begin{definition}
+    The \textbf{i-th devided difference} $b_i$ is definied by the follwing recurrence relation
     $$b_i  = f[x_0, \dots x_i] =  \frac{f[x_1, \dots x_i] - f[x_0, \dots x_{i-1}]}{x_i - x_0}$$
-    and $f[x_i] = y_i$ 
-\end{remark}
+    where $f[x_i] = y_i$ 
+\end{definition}
 
 \subsection{Lagrange}
 
 \begin{definition}
     \textbf{Lagrange-polynomials} are polynomials of the form
-    $$l_i(x) = \prod_{j=0, j\neq i}^{n} \frac{x - x_j}{x_i - x_j}$$
+    $$l_i(x) = \prod_{j=0, j\neq i}^{n} \frac{x - x_j}{x_i - x_j} = \frac{(x-x_1) (x-x_2) (x-x_3) \dots}{(x_i-x_1) (x_i-x_2 \dots)}$$
 \end{definition}
 
 \begin{theorem}
     Observe that for such a largrange polynomial $l_i(x)$ we have
-    $$l_i(x) = 0 \forall x_j \text{with} j\neq i$$
-    and 
-    $$l_i(x_i) = 1$$
+    $$l_i(x) = 0 \forall x_j \text{with} j\neq i \quad \text{and} \quad l_i(x_i) = 1$$
 \end{theorem}
 
 \begin{theorem}
-    Because the because the above holds, given a set of datapoints $(x_1, y_1)  \dots (x_n, y_n)$ we can construct a polynomial that fullfilles all of the $n$ conditions
+    Because the above holds, given a set of datapoints $(x_1, y_1)  \dots (x_n, y_n)$ we can construct a polynomial that fullfilles all of the $n$ conditions
     $$p_n(x) = \sum_{i=0}^{n} y_i l_i(x)$$
 \end{theorem}
 
 \subsection{Barycentric Interpolation-formula}
 
 \begin{definition}
-    \textbf{Barycentric weights:} We define the barycentric weights $w_i$ for a set of nodes $x_0, \dots, x_n$ as
-    $$w_i = \prod_{j=0, j \neq i}^{n} \frac{1}{x_i - x_j}$$
-    and the node polynomial $\ell(x)$ as
-    $$\ell(x) = \prod_{i=0}^{n} (x - x_i)$$
+    We define the \textbf{barycentric weights} $w_i$ and the node polynomial $\ell(x)$ for a set of nodes $x_0, \dots, x_n$ as
+    $$w_i = \prod_{j=0, j \neq i}^{n} \frac{1}{x_i - x_j} \quad \quad \ell(x) = \prod_{i=0}^{n} (x - x_i)$$
 \end{definition}
 
 \begin{theorem}
-    Using these definitions, we can rewrite the Lagrange basis polynomials as $l_i(x) = \ell(x) \frac{w_i}{x - x_i}$. Substituting this into the standard Lagrange polynomial yields the \textbf{first form of the barycentric interpolation formula}:
+    Using these definitions, we can rewrite the Lagrange basis polynomials as $l_i(x) = \ell(x) \frac{w_i}{x - x_i}$. Substituting this into the standard Lagrange polynomial yields the \textbf{barycentric interpolation formula}:
     $$p_n(x) = \ell(x) \sum_{i=0}^{n} \frac{w_i}{x - x_i} y_i$$
 \end{theorem}
 
@@ -104,18 +94,18 @@
 
 \subsection{Chebyshev}
 
-\begin{remark}
+\begin{definition}
     Using equidistant nodes for polynomial interpolation of high degree often leads to severe oscillations at the edges of the interval. This is known as \textbf{Runge's phenomenon}. To minimize this error, we must choose our interpolation nodes strategically.
-\end{remark}
+\end{definition}
 
 \begin{theorem}
-    The error of polynomial interpolation is given by:
+    The \textbf{error of polynomial interpolation} is given by:
     $$f(x) - p_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} \prod_{i=0}^{n} (x - x_i)$$
     for some $\xi$ in the interpolation interval. Since we cannot control the $(n+1)$-th derivative of the unknown function $f$, we must minimize the maximum absolute value of the node polynomial $\prod_{i=0}^{n} (x - x_i)$.
 \end{theorem}
 
 \begin{definition}
-    \textbf{Chebyshev nodes:} The roots of the Chebyshev polynomials of the first kind are called Chebyshev nodes. On the standard interval $[-1, 1]$, the $n+1$ nodes are defined as:
+    The roots of the Chebyshev polynomials of the first kind are called \textbf{Chebyshev nodes}. On the standard interval $[-1, 1]$, the $n+1$ nodes are defined as:
     $$x_i = \cos\left(\frac{2i + 1}{2n + 2}\pi\right) \quad \text{for } i = 0, 1, \dots, n$$
 \end{definition}
 
@@ -132,226 +122,231 @@
 
 \subsection{Trigonometric Interpolation}
 
-\begin{definition} \textbf{Hilbert Space $L^2(0,1)$:} The space of square-integrable complex-valued functions on the interval $[0,1]$ is defined as:
-$$L^2(0,1) := \left\{ f: (0,1) \rightarrow \mathbb{C} \;\middle|\; \|f\|_{L^2(0,1)} = \sqrt{\langle f, f \rangle_{L^2(0,1)}} < \infty \right\}$$
-equipped with the inner product $\langle g, f \rangle_{L^2(0,1)} := \int_0^1 \overline{g(t)} f(t) \, dt$.
+\begin{definition}
+    \textbf{Hilbert Space $L^2(0,1)$:} The space of square-integrable complex-valued functions on the interval $[0,1]$ is defined as:
+    $$L^2(0,1) := \left\{ f: (0,1) \rightarrow \mathbb{C} \;\middle|\; \|f\|_{L^2(0,1)} = \sqrt{\langle f, f \rangle_{L^2(0,1)}} < \infty \right\}$$
+    equipped with the inner product $\langle g, f \rangle_{L^2(0,1)} := \int_0^1 \overline{g(t)} f(t) \, dt$.
 \end{definition}
 
-\begin{remark} \textbf{$L^2$-Convergence:} A function $f$ is the $L^2$-limit of a sequence of functions $f_n \in L^2(0,1)$ if:
-$$\lim_{n \rightarrow \infty} \|f - f_n\|_{L^2(0,1)} = 0 \iff \lim_{n \rightarrow \infty} \int_0^1 |f(t) - f_n(t)|^2 \, dt = 0$$
-Unlike pointwise convergence, $L^2$-convergence implies that the total energy (integrated squared difference) between $f$ and $f_n$ vanishes, allowing isolated point discrepancies.
+\begin{remark}
+    \textbf{$L^2$-Convergence:} A function $f$ is the $L^2$-limit of a sequence of functions $f_n \in L^2(0,1)$ if:
+    $$\lim_{n \rightarrow \infty} \|f - f_n\|_{L^2(0,1)} = 0 \iff \lim_{n \rightarrow \infty} \int_0^1 |f(t) - f_n(t)|^2 \, dt = 0$$
+    Unlike pointwise convergence, $L^2$-convergence implies that the total energy (integrated squared difference) between $f$ and $f_n$ vanishes, allowing isolated point discrepancies.
 \end{remark}
 
-\begin{theorem} The complex exponential functions $\phi_k(x) = e^{2\pi i k x}$ for $k \in \mathbb{Z}$ form a complete orthonormal basis in $L^2(0,1)$:
-$$\langle \phi_k, \phi_j \rangle_{L^2(0,1)} = \int_0^1 e^{-2\pi i k x} e^{2\pi i j x} \, dx = \begin{cases} 1, & \text{if } k = j \\ 0, & \text{if } k \neq j \end{cases}$$
+\begin{theorem}
+    The complex exponential functions $\phi_k(x) = e^{2\pi i k x}$ for $k \in \mathbb{Z}$ form a complete orthonormal basis in $L^2(0,1)$:
+    $$\langle \phi_k, \phi_j \rangle_{L^2(0,1)} = \int_0^1 e^{-2\pi i k x} e^{2\pi i j x} \, dx = \begin{cases} 1, & \text{if } k = j \\ 0, & \text{if } k \neq j \end{cases}$$
 \end{theorem}
 
-\begin{definition} \textbf{Fourier Series:} Any function $f \in L^2(0,1)$ can be represented by its Fourier coefficients $\hat{f}(k)$ as:
-$$f(t) = \sum_{k=-\infty}^{\infty} \hat{f}(k) e^{2\pi i k t}$$
-where the Fourier coefficients $\hat{f}(k)$ are given by the orthogonal projection onto the basis functions:
-$$\hat{f}(k) = \int_0^1 f(t) e^{-2\pi i k t} \, dt$$
+\begin{definition}
+    \textbf{Fourier Series:} Any function $f \in L^2(0,1)$ can be represented by its Fourier coefficients $\hat{f}(k)$ as:
+    $$f(t) = \sum_{k=-\infty}^{\infty} \hat{f}(k) e^{2\pi i k t}$$
+    where the Fourier coefficients $\hat{f}(k)$ are given by the orthogonal projection onto the basis functions:
+    $$\hat{f}(k) = \int_0^1 f(t) e^{-2\pi i k t} \, dt$$
 \end{definition}
 
-\begin{remark} \textbf{Intuition \& Physical Meaning:} Analogous to decomposing a 3D vector into orthogonal coordinate axes, $f(t)$ is decomposed into pure periodic waves $e^{2\pi i k t}$ of integer frequency $k$. The magnitude $|\hat{f}(k)|$ represents the amplitude of frequency $k$, while its angle represents phase shift. Parseval's identity guarantees energy conservation:
-$$\sum_{k=-\infty}^{\infty} |\hat{f}(k)|^2 = \|f\|_{L^2(0,1)}^2$$
+\begin{remark}
+    \textbf{Intuition:} Analogous to decomposing a 3D vector into orthogonal coordinate axes, $f(t)$ is decomposed into pure periodic waves $e^{2\pi i k t}$ of integer frequency $k$. The magnitude $|\hat{f}(k)|$ represents the amplitude of frequency $k$, while its angle represents phase shift. Parseval's identity guarantees energy conservation:
+    $$\sum_{k=-\infty}^{\infty} |\hat{f}(k)|^2 = \|f\|_{L^2(0,1)}^2$$
 \end{remark}
 
-\begin{remark} \textbf{Smoothness and Decay Rate:} The decay rate of Fourier coefficients depends directly on the smoothness of $f$. If $f^{(n)}$ is integrable ($\int_0^1 |f^{(n)}(t)| \, dt < \infty$), then:
-$$\hat{f}(k) = \mathcal{O}(k^{-n})$$
-Smoother functions yield faster coefficient decay, leading to rapid convergence of the Fourier series.
+\begin{remark}
+    The \textbf{decay rate} of Fourier coefficients depends directly on the smoothness of $f$. If $f^{(n)}$ is integrable then:
+    Smoother functions yield faster coefficient decay, leading to rapid convergence of the Fourier series.
 \end{remark}
 
-\begin{remark} \textbf{Derivative of Fourier Coefficients:} The Fourier coefficients of the $n$-th derivative $f^{(n)}$ satisfy:
-$$\widehat{f^{(n)}}(k) = (2\pi i k)^n \hat{f}(k)$$
-This converts linear differential operators in the time domain into simple algebraic multiplications in the frequency domain.
+\begin{remark}
+    The Fourier coefficients of the $n$-th \textbf{derivative} $f^{(n)}$ satisfy:
+    $$\widehat{f^{(n)}}(k) = (2\pi i k)^n \hat{f}(k)$$
 \end{remark}
 
-\begin{remark} \textbf{Gibbs Phenomenon:} At jump discontinuities, the truncated Fourier series overshoots near the edge by approximately $9\%$ of the jump size. Increasing the number of terms shifts the overshoot closer to the discontinuity but does not eliminate its amplitude.
+\begin{remark}
+    \textbf{Gibbs Phenomenon:} At jump discontinuities, the truncated Fourier series overshoots near the edge. Increasing the number of terms shifts the overshoot closer to the discontinuity but does not eliminate its amplitude.
 \end{remark}
 
-\begin{definition} \textbf{N-th Root of Unity:} The primitive $N$-th root of unity is defined as:
-$$\omega_N := \exp\left(\frac{-2\pi i}{N}\right) = \cos\left(\frac{2\pi}{N}\right) - i \sin\left(\frac{2\pi}{N}\right)$$
-The roots of unity satisfy the discrete orthogonality relation:
-$$\sum_{k=0}^{N-1} \omega_N^{kj} = \begin{cases} N, & \text{if } j \equiv 0 \pmod N \\ 0, & \text{if } j \not\equiv 0 \pmod N \end{cases}$$
-This discrete orthogonality serves as the exact algebraic analogue of the continuous inner product of complex exponentials.
+\begin{definition}
+    \textbf{N-th Root of Unity:} The primitive $N$-th root of unity is defined as:
+    $$\omega_N := \exp\left(\frac{-2\pi i}{N}\right) = \cos\left(\frac{2\pi}{N}\right) - i \sin\left(\frac{2\pi}{N}\right)$$
+    The roots of unity satisfy the discrete orthogonality relation:
+    $$\sum_{k=0}^{N-1} \omega_N^{kj} = \begin{cases} N, & \text{if } j \equiv 0 \pmod N \\ 0, & \text{if } j \not\equiv 0 \pmod N \end{cases}$$
 \end{definition}
 
-\begin{definition} \textbf{Discrete Fourier Transform (DFT):} Given $N$ equidistant nodes $x_l = \frac{l}{N}$ for $l = 0, \dots, N-1$, approximating the continuous Fourier coefficients $\hat{f}(k)$ via the trapezoidal rule yields the DFT:
-$$\hat{f}(k) \approx \hat{f}_N(k) = \frac{1}{N} \sum_{l=0}^{N-1} f\left(\frac{l}{N}\right) \omega_N^{kl}$$
-The transformation mapping samples $y = (f(x_0), \dots, f(x_{N-1}))^T \mapsto c = F_N y$ is performed via the Fourier matrix $F_N = (\omega_N^{ij})_{i,j=0}^{N-1}$.
+\begin{definition}
+    \textbf{Discrete Fourier Transform (DFT):} Given $N$ equidistant nodes $x_l = \frac{l}{N}$ for $l = 0, \dots, N-1$, approximating the continuous Fourier coefficients $\hat{f}(k)$ via the trapezoidal rule yields the DFT:
+    $$\hat{f}(k) \approx \hat{f}_N(k) = \frac{1}{N} \sum_{l=0}^{N-1} f\left(\frac{l}{N}\right) \omega_N^{kl}$$
+    The transformation mapping samples $y = (f(x_0), \dots, f(x_{N-1}))^T \mapsto c = F_N y$ is performed via the Fourier matrix $F_N = (\omega_N^{ij})_{i,j=0}^{N-1}$.
+    $$F_N = \begin{pmatrix}
+        1 & 1 & 1 & \cdots & 1 \\
+        1 & \omega_N^1 & \omega_N^2 & \cdots & \omega_N^{N-1} \\
+        1 & \omega_N^2 & \omega_N^4 & \cdots & \omega_N^{2(N-1)} \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        1 & \omega_N^{N-1} & \omega_N^{2(N-1)} & \cdots & \omega_N^{(N-1)(N-1)}
+    \end{pmatrix} \implies \hat{f}(k) \approx F_N \cdot y$$
 \end{definition}
 
-\begin{remark} \textbf{Fast Fourier Transform (FFT):} Using a divide-and-conquer strategy (e.g., Cooley-Tukey algorithm), the matrix-vector multiplication $F_N y$ can be evaluated in $\mathcal{O}(N \log N)$ operations instead of naive $\mathcal{O}(N^2)$.
+\begin{remark}
+    \textbf{Fast Fourier Transform (FFT):} Using a divide-and-conquer strategy (e.g., Cooley-Tukey algorithm), the matrix-vector multiplication $F_N y$ can be evaluated in $\mathcal{O}(N \log N)$ operations instead of naive $\mathcal{O}(N^2)$.
 \end{remark}
 
-\begin{remark} \textbf{Aliasing:} Sampling $f$ at discrete nodes $x_l = \frac{l}{N}$ makes frequencies differing by integer multiples of $N$ indistinguishable, since $\omega_N^{(k + mN)l} = \omega_N^{kl}$. To avoid aliasing high frequencies into lower modes, $N$ must satisfy the Nyquist-Shannon sampling threshold relative to the highest frequency present in $f$.
+\begin{remark}
+    \textbf{Aliasing:} Sampling $f$ at discrete nodes $x_l = \frac{l}{N}$ makes frequencies differing by integer multiples of $N$ indistinguishable, since $\omega_N^{(k + mN)l} = \omega_N^{kl}$. To avoid aliasing high frequencies into lower modes, $N$ must satisfy the Nyquist-Shannon sampling threshold relative to the highest frequency present in $f$.
 \end{remark}
 
-\begin{definition} \textbf{Trigonometric Interpolating Polynomial \& \texttt{fftshift}:} For $N$ samples $y_l = f(t_l)$ at $t_l = \frac{l}{N}$, the trigonometric polynomial $p_N(t)$ satisfying $p_N(t_l) = f(t_l)$ is expressed in symmetric frequency order:
-$$p_N(t) = \sum_{k=-N/2}^{N/2-1} \zeta_k e^{2\pi i k t}$$
-Standard FFT outputs store coefficients indexed in non-symmetric order $k \in \{0, \dots, N-1\}$. Applying \texttt{fftshift} rearranges indices from $[0, N-1]$ to symmetric frequency spectrum $[-\frac{N}{2}, \frac{N}{2}-1]$.
+\begin{definition}
+    \textbf{Trigonometric Interpolating Polynomial:} For $N$ samples $y_l = f(t_l)$ at $t_l = \frac{l}{N}$, the trigonometric polynomial $p_N(t)$ satisfying $p_N(t_l) = f(t_l)$ is expressed in symmetric frequency order:
+    $$p_N(t) = \sum_{k=-N/2}^{N/2-1} \hat{f}(k) e^{2\pi i k t}$$
 \end{definition}
 
-\begin{definition} \textbf{Cyclic Convolution:} The cyclic convolution $c = a \otimes b$ of two $N$-periodic vectors $a, b \in \mathbb{C}^N$ is defined as:
-$$c_k = \sum_{n=0}^{N-1} a_n b_{(k-n) \pmod N}$$
-\end{definition}
+\begin{remark}
+    Standard FFT outputs store coefficients indexed in non-symmetric order $k \in \{0, \dots, N-1\}$. Applying \texttt{fftshift} rearranges indices from $[0, N-1]$ to symmetric frequency spectrum $[-\frac{N}{2}, \frac{N}{2}-1]$.
+\end{remark}
 
-\begin{theorem} \textbf{Discrete Convolution Theorem:} The DFT converts cyclic convolution into pointwise vector multiplication:
-$$\mathcal{F}_N(a \otimes b) = \mathcal{F}_N(a) \odot \mathcal{F}_N(b)$$
-This allows evaluating cyclic convolution in $\mathcal{O}(N \log N)$ operations via:
-$$a \otimes b = \text{IFFT}(\text{FFT}(a) \cdot \text{FFT}(b))$$
-Linear convolution of length-$N$ sequences can be evaluated using cyclic convolution by zero-padding both sequences to length at least $2N-1$.
+\begin{example}
+    \textbf{Cyclic Convolution and DFT:} The cyclic convolution $c = a \otimes b$ of two $N$-periodic vectors $a, b \in \mathbb{C}^N$ is defined as:
+    $$c_k = \sum_{n=0}^{N-1} a_n b_{(k-n) \pmod N}$$
+    the DFT converts cyclic convolution into pointwise vector multiplication:
+    $$\mathcal{F}_N(a \otimes b) = \mathcal{F}_N(a) \odot \mathcal{F}_N(b)$$
+    This allows evaluating cyclic convolution in $\mathcal{O}(N \log N)$ operations via:
+    $$a \otimes b = \text{IFFT}(\text{FFT}(a) \cdot \text{FFT}(b))$$
+    Linear convolution of length-$N$ sequences can be evaluated using cyclic convolution by zero-padding both sequences to length at least $2N-1$.
+\end{example}
+
+\begin{theorem}
+    \textbf{Zero-Padding for High-Resolution Evaluation:} To evaluate an interpolating trigonometric polynomial $p_N(t)$ at $M \gg N$ fine grid points:
+    \begin{enumerate}
+        \item Compute $c = \text{FFT}(y)$ of size $N$ and center coefficients using \texttt{fftshift}.
+        \item Pad the frequency vector with $M - N$ zeros at the high-frequency boundaries.
+        \item Apply \texttt{ifftshift} and compute $\tilde{y} = \frac{M}{N} \text{IFFT}(\tilde{c})$ of size $M$.
+    \end{enumerate}
+    This yields exact evaluation of $p_N(t)$ on a fine grid without computing individual exponential sums.
 \end{theorem}
-
-\begin{remark} \textbf{Zero-Padding for High-Resolution Evaluation:} To evaluate an interpolating trigonometric polynomial $p_N(t)$ at $M \gg N$ fine grid points:
-\begin{enumerate}
-    \item Compute $c = \text{FFT}(y)$ of size $N$ and center coefficients using \texttt{fftshift}.
-    \item Pad the frequency vector with $M - N$ zeros at the high-frequency boundaries.
-    \item Apply \texttt{ifftshift} and compute $\tilde{y} = \frac{M}{N} \text{IFFT}(\tilde{c})$ of size $M$.
-\end{enumerate}
-This yields exact evaluation of $p_N(t)$ on a fine grid without computing individual exponential sums.
-\end{remark}
 
 \subsection{Piecewise Polynomial Interpolation}
 
-\begin{remark} \textbf{Motivation \& The Problem with High Degrees:} As seen with Runge's phenomenon, fitting a single global polynomial of high degree $n$ over an entire interval $[a,b]$ often leads to severe, explosive oscillations near the boundary points. Moreover, high-degree polynomial interpolation is non-local: perturbing a single data point alters the interpolant everywhere across the entire domain.
+\begin{remark}
+    \textbf{Motivation \& The Problem with High Degrees:} As seen with Runge's phenomenon, fitting a single global polynomial of high degree $n$ over an entire interval $[a,b]$ often leads to severe, explosive oscillations near the boundary points. Moreover, high-degree polynomial interpolation is non-local: perturbing a single data point alters the interpolant everywhere across the entire domain.
 \end{remark}
 
-\begin{definition} \textbf{Grid Partition \& Piecewise Polynomial:} To overcome this instability, we replace a single global polynomial with localized low-degree polynomials. We divide the domain $[a,b]$ into $N$ subintervals using breakpoints (nodes):
-$$\mathcal{G} := \{a = x_0 < x_1 < x_2 < \dots < x_N = b\}$$
-with subinterval lengths $h_j := x_j - x_{j-1}$ for $j = 1, \dots, N$, and maximal mesh width $h := \max_{1 \le j \le N} h_j$. 
+\begin{definition}
+    \textbf{Grid Partition \& Piecewise Polynomial:} To overcome this instability, we replace a single global polynomial with localized low-degree polynomials. We divide the domain $[a,b]$ into $N$ subintervals using breakpoints (nodes):
+    $$\mathcal{G} := \{a = x_0 < x_1 < x_2 < \dots < x_N = b\}$$
+    with subinterval lengths $h_j := x_j - x_{j-1}$ for $j = 1, \dots, N$, and maximal mesh width $h := \max_{1 \le j \le N} h_j$.
 
-A function $s: [a,b] \to \mathbb{R}$ is called a \textbf{piecewise polynomial} of degree $d$ if on each subinterval $I_j = [x_{j-1}, x_j]$, $s$ is given by a polynomial of degree at most $d$:
-$$s|_{[x_{j-1}, x_j]} \in \mathcal{P}_d \quad \text{for each } j = 1, \dots, N$$
+    A function $s: [a,b] \to \mathbb{R}$ is called a \textbf{piecewise polynomial} of degree $d$ if on each subinterval $I_j = [x_{j-1}, x_j]$, $s$ is given by a polynomial of degree at most $d$:
+    $$s|_{[x_{j-1}, x_j]} \in \mathcal{P}_d \quad \text{for each } j = 1, \dots, N$$
 \end{definition}
 
-\begin{remark} \textbf{Intuition of $h$-Refinement vs. $p$-Refinement:} Instead of achieving higher accuracy by driving the polynomial degree $d \to \infty$ ($p$-refinement), piecewise interpolation keeps the degree $d$ low (typically $d \in \{1, 3\}$) and increases accuracy by making the subintervals smaller, i.e., letting the mesh size $h \to 0$ ($h$-refinement). This completely avoids Runge's phenomenon and ensures that errors and local perturbations remain confined to a small neighborhood.
+\begin{remark}
+    \textbf{Intuition of $h$-Refinement vs. $p$-Refinement:} Instead of achieving higher accuracy by driving the polynomial degree $d \to \infty$ ($p$-refinement), piecewise interpolation keeps the degree $d$ low (typically $d \in \{1, 3\}$) and increases accuracy by making the subintervals smaller, i.e., letting the mesh size $h \to 0$ ($h$-refinement). This completely avoids Runge's phenomenon and ensures that errors and local perturbations remain confined to a small neighborhood.
 \end{remark}
 
 \subsection{Piecewise Linear Interpolation}
 
-\begin{definition} \textbf{Piecewise Linear Interpolant:} The simplest piecewise polynomial sets $d=1$. Given data points $(x_0, y_0), \dots, (x_N, y_N)$, we connect consecutive points $(x_{j-1}, y_{j-1})$ and $(x_j, y_j)$ with straight line segments:
-$$s(x) = y_{j-1} \frac{x_j - x}{h_j} + y_j \frac{x - x_{j-1}}{h_j} \quad \text{for } x \in [x_{j-1}, x_j]$$
-This produces a globally continuous function $s \in C^0[a,b]$.
+\begin{definition}
+    \textbf{Piecewise Linear Interpolant:} The simplest piecewise polynomial sets $d=1$. Given data points $(x_0, y_0), \dots, (x_N, y_N)$, we connect consecutive points $(x_{j-1}, y_{j-1})$ and $(x_j, y_j)$ with straight line segments:
+    $$s(x) = y_{j-1} \frac{x_j - x}{h_j} + y_j \frac{x - x_{j-1}}{h_j} \quad \text{for } x \in [x_{j-1}, x_j]$$
+    This produces a globally continuous function $s \in C^0[a,b]$.
 \end{definition}
 
-\begin{remark} \textbf{Smoothness and Interior Kinks:} While $s(x)$ is continuous across the entire domain, its derivative jumps at the interior nodes $x_j$:
-$$\lim_{x \nearrow x_j} s'(x) = \frac{y_j - y_{j-1}}{h_j} \neq \frac{y_{j+1} - y_j}{h_{j+1}} = \lim_{x \searrow x_j} s'(x)$$
-Because the slopes from the left and right generally differ, the interpolant has sharp "corners" or "kinks" at the nodes, meaning $s \notin C^1[a,b]$.
+\begin{remark}
+    While $s(x)$ is continuous across the entire domain, its derivative jumps at the interior nodes $x_j$:
+    $$\lim_{x \nearrow x_j} s'(x) = \frac{y_j - y_{j-1}}{h_j} \neq \frac{y_{j+1} - y_j}{h_{j+1}} = \lim_{x \searrow x_j} s'(x)$$
+    Because the slopes from the left and right generally differ, the interpolant has sharp "corners" or "kinks" at the nodes, meaning $s \notin C^1[a,b]$.
 \end{remark}
 
-\begin{definition} \textbf{Nodal Hat Basis Functions:} Piecewise linear interpolation can also be expressed globally using the nodal basis (also called \textbf{tent} or \textbf{hat functions}) $B_j(x)$:
-$$s(x) = \sum_{j=0}^N y_j B_j(x)$$
-where each basis function $B_j(x)$ satisfies $B_j(x_k) = \delta_{jk}$ and is defined as:
-$$B_j(x) = \begin{cases} 
-\frac{x - x_{j-1}}{x_j - x_{j-1}}, & \text{if } x \in [x_{j-1}, x_j], \\
-\frac{x_{j+1} - x}{x_{j+1} - x_j}, & \text{if } x \in [x_j, x_{j+1}], \\
-0, & \text{otherwise}
-\end{cases}$$
+\begin{definition}
+    \textbf{Nodal Hat Basis Functions:} Piecewise linear interpolation can also be expressed globally using the nodal basis (also called \textbf{tent} or \textbf{hat functions}) $B_j(x)$:
+    $$s(x) = \sum_{j=0}^N y_j B_j(x)$$
+    where each basis function $B_j(x)$ satisfies $B_j(x_k) = \delta_{jk}$ and is defined as:
+    $$B_j(x) = \begin{cases}
+        \frac{x - x_{j-1}}{x_j - x_{j-1}}, & \text{if } x \in [x_{j-1}, x_j], \\
+        \frac{x_{j+1} - x}{x_{j+1} - x_j}, & \text{if } x \in [x_j, x_{j+1}], \\
+        0, & \text{otherwise}
+    \end{cases}$$
 \end{definition}
 
-\begin{theorem} \textbf{Error Estimate for Linear Interpolation:} For a twice continuously differentiable function $f \in C^2[a,b]$, the interpolation error on a mesh of width $h = \max_j h_j$ satisfies:
-$$\|f - s\|_{L^\infty} \le \frac{1}{8} h^2 \|f''\|_{L^\infty}$$
-and for the derivative (away from the nodes):
-$$\|f' - s'\|_{L^\infty} \le \frac{1}{2} h \|f''\|_{L^\infty}$$
-The error in function values converges quadratically with order $\mathcal{O}(h^2)$: halving the grid width cuts the error by a factor of 4.
+\begin{theorem}
+    \textbf{Error Estimate for Linear Interpolation:} For a twice continuously differentiable function $f \in C^2[a,b]$, the interpolation error on a mesh of width $h = \max_j h_j$ satisfies:
+    $$\|f - s\|_{L^\infty} \le \frac{1}{8} h^2 \|f''\|_{L^\infty}$$
+    and for the derivative (away from the nodes):
+    $$\|f' - s'\|_{L^\infty} \le \frac{1}{2} h \|f''\|_{L^\infty}$$
+    The error in function values converges quadratically with order $\mathcal{O}(h^2)$: halving the grid width cuts the error by a factor of 4.
 \end{theorem}
 
 \subsection{Cubic Hermite Interpolation}
 
-\begin{definition} \textbf{Cubic Hermite Interpolation:} Given both function values $y_j = f(x_j)$ and derivative values $c_j = f'(x_j)$ at the nodes $x_0, \dots, x_N$, Cubic Hermite interpolation constructs a local degree-3 polynomial $s_j \in \mathcal{P}_3$ on each interval $[x_{j-1}, x_j]$ satisfying 4 conditions:
-$$s_j(x_{j-1}) = y_{j-1}, \quad s_j(x_j) = y_j, \quad s_j'(x_{j-1}) = c_{j-1}, \quad s_j'(x_j) = c_j$$
-Since a cubic polynomial $a x^3 + b x^2 + c x + d$ has 4 degrees of freedom, these 4 conditions determine $s_j(x)$ uniquely on each interval.
+\begin{definition}
+    \textbf{Cubic Hermite Interpolation:} Given both function values $y_j = f(x_j)$ and derivative values $c_j = f'(x_j)$ at the nodes $x_0, \dots, x_N$, Cubic Hermite interpolation constructs a local degree-3 polynomial $s_j \in \mathcal{P}_3$ on each interval $[x_{j-1}, x_j]$ satisfying 4 conditions:
+    $$s_j(x_{j-1}) = y_{j-1}, \quad s_j(x_j) = y_j, \quad s_j'(x_{j-1}) = c_{j-1}, \quad s_j'(x_j) = c_j$$
+    Since a cubic polynomial $a x^3 + b x^2 + c x + d$ has 4 degrees of freedom, these 4 conditions determine $s_j(x)$ uniquely on each interval.
 \end{definition}
 
-\begin{remark} \textbf{Continuity ($C^1$ Smoothness):} Because adjacent polynomials on $[x_{j-1}, x_j]$ and $[x_j, x_{j+1}]$ match both the function value $y_j$ and the slope $c_j$ at their shared boundary point $x_j$, the global interpolant $s(x)$ has no sharp corners and is continuously differentiable on all of $[a,b]$:
-$$s \in C^1[a,b]$$
+\begin{remark}
+    \textbf{Continuity ($C^1$ Smoothness):} Because adjacent polynomials on $[x_{j-1}, x_j]$ and $[x_j, x_{j+1}]$ match both the function value $y_j$ and the slope $c_j$ at their shared boundary point $x_j$, the global interpolant $s(x)$ has no sharp corners and is continuously differentiable on all of $[a,b]$:
+    $$s \in C^1[a,b]$$
 \end{remark}
 
-\begin{definition} \textbf{Hermite Cardinal Basis:} Using the local normalized coordinate $t = \frac{x - x_{j-1}}{h_j} \in [0, 1]$, the cubic polynomial on $[x_{j-1}, x_j]$ can be written directly without solving any linear system:
-$$s(x) = y_{j-1} \phi_0(t) + y_j \phi_1(t) + h_j c_{j-1} \psi_0(t) + h_j c_j \psi_1(t)$$
-where the Hermite basis polynomials on $[0,1]$ are given by:
-$$\phi_0(t) = 1 - 3t^2 + 2t^3, \quad \phi_1(t) = 3t^2 - 2t^3$$
-$$\psi_0(t) = t - 2t^2 + t^3, \quad \psi_1(t) = -t^2 + t^3$$
-These basis functions satisfy cardinal properties such as $\phi_0(0)=1, \phi_0(1)=0, \phi_0'(0)=0, \phi_0'(1)=0$, isolating the influence of each node value and derivative.
+\begin{definition}
+    \textbf{Hermite Cardinal Basis:} Using the local normalized coordinate $t = \frac{x - x_{j-1}}{h_j} \in [0, 1]$, the cubic polynomial on $[x_{j-1}, x_j]$ can be written directly without solving any linear system:
+    $$s(x) = y_{j-1} \phi_0(t) + y_j \phi_1(t) + h_j c_{j-1} \psi_0(t) + h_j c_j \psi_1(t)$$
+    where the Hermite basis polynomials on $[0,1]$ are given by:
+    $$\phi_0(t) = 1 - 3t^2 + 2t^3, \quad \phi_1(t) = 3t^2 - 2t^3$$
+    $$\psi_0(t) = t - 2t^2 + t^3, \quad \psi_1(t) = -t^2 + t^3$$
+    These basis functions satisfy cardinal properties such as $\phi_0(0)=1, \phi_0(1)=0, \phi_0'(0)=0, \phi_0'(1)=0$, isolating the influence of each node value and derivative.
 \end{definition}
 
-\begin{theorem} \textbf{Cubic Hermite Error Estimate:} For $f \in C^4[a,b]$ and exact derivative values $c_j = f'(x_j)$, the error satisfies:
-$$\|f^{(k)} - s^{(k)}\|_{L^\infty} \le \frac{1}{384} h^{4-k} \|f^{(4)}\|_{L^\infty} \quad \text{for } k \in \{0, 1\}$$
-For the function values ($k = 0$), this yields fourth-order convergence:
-$$\|f - s\|_{L^\infty} \le \frac{1}{384} h^4 \|f^{(4)}\|_{L^\infty} = \mathcal{O}(h^4)$$
-and for the first derivative ($k = 1$), it yields third-order convergence:
-$$\|f' - s'\|_{L^\infty} \le \frac{1}{384} h^3 \|f^{(4)}\|_{L^\infty} = \mathcal{O}(h^3)$$
-\end{theorem}
-
-\begin{remark} \textbf{Limitation in Practice:} Cubic Hermite interpolation requires exact derivative values $c_j = f'(x_j)$ at all node points. In many practical applications, however, only the function values $y_j$ are available. This motivates the need for \textbf{splines}, which achieve high smoothness without requiring prescribed derivatives.
+\begin{remark}
+    \textbf{Limitation in Practice:} Cubic Hermite interpolation requires exact derivative values $c_j = f'(x_j)$ at all node points. In many practical applications, however, only the function values $y_j$ are available. This motivates the need for \textbf{splines}, which achieve high smoothness without requiring prescribed derivatives.
 \end{remark}
 
 \subsection{Spline Interpolation}
 
-\begin{definition} \textbf{Spline Spaces ($\mathcal{S}_{d,\mathcal{G}}$):} Let $\mathcal{G} = \{a = x_0 < x_1 < \dots < x_N = b\}$ be a grid on $[a,b]$. The spline space of degree $d \ge 1$, denoted by $\mathcal{S}_{d,\mathcal{G}}$, is the set of functions that:
-\begin{enumerate}
-    \item Are $(d-1)$-times continuously differentiable on $[a,b]$: $s \in C^{d-1}[a,b]$.
-    \item Consist of polynomials of degree at most $d$ on each subinterval: $s|_{[x_{j-1}, x_j]} \in \mathcal{P}_d$ for $j = 1, \dots, N$.
-\end{enumerate}
-Formally:
-$$\mathcal{S}_{d,\mathcal{G}} := \left\{ s \in C^{d-1}[a,b] \;\middle|\; s|_{[x_{j-1}, x_j]} \in \mathcal{P}_d, \; j = 1, \dots, N \right\}$$
+\begin{definition}
+    \textbf{Spline Spaces ($\mathcal{S}_{d,\mathcal{G}}$):} Let $\mathcal{G} = \{a = x_0 < x_1 < \dots < x_N = b\}$ be a grid on $[a,b]$. The spline space of degree $d \ge 1$, denoted by $\mathcal{S}_{d,\mathcal{G}}$, is the set of functions that:
+    \begin{enumerate}
+        \item Are $(d-1)$-times continuously differentiable on $[a,b]$: $s \in C^{d-1}[a,b]$.
+        \item Consist of polynomials of degree at most $d$ on each subinterval: $s|_{[x_{j-1}, x_j]} \in \mathcal{P}_d$ for $j = 1, \dots, N$.
+    \end{enumerate}
+    Formally:
+    $$\mathcal{S}_{d,\mathcal{G}} := \left\{ s \in C^{d-1}[a,b] \;\middle|\; s|_{[x_{j-1}, x_j]} \in \mathcal{P}_d, \; j = 1, \dots, N \right\}$$
+    The dimension of the spline space $\mathcal{S}_{d,\mathcal{G}}$ is:
+    $$\dim \mathcal{S}_{d,\mathcal{G}} = N + d$$
 \end{definition}
 
-\begin{theorem} \textbf{Dimension of the Spline Space:} The dimension of the spline space $\mathcal{S}_{d,\mathcal{G}}$ is:
-$$\dim \mathcal{S}_{d,\mathcal{G}} = N + d$$
-For cubic splines ($d = 3$), the dimension is:
-$$\dim \mathcal{S}_{3,\mathcal{G}} = N + 3$$
-\end{theorem}
-
-\begin{remark} \textbf{Intuition \& Dimension Counting:} Why is the dimension $N + d$?
-\begin{itemize}
-    \item On $N$ subintervals, each polynomial of degree $d$ has $d+1$ coefficients, giving a total of $N(d+1)$ parameters.
-    \item At each of the $N-1$ internal nodes $x_1, \dots, x_{N-1}$, the function and its first $d-1$ derivatives must match from the left and right. This imposes $d$ continuity conditions per internal node, giving $d(N-1)$ linear constraints.
-    \item Subtracting constraints from parameters:
+\begin{remark}
+    \textbf{Dimension} $N + d$: On $N$ subintervals, each polynomial of degree $d$ has $d+1$ coefficients, giving a total of $N(d+1)$ parameters. At each of the $N-1$ internal nodes $x_1, \dots, x_{N-1}$, the function and its first $d-1$ derivatives must match from the left and right. This imposes $d$ continuity conditions per internal node, giving $d(N-1)$ linear constraints. Subtracting constraints from parameters:
     $$\dim \mathcal{S}_{d,\mathcal{G}} = N(d+1) - d(N-1) = Nd + N - Nd + d = N + d$$
-\end{itemize}
-For cubic splines ($d=3$), we have $N+3$ degrees of freedom. Interpolating $N+1$ data points $s(x_j) = y_j$ fixes $N+1$ degrees of freedom, leaving:
-$$(N+3) - (N+1) = 2 \text{ free degrees of freedom}$$
-Therefore, to uniquely determine a cubic spline, we need \textbf{exactly 2 additional boundary conditions}.
+    Therefore, to uniquely determine a cubic spline, we need \textbf{exactly 2 additional boundary conditions}.
 \end{remark}
 
-\begin{definition} \textbf{Cubic Spline Boundary Conditions:} To close the system and uniquely fix the 2 remaining degrees of freedom, one of the following boundary conditions is typically chosen:
-\begin{enumerate}
-    \item \textbf{Clamped / Complete Splines (\textit{Eingespannte Splines}):} Specifies exact boundary first derivatives:
-    $$s'(x_0) = c_0 \quad \text{and} \quad s'(x_N) = c_N$$
-    This is used when the physical boundary slopes (such as entry/exit velocities) are known.
-    
-    \item \textbf{Natural Splines (\textit{Natürliche Splines}):} Sets the second derivatives at the boundaries to zero:
-    $$s''(x_0) = 0 \quad \text{and} \quad s''(x_N) = 0$$
-    This means the curvature vanishes at the endpoints, so the spline transitions into a straight line at the boundary.
-    
-    \item \textbf{Periodic Splines (\textit{Periodische Splines}):} For periodic data where $y_0 = y_N$, enforces equal first and second derivatives at the endpoints:
-    $$s'(x_0) = s'(x_N) \quad \text{and} \quad s''(x_0) = s''(x_N)$$
-    This ensures that closed curves or periodic signals remain $C^2$-smooth across the period boundary.
-    
-    \item \textbf{Not-a-Knot Condition:} Requires the third derivative $s'''(x)$ to be continuous across the first and last internal nodes:
-    $$\lim_{x \nearrow x_1} s'''(x) = \lim_{x \searrow x_1} s'''(x) \quad \text{and} \quad \lim_{x \nearrow x_{N-1}} s'''(x) = \lim_{x \searrow x_{N-1}} s'''(x)$$
-    Since two cubic polynomials that match up to the 3rd derivative must be identical, the first two intervals $[x_0, x_2]$ share the same single cubic polynomial, and the last two intervals $[x_{N-2}, x_N]$ share the same cubic polynomial. The nodes $x_1$ and $x_{N-1}$ are effectively "not knots".
-\end{enumerate}
+\begin{definition}
+    \textbf{Cubic Spline Boundary Conditions:} To close the system and uniquely fix the 2 remaining degrees of freedom, one of the following boundary conditions is typically chosen:
+    \begin{enumerate}
+        \item \textbf{Clamped / Complete Splines (\textit{Eingespannte Splines}):} Specifies exact boundary first derivatives:
+        $$s'(x_0) = c_0 \quad \text{and} \quad s'(x_N) = c_N$$
+        This is used when the physical boundary slopes (such as entry/exit velocities) are known.
+
+        \item \textbf{Natural Splines (\textit{Natürliche Splines}):} Sets the second derivatives at the boundaries to zero:
+        $$s''(x_0) = 0 \quad \text{and} \quad s''(x_N) = 0$$
+        This means the curvature vanishes at the endpoints, so the spline transitions into a straight line at the boundary.
+
+        \item \textbf{Periodic Splines (\textit{Periodische Splines}):} For periodic data where $y_0 = y_N$, enforces equal first and second derivatives at the endpoints:
+        $$s'(x_0) = s'(x_N) \quad \text{and} \quad s''(x_0) = s''(x_N)$$
+        This ensures that closed curves or periodic signals remain $C^2$-smooth across the period boundary.
+
+        \item \textbf{Not-a-Knot Condition:} Requires the third derivative $s'''(x)$ to be continuous across the first and last internal nodes:
+        $$\lim_{x \nearrow x_1} s'''(x) = \lim_{x \searrow x_1} s'''(x) \quad \text{and} \quad \lim_{x \nearrow x_{N-1}} s'''(x) = \lim_{x \searrow x_{N-1}} s'''(x)$$
+        Since two cubic polynomials that match up to the 3rd derivative must be identical, the first two intervals $[x_0, x_2]$ share the same single cubic polynomial, and the last two intervals $[x_{N-2}, x_N]$ share the same cubic polynomial. The nodes $x_1$ and $x_{N-1}$ are effectively "not knots".
+    \end{enumerate}
 \end{definition}
 
-\begin{theorem} \textbf{Minimal Curvature Property of Natural Splines:} Let $s$ be the natural cubic spline interpolating the points $(x_j, y_j)_{j=0}^N$. Then $s$ minimizes the total bending energy (graph curvature) among all twice continuously differentiable interpolants:
-$$\int_a^b |s''(x)|^2 \, dx \le \int_a^b |g''(x)|^2 \, dx$$
-for any function $g \in C^2[a,b]$ satisfying $g(x_j) = y_j$ for all $j = 0, \dots, N$.
+\begin{theorem}
+    \textbf{Minimal Curvature Property of Natural Splines:} Let $s$ be the natural cubic spline interpolating the points $(x_j, y_j)_{j=0}^N$. Then $s$ minimizes the total bending energy (graph curvature) among all twice continuously differentiable interpolants:
+    $$\int_a^b |s''(x)|^2 \, dx \le \int_a^b |g''(x)|^2 \, dx$$
+    for any function $g \in C^2[a,b]$ satisfying $g(x_j) = y_j$ for all $j = 0, \dots, N$.
 \end{theorem}
 
-\begin{remark} \textbf{Physical Intuition of Splines:} Historically, a ``spline'' was a flexible thin wooden or metal strip used by shipbuilders and draftsmen. When pinned down at fixed coordinates $(x_j, y_j)$, the strip naturally settles into an equilibrium shape that minimizes its internal elastic bending energy $\int |s''(x)|^2 dx$. Because the ends are free of external bending torque, the curvature naturally vanishes at the ends ($s''(a) = s''(b) = 0$), which is precisely the natural cubic spline.
+\begin{remark}
+    \textbf{Computation via Tridiagonal Systems:} Computing a cubic spline does not require solving an intractable dense matrix. The conditions of $C^2$ continuity lead to a strictly diagonally dominant \textbf{tridiagonal system of linear equations} for the derivative values $c_j = s'(x_j)$ (or second derivatives $s''(x_j)$). This tridiagonal system is always invertible and can be solved in only $\mathcal{O}(N)$ operations using the Thomas algorithm (tridiagonal Gaussian elimination).
 \end{remark}
-
-\begin{remark} \textbf{Computation via Tridiagonal Systems:} Computing a cubic spline does not require solving an intractable dense matrix. The conditions of $C^2$ continuity lead to a strictly diagonally dominant \textbf{tridiagonal system of linear equations} for the derivative values $c_j = s'(x_j)$ (or second derivatives $s''(x_j)$). This tridiagonal system is always invertible and can be solved in only $\mathcal{O}(N)$ operations using the Thomas algorithm (tridiagonal Gaussian elimination).
-\end{remark}
-
-\begin{theorem} \textbf{Error Estimates for Complete Cubic Splines:} Let $f \in C^4[a,b]$. On an equidistant grid of width $h = \frac{b-a}{N}$, the complete (clamped) cubic spline interpolant $s$ satisfies the error bound:
-$$\|f^{(k)} - s^{(k)}\|_{L^\infty} \le \frac{5}{384} h^{4-k} \|f^{(4)}\|_{L^\infty} \quad \text{for } k \in \{0, 1, 2, 3\}$$
-In particular, for the function values ($k = 0$), the complete cubic spline converges at rate $\mathcal{O}(h^4)$:
-$$\|f - s\|_{L^\infty} \le \frac{5}{384} h^4 \|f^{(4)}\|_{L^\infty}$$
-and for its derivatives:
-$$\|f' - s'\|_{L^\infty} = \mathcal{O}(h^3), \quad \|f'' - s''\|_{L^\infty} = \mathcal{O}(h^2), \quad \|f''' - s'''\|_{L^\infty} = \mathcal{O}(h)$$
-Even though derivative values are not specified at interior nodes, the global $C^2$ smoothness constraint still delivers the optimal fourth-order convergence $\mathcal{O}(h^4)$ with an error constant only $\frac{5}{384}$ (merely 5 times that of Hermite interpolation).
-\end{theorem}

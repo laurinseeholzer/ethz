@@ -11,20 +11,20 @@
 \contentsline {section}{\numberline {2}Interpolation}{8}{}%
 \contentsline {subsection}{\numberline {2.1}Newton}{8}{}%
 \contentsline {subsection}{\numberline {2.2}Lagrange}{9}{}%
-\contentsline {subsection}{\numberline {2.3}Barycentric Interpolation-formula}{10}{}%
-\contentsline {subsection}{\numberline {2.4}Chebyshev}{11}{}%
-\contentsline {subsection}{\numberline {2.5}Trigonometric Interpolation}{12}{}%
-\contentsline {subsection}{\numberline {2.6}Piecewise Polynomial Interpolation}{15}{}%
-\contentsline {subsection}{\numberline {2.7}Piecewise Linear Interpolation}{16}{}%
-\contentsline {subsection}{\numberline {2.8}Cubic Hermite Interpolation}{17}{}%
-\contentsline {subsection}{\numberline {2.9}Spline Interpolation}{18}{}%
-\contentsline {section}{\numberline {3}Quadrature}{22}{}%
-\contentsline {subsection}{\numberline {3.1}Polynomial Interpolation}{22}{}%
-\contentsline {subsection}{\numberline {3.2}Composite Quadrature Rules}{23}{}%
-\contentsline {subsubsection}{\numberline {3.2.1}The Midpoint Rule}{23}{}%
-\contentsline {subsubsection}{\numberline {3.2.2}The Trapezoidal Rule}{24}{}%
-\contentsline {subsubsection}{\numberline {3.2.3}Simpson's Rule}{24}{}%
-\contentsline {subsubsection}{\numberline {3.2.4}Smoothness and Periodic Boundary Properties}{24}{}%
-\contentsline {subsubsection}{\numberline {3.2.5}Romberg Extrapolation}{25}{}%
-\contentsline {subsubsection}{\numberline {3.2.6}High-Order Rules}{27}{}%
-\contentsline {subsection}{\numberline {3.3}Adaptive Quadrature}{28}{}%
+\contentsline {subsection}{\numberline {2.3}Barycentric Interpolation-formula}{9}{}%
+\contentsline {subsection}{\numberline {2.4}Chebyshev}{10}{}%
+\contentsline {subsection}{\numberline {2.5}Trigonometric Interpolation}{11}{}%
+\contentsline {subsection}{\numberline {2.6}Piecewise Polynomial Interpolation}{14}{}%
+\contentsline {subsection}{\numberline {2.7}Piecewise Linear Interpolation}{15}{}%
+\contentsline {subsection}{\numberline {2.8}Cubic Hermite Interpolation}{16}{}%
+\contentsline {subsection}{\numberline {2.9}Spline Interpolation}{17}{}%
+\contentsline {section}{\numberline {3}Quadrature}{20}{}%
+\contentsline {subsection}{\numberline {3.1}Polynomial Interpolation}{20}{}%
+\contentsline {subsection}{\numberline {3.2}Composite Quadrature Rules}{21}{}%
+\contentsline {subsubsection}{\numberline {3.2.1}The Midpoint Rule}{21}{}%
+\contentsline {subsubsection}{\numberline {3.2.2}The Trapezoidal Rule}{21}{}%
+\contentsline {subsubsection}{\numberline {3.2.3}Simpson's Rule}{22}{}%
+\contentsline {subsubsection}{\numberline {3.2.4}Smoothness}{22}{}%
+\contentsline {subsubsection}{\numberline {3.2.5}Romberg Extrapolation}{23}{}%
+\contentsline {subsubsection}{\numberline {3.2.6}High-Order Rules}{23}{}%
+\contentsline {subsection}{\numberline {3.3}Adaptive Quadrature}{24}{}%
