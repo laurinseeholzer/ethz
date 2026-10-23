@@ -1,0 +1,539 @@
+\section{Compiling C Control Flow and Procedures}
+
+\subsection{Conditional Control Flow: Branching vs. Conditional Moves}
+
+\begin{definition} \textbf{Control Flow Representation:}
+In high-level C, execution paths are structured using conditionals (\texttt{if-else}, the ternary operator \texttt{? :}, and \texttt{switch}) and loops (\texttt{while}, \texttt{do-while}, and \texttt{for}). 
+In x86-64 machine assembly, the processor executes instructions sequentially as dictated by the Program Counter (\texttt{\%rip}). Control flow is altered through two fundamental mechanisms:
+\begin{itemize}
+    \item \textbf{Control Transfers (Jumps / Branching):} Modifying \texttt{\%rip} conditionally or unconditionally based on status flags in \texttt{RFLAGS} (e.g., \texttt{jmp}, \texttt{je}, \texttt{jl}, \texttt{jg}).
+    \item \textbf{Conditional Data Transfers (Conditional Moves):} Conditionally transferring data between registers (\texttt{cmov*}) without altering the sequential instruction stream.
+\end{itemize}
+\end{definition}
+
+\subsubsection{Branching with Conditional Jumps}
+
+\begin{definition} \textbf{Jump-Based Conditional Execution:}
+The standard translation of a C \texttt{if (test) then-statement else else-statement} evaluates the condition, sets condition codes using \texttt{cmp} or \texttt{test}, and executes a conditional jump based on the outcome:
+\end{definition}
+
+\begin{codeexample}
+// C code:
+long absdiff(long x, long y) {
+    if (x < y) {
+        return y - x;
+    } else {
+        return x - y;
+    }
+}
+
+// x86-64 Assembly (Branch-based):
+// Arguments: x in %rdi, y in %rsi
+absdiff:
+    cmpq    %rsi, %rdi          // Compare x and y (computes x - y)
+    jl      .L_then             // If x < y, branch to .L_then
+    movq    %rdi, %rax          // Else-path: %rax = x
+    subq    %rsi, %rax          // %rax = x - y
+    ret                         // Return result in %rax
+.L_then:
+    movq    %rsi, %rax          // Then-path: %rax = y
+    subq    %rdi, %rax          // %rax = y - x
+    ret                         // Return result in %rax
+\end{codeexample}
+
+\subsubsection{Branch Prediction and Pipeline Penalties}
+
+\begin{definition} \textbf{Instruction Pipelining and Branch Prediction:}
+Modern high-performance x86 processors employ deep execution pipelines (typically 15 to 20 stages) to execute multiple instructions per cycle.
+\begin{itemize}
+    \item \textbf{Branch Predictor:} When fetching a conditional jump instruction (\texttt{j*}), the processor cannot afford to wait until the condition code is resolved in the ALU stages. It employs a hardware \textbf{Branch Predictor} with history tables to speculate whether the branch will be taken or not taken.
+    \item \textbf{Speculative Execution:} The CPU speculatively fetches and decodes instructions along the predicted path.
+    \item \textbf{Branch Misprediction Penalty:} If the branch prediction turns out to be wrong once flags are evaluated, all speculatively fetched instructions in the pipeline must be discarded and flushed. This incurs a severe performance penalty of \textbf{15 to 30 clock cycles} of lost work.
+\end{itemize}
+\end{definition}
+
+\subsubsection{Conditional Moves (\texttt{cmov})}
+
+\begin{definition} \textbf{Conditional Move Translation:}
+Rather than changing the execution path, a compiler can compute both candidate outcomes eagerly and use a \textbf{conditional move} (\texttt{cmov}) instruction to copy the chosen result into the destination register:
+\[
+\texttt{cmov}\langle\text{condition}\rangle \quad \text{Source}, \quad \text{Destination}
+\]
+The transfer takes place if and only if the specified condition code holds; otherwise, the destination register remains untouched.
+\end{definition}
+
+\begin{codeexample}
+// x86-64 Assembly (Conditional Move):
+// Arguments: x in %rdi, y in %rsi
+absdiff:
+    movq    %rsi, %rdx
+    subq    %rdi, %rdx          // %rdx = y - x (then-expression)
+    movq    %rdi, %rax
+    subq    %rsi, %rax          // %rax = x - y (else-expression, default in %rax)
+    cmpq    %rsi, %rdi          // Compare x and y
+    cmovl   %rdx, %rax          // If x < y, %rax = %rdx (y - x); else keep x - y
+    ret
+\end{codeexample}
+
+\begin{remark} \textbf{Branch vs. Conditional Move Trade-offs:}
+\begin{itemize}
+    \item \textbf{Data Dependency vs. Control Dependency:} Conditional moves transform a \emph{control dependency} (which instruction to execute next) into a \emph{data dependency} (which operand to select). The instruction flow is strictly linear and deterministic.
+    \item \textbf{Unpredictable Branches:} When branches are random (e.g., branching on unsorted array elements), branch predictors fail roughly 50\% of the time. Here, \texttt{cmov} yields substantial speedups by eliminating all pipeline flushes.
+    \item \textbf{Predictable Branches:} If a branch is highly predictable (e.g., error checking that rarely triggers or loops with hundreds of iterations), branch-based code is faster because it computes only the taken branch.
+\end{itemize}
+\end{remark}
+
+\begin{important} \textbf{When Conditional Moves CANNOT or MUST NOT be Used:}
+Compilers are prohibited from emitting \texttt{cmov} in the following critical scenarios:
+\begin{enumerate}
+    \item \textbf{Memory Safety / Null-Pointer Dereferencing:}
+    \begin{lstlisting}[language=C]
+    long val = (p != NULL) ? *p : 0;
+    \end{lstlisting}
+    Because \texttt{cmov} requires evaluating both paths before selection, computing \texttt{*p} eagerly dereferences \texttt{NULL} when \texttt{p == NULL}, triggering a fatal Segmentation Fault (\texttt{SIGSEGV}).
+    \item \textbf{Side Effects:}
+    \begin{lstlisting}[language=C]
+    long val = (x > 0) ? x++ : y--;
+    \end{lstlisting}
+    Eagerly evaluating both sides executes both \texttt{x++} and \texttt{y--}, corrupting program state regardless of the condition.
+    \item \textbf{Expensive Computations:}
+    If evaluating both candidate expressions requires expensive calculations or function calls (e.g., \texttt{f(x) ? heavy1() : heavy2()}), computing both wastes more CPU cycles than an occasional branch misprediction.
+    \item \textbf{Arithmetic Exceptions:}
+    \begin{lstlisting}[language=C]
+    long val = (y != 0) ? (x / y) : 0;
+    \end{lstlisting}
+    Eagerly evaluating the division when $y = 0$ triggers a hardware divide-by-zero trap (\texttt{SIGFPE}).
+\end{enumerate}
+\end{important}
+
+\subsection{Compiling Loops}
+
+\begin{definition} \textbf{Loop Compilation Principle:}
+In assembly language, loops are synthesized by combining conditional and unconditional jumps with condition code evaluations. Repetitive execution occurs when a jump targets an earlier address in the instruction stream.
+\end{definition}
+
+\subsubsection{Do-While Loops (Bottom-Tested)}
+
+\begin{definition} \textbf{Do-While Translation:}
+A \texttt{do-while} loop inherently matches the hardware execution model:
+\begin{enumerate}
+    \item The body executes first unconditionally.
+    \item The loop test condition is evaluated at the bottom.
+    \item If the condition evaluates to true, a conditional branch jumps backward to the beginning of the body; otherwise, execution falls through.
+\end{enumerate}
+\end{definition}
+
+\begin{codeexample}
+// C code:
+long factorial_do_while(long n) {
+    long result = 1;
+    do {
+        result *= n;
+        n--;
+    } while (n > 1);
+    return result;
+}
+
+// x86-64 Assembly:
+// Argument: n in %rdi
+factorial_do_while:
+    movq    $1, %rax            // result = 1
+.L_body:
+    imulq   %rdi, %rax          // result *= n
+    subq    $1, %rdi            // n--
+    cmpq    $1, %rdi            // Compare n : 1
+    jg      .L_body             // If n > 1, jump back to .L_body
+    ret                         // Return result
+\end{codeexample}
+
+\subsubsection{While Loops: Jump-to-Middle vs. Guarded-Do}
+
+\begin{definition} \textbf{While Loop Semantics:}
+Unlike \texttt{do-while}, a standard \texttt{while (test) body} tests the condition \emph{before} executing the loop body. If the initial test is false, the loop body must never execute.
+Compilers employ two distinct strategies to compile \texttt{while} loops:
+\end{definition}
+
+\begin{theorem} \textbf{Strategy 1: Jump-to-Middle (JTM):}
+Commonly generated by compilers at lower optimization levels (\texttt{-O0}):
+\begin{itemize}
+    \item An initial unconditional jump (\texttt{jmp .L\_test}) skips the loop body to the test located at the bottom.
+    \item The test is evaluated, and if true, a conditional branch jumps back up to the body.
+    \item \textbf{Characteristic:} Compact code footprint, but requires an extra unconditional branch upon initial entry.
+\end{itemize}
+\end{theorem}
+
+\begin{codeexample}
+// Jump-to-Middle Pattern (GCC -O0 style):
+    jmp     .L_test             // Jump to initial test
+.L_body:
+    // ... Loop Body Statements ...
+.L_test:
+    // ... Evaluate Condition ...
+    j_cond  .L_body             // If condition holds, jump back to body
+\end{codeexample}
+
+\begin{theorem} \textbf{Strategy 2: Guarded-Do (GD):}
+Standard strategy generated by optimizing compilers (\texttt{-O1}, \texttt{-O2}, \texttt{-O3}):
+\begin{itemize}
+    \item An initial conditional branch (the \emph{guard}) tests the condition. If false, it jumps straight to the exit, bypassing the loop entirely.
+    \item The remaining structure is compiled as an optimal \textbf{do-while loop}: the body runs, followed by a bottom-tested conditional branch.
+    \item \textbf{Characteristic:} Steady-state loop iterations contain only a single conditional jump and zero unconditional jumps, maximizing branch predictor efficiency and loop throughput.
+\end{itemize}
+\end{theorem}
+
+\begin{codeexample}
+// Guarded-Do Pattern (GCC -O1/O2 style):
+    // ... Evaluate Condition ...
+    j_not_cond .L_done          // Guard: if initially false, skip loop
+.L_body:
+    // ... Loop Body Statements ...
+    // ... Evaluate Condition ...
+    j_cond     .L_body          // If true, repeat loop
+.L_done:
+\end{codeexample}
+
+\subsubsection{For Loops}
+
+\begin{definition} \textbf{For Loop Translation:}
+The canonical C \texttt{for} loop:
+\begin{lstlisting}[language=C]
+for (init; test; update) {
+    body;
+}
+\end{lstlisting}
+is semantically equivalent to a \texttt{while} loop:
+\begin{lstlisting}[language=C]
+init;
+while (test) {
+    body;
+    update;
+}
+\end{lstlisting}
+Applying the guarded-do strategy yields:
+\begin{lstlisting}[language=C]
+init;
+if (!test) goto done;
+do {
+    body;
+update_label:
+    update;
+} while (test);
+done:
+\end{lstlisting}
+\end{definition}
+
+\begin{important} \textbf{Semantics of \texttt{continue} in \texttt{for} Loops:}
+In a \texttt{while} loop, executing \texttt{continue} jumps directly to the condition test. 
+However, in a \texttt{for} loop, executing \texttt{continue} jumps directly to the \textbf{\texttt{update}} expression before testing the condition again.
+\end{important}
+
+\subsection{Switch Statements and Multi-Way Branching}
+
+\begin{definition} \textbf{The C \texttt{switch} Statement:}
+A \texttt{switch} provides multi-way branching based on the value of an integer index expression. Depending on the span and density of case constants, compilers select between two primary implementations:
+\begin{enumerate}
+    \item \textbf{Jump Tables ($O(1)$ time):} Used when case values are dense (closely packed).
+    \item \textbf{Binary Decision Trees ($O(\log N)$ time):} Used when case values are sparse (widely separated).
+\end{enumerate}
+\end{definition}
+
+\subsubsection{Jump Tables for Dense Cases}
+
+\begin{definition} \textbf{Jump Table Architecture:}
+A jump table is an array of code pointers (target memory addresses) stored in the read-only data section (\texttt{.rodata}) of memory:
+\begin{itemize}
+    \item \textbf{Zero-Basing / Index Bias Subtraction:} If case constants start at $min$, the index is normalized by computing:
+    \[
+    index = value - min
+    \]
+    \item \textbf{Single Unsigned Bounds Check:} To determine whether $index$ falls within $[0, span]$, the compiler performs an unsigned comparison against $span$:
+    \[
+    \texttt{cmpq} \quad \$span, \quad index; \quad \texttt{ja} \quad \text{.L\_default}
+    \]
+    \begin{remark} \textbf{Unsigned Arithmetic Trick:} 
+    Because negative numbers are represented in two's complement, treating a negative $index$ as an unsigned integer turns it into an immense positive number ($> 2^{63}$). Consequently, a single unsigned check (\texttt{ja}) simultaneously catches values below $min$ and values above $max$!
+    \end{remark}
+    \item \textbf{Indirect Jump:} Control is dispatched in constant $O(1)$ time using an indirect jump with scaled index addressing:
+    \[
+    \texttt{jmp} \quad *\text{.L\_table}(, \%reg, 8)
+    \]
+    The processor reads the target 64-bit address from the jump table array at offset $8 \times index$ and loads it directly into \texttt{\%rip}.
+\end{itemize}
+\end{definition}
+
+\begin{codeexample}
+// C code:
+void switch_dense(long n, long *val) {
+    switch (n) {
+        case 100: *val += 10; break;
+        case 102: *val += 20; // Fallthrough
+        case 103: *val += 30; break;
+        case 104: *val *= 2;  break;
+        default:  *val = 0;   break;
+    }
+}
+
+// x86-64 Assembly:
+// Arguments: n in %rdi, val in %rsi
+switch_dense:
+    subq    $100, %rdi          // Zero-base: index = n - 100
+    cmpq    $4, %rdi            // Check if index > 4 (span = 104 - 100 = 4)
+    ja      .L_default          // Unsigned > 4 covers n < 100 and n > 104
+    jmp     *.L_jt(,%rdi,8)     // Indirect jump through table: %rip = .L_jt[index]
+
+.section .rodata
+    .align 8
+.L_jt:
+    .quad   .L_case100          // index 0 (n = 100)
+    .quad   .L_default          // index 1 (n = 101, missing -> default)
+    .quad   .L_case102          // index 2 (n = 102)
+    .quad   .L_case103          // index 3 (n = 103)
+    .quad   .L_case104          // index 4 (n = 104)
+
+.text
+.L_case100:
+    addq    $10, (%rsi)
+    ret
+.L_case102:
+    addq    $20, (%rsi)         // No break: falls through directly to .L_case103!
+.L_case103:
+    addq    $30, (%rsi)
+    ret
+.L_case104:
+    shlq    $1, (%rsi)          // *val *= 2
+    ret
+.L_default:
+    movq    $0, (%rsi)
+    ret
+\end{codeexample}
+
+\begin{remark} \textbf{Fallthrough and Missing Cases in Jump Tables:}
+\begin{itemize}
+    \item \textbf{Missing Cases:} Missing numbers within the case range (such as $n = 101$ above) simply point to the default label in the jump table array.
+    \item \textbf{Fallthrough:} When a \texttt{break} is omitted, the code for one case immediately precedes the next case in the instruction stream, and execution simply falls through without a jump.
+\end{itemize}
+\end{remark}
+
+\subsubsection{Sparse Switch Statements: Binary Decision Trees}
+
+\begin{definition} \textbf{Sparse Switch Compilation:}
+When case constants are sparse and far apart (e.g., \texttt{case 5:}, \texttt{case 5000:}, \texttt{case 5000000:}), allocating a jump table would waste megabytes of memory on unused default entries.
+Instead, the compiler organizes the case labels into a balanced \textbf{Binary Decision Tree}:
+\begin{itemize}
+    \item The compiler compares the input index against the median case value.
+    \item It uses conditional jumps (\texttt{jl}, \texttt{jg}, \texttt{je}) to recursively partition the search space.
+    \item \textbf{Time Complexity:} $O(\log N)$, where $N$ is the number of case labels.
+    \item For very small numbers of cases ($N \le 3$), compilers simply emit a linear sequence of \texttt{cmp} and \texttt{je} comparisons ($O(N)$).
+\end{itemize}
+\end{definition}
+
+\subsection{Procedures and the System V AMD64 ABI}
+
+\begin{definition} \textbf{Procedure Abstraction Mechanics:}
+A procedure call requires orchestrating several low-level mechanisms between the \textbf{Caller} (invoking function) and the \textbf{Callee} (invoked function):
+\begin{enumerate}
+    \item \textbf{Control Transfer:} Passing execution to the entry of the callee and cleanly resuming the caller upon completion.
+    \item \textbf{Data Transfer:} Passing parameters into the callee and returning a result value back to the caller.
+    \item \textbf{Memory Allocation:} Allocating private local storage for the callee upon entry and deallocating it upon exit.
+    \item \textbf{State Preservation:} Ensuring register contents relied upon by the caller are not corrupted by the callee.
+\end{enumerate}
+All interactions conform to the \textbf{System V AMD64 ABI} on Linux and Unix systems.
+\end{definition}
+
+\subsubsection{The Runtime Stack and Frame Architecture}
+
+\begin{definition} \textbf{Stack Discipline:}
+The runtime stack is allocated in high virtual memory and \textbf{grows downward} toward lower memory addresses:
+\begin{itemize}
+    \item The stack pointer register \texttt{\%rsp} holds the memory address of the current \textbf{top of the stack} (the lowest allocated valid byte).
+    \item Pushing an 8-byte value: \texttt{pushq \%reg} decrements \texttt{\%rsp} by 8 and writes to \texttt{(\%rsp)}.
+    \item Popping an 8-byte value: \texttt{popq \%reg} reads from \texttt{(\%rsp)} and increments \texttt{\%rsp} by 8.
+\end{itemize}
+\end{definition}
+
+\begin{table}[htbp]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{|l|p{9.5cm}|}
+\hline
+\textbf{Memory Region} & \textbf{Contents and Purpose} \\
+\hline
+\textbf{Caller Frame} & High virtual memory addresses \\
+& Incoming 8th argument (if present, pushed by caller) \\
+& Incoming 7th argument (pushed by caller) \\
+\hline
+\textbf{Frame Boundary} & \textbf{Return Address} (pushed by \texttt{call} instruction) \\
+\hline
+\textbf{Callee Frame} & Saved caller base pointer \texttt{\%rbp} (optional) \\
+& Saved callee-saved registers (\texttt{\%rbx}, \texttt{\%r12}--\texttt{\%r15}) \\
+& Local stack variables, arrays, and structures \\
+& Outgoing arguments (7+) passed to downstream functions \\
+\hline
+\textbf{Top of Stack (\texttt{\%rsp})} & Current lowest allocated stack address \\
+\hline
+\end{tabular}
+\caption{System V AMD64 Stack Frame Anatomy.}
+\end{table}
+
+\subsubsection{Control Transfer: \texttt{call} and \texttt{ret}}
+
+\begin{definition} \textbf{Control Transfer Primitives:}
+Control transfer between caller and callee is managed via the hardware stack:
+\begin{itemize}
+    \item \textbf{\texttt{call Target}:}
+    \begin{enumerate}
+        \item Pushes the 8-byte return address (the address of the instruction immediately following \texttt{call}) onto the stack:
+        \[
+        \texttt{\%rsp} \leftarrow \texttt{\%rsp} - 8, \quad \text{Mem}[\texttt{\%rsp}] \leftarrow \texttt{\%rip}_{\text{next}}
+        \]
+        \item Jumps to the callee: $\texttt{\%rip} \leftarrow \text{Target}$.
+    \end{enumerate}
+    \item \textbf{\texttt{ret}:}
+    \begin{enumerate}
+        \item Pops the return address off the top of the stack into \texttt{\%rip}:
+        \[
+        \texttt{\%rip} \leftarrow \text{Mem}[\texttt{\%rsp}], \quad \texttt{\%rsp} \leftarrow \texttt{\%rsp} + 8
+        \]
+        \item Resumes execution in the caller at the instruction following the original \texttt{call}.
+    \end{enumerate}
+\end{itemize}
+\end{definition}
+
+\begin{important} \textbf{The 16-Byte Stack Alignment Rule:}
+The System V AMD64 ABI mandates that immediately before any \texttt{call} instruction is executed, the stack pointer \texttt{\%rsp} must be a multiple of 16 (\textbf{16-byte aligned}).
+\begin{itemize}
+    \item When the \texttt{call} executes, it pushes the 8-byte return address onto the stack.
+    \item Therefore, upon function entry (at the first instruction of the callee), \texttt{\%rsp} satisfies:
+    \[
+    \texttt{\%rsp} \pmod{16} = 8
+    \]
+    \item If the callee makes further function calls, it must allocate sufficient stack space (e.g., \texttt{subq \$8, \%rsp} or an odd multiple of 8) so that \texttt{\%rsp} is once again an exact multiple of 16 before issuing its own \texttt{call}.
+    \item Failure to maintain 16-byte alignment causes crashes in SIMD/SSE instructions (e.g., \texttt{movaps}) that require 16-byte aligned memory.
+\end{itemize}
+\end{important}
+
+\subsubsection{Data Transfer: Arguments and Return Values}
+
+\begin{theorem} \textbf{Parameter Passing under System V AMD64 ABI:}
+Function parameters and return values are passed via registers whenever possible to eliminate slow memory accesses:
+\begin{itemize}
+    \item \textbf{First 6 Integer/Pointer Arguments:} Passed in dedicated general-purpose registers:
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    \textbf{1st Arg} & \textbf{2nd Arg} & \textbf{3rd Arg} & \textbf{4th Arg} & \textbf{5th Arg} & \textbf{6th Arg} \\
+    \hline
+    \texttt{\%rdi} & \texttt{\%rsi} & \texttt{\%rdx} & \texttt{\%rcx} & \texttt{\%r8} & \texttt{\%r9} \\
+    \hline
+    \end{tabular}
+    \end{center}
+    \item \textbf{Arguments 7 and Higher:} Pushed onto the caller's stack frame in \textbf{reverse order} (argument 7 is at \texttt{(\%rsp)} immediately before the \texttt{call}).
+    \item \textbf{Floating-Point Arguments:} Passed in vector registers \texttt{\%xmm0}--\texttt{\%xmm7}.
+    \item \textbf{Return Values:} Up to 64-bit integer/pointer return values are returned in \texttt{\%rax}. 128-bit values use both \texttt{\%rax} (low 64 bits) and \texttt{\%rdx} (high 64 bits).
+\end{itemize}
+\end{theorem}
+
+\subsubsection{Caller-Saved vs. Callee-Saved Registers}
+
+\begin{definition} \textbf{Register Preservation Conventions:}
+To prevent subroutines from inadvertently overwriting each other's live variables, all 16 general-purpose registers are categorized into two strict contractual sets:
+\end{definition}
+
+\begin{table}[htbp]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{|l|l|p{7.5cm}|}
+\hline
+\textbf{Category} & \textbf{Registers} & \textbf{Preservation Responsibility} \\
+\hline
+\textbf{Caller-Saved} & \texttt{\%rax}, \texttt{\%rcx}, \texttt{\%rdx}, & The \textbf{callee may freely overwrite} these registers \\
+(Call-clobbered) & \texttt{\%rsi}, \texttt{\%rdi}, \texttt{\%r8}, & (scratch). If the \textbf{caller} needs their values preserved \\
+& \texttt{\%r9}, \texttt{\%r10}, \texttt{\%r11} & across a function call, the caller must save them on its stack before the \texttt{call}. \\
+\hline
+\textbf{Callee-Saved} & \texttt{\%rbx}, \texttt{\%rbp}, \texttt{\%rsp}, & The \textbf{callee is strictly obligated} to preserve these \\
+(Call-preserved) & \texttt{\%r12}, \texttt{\%r13}, \texttt{\%r14}, & registers. If the callee modifies any of them, it \textbf{must} \\
+& \texttt{\%r15} & push their original values upon entry and restore them before returning. \\
+\hline
+\end{tabular}
+\caption{Classification of x86-64 Registers by Preservation Responsibility.}
+\end{table}
+
+\begin{codeexample}
+// Function demonstrating preservation of callee-saved registers:
+compute:
+    pushq   %rbp                // Save caller's %rbp (callee-saved)
+    pushq   %rbx                // Save caller's %rbx (callee-saved)
+    subq    $8, %rsp            // Align stack to 16 bytes (pushed 2*8=16 bytes, +8 ret = 24 -> need 8 more)
+
+    movq    %rdi, %rbx          // Safely store argument in callee-saved %rbx
+    call    helper_func         // helper_func cannot clobber %rbx!
+    addq    %rbx, %rax          // Add preserved value to helper return value
+
+    addq    $8, %rsp            // Deallocate local alignment padding
+    popq    %rbx                // Restore caller's %rbx
+    popq    %rbp                // Restore caller's %rbp
+    ret                         // Return to caller
+\end{codeexample}
+
+\subsubsection{Local Storage on the Stack and the Red Zone}
+
+\begin{definition} \textbf{When Local Variables Must Reside on the Stack:}
+Although compilers place local variables in registers whenever possible, memory on the stack is required when:
+\begin{enumerate}
+    \item \textbf{Insufficient Registers:} Too many local variables are active simultaneously (\emph{register spilling}).
+    \item \textbf{Address-of Operator (\texttt{\&}):} If the code evaluates \texttt{\&x}, the variable $x$ must have a concrete physical memory address (registers do not have memory addresses).
+    \item \textbf{Arrays and Structures:} Contiguous buffers or aggregate data types accessed via index arithmetic.
+\end{enumerate}
+\end{definition}
+
+\begin{definition} \textbf{The Red Zone Optimization:}
+The x86-64 System V ABI specifies a 128-byte region beyond the current stack pointer (\texttt{-128(\%rsp)} to \texttt{-1(\%rsp)}) known as the \textbf{Red Zone}:
+\begin{itemize}
+    \item This space is guaranteed \textbf{not} to be clobbered by operating system signals or interrupt handlers.
+    \item \textbf{Leaf Functions} (functions that do not invoke any other functions) can use this 128-byte memory space for local storage without adjusting the stack pointer (\texttt{subq / addq \%rsp}), eliminating stack allocation overhead.
+\end{itemize}
+\end{definition}
+
+\subsubsection{Variadic Functions (\texttt{stdarg.h})}
+
+\begin{definition} \textbf{Variadic Functions:}
+A \textbf{variadic function} is a function that accepts a variable number of arguments of differing types (e.g., \texttt{int printf(const char *format, ...)}).
+\end{definition}
+
+\begin{theorem} \textbf{Variadic Calling Convention in x86-64 ABI:}
+Because the callee does not know ahead of time how many floating-point arguments were passed, the System V ABI enforces a special register convention:
+\begin{itemize}
+    \item \textbf{Role of \texttt{\%rax}:} Before calling a variadic function, the caller \textbf{must set \texttt{\%rax} (or \texttt{\%al}) to the number of vector registers (\texttt{\%xmm0}--\texttt{\%xmm7}) used} to pass floating-point arguments.
+    \item For standard calls with no floating-point arguments, the caller emits:
+    \[
+    \texttt{movl \$0, \%eax} \quad \text{or} \quad \texttt{xorl \%eax, \%eax}
+    \]
+    \item \textbf{Register Save Area (RSA):} Upon entry, a variadic callee uses the value in \texttt{\%al} to selectively dump the incoming argument registers into a contiguous block on its stack frame.
+    \item \textbf{The \texttt{va\_list} Cursor:} The \texttt{va\_list} type is an internal structure that records offsets into the Register Save Area and the stack argument overflow area, enabling the \texttt{va\_arg()} macro to retrieve each consecutive argument.
+\end{itemize}
+\end{theorem}
+
+\begin{codeexample}
+// Calling printf in x86-64 assembly:
+.section .rodata
+.L_fmt:
+    .string "Sum: %ld, Float: %f\n"
+.align 8
+.L_val:
+    .double 3.1415926535
+
+.text
+.globl main
+main:
+    subq    $8, %rsp            // Align stack to 16 bytes
+    leaq    .L_fmt(%rip), %rdi  // 1st argument (format string) in %rdi
+    movq    $42, %rsi           // 2nd argument (integer %ld) in %rsi
+    movsd   .L_val(%rip), %xmm0 // 3rd argument (double %f) in %xmm0
+    movl    $1, %eax            // Exactly 1 vector register (%xmm0) used!
+    call    printf              // Invoke variadic printf
+    xorl    %eax, %eax          // Return 0
+    addq    $8, %rsp            // Restore stack pointer
+    ret
+\end{codeexample}

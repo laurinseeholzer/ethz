@@ -1,0 +1,112 @@
+\section{Design and Debugging}
+
+\subsection{Defects, Errors, and Failures}
+
+\begin{definition} 
+\textbf{Defect, Error, and Failure Taxonomy:}
+\begin{itemize}
+    \item \textbf{Defect (Fault / Bug):} An imperfection, flaw, or mistake in the source code or design created by the programmer (e.g., an off-by-one loop condition, an uninitialized variable, or a missing boundary check).
+    \item \textbf{Error:} An erroneous or invalid internal runtime state of the program resulting from the execution of a defect (e.g., an internal variable holding an illegal value or corrupted memory on the heap). An error is internal and may not yet be observable from outside the system.
+    \item \textbf{Failure:} An externally observable divergence of the system's behavior from its specification or expected behavior (e.g., a segmentation fault / crash, incorrect output displayed to the user, an infinite loop, or data corruption).
+\end{itemize}
+\end{definition}
+
+\begin{remark} 
+\textbf{The Fault Propagation Chain:}
+\[
+\text{Defect (Code)} \xrightarrow{\text{Execution}} \text{Error (State)} \xrightarrow{\text{Propagation}} \text{Failure (Symptom)}
+\]
+\begin{itemize}
+    \item A defect remains dormant until the specific code path containing it is executed under conditions that trigger the flaw.
+    \item An error remains hidden until it propagates to an observable boundary. An error may be masked, overwritten, or ignored without causing a failure.
+    \item \textbf{The Debugging Inversion:} Debugging is the reverse process of failure propagation: start from an observed \textbf{failure}, trace backwards to identify the invalid internal \textbf{error} state, and isolate the underlying source code \textbf{defect}.
+\end{itemize}
+\end{remark}
+
+\subsection{Testing Principles}
+
+\begin{definition} 
+\textbf{Core Testing Strategies:}
+\begin{itemize}
+    \item \textbf{Test Early:} Testing should begin alongside development rather than being deferred until the end. Finding and resolving defects early reduces debugging complexity and cost.
+    \item \textbf{Test Incrementally:} Build and test software in small, verifiable steps. When code is tested after every small addition, newly introduced bugs are localized to the most recent changes.
+    \item \textbf{Test Small, Simple Units:} Isolate individual functions and components (unit testing) to verify their behavior independently before combining them into complex systems.
+    \item \textbf{Test Boundary Conditions (Corner Cases):} Software bugs disproportionately cluster around edges and extreme limits. Thorough test suites must evaluate:
+    \begin{itemize}
+        \item \emph{Zero / Empty Cases:} Empty strings (\texttt{""}), null pointers (\texttt{NULL}), collections of size 0.
+        \item \emph{Singletons:} Arrays, buffers, or strings with exactly one element.
+        \item \emph{Extremes and Limits:} Minimum and maximum integer values (\texttt{INT\_MIN}, \texttt{INT\_MAX}), buffer capacities ($N-1$, $N$, $N+1$).
+        \item \emph{Off-by-One Boundaries:} Beginning and end of loops, arrays, and memory blocks.
+        \item \emph{Invalid Inputs:} Negative values where positive are expected, out-of-range inputs, and malformed data.
+    \end{itemize}
+    \item \textbf{Regression Testing:} Run automated test suites after every code change to ensure existing functionality remains unbroken.
+\end{itemize}
+\end{definition}
+
+\begin{important} 
+\textbf{Dijkstra's Aphorism on Testing:}
+\begin{quote}
+\emph{``Program testing can be used to show the presence of bugs, but never to show their absence!''}
+\hfill --- Edsger W. Dijkstra (1970)
+\end{quote}
+No matter how many test cases pass, testing cannot formally prove that a program is defect-free because testing all possible inputs and system states is computationally infeasible. Testing must be combined with disciplined design, modularity, assertions, and invariant verification.
+\end{important}
+
+\subsection{Debugging Advice and Strategies}
+
+\begin{definition} 
+\textbf{Systematic Debugging Guidelines:}
+\begin{itemize}
+    \item \textbf{Examine the Most Recent Change:} If a previously working system breaks, the bug almost certainly lies within the most recent modifications. Use version control tools (\texttt{git diff}, \texttt{git log -p}, \texttt{git bisect}) to isolate changes.
+    \item \textbf{Simplify the Input (Minimal Reproducible Example):} Reduce large, complex failing inputs to the smallest, simplest possible test case that still triggers the failure. Eliminating irrelevant operations simplifies tracing program state.
+    \item \textbf{Inspect the Stack Trace:} Upon a crash or assertion failure, use a debugger (e.g., \texttt{gdb} command \texttt{backtrace} or \texttt{bt}) or core dump to identify the exact call chain, active stack frames, and parameter values at the point of failure.
+    \item \textbf{Sanity Check Intermediate Results:} Formulate concrete hypotheses about program state and verify them at key execution milestones using assertions (\texttt{assert()}), logging, or debugger watchpoints. Verify preconditions, postconditions, and loop invariants.
+    \item \textbf{Understand the Root Cause:} Avoid superficial "band-aid" fixes (such as blindly changing \texttt{<} to \texttt{<=}, adding arbitrary \texttt{+1} offsets, or silencing warnings). Only modify code once the exact failure mechanism and the rationale for the fix are fully understood.
+\end{itemize}
+\end{definition}
+
+\begin{codeexample}
+// Defensive programming: validating boundary conditions and invariants
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+
+int binary_search(const int *arr, int size, int target) {
+    // 1. Sanity check preconditions & boundary conditions
+    assert(arr != NULL || size == 0);
+    assert(size >= 0);
+
+    int low = 0;
+    int high = size - 1; // Correct boundary: size - 1, not size
+
+    while (low <= high) {
+        // Prevent integer overflow: low + (high - low) / 2 instead of (low + high) / 2
+        int mid = low + (high - low) / 2;
+
+        // 2. Sanity check intermediate invariants
+        assert(mid >= low && mid <= high);
+
+        if (arr[mid] == target)
+            return mid; // Target found
+        else if (arr[mid] < target)
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+
+    return -1; // Target not found
+}
+\end{codeexample}
+
+\begin{remark} 
+\textbf{Essential Systems Debugging Tools:}
+\begin{itemize}
+    \item \textbf{GDB (GNU Debugger):} Interactive debugger to step through execution (\texttt{step}, \texttt{next}), inspect variable values (\texttt{print}), set breakpoints/watchpoints, and inspect crash backtraces (\texttt{bt}).
+    \item \textbf{Valgrind (Memcheck):} Dynamic memory analysis tool detecting memory leaks, invalid heap reads/writes, and use-after-free bugs.
+    \item \textbf{Sanitizers (GCC / Clang):} Compile-time instrumentation adding automated checks:
+    \begin{itemize}
+        \item AddressSanitizer (\texttt{-fsanitize=address}): Catches buffer overflows and use-after-free bugs.
+        \item UndefinedBehaviorSanitizer (\texttt{-fsanitize=undefined}): Catches undefined behavior (e.g., signed overflow, invalid shifts, null dereferences).
+    \end{itemize}
+\end{itemize}
+\end{remark}

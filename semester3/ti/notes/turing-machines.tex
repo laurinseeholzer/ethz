@@ -130,3 +130,102 @@
 \begin{remark}
     Every decidable language is Turing-recognizable, but the converse does not hold. For example, the Halting Problem $H = \{ \langle M, w \rangle \mid M \text{ halts on } w \}$ is Turing-recognizable but undecidable.
 \end{remark}
+
+\newpage
+\subsection{Multi-Tape Turing Machines}
+
+\begin{definition}
+    \textbf{Multi-Tape Turing Machine ($k$-Tape TM):} A $k$-tape Turing Machine ($k \ge 1$) consists of a finite control and $k$ independent, semi-infinite tapes, each equipped with its own independently moving read/write head:
+    $$
+        M = (Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject})
+    $$
+    where the transition function is defined as:
+    $$
+        \delta : (Q \setminus \{q_{accept}, q_{reject}\}) \times \Gamma^k \to Q \times \Gamma^k \times \{\mathrm{L}, \mathrm{R}, \mathrm{S}\}^k
+    $$
+    In a single computation step, the machine reads the $k$-tuple of symbols currently under the $k$ heads $(a_1, \dots, a_k) \in \Gamma^k$, transitions to a new state $p \in Q$, writes new symbols $(b_1, \dots, b_k) \in \Gamma^k$, and moves each head independently according to $(D_1, \dots, D_k) \in \{\mathrm{L}, \mathrm{R}, \mathrm{S}\}^k$ (where $\mathrm{S}$ denotes staying stationary).
+\end{definition}
+
+\begin{remark}
+    \textbf{Start Configuration:} On input $x \in \Sigma^*$, Tape 1 contains the input word preceded by the left-end marker $\text{\textcent} x \sqcup \dots$, while all other $k-1$ work tapes are initially empty ($\text{\textcent} \sqcup \dots$). All $k$ heads initially scan the left-end marker $\text{\textcent}$.
+\end{remark}
+
+\begin{remark}
+    \textbf{Why Use Multi-Tape Machines?}
+    \begin{itemize}
+        \item \textbf{Natural Algorithm Design:} A multi-tape TM provides a much more intuitive programming paradigm than a single-tape TM. Dedicated tapes can be designated for specific roles (e.g., an input tape, one or more scratch/work tapes, and an output tape).
+        \item \textbf{Modularity:} Multiple tapes allow implementing modular subroutines (e.g., copying strings, arithmetic, or counting) without continually traversing and corrupting the primary input.
+    \end{itemize}
+\end{remark}
+
+\begin{theorem}
+    \textbf{Equivalence of Single-Tape and Multi-Tape TMs:} Multi-tape Turing machines have exactly the same computational power as standard single-tape Turing machines. A language $L$ is Turing-recognizable (resp. decidable) by a $k$-tape TM if and only if it is Turing-recognizable (resp. decidable) by a single-tape TM:
+    $$
+        \mathcal{L}(\text{Multi-Tape TM}) = \mathcal{L}(\text{Single-Tape TM})
+    $$
+\end{theorem}
+
+\begin{remark}
+    \textbf{Simulation via Tracks (Spurtechnik):} A single-tape TM $S$ can simulate a $k$-tape TM $M$ by dividing its single tape into $2k$ tracks using an expanded tape alphabet $\Gamma_S \cong (\Gamma \times \{0, 1\})^k$:
+    \begin{itemize}
+        \item For each tape $i \in \{1, \dots, k\}$, one track stores the contents of tape $i$, and a second track stores a head marker flag (a bit $1$ or a marked symbol $\hat{a}$) indicating the current position of head $i$.
+        \item To simulate one step of $M$, machine $S$ sweeps across the tape from the leftmost head marker to the rightmost head marker, records all $k$ scanned symbols in its finite control, applies $\delta$, and sweeps back to write the replacement symbols and shift the head markers.
+    \end{itemize}
+\end{remark}
+
+\begin{definition}
+    \textbf{Church-Turing Thesis (Church'sche These):}
+    \begin{quote}
+    \emph{Every algorithmically computable function or intuitive effective procedure can be carried out by a standard Turing Machine.}
+    \end{quote}
+\end{definition}
+
+\begin{remark}
+    \textbf{Significance and Robustness:}
+    \begin{itemize}
+        \item Augmenting a Turing machine with multiple tapes, multi-dimensional tapes, random-access memory (RAMs), or non-determinism does not expand the class of decidable languages. This demonstrates the exceptional robustness of the Turing machine model.
+        \item Independent models of computability ($\lambda$-calculus, $\mu$-recursive functions, RAMs, and modern programming languages) define the exact same class of computable functions.
+        \item \textbf{Extended Church-Turing Thesis:} Any physically realistic computational model can be simulated by a deterministic single-tape Turing machine with at most a polynomial slowdown. Because simulating a $k$-tape TM on a 1-tape TM incurs only a quadratic slowdown, the multi-tape TM fully complies with the Extended Church-Turing Thesis.
+    \end{itemize}
+\end{remark}
+
+\begin{definition}
+    \textbf{Time Complexity:} Let $T : \mathbb{N} \to \mathbb{N}$. A Turing Machine $M$ runs in time $T(n)$ if for every input word $x \in \Sigma^*$ of length $n = |x|$, the computation of $M$ on $x$ halts within at most $T(n)$ steps.
+\end{definition}
+
+\begin{theorem}
+    \textbf{Quadratic Simulation Theorem (Hartmanis \& Stearns):} Let $M$ be a $k$-tape Turing machine that decides a language $L$ in time $T(n)$. Then there exists a single-tape Turing machine $S$ that decides $L$ in time $\mathcal{O}(T(n)^2)$:
+    $$
+        \mathrm{TIME}_{k\text{-tape}}(T(n)) \subseteq \mathrm{TIME}_{1\text{-tape}}(T(n)^2)
+    $$
+\end{theorem}
+
+\begin{remark}
+    \textbf{Derivation of Quadratic Overhead:}
+    \begin{itemize}
+        \item In $T(n)$ steps, each head of $M$ can travel at most distance $T(n)$ from the left-end marker. Hence, all $k$ head markers on the single tape of $S$ are contained within a span of at most $k \cdot T(n) = \mathcal{O}(T(n))$ cells.
+        \item For every single step of $M$, machine $S$ sweeps over this span to read the symbols under the $k$ head markers and sweeps back to update them, requiring $\mathcal{O}(T(n))$ steps per simulated step.
+        \item Total simulation time for $T(n)$ steps is therefore:
+        $$
+            T(n) \cdot \mathcal{O}(T(n)) = \mathcal{O}(T(n)^2)
+        $$
+    \end{itemize}
+\end{remark}
+
+\begin{example}
+    \textbf{Separation: Palindrome Recognition ($L_{pal}$):}
+    Consider the palindrome language $L_{pal} = \{ w \in \{0, 1\}^* \mid w = w^R \}$:
+    \begin{itemize}
+        \item \textbf{2-Tape TM:} Copies $w$ to Tape 2 in $n$ steps, moves head 2 back to the left in $n$ steps, and compares Tape 1 and Tape 2 in $n$ steps. Total time: $\mathcal{O}(n)$ (linear time).
+        \item \textbf{1-Tape TM:} Must shuttle back and forth between the opposing ends of $w$ to compare characters, which takes $\Omega(n^2)$ steps. (Formally proven via crossing sequences).
+    \end{itemize}
+    This proves that a 2-tape TM can achieve a quadratic speedup over a 1-tape TM, and the $\mathcal{O}(T(n)^2)$ simulation bound is asymptotically tight.
+\end{example}
+
+\begin{remark}
+    \textbf{Invariance of Class $\mathbf{P}$:} Because the overhead of simulating multi-tape TMs on single-tape TMs is polynomial ($\mathcal{O}(T(n)^2)$), the fundamental complexity class $\mathbf{P}$ (problems solvable in polynomial time) is invariant under the number of tapes:
+    $$
+        \mathbf{P}_{1\text{-tape}} = \mathbf{P}_{k\text{-tape}}
+    $$
+\end{remark}
+

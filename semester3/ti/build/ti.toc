@@ -16,3 +16,4 @@
 \contentsline {subsection}{\numberline {3.3}Configurations}{13}{}%
 \contentsline {subsection}{\numberline {3.4}Computation and Steps}{13}{}%
 \contentsline {subsection}{\numberline {3.5}Recognizability and Decidability}{14}{}%
+\contentsline {subsection}{\numberline {3.6}Multi-Tape Turing Machines}{15}{}%

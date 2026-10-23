@@ -24,7 +24,21 @@ free(a); // Frees allocated memory block
 zeros = (char *) realloc(zeros, 20 * sizeof(char)); // Resizes allocated memory block to 20 characters
 \end{codeexample}  
 
+\begin{definition} 
+\textbf{Memory Corruption:} Occurs when a program unintentionally reads, modifies, or overwrites memory contents outside the bounds of an allocated block, or writes to memory that has already been deallocated or belongs to allocator metadata. This causes unpredictable program behavior, silent data corruption, or segmentation faults.
+\end{definition}  
+
+\begin{definition} 
+\textbf{Memory Leaks:} Occur when dynamically allocated heap memory is no longer referenced by any active pointer in the application but has not been returned to the heap via \texttt{free()}. Over time, uncollected memory accumulates and exhausts available memory.
+\end{definition}  
+
+\begin{important} 
+In C, memory management is strictly manual: every byte allocated on the heap must eventually be deallocated exactly once. Failing to properly manage memory boundaries and lifetimes leads to either memory corruption or memory leaks.
+\end{important} 
+
+\newpage
 \subsection{Data Structures}
+
 
 \begin{definition} 
 \textbf{Structured Data} is a custom type containing multiple data fields of different types. It is defined using the \texttt{struct} keyword.
@@ -69,3 +83,225 @@ struct listNode {
 
 struct listNode *myList = NULL;
 \end{codeexample}
+
+\newpage
+\subsection{Memory Allocators}
+
+\begin{definition} 
+\textbf{Implicit vs. Explicit Allocators:}
+\begin{itemize}
+    \item \textbf{Explicit Allocator:} The application program explicitly allocates and deallocates memory blocks (e.g., \texttt{malloc} and \texttt{free} in C, \texttt{new} and \texttt{delete} in C++).
+    \item \textbf{Implicit Allocator (Garbage Collector):} The application explicitly requests memory allocation, but deallocation is handled automatically by the runtime system when a block is no longer in use or reachable (e.g., in Java, Python, Go, and Lisp).
+\end{itemize}
+\end{definition}
+
+\begin{remark} 
+\textbf{Allocator Constraints and Requirements:}
+\begin{itemize}
+    \item \textbf{Arbitrary request sequences:} The allocator cannot make assumptions about the ordering or interleaving of allocation and deallocation requests.
+    \item \textbf{Immediate response:} Requests must be serviced immediately; the allocator cannot buffer or reorder requests to optimize placement.
+    \item \textbf{Heap storage only:} Any metadata structures used by the allocator must reside directly within the heap itself.
+    \item \textbf{Alignment requirements:} Blocks must satisfy architecture-specific alignment boundaries (e.g., 8-byte alignment on 32-bit systems, 16-byte alignment on 64-bit systems).
+    \item \textbf{Non-relocatable blocks:} Once allocated, blocks cannot be moved, compacted, or relocated by the allocator.
+\end{itemize}
+\end{remark}
+
+\begin{definition} 
+\textbf{Performance Goals:} Allocator efficiency is governed by two competing metrics:
+\begin{itemize}
+    \item \textbf{Throughput:} The number of allocation and free operations completed per unit time (e.g., operations per second). High throughput requires low constant-time overhead for finding and freeing blocks.
+    \item \textbf{Peak Memory Utilization ($U_k$):} Measures how efficiently the allocator utilizes heap memory. Given a sequence of requests $r_0, r_1, \dots, r_k$, if $P_k$ is the aggregate payload currently in use and $H_k$ is the current heap size (high-water mark):
+    \[
+        U_k = \frac{\max_{i \le k} P_i}{H_k}
+    \]
+    The objective is to maximize $U_k$ (as close to 1 as possible).
+\end{itemize}
+\end{definition}
+
+\begin{important} 
+\textbf{Throughput vs. Memory Utilization Trade-off:} Maximizing memory utilization requires thorough searching to find tightly fitting free blocks and frequent coalescing (reducing throughput). Conversely, maximizing throughput favors fast, greedy placement heuristics (like first-fit) that can cause fragmentation and degrade memory utilization.
+\end{important}
+
+\begin{definition} 
+\textbf{Internal vs. External Fragmentation:}
+\begin{itemize}
+    \item \textbf{Internal Fragmentation:} Occurs when an allocated block is larger than the requested payload. Caused by allocator metadata overhead (headers, footers), alignment padding, or minimum block size constraints. It depends solely on individual request sizes and allocator overhead, making it easy to quantify.
+    \item \textbf{External Fragmentation:} Occurs when there is sufficient aggregate free memory in the heap to satisfy an allocation request, but no single contiguous free block is large enough. It depends on the future history of requests and is significantly harder to measure and avoid.
+\end{itemize}
+\end{definition}
+
+\begin{definition} 
+\textbf{Block Structure and Header:} Because \texttt{free(ptr)} receives only a pointer without the block size, each block stores metadata preceding the payload:
+\begin{itemize}
+    \item \textbf{Header:} A single word (4 or 8 bytes) placed immediately before the user payload containing:
+    \begin{itemize}
+        \item \textbf{Block Size:} The total size of the block (including header, payload, and padding).
+        \item \textbf{Allocated Bit:} Since blocks are aligned to multiples of 8 (or 16) bytes, the lowest 3 (or 4) bits of any valid block size are always zero. The allocator repurposes the least significant bit (LSB) as an allocation flag: \texttt{1} for allocated, \texttt{0} for free.
+    \end{itemize}
+    \item \textbf{Payload:} The user-accessible memory returned by \texttt{malloc}.
+    \item \textbf{Padding:} Optional unused space to satisfy alignment constraints.
+\end{itemize}
+\end{definition}
+
+\begin{codeexample}
+// Header encoding example (8-byte alignment, 3 lowest bits free)
+#define GET_SIZE(header)   ((header) & ~0x7) // Clears lowest 3 bits
+#define GET_ALLOC(header)  ((header) & 0x1)  // Reads allocation status bit
+#define PACK(size, alloc)  ((size) | (alloc)) // Combines size and status bit
+\end{codeexample}
+
+\begin{definition} 
+\textbf{Tracking Free Blocks:} Dynamic allocators maintain free memory using different organizational strategies:
+\begin{itemize}
+    \item \textbf{Implicit Free List:} All blocks (both allocated and free) are chained together implicitly through the size fields in their headers. Traversing blocks requires scanning sequentially from the beginning of the heap.
+    \begin{itemize}
+        \item \textbf{Placement Policies:}
+        \begin{itemize}
+            \item \emph{First Fit:} Scans the list from the start and chooses the first free block that fits. Simple, but small fragments tend to accumulate at the start of the heap.
+            \item \emph{Next Fit:} Starts searching where the previous search left off. Runs faster than first fit, but often leads to worse memory utilization.
+            \item \emph{Best Fit:} Examines every free block and selects the one with the smallest fitting size. Maximizes utilization and minimizes fragmentation, but requires an exhaustive $O(N)$ scan.
+        \end{itemize}
+        \item \textbf{Coalescing \& Boundary Tags:} When a block is freed, it must be merged with adjacent free blocks to prevent false fragmentation (consecutive small free blocks failing to satisfy a larger request). With \textbf{boundary tags} (a duplicate footer identical to the header placed at the end of each block), both previous and next adjacent blocks can be coalesced in $O(1)$ constant time.
+    \end{itemize}
+    \item \textbf{Explicit Free List:} Links only the \emph{free} blocks into an explicit doubly linked list by storing \texttt{prev} and \texttt{next} pointers inside the unused payload area of each free block.
+    \begin{itemize}
+        \item Search time drops from $O(\text{all blocks})$ to $O(\text{free blocks})$.
+        \item \textbf{Insertion Policies:}
+        \begin{itemize}
+            \item \emph{LIFO (Last-In, First-Out):} Newly freed blocks are inserted at the head of the list in $O(1)$ time, but fragmentation can be worse.
+            \item \emph{Address-Ordered:} Keeps the free list sorted by memory address. Freeing requires searching for the insertion point ($O(\text{free blocks})$), but it significantly reduces fragmentation and simplifies coalescing.
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Segregated Free Lists:} Maintains an array of distinct free lists partitioned by size class (e.g., small exact classes like $16, 24, 32$ bytes, followed by power-of-two ranges like $33\text{--}64$, $65\text{--}128$, etc.).
+    \begin{itemize}
+        \item Allocation searches only the list matching the requested size class, falling back to larger lists if necessary.
+        \item Combines the fast search time of simple explicit lists with the high memory utilization of best-fit approaches.
+    \end{itemize}
+\end{itemize}
+\end{definition}
+
+\begin{definition} 
+\textbf{Garbage Collection (GC):} An automated runtime technique that dynamically reclaims heap memory that will no longer be accessed by the application.
+\end{definition}
+
+\begin{definition} 
+\textbf{Memory as a Directed Graph:} Garbage collection models heap memory as a directed reachability graph:
+\begin{itemize}
+    \item \textbf{Nodes:} Memory blocks on the heap.
+    \item \textbf{Edges:} Pointers from one block to another.
+    \item \textbf{Roots:} Pointers stored outside the heap (CPU registers, local stack variables, global/static variables).
+    \item \textbf{Reachable vs. Garbage:} A block is reachable if there is a directed path from any root. Blocks that cannot be reached from any root are garbage and can be safely reclaimed.
+\end{itemize}
+\end{definition}
+
+\begin{definition} 
+\textbf{Classical Garbage Collection Algorithms:}
+\begin{itemize}
+    \item \textbf{Reference Counting:} Each block maintains a counter tracking incoming references. The block is freed immediately when the counter drops to zero. Cannot handle cyclic references without special cycle detection.
+    \item \textbf{Mark-and-Sweep:} Tracing collector that identifies all reachable nodes by traversing from roots (mark phase), and then sweeps through all heap blocks to deallocate unmarked nodes (sweep phase).
+    \item \textbf{Stop-and-Copy (Copying GC):} Splits heap memory into two regions (from-space and to-space). Reachable objects are copied contiguously into to-space, automatically compacting memory and eliminating external fragmentation.
+    \item \textbf{Generational Collection:} Groups objects by lifetime into generations (young and old), collecting the short-lived young generation frequently and promoting surviving objects to the older generation.
+\end{itemize}
+\end{definition}
+
+\begin{remark} 
+\textbf{Example: Mark-and-Sweep in Action:}
+\begin{itemize}
+    \item \textbf{Mark Phase:} Begins at the root set and traverses all pointers (e.g., via depth-first search), setting a mark bit in the header of each reached block.
+    \item \textbf{Sweep Phase:} Performs a linear scan over all heap blocks. If a block's mark bit is clear, it is freed; if set, its mark bit is reset to 0 in preparation for the next cycle.
+\end{itemize}
+\end{remark}
+
+\begin{codeexample}
+// Pseudocode for Mark-and-Sweep Collection
+void mark(ptr p) {
+    if ((b = block_of(p)) != NULL && !is_marked(b)) {
+        set_marked(b);
+        for (each pointer child in payload(b))
+            mark(child);
+    }
+}
+
+void sweep() {
+    ptr p = heap_start();
+    while (p < heap_end()) {
+        if (!is_marked(p)) {
+            if (is_allocated(p))
+                free(p);
+        } else {
+            clear_marked(p);
+        }
+        p = next_block(p);
+    }
+}
+\end{codeexample}
+
+\begin{remark} 
+\textbf{Conservative GC for C:} Because C is not type-safe, the runtime cannot distinguish whether an arbitrary memory word is a pointer or an integer. Conservative collectors (such as the Boehm-Demers-Weiser collector) assume that any word in the stack, registers, or heap whose numerical value corresponds to a valid heap address is a pointer, marking the referenced block as reachable to prevent premature freeing.
+\end{remark}
+
+\subsection{Memory Pitfalls}
+
+\begin{remark} 
+Because C allows direct pointer manipulation without automatic bounds checking or garbage collection, memory errors are common, difficult to diagnose, and can lead to severe security vulnerabilities.
+\end{remark}
+
+\begin{definition} 
+\textbf{Common Memory Pitfalls:}
+\begin{itemize}
+    \item \textbf{Dereferencing Bad Pointers:} Dereferencing an uninitialized pointer, a \texttt{NULL} pointer, or an arbitrary invalid address. This causes a segmentation fault (\texttt{SIGSEGV}) or corrupts arbitrary memory.
+    \item \textbf{Reading Uninitialized Memory:} Assuming memory returned by \texttt{malloc()} is zero-filled. \texttt{malloc()} leaves the allocated block uninitialized with indeterminate garbage values. Memory must be initialized explicitly or allocated with \texttt{calloc()}.
+    \item \textbf{Overwriting Memory (Buffer Overflow):} Writing past the boundaries of an allocated block due to off-by-one errors (e.g., \texttt{<=} instead of \texttt{<}), missing string null terminators, or calculating incorrect allocation sizes. This corrupts adjacent variables or heap metadata.
+    \item \textbf{Referencing Nonexistent Variables:} Returning or storing the address of a local automatic stack variable. When the function returns, its stack frame is popped; the pointer becomes dangling, and subsequent function calls overwrite the data.
+    \item \textbf{Freeing Blocks Multiple Times (Double Free):} Calling \texttt{free(p)} twice on the same pointer without an intervening allocation. This corrupts the allocator's free list data structures and can create exploitable security vulnerabilities.
+    \item \textbf{Use-After-Free:} Accessing or modifying memory after it has been freed. The allocator may reallocate that block for another purpose, leading to silent data corruption or crashes.
+    \item \textbf{Failing to Free Blocks (Memory Leaks):} Allocating memory on the heap and discarding all pointers to it without calling \texttt{free()}. Over time, leaked memory accumulates, exhausting system memory.
+\end{itemize}
+\end{definition}
+
+\begin{codeexample}
+// 1. Dereferencing Bad Pointers (e.g., passing val instead of &val)
+int val;
+scanf("%d", val); // Bug: passes garbage val as address (should be &val)
+
+// 2. Reading Uninitialized Memory
+int *arr = (int *) malloc(10 * sizeof(int));
+int sum = arr[0]; // Bug: arr[0] contains indeterminate garbage values
+
+// 3. Overwriting Memory (off-by-one loop boundary)
+for (int i = 0; i <= 10; i++) // Bug: writes 11 elements (arr[10] is out of bounds)
+    arr[i] = i;
+
+// 4. Referencing Nonexistent Variables (dangling stack pointer)
+int *get_bad_ref() {
+    int local = 42;
+    return &local; // Bug: local variable is deallocated when function returns!
+}
+
+// 5. Freeing Blocks Multiple Times (Double Free)
+free(arr);
+free(arr); // Bug: double free corrupts allocator free list metadata!
+
+// 6. Referencing Freed Blocks (Use-After-Free)
+int *ptr = (int *) malloc(sizeof(int));
+free(ptr);
+*ptr = 100; // Bug: writing to deallocated block
+
+// 7. Failing to Free Blocks (Memory Leak)
+void leak() {
+    char *buf = (char *) malloc(1024);
+    return; // Bug: pointer buf is lost; memory block is leaked
+}
+\end{codeexample}
+
+\begin{remark} 
+\textbf{Best Practices for Safe Memory Management:}
+\begin{itemize}
+    \item Always set freed pointers to \texttt{NULL} (\texttt{free(p); p = NULL;}), as calling \texttt{free(NULL)} is guaranteed to be safe and harmless in C.
+    \item Use automated memory debugging and dynamic analysis tools such as \textbf{Valgrind} or AddressSanitizer (\texttt{-fsanitize=address}) during development to detect leaks and invalid accesses at runtime.
+\end{itemize}
+\end{remark}
+
+
+
+

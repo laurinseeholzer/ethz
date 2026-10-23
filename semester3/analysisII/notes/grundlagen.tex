@@ -168,3 +168,137 @@
     wobei $H_f(a)$ die Hesse-Matrix von $f$ im Punkt $a$ ist.
 \end{definition}
 
+\subsection{Hesse-Matrix, Laplace-Operator und Lokale Extrema}
+
+\begin{definition}
+    \textbf{Hesse-Matrix:} Sei $f: U \to \mathbb{R}$ eine zweimal partiell differenzierbare Funktion auf einer offenen Menge $U \subset \mathbb{R}^n$. Die \textbf{Hesse-Matrix} $H_f(x)$ (auch $D^2 f(x)$ oder $\nabla^2 f(x)$) ist die $n \times n$-Matrix aller zweiten partiellen Ableitungen:
+    $$ H_f(x) := \begin{pmatrix} 
+    \frac{\partial^2 f}{\partial x_1^2}(x) & \frac{\partial^2 f}{\partial x_1 \partial x_2}(x) & \dots & \frac{\partial^2 f}{\partial x_1 \partial x_n}(x) \\
+    \frac{\partial^2 f}{\partial x_2 \partial x_1}(x) & \frac{\partial^2 f}{\partial x_2^2}(x) & \dots & \frac{\partial^2 f}{\partial x_2 \partial x_n}(x) \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \frac{\partial^2 f}{\partial x_n \partial x_1}(x) & \frac{\partial^2 f}{\partial x_n \partial x_2}(x) & \dots & \frac{\partial^2 f}{\partial x_n^2}(x)
+    \end{pmatrix} = \left( \frac{\partial^2 f}{\partial x_i \partial x_j}(x) \right)_{1 \le i, j \le n} $$
+\end{definition}
+
+\begin{theorem}
+    \textbf{Symmetrie der Hesse-Matrix:} Ist $f \in C^2(U)$ (zweimal stetig differenzierbar), so folgt aus dem Satz von Schwarz:
+    $$ \frac{\partial^2 f}{\partial x_i \partial x_j}(x) = \frac{\partial^2 f}{\partial x_j \partial x_i}(x) \quad \forall i, j \in \{1, \dots, n\} $$
+    Die Hesse-Matrix $H_f(x)$ ist somit eine \textbf{reelle symmetrische Matrix}: $H_f(x) = H_f(x)^T$.
+\end{theorem}
+
+\begin{remark}
+    \textbf{Intuition zur Hesse-Matrix:} Die Hesse-Matrix ist das mehrdimensionale Analogon der zweiten Ableitung $f''(x)$. Während der Gradient $\nabla f(x)$ die Steigung und Orientierung der Tangentialebene bestimmt (lineare Näherung), erfasst die Hesse-Matrix die \textbf{Krümmung} der Fläche in alle Raumrichtungen (quadratische Näherung). Für jeden Richtungsvektor $v \in \mathbb{R}^n$ mit $\|v\|=1$ ist die zweite Richtungsableitung gegeben durch die quadratische Form:
+    $$ D_v(D_v f)(x) = v^T H_f(x) v $$
+\end{remark}
+
+\begin{definition}
+    \textbf{Laplace-Operator:} Der Laplace-Operator $\Delta$ ordnet einer zweimal partiell differenzierbaren Funktion $f: U \to \mathbb{R}$ die Summe ihrer ungemischten zweiten partiellen Ableitungen zu:
+    $$ \Delta f(x) := \sum_{i=1}^n \frac{\partial^2 f}{\partial x_i^2}(x) $$
+    Er entspricht der Spur (Trace) der Hesse-Matrix sowie der Divergenz des Gradientenfeldes:
+    $$ \Delta f(x) = \operatorname{tr}(H_f(x)) = \operatorname{div}(\nabla f(x)) $$
+\end{definition}
+
+\begin{definition}
+    \textbf{Harmonische Funktionen:} Eine Funktion $f \in C^2(U)$ heisst \textbf{harmonisch}, wenn sie die Laplace-Gleichung erfüllt:
+    $$ \Delta f(x) = 0 \quad \forall x \in U $$
+\end{definition}
+
+\begin{remark}
+    \textbf{Intuition zum Laplace-Operator:} $\Delta f(x)$ misst die lokale Krümmung gemittelt über alle Raumrichtungen bzw. die Abweichung des Funktionswertes $f(x)$ vom Mittelwert seiner Nachbarpunkte auf einer kleinen Kugeloberfläche um $x$:
+    \begin{itemize}
+        \item Ist $\Delta f(x) > 0$, so liegt $f(x)$ unter dem Durchschnitt seiner Nachbarn (talförmig / Senke).
+        \item Ist $\Delta f(x) < 0$, so liegt $f(x)$ über dem Durchschnitt seiner Nachbarn (kuppelförmig / Quelle).
+        \item Ist $\Delta f(x) = 0$ (harmonisch), so ist der Funktionswert in jedem Punkt exakt gleich dem Mittelwert seiner Umgebung (Mittelwerteigenschaft). Daher können harmonische Funktionen im Inneren eines Gebiets niemals isolierte lokale Maxima oder Minima besitzen (starkes Maximumprinzip).
+    \end{itemize}
+\end{remark}
+
+\begin{definition}
+    \textbf{Lokale und globale Extrema:} Sei $f: D \to \mathbb{R}$ eine Funktion auf $D \subseteq \mathbb{R}^n$ und $x_0 \in D$.
+    \begin{itemize}
+        \item $f$ hat in $x_0$ ein \textbf{lokales Minimum} (bzw. \textbf{lokales Maximum}), wenn eine Umgebung $B_\epsilon(x_0)$ existiert, sodass:
+        $$ f(x_0) \le f(x) \quad (\text{bzw. } f(x_0) \ge f(x)) \quad \forall x \in B_\epsilon(x_0) \cap D $$
+        \item Gilt die Ungleichung für alle $x \in (B_\epsilon(x_0) \cap D) \setminus \{x_0\}$ strikt ($<$ bzw. $>$), so heisst das Extremum \textbf{strikt} (oder isoliert).
+        \item Gilt die Ungleichung für alle $x \in D$, so liegt ein \textbf{globales} (absolutes) Minimum bzw. Maximum vor.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Kritischer Punkt (Stationärer Punkt):} Sei $f: U \to \mathbb{R}$ auf einer offenen Menge $U \subset \mathbb{R}^n$ differenzierbar. Ein Punkt $x_0 \in U$ heisst \textbf{kritischer Punkt} (oder stationärer Punkt), wenn der Gradient in $x_0$ verschwindet:
+    $$ \nabla f(x_0) = 0 \iff \frac{\partial f}{\partial x_i}(x_0) = 0 \quad \forall i \in \{1, \dots, n\} $$
+\end{definition}
+
+\begin{theorem}
+    \textbf{Notwendige Bedingung 1. Ordnung (Fermat):} Besitzt eine differenzierbare Funktion $f: U \to \mathbb{R}$ auf einer offenen Menge $U \subset \mathbb{R}^n$ in $x_0 \in U$ ein lokales Extremum, so ist $x_0$ ein kritischer Punkt:
+    $$ \nabla f(x_0) = 0 $$
+\end{theorem}
+
+\begin{remark}
+    \textbf{Intuition:} In einem kritischen Punkt ist die Tangentialebene an den Funktionsgraphen vollkommen flach (horizontal): $z = f(x_0)$. Bei infinitesimalen Auslenkungen in jede beliebige Richtung $v$ verschwindet die Steigung: $D_v f(x_0) = \nabla f(x_0) \cdot v = 0$.
+\end{remark}
+
+\begin{definition}
+    \textbf{Definitheit symmetrischer Matrizen:} Eine reelle symmetrische $n \times n$-Matrix $A = A^T$ (und ihre quadratische Form $q(v) = v^T A v$) heisst:
+    \begin{itemize}
+        \item \textbf{positiv definit} ($A > 0$), falls $v^T A v > 0$ für alle $v \in \mathbb{R}^n \setminus \{0\}$.
+        \item \textbf{negativ definit} ($A < 0$), falls $v^T A v < 0$ für alle $v \in \mathbb{R}^n \setminus \{0\}$.
+        \item \textbf{positiv semidefinit} ($A \ge 0$), falls $v^T A v \ge 0$ für alle $v \in \mathbb{R}^n$.
+        \item \textbf{negativ semidefinit} ($A \le 0$), falls $v^T A v \le 0$ für alle $v \in \mathbb{R}^n$.
+        \item \textbf{indefinit}, falls Vektoren $v, w \in \mathbb{R}^n$ existieren mit $v^T A v > 0$ und $w^T A w < 0$.
+        \item \textbf{degeneriert (ausgeartet)}, falls $\det(A) = 0$ (d.h. $\lambda = 0$ ist ein Eigenwert; es existiert ein Vektor $v \neq 0$ mit $A v = 0 \implies v^T A v = 0$).
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}
+    \textbf{Kriterien für Definitheit:} Sei $A \in \mathbb{R}^{n \times n}$ symmetrisch.
+    \begin{enumerate}
+        \item \textbf{Eigenwert-Kriterium:}
+        \begin{itemize}
+            \item $A$ ist positiv definit $\iff$ alle Eigenwerte erfüllen $\lambda_i > 0$.
+            \item $A$ ist negativ definit $\iff$ alle Eigenwerte erfüllen $\lambda_i < 0$.
+            \item $A$ ist indefinit $\iff$ es gibt mindestens einen echten positiven ($\lambda_i > 0$) und einen echten negativen ($\lambda_j < 0$) Eigenwert.
+        \end{itemize}
+        \item \textbf{Sylvester-Kriterium (führende Hauptminoren $d_k = \det(A_k)$):}
+        \begin{itemize}
+            \item $A$ ist positiv definit $\iff d_k > 0$ für alle $k = 1, \dots, n$.
+            \item $A$ ist negativ definit $\iff (-1)^k d_k > 0$ für alle $k = 1, \dots, n$ ($d_1 < 0, d_2 > 0, d_3 < 0, \dots$).
+        \end{itemize}
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+    \textbf{Definitheits-Schnelltest im $\mathbb{R}^2$ ($2 \times 2$-Hesse-Matrix):} Für $H = \begin{pmatrix} f_{xx} & f_{xy} \\ f_{xy} & f_{yy} \end{pmatrix}$ gilt mit $\det(H) = f_{xx} f_{yy} - f_{xy}^2$:
+    \begin{itemize}
+        \item $\det(H) > 0$ und $f_{xx} > 0 \implies H$ ist \textbf{positiv definit}.
+        \item $\det(H) > 0$ und $f_{xx} < 0 \implies H$ ist \textbf{negativ definit}.
+        \item $\det(H) < 0 \implies H$ ist \textbf{indefinit} (da $\det(H) = \lambda_1 \lambda_2 < 0$, haben die Eigenwerte unterschiedliche Vorzeichen).
+        \item $\det(H) = 0 \implies H$ ist \textbf{degeneriert} (semidefinit; Eigenwert 0).
+    \end{itemize}
+\end{remark}
+
+\begin{theorem}
+    \textbf{Hinreichende Bedingung 2. Ordnung für lokale Extrema:} Sei $f \in C^2(U)$ und $x_0 \in U$ ein kritischer Punkt ($\nabla f(x_0) = 0$).
+    \begin{enumerate}
+        \item Ist die Hesse-Matrix $H_f(x_0)$ \textbf{positiv definit}, so besitzt $f$ in $x_0$ ein \textbf{striktes lokales Minimum}.
+        \item Ist die Hesse-Matrix $H_f(x_0)$ \textbf{negativ definit}, so besitzt $f$ in $x_0$ ein \textbf{striktes lokales Maximum}.
+        \item Ist die Hesse-Matrix $H_f(x_0)$ \textbf{indefinit und nicht degeneriert}, so besitzt $f$ in $x_0$ einen \textbf{Sattelpunkt} (kein lokales Extremum).
+        \item Ist die Hesse-Matrix $H_f(x_0)$ \textbf{degeneriert} ($\det H_f(x_0) = 0$), so liefert das Kriterium 2. Ordnung \textbf{keine Entscheidung}. (Das Verhalten hängt von höheren Ableitungen ab).
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}
+    \textbf{Sattelpunkt:} Ein kritischer Punkt $x_0$ heisst \textbf{Sattelpunkt}, wenn er kein lokales Extremum ist, d.h. in jeder beliebig kleinen Umgebung $B_\epsilon(x_0)$ existieren Punkte $x_+, x_-$ mit:
+    $$ f(x_-) < f(x_0) < f(x_+) $$
+    \textbf{Prototyp:} $f(x, y) = x^2 - y^2$ bei $(0,0)$. Entlang der $x$-Achse krümmt sich die Funktion nach oben ($f(x, 0) = x^2 \ge 0$), entlang der $y$-Achse nach unten ($f(0, y) = -y^2 \le 0$). Die Hesse-Matrix $H = \begin{pmatrix} 2 & 0 \\ 0 & -2 \end{pmatrix}$ hat Eigenwerte $+2$ und $-2$, ist also indefinit mit $\det(H) = -4 < 0$.
+\end{definition}
+
+\begin{remark}
+    \textbf{Intuition aus der Taylor-Approximation:} Aus der Taylor-Formel um den kritischen Punkt $x_0$ folgt wegen $\nabla f(x_0) = 0$:
+    $$ f(x) - f(x_0) = \frac{1}{2} (x - x_0)^T H_f(x_0) (x - x_0) + o(\|x - x_0\|^2) $$
+    Für kleine Abstände $v = x - x_0$ wird das Vorzeichen von $f(x) - f(x_0)$ ausschliesslich von der quadratischen Form $v^T H_f(x_0) v$ bestimmt:
+    \begin{itemize}
+        \item Positiv definit: $v^T H_f(x_0) v > 0$ für alle $v \neq 0 \implies f(x) > f(x_0)$ in allen Richtungen (nach oben offenes Paraboloid $\implies$ lokales Minimum).
+        \item Negativ definit: $v^T H_f(x_0) v < 0$ für alle $v \neq 0 \implies f(x) < f(x_0)$ in allen Richtungen (nach unten offenes Paraboloid $\implies$ lokales Maximum).
+        \item Indefinit: Krümmt sich in Richtungen mit positiven Eigenwerten nach oben und in Richtungen mit negativen Eigenwerten nach unten $\implies$ Bergsattel / Sattelpunkt.
+    \end{itemize}
+\end{remark}
+
