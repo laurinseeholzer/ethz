@@ -1,8 +1,9 @@
 # Fdb version 4
-["pdflatex"] 1792661671.85635 "analysisII.tex" "build/analysisII.pdf" "analysisII" 1792661672.26656 0
+["pdflatex"] 1792764637.08245 "/home/laurin/dev/ethz/semester3/analysisII/analysisII.tex" "build/analysisII.pdf" "analysisII" 1792764637.3972 0
   "../../templates/templateNotes/commands.tex" 1774795684.82424 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
   "../../templates/templateNotes/packages.tex" 1790417146.32119 516 7d64a0165295c034e7941cda1e6365a8 ""
   "../../templates/templateNotes/theorem_styles.tex" 1780227718.45916 2599 ef35b4d09ba532e85d73c0bf2d41006f ""
+  "/home/laurin/dev/ethz/semester3/analysisII/analysisII.tex" 1792661813.44456 394 dbeb51c42f0f4865f5c76f8667ab5d2c ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -110,10 +111,10 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1777593600 43785 66587115382950aca692b5f6e3c2fb74 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1791899270 480835 c97dc259877a20c8c55a62e2e0308238 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1791899253 2299030 e57e8f062effa18901a2245b9f04b477 ""
-  "analysisII.tex" 1789726043.23935 394 dbeb51c42f0f4865f5c76f8667ab5d2c ""
-  "build/analysisII.aux" 1792661672.20602 877 fc2c4312ff72e2c1b74a04c9d15ca409 "pdflatex"
-  "build/analysisII.toc" 1792661672.20702 520 08fe6ba66fd45740e54c6cfef0a7926b "pdflatex"
-  "notes/grundlagen.tex" 1792661658.35406 19889 44534783b82be5c2c2b175b47f2cecae ""
+  "analysisII.tex" 1792661813.44456 394 dbeb51c42f0f4865f5c76f8667ab5d2c ""
+  "build/analysisII.aux" 1792764637.34609 877 561aeeaf2feb210eedc96941b51235f8 "pdflatex"
+  "build/analysisII.toc" 1792764637.34709 520 f6ea775fe0f8232e52d8290f188f6992 "pdflatex"
+  "notes/grundlagen.tex" 1792764636.90714 18952 2e88079552dd2ba9d3737d493944de15 ""
   (generated)
   "build/analysisII.aux"
   "build/analysisII.log"
