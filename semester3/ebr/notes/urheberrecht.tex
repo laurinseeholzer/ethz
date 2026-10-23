@@ -217,3 +217,113 @@
               gekommen ist (z.B. durch Registrierung).
     \end{itemize}
 \end{remark}
+
+\subsection{Domain-Namen}
+
+\subsubsection{Grundlagen und Aufbau}
+
+\begin{definition}
+    \textbf{Domain-Name:} Weltweit eindeutige, menschenlesbare Adresse zur Identifikation und Adressierung von Rechnern und Diensten im Internet (wird über das DNS in IP-Adressen aufgelöst).
+\end{definition}
+
+\begin{remark}
+    \textbf{Hierarchischer Aufbau:}
+    \begin{itemize}
+        \item \textbf{Top-Level-Domain (TLD):} Oberste Ebene der Namenshierarchie:
+              \begin{itemize}
+                  \item \textit{ccTLD (country code):} Länderspezifisch (z.B. \texttt{.ch}, \texttt{.de})
+                  \item \textit{gTLD (generic):} Generisch (z.B. \texttt{.com}, \texttt{.org}, \texttt{.swiss})
+              \end{itemize}
+        \item \textbf{Second-Level-Domain (SLD):} Der eigentliche gewählte Name (z.B. \texttt{ethz} in \texttt{ethz.ch}).
+        \item \textbf{Subdomains:} Weitere Untergliederungen (z.B. \texttt{moodle.ethz.ch}).
+    \end{itemize}
+\end{remark}
+
+\subsubsection{Vergabesystem und Akteure}
+
+\begin{remark}
+    \textbf{Akteure bei der Domain-Vergabe:}
+    \begin{itemize}
+        \item \textbf{ICANN:} Globale Non-Profit-Organisation, koordiniert das Domain Name System und die Root-Zone weltweit.
+        \item \textbf{Nationale Ordnung (Registry):} Verwaltet die Datenbank der jeweiligen TLD (z.B. SWITCH bzw. BAKOM für \texttt{.ch}).
+        \item \textbf{Händler (Registrar):} Akkreditierte Verkäufer (z.B. Hostpoint, Infomaniak), über die Endkunden Domains registrieren.
+        \item \textbf{Registrant:} Der Endkunde bzw. Domain-Halter.
+    \end{itemize}
+\end{remark}
+
+\subsubsection{Rechtliche Natur und Vergabe}
+
+\begin{definition}
+    \textbf{First come, first served:} Domain-Namen werden nach dem Prioritätsprinzip vergeben: Wer eine freie Domain zuerst anmeldet, erhält den Zuschlag. Die Registrierungsstellen führen keine Vorprüfung auf allfällige Marken- oder Namensrechte durch.
+\end{definition}
+
+\begin{important}
+    \textbf{Dienstleistung, nicht Eigentum!} \\
+    An einem Domain-Namen erwirbt man \textbf{kein Sacheigentum} (kein Eigentum im Sinne von Art. 641 ZGB). \\
+    Es handelt sich um eine rein \textbf{vertragliche Dienstleistung}: Ein schuldrechtliches, relatives Nutzungsrecht auf Eintragung und Routing im DNS gegen Bezahlung einer periodischen Gebühr.
+\end{important}
+
+\subsubsection{Kennzeichenfunktion und Schutzrechte}
+
+\begin{definition}
+    \textbf{Kennzeichenfunktion von Domain-Namen:} Obwohl Domain-Namen technisch primär der Adressierung dienen, fungieren sie im geschäftlichen Verkehr als Erkennungs- und Unterscheidungszeichen. Sie wirken faktisch wie Namen oder Kennzeichen. Daher muss bei der Registrierung und Nutzung ein \textbf{hinreichender Abstand} zu bereits bestehenden Schutzrechten Dritter gewahrt werden, um Verwechslungsgefahr zu vermeiden.
+\end{definition}
+
+\begin{remark}
+    \textbf{Anwendbare Rechtsgrundlagen bei Konflikten:}
+    \begin{itemize}
+        \item \textbf{Namensschutz (Art. 29 ZGB):} Schützt den Namen von natürlichen und juristischen Personen sowie Gemeinwesen vor unbefugter Namensanmassung. Gilt \textbf{branchenunabhängig}.
+        \item \textbf{Markenschutz (MSchG):} Schützt eingetragene Kennzeichen für bestimmte Waren oder Dienstleistungen. Gilt grundsätzlich \textbf{branchenabhängig} (Spezialitätsprinzip: Schutz nur für die eingetragenen Klassen; Ausnahme: berühmte Marken gemäss Art. 15 MSchG).
+        \item \textbf{Lauterkeitsrecht (Art. 3 Abs. 1 lit. d UWG):} Verbietet unlautere Verhaltensweisen, die geeignet sind, Verwechslungen mit den Waren, Werken, Leistungen oder dem Geschäftsbetrieb eines anderen herbeizuführen (sowie unlautere Kundenabfangung oder Rufausbeutung).
+        \item \textbf{Firmenrecht (Art. 956 OR):} Schützt die im Handelsregister eingetragene Geschäftsfirma vor unbefugtem Gebrauch durch Dritte.
+    \end{itemize}
+\end{remark}
+
+\subsubsection{Rechtsverletzung und Verwechslungsgefahr}
+
+\begin{remark}
+    \textbf{Rechtsverletzung durch Fehlleitung (Initial Interest Confusion):} \\
+    Eine Rechtsverletzung (insbesondere nach UWG oder Kennzeichenrecht) kann bereits dann vorliegen, wenn Suchende oder Kunden, die gezielt nach dem berechtigten Original suchen, durch den Domain-Namen auf eine falsche Website fehlgeleitet werden (\textbf{Kundenabfangung}). \\
+    Unerheblich ist dabei grundsätzlich, ob der Internetnutzer beim Betrachten des Website-Inhalts bemerkt, dass es sich nicht um die gesuchte Originalseite handelt, da dessen Aufmerksamkeit bereits unlauter abgelenkt wurde.
+\end{remark}
+
+\subsubsection{Sonderkonstellationen und Schranken}
+
+\begin{remark}
+    \textbf{Spezialfälle im Domainrecht:}
+    \begin{itemize}
+        \item \textbf{Gemeindenamen und Hoheitszeichen (z.B. \texttt{gemeindename.ch}):} Namen von Gemeinwesen (Kantone, Gemeinden, Städte) geniessen Namensschutz (Art. 29 ZGB). Private dürfen sich Gemeindenamen in der Regel nicht als Domain registrieren, da das Publikum dahinter eine offizielle behördliche Website vermutet (\textbf{hohe Verkehrserwartung}).
+        \item \textbf{Beschreibende Begriffe und Gemeingut:} Rein beschreibende Gattungsbezeichnungen (z.B. \texttt{velo.ch}, \texttt{recht.ch}) gehören zum Gemeingut (Freihaltebedürfnis) und geniessen mangels Unterscheidungskraft in der Regel keinen Markenschutz. Bei reinen Sachbezeichnungen gilt strikt das Prioritätsprinzip (\textit{First come, first served}), sofern keine unlautere Behinderung oder Täuschung vorliegt.
+        \item \textbf{Kollision gleichwertiger Rechte (Gleichnamige):} Haben mehrere Parteien ein legitimes Recht am gleichen Namen bzw. Zeichen (z.B. gleiche Familiennamen oder Firmen in unterschiedlichen Branchen):
+              \begin{itemize}
+                  \item \textit{Grundsatz:} Es gilt das Prioritätsprinzip (\textit{First come, first served}).
+                  \item \textit{Korrektiv:} Sofern eine Partei eine deutlich überwiegende \textbf{Verkehrserwartung} für sich beanspruchen kann (z.B. überragende Bekanntheit) oder die Registrierung rechtsmissbräuchlich bzw. sittenwidrig erfolgte, kann ein Vorrang bestehen.
+              \end{itemize}
+        \item \textbf{Nutzung durch Händler, Vertriebspartner und Importeure:} Dritte dürfen fremde Marken nutzen, um auf angebotene Originalwaren, Ersatzteile oder Dienstleistungen wahrheitsgemäss hinzuweisen (beschreibender Markengebrauch / Erschöpfungsgrundsatz). Es darf jedoch nicht der irreführende Eindruck erweckt werden, man sei die Markeninhaberin selbst oder eine wirtschaftlich verbundene Niederlassung.
+    \end{itemize}
+\end{remark}
+
+\subsubsection{Streitbeilegung und Schlichtungsverfahren}
+
+\begin{definition}
+    \textbf{Alternative Streitbeilegung (Dispute Resolution):} Schnelle, kostengünstige und spezialisierte Verfahren zur Beilegung von Domain-Streitigkeiten ausserhalb der ordentlichen staatlichen Zivilgerichte.
+\end{definition}
+
+\begin{remark}
+    \textbf{Verfahren im Überblick:}
+    \begin{itemize}
+        \item \textbf{UDRP (Uniform Domain-Name Dispute-Resolution Policy):}
+              \begin{itemize}
+                  \item Globales Schlichtungsverfahren der ICANN für generische Top-Level-Domains (gTLDs wie \texttt{.com}, \texttt{.org}, \texttt{.net}) sowie diverse ccTLDs.
+                  \item Streitigkeiten werden massgeblich über das Schiedszentrum der \textbf{WIPO} (World Intellectual Property Organization in Genf) geführt.
+                  \item \textit{Voraussetzungen (kumulativ):} Die Domain ist identisch oder verwechslungsfähig ähnlich zu einer Marke des Klägers, der Halter hat keine eigenen Rechte oder berechtigten Interessen und die Domain wurde bösgläubig registriert und wird bösgläubig genutzt (\textit{bad faith} / Cybersquatting / Domaingrabbing).
+              \end{itemize}
+        \item \textbf{SWITCH-Streitbeilegungsverfahren (für \texttt{.ch} und \texttt{.li}):}
+              \begin{itemize}
+                  \item Spezifisches Verfahren für Schweizer und Liechtensteiner Domains, ebenfalls unter administrativer Leitung der \textbf{WIPO}.
+                  \item Zweistufiges Verfahren: Zunächst eine Schlichtungsverhandlung (Mediation); falls keine Einigung erzielt wird, entscheidet ein unabhängiger Fachexperte.
+                  \item \textit{Voraussetzungen:} Die Zuteilung oder Verwendung der Domain stellt eine Verletzung eines Kennzeichenrechts nach schweizerischem Recht dar (Marken-, Namens-, Firmenrecht oder UWG) und der Inhaber besitzt kein überwiegendes schutzwürdiges Eigeninteresse.
+              \end{itemize}
+    \end{itemize}
+\end{remark}
+

@@ -2,7 +2,7 @@ PWD /home/laurin/dev/ethz/semester3/ebr
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
-INPUT /home/laurin/dev/ethz/semester3/ebr/ebr.tex
+INPUT ebr.tex
 OUTPUT build/ebr.log
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/article.cls
@@ -225,7 +225,9 @@ INPUT /usr/share/texlive/texmf-dist/tex/latex/inconsolata/ot1zi4.fd
 INPUT /usr/share/texlive/texmf-dist/tex/latex/inconsolata/ot1zi4.fd
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/inconsolata/ot1-zi4r-0.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.enc
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/inconsolata/ot1-zi4b-0.tfm
 INPUT build/ebr.aux
+INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4b.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
