@@ -1,1 +1,181 @@
-\section{Reduucing Turing Machines}
+\section{Reductions and Undecidability}
+
+\subsection{The Concept of Reductions}
+
+\begin{remark}
+    \textbf{Core Idea:} Reductions are the primary tool in computability and complexity theory to compare the relative difficulty of algorithmic problems.
+    If a problem $A$ can be solved using an algorithm (subroutine) for a problem $B$, we say that \textbf{$A$ reduces to $B$} ($A \le B$). This means:
+    $$
+        \text{Problem } B \text{ is at least as hard as problem } A.
+    $$
+\end{remark}
+
+\begin{important}
+    \textbf{The Two Ways to Use a Reduction ($A \le B$):}
+    \begin{itemize}
+        \item \textbf{Positive Direction (Algorithm Design / Decidability):} If problem $B$ is known to be decidable, then problem $A$ is also decidable:
+        $$
+            A \le B \;\land\; B \in \mathcal{L}_{\text{rec}} \implies A \in \mathcal{L}_{\text{rec}}
+        $$
+        \item \textbf{Negative Direction (Impossibility Proofs / Undecidability):} By contraposition, if problem $A$ is known to be undecidable, then problem $B$ must also be undecidable:
+        $$
+            A \le B \;\land\; A \notin \mathcal{L}_{\text{rec}} \implies B \notin \mathcal{L}_{\text{rec}}
+        $$
+        This negative direction is the main method used to establish that newly encountered computational problems are undecidable.
+    \end{itemize}
+\end{important}
+
+\subsection{General Reductions ($R$-Reductions)}
+
+\begin{definition}
+    \textbf{$R$-Reduction (Turing / Oracle Reduction):} Let $L_1 \subseteq \Sigma_1^*$ and $L_2 \subseteq \Sigma_2^*$. We say that $L_1$ is \textbf{$R$-reducible} to $L_2$ (denoted $L_1 \le_R L_2$) if there exists an algorithm (or Turing machine with an oracle for $L_2$) that decides membership in $L_1$, using queries to an imaginary subroutine for $L_2$ as a black box.
+\end{definition}
+
+\begin{theorem}
+    \textbf{Properties of $R$-Reductions:}
+    \begin{itemize}
+        \item \textbf{Reflexivity and Transitivity:} $L \le_R L$, and if $L_1 \le_R L_2$ and $L_2 \le_R L_3$, then $L_1 \le_R L_3$.
+        \item \textbf{Decidability Transfer:} If $L_1 \le_R L_2$ and $L_2 \in \mathcal{L}_{\text{rec}}$, then $L_1 \in \mathcal{L}_{\text{rec}}$.
+        \item \textbf{Complement Invariance:} $L \le_R L^c$ always holds (simply invert the yes/no answer of the subroutine).
+    \end{itemize}
+\end{theorem}
+
+\subsection{Many-One Reductions (EE-Reductions)}
+
+\begin{definition}
+    \textbf{EE-Reduction (Eingabe-Eingabe / Many-One Reduction):} A language $L_1 \subseteq \Sigma_1^*$ is called \textbf{EE-reducible} to $L_2 \subseteq \Sigma_2^*$ (written $L_1 \le_{EE} L_2$ or $L_1 \le_m L_2$) if there exists a \textbf{computable total function}
+    $$
+        f : \Sigma_1^* \to \Sigma_2^*
+    $$
+    such that for every word $w \in \Sigma_1^*$:
+    $$
+        w \in L_1 \iff f(w) \in L_2
+    $$
+    The function $f$ is computed by a halting deterministic Turing machine $M_f$ (a transducer).
+\end{definition}
+
+\begin{remark}
+    \textbf{Intuition behind the Name:} It is called an \textit{Eingabe-Eingabe-Reduktion} (input-to-input reduction) because the reduction function $f$ directly maps an input $w$ of problem $L_1$ into a corresponding input $f(w)$ of problem $L_2$, without any post-processing of the decision result:
+    $$
+        \text{Decider for } L_1(w) = \text{Decider for } L_2(f(w))
+    $$
+    Every EE-reduction is a special case of an $R$-reduction: $L_1 \le_{EE} L_2 \implies L_1 \le_R L_2$.
+\end{remark}
+
+\begin{theorem}
+    \textbf{Conservation Theorems for EE-Reductions:} Let $L_1 \le_{EE} L_2$ with reduction function $f$.
+    \begin{enumerate}
+        \item \textbf{Decidability:}
+        \begin{itemize}
+            \item If $L_2 \in \mathcal{L}_{\text{rec}}$, then $L_1 \in \mathcal{L}_{\text{rec}}$.
+            \item If $L_1 \notin \mathcal{L}_{\text{rec}}$, then $L_2 \notin \mathcal{L}_{\text{rec}}$.
+        \end{itemize}
+        \item \textbf{Turing-Recognizability:}
+        \begin{itemize}
+            \item If $L_2 \in \mathcal{L}_{\text{RE}}$, then $L_1 \in \mathcal{L}_{\text{RE}}$.
+            \item If $L_1 \notin \mathcal{L}_{\text{RE}}$, then $L_2 \notin \mathcal{L}_{\text{RE}}$.
+        \end{itemize}
+        \item \textbf{Complements:}
+        $$
+            L_1 \le_{EE} L_2 \iff L_1^c \le_{EE} L_2^c \quad (\text{using the exact same function } f)
+        $$
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+    \textbf{Difference between $\le_R$ and $\le_{EE}$ on Recognizability:}
+    While $L_1 \le_R L_2$ preserves decidability, it does \textbf{not} necessarily preserve Turing-recognizability (for instance, $L_{\text{diag}} \le_R L_{\text{diag}}^c$ holds by flipping the result, but $L_{\text{diag}}^c \in \mathcal{L}_{\text{RE}}$ while $L_{\text{diag}} \notin \mathcal{L}_{\text{RE}}$). In contrast, an EE-reduction \textbf{preserves both} decidability and Turing-recognizability.
+\end{remark}
+
+\subsection{Canonical Undecidable Problems and Classic Reductions}
+
+\begin{definition}
+    \textbf{The Halting Problem ($H$ and $H_\varepsilon$):}
+    \begin{itemize}
+        \item \textbf{General Halting Problem:}
+        $$
+            H = \{ \langle M \rangle \# w \mid M \text{ halts on input } w \}
+        $$
+        \item \textbf{Empty-Tape Halting Problem (Special Halting Problem):}
+        $$
+            H_\varepsilon = \{ \langle M \rangle \mid M \text{ halts on the empty input } \varepsilon \}
+        $$
+    \end{itemize}
+\end{definition}
+
+\begin{example}
+    \textbf{Reduction $L_{\text{univ}} \le_{EE} H$:}
+    Given an instance $\langle M \rangle \# w$ of $L_{\text{univ}}$, construct a Turing machine $M'$ that simulates $M$ on $w$. If $M$ accepts $w$, $M'$ halts. If $M$ rejects $w$, $M'$ enters an intentional infinite loop.
+    Then:
+    $$
+        \langle M \rangle \# w \in L_{\text{univ}} \iff M \text{ accepts } w \iff M' \text{ halts} \iff \langle M' \rangle \# w \in H
+    $$
+    Since $L_{\text{univ}}$ is undecidable, it follows that $H$ is \textbf{undecidable}.
+\end{example}
+
+\begin{example}
+    \textbf{Reduction $H \le_{EE} H_\varepsilon$:}
+    Given an instance $\langle M \rangle \# w$ of $H$, define a reduction function $f(\langle M \rangle \# w) = \langle M_w \rangle$, where $M_w$ is a newly constructed Turing machine that:
+    \begin{enumerate}
+        \item Ignores its own input tape.
+        \item Writes the fixed word $w$ onto its tape.
+        \item Simulates $M$ on $w$.
+    \end{enumerate}
+    When started on the empty word $\varepsilon$, $M_w$ writes $w$ and simulates $M(w)$. Thus:
+    $$
+        M_w \text{ halts on } \varepsilon \iff M \text{ halts on } w
+    $$
+    Therefore, $\langle M \rangle \# w \in H \iff \langle M_w \rangle \in H_\varepsilon$.
+    Because $H$ is undecidable, $H_\varepsilon$ is also \textbf{undecidable}.
+\end{example}
+
+\subsection{The Emptiness Problem and Non-Recognizability}
+
+\begin{definition}
+    \textbf{The Emptiness Problem ($L_\emptyset$):} The language of all Turing machines that accept no words:
+    $$
+        L_\emptyset = \{ \langle M \rangle \mid L(M) = \emptyset \}
+    $$
+    Its complement is $L_{\ne \emptyset} = \{ \langle M \rangle \mid L(M) \neq \emptyset \}$.
+\end{definition}
+
+\begin{theorem}
+    \textbf{Status of $L_\emptyset$ and $L_{\ne \emptyset}$:}
+    \begin{itemize}
+        \item $L_{\ne \emptyset}$ is \textbf{Turing-recognizable} ($L_{\ne \emptyset} \in \mathcal{L}_{\text{RE}}$), via dovetailing simulation across all possible words.
+        \item $L_{\ne \emptyset}$ is \textbf{undecidable} ($H_\varepsilon \le_{EE} L_{\ne \emptyset}$).
+        \item $L_\emptyset$ is \textbf{not Turing-recognizable} ($L_\emptyset \notin \mathcal{L}_{\text{RE}}$).
+    \end{itemize}
+\end{theorem}
+
+\subsection{Rice's Theorem}
+
+\begin{definition}
+    \textbf{Semantic Property of Turing Machines:} A property of Turing machines is called a \textbf{semantic property} (or language property) if it depends solely on the recognized language $L(M)$, not on the specific encoding or implementation details of $M$:
+    $$
+        L(M_1) = L(M_2) \implies (\langle M_1 \rangle \in L_{\mathcal{P}} \iff \langle M_2 \rangle \in L_{\mathcal{P}})
+    $$
+    A property $\mathcal{P} \subseteq \mathcal{L}_{\text{RE}}$ is called \textbf{non-trivial} if there is at least one recognizable language that has property $\mathcal{P}$ and at least one that does not:
+    $$
+        \mathcal{P} \neq \emptyset \quad \text{and} \quad \mathcal{P} \neq \mathcal{L}_{\text{RE}}
+    $$
+\end{definition}
+
+\begin{theorem}
+    \textbf{Rice's Theorem (Satz von Rice):} Every non-trivial semantic property of Turing-recognizable languages is \textbf{undecidable}.
+    That is, if $\emptyset \subsetneq \mathcal{P} \subsetneq \mathcal{L}_{\text{RE}}$, then:
+    $$
+        L_{\mathcal{P}} = \{ \langle M \rangle \mid L(M) \in \mathcal{P} \} \notin \mathcal{L}_{\text{rec}}
+    $$
+\end{theorem}
+
+\begin{remark}
+    \textbf{Power of Rice's Theorem:} Rice's theorem immediately proves the undecidability of virtually every semantic question about program behavior without needing separate manual reductions:
+    \begin{itemize}
+        \item Is $L(M) = \emptyset$? (Undecidable)
+        \item Is $L(M)$ finite? (Undecidable)
+        \item Is $L(M)$ regular? (Undecidable)
+        \item Does $M$ accept the word $01$? (Undecidable)
+    \end{itemize}
+    \textbf{Warning (Syntactic properties are NOT covered):} Rice's theorem only applies to semantic properties (languages). Syntactic properties (e.g., ,,Does $M$ have more than 5 states?`` or ,,Does $M$ ever execute transition $\delta(q_1, 0)$ on its transition diagram?``) are structural features of the code and are typically easily decidable.
+\end{remark}

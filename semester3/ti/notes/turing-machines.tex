@@ -99,39 +99,6 @@
     \end{itemize}
 \end{definition}
 
-\subsection{Recognizability and Decidability}
-
-\begin{definition}
-    \textbf{Accepted Language:} A word $x \in \Sigma^*$ is accepted by $M$ if the computation of $M$ on $x$ halts in $q_{accept}$:
-    $$
-        L(M) = \{ x \in \Sigma^* \mid C_0(x) \vdash_M^* u q_{accept} v \text{ for some } u, v \in \Gamma^* \}
-    $$
-\end{definition}
-
-\begin{definition}
-    \textbf{Decidable (Recursive) Language:} A language $L \subseteq \Sigma^*$ is called \textbf{decidable} (or \textbf{recursive}) if there exists a Turing Machine $M$ that \textbf{halts on every input} $x \in \Sigma^*$ such that:
-    $$
-        x \in L \iff M \text{ halts in } q_{accept}
-    $$
-    $$
-        x \notin L \iff M \text{ halts in } q_{reject}
-    $$
-    A Turing machine with this property is called a \textbf{decider}.
-\end{definition}
-
-\begin{definition}
-    \textbf{Turing-Recognizable (Recursively Enumerable) Language:} A language $L \subseteq \Sigma^*$ is called \textbf{Turing-recognizable} (or \textbf{recursively enumerable} / semi-decidable) if there exists a Turing Machine $M$ such that:
-    $$
-        L(M) = L
-    $$
-    For words $x \notin L$, $M$ is allowed to halt in $q_{reject}$ or loop indefinitely.
-\end{definition}
-
-\begin{remark}
-    Every decidable language is Turing-recognizable, but the converse does not hold. For example, the Halting Problem $H = \{ \langle M, w \rangle \mid M \text{ halts on } w \}$ is Turing-recognizable but undecidable.
-\end{remark}
-
-\newpage
 \subsection{Multi-Tape Turing Machines}
 
 \begin{definition}
@@ -228,4 +195,130 @@
         \mathbf{P}_{1\text{-tape}} = \mathbf{P}_{k\text{-tape}}
     $$
 \end{remark}
+
+\subsection{Nondeterministic Turing Machines}
+
+\begin{definition}
+    \textbf{Nondeterministic Turing Machine (NTM):} An NTM is defined similarly to a deterministic TM, but its transition function allows multiple alternative transitions for any given state and tape symbol:
+    $$
+        \delta : (Q \setminus \{q_{accept}, q_{reject}\}) \times \Gamma \to \mathcal{P}(Q \times \Gamma \times \{\mathrm{L}, \mathrm{R}\})
+    $$
+    At each step, the machine may choose any transition from $\delta(q, a)$. If $\delta(q, a) = \emptyset$, that computation branch halts without accepting.
+\end{definition}
+
+\begin{definition}
+    \textbf{Computation Tree and Acceptance:} The set of all possible computations on an input $x$ forms a \textbf{computation tree} rooted at the start configuration $C_0(x)$.
+    An NTM $M$ \textbf{accepts} $x$ if \textbf{at least one} computation path in the tree halts in $q_{accept}$:
+    $$
+        x \in L(M) \iff \exists \text{ path s.t. } C_0(x) \vdash_M^* u q_{accept} v \quad (\text{for some } u, v \in \Gamma^*)
+    $$
+    $M$ rejects $x$ if all computation branches halt in $q_{reject}$ (or fail to reach $q_{accept}$).
+\end{definition}
+
+\begin{theorem}
+    \textbf{Equivalence of DTMs and NTMs:} For every nondeterministic Turing machine $N$, there exists an equivalent deterministic Turing machine $D$ such that:
+    $$
+        L(D) = L(N)
+    $$
+    Hence, nondeterminism does not increase the computational power of Turing machines (the class of recognizable languages remains identical).
+\end{theorem}
+
+\begin{remark}
+    \textbf{BFS Simulation and Time Complexity:}
+    \begin{itemize}
+        \item \textbf{Breadth-First Search (BFS):} The deterministic simulator $D$ systematically explores the computation tree of $N$ level by level. A depth-first search would not suffice, as it could get trapped in an infinite non-accepting branch.
+        \item \textbf{Exponential Overhead:} If the shortest accepting path has length $T(n)$ and the maximum branching factor is $b$, the tree contains up to $b^{T(n)}$ configurations. The deterministic simulation runs in \textbf{exponential time} $\mathcal{O}(b^{T(n)})$, which motivates the $\mathbf{P} \overset{?}{=} \mathbf{NP}$ question.
+    \end{itemize}
+\end{remark}
+
+\subsection{Recognizability and Decidability}
+
+\begin{definition}
+    \textbf{Accepted Language:} A word $x \in \Sigma^*$ is accepted by $M$ if the computation of $M$ on $x$ halts in $q_{accept}$:
+    $$
+        L(M) = \{ x \in \Sigma^* \mid C_0(x) \vdash_M^* u q_{accept} v \text{ for some } u, v \in \Gamma^* \}
+    $$
+\end{definition}
+
+\begin{definition}
+    \textbf{Decidable (Recursive) Language:} A language $L \subseteq \Sigma^*$ is called \textbf{decidable} (or \textbf{recursive}) if there exists a Turing Machine $M$ that \textbf{halts on every input} $x \in \Sigma^*$ such that:
+    $$
+        x \in L \iff M \text{ halts in } q_{accept}
+    $$
+    $$
+        x \notin L \iff M \text{ halts in } q_{reject}
+    $$
+    A Turing machine with this property is called a \textbf{decider}.
+\end{definition}
+
+\begin{definition}
+    \textbf{Turing-Recognizable (Recursively Enumerable) Language:} A language $L \subseteq \Sigma^*$ is called \textbf{Turing-recognizable} (or \textbf{recursively enumerable} / semi-decidable) if there exists a Turing Machine $M$ such that:
+    $$
+        L(M) = L
+    $$
+    For words $x \notin L$, $M$ is allowed to halt in $q_{reject}$ or loop indefinitely.
+\end{definition}
+
+\begin{remark}
+    Every decidable language is Turing-recognizable, but the converse does not hold. For example, the Halting Problem $H = \{ \langle M, w \rangle \mid M \text{ halts on } w \}$ is Turing-recognizable but undecidable.
+\end{remark}
+
+\begin{theorem}
+    \textbf{Decidability via Complements:} A language $L \subseteq \Sigma^*$ is \textbf{decidable} if and only if both $L$ and its complement $L^c = \Sigma^* \setminus L$ are \textbf{Turing-recognizable}:
+    $$
+        L \in \mathcal{L}_{\text{rec}} \iff L \in \mathcal{L}_{\text{RE}} \land L^c \in \mathcal{L}_{\text{RE}}
+    $$
+\end{theorem}
+
+\subsection{Universal Turing Machine and Universal Language}
+
+\begin{definition}
+    \textbf{Universal Language ($L_{\text{univ}}$):} Let $\langle M \rangle \in \{0, 1\}^*$ denote a binary encoding of a Turing machine $M$. The \textbf{Universal Language} $L_{\text{univ}}$ (also denoted $L_U$ or $A_{\text{TM}}$) consists of all pairs of machine encodings and input words accepted by that machine:
+    $$
+        L_{\text{univ}} = \{ \langle M \rangle \# w \mid w \in L(M) \}
+    $$
+\end{definition}
+
+\subsection{The Diagonal Language ($L_{\text{diag}}$) and Its Complement ($L_{\text{diag}}^c$)}
+
+\begin{definition}
+    \textbf{Canonical TM Enumeration:} Let $w_1, w_2, w_3, \dots$ be the canonical lexicographic ordering of all words in $\{0, 1\}^*$. Every word $w_i$ can be uniquely interpreted as an encoding of a Turing machine $M_i = M_{w_i}$ (if $w_i$ is not a syntactically valid encoding, $M_i$ is defined as a dummy TM with $L(M_i) = \emptyset$).
+\end{definition}
+
+\begin{definition}
+    \textbf{Diagonal Language ($L_{\text{diag}}$):} The diagonal language contains all words $w_i$ whose corresponding Turing machine $M_i$ does \textbf{not} accept its own encoding $w_i$:
+    $$
+        L_{\text{diag}} = \{ w_i \in \{0, 1\}^* \mid w_i \notin L(M_i) \}
+    $$
+\end{definition}
+
+\begin{theorem}
+    \textbf{Non-Recognizability of $L_{\text{diag}}$ (Diagonalization):} The diagonal language is \textbf{not Turing-recognizable}:
+    $$
+        L_{\text{diag}} \notin \mathcal{L}_{\text{RE}}
+    $$
+\end{theorem}
+
+\begin{proof}
+    Assume for contradiction that $L_{\text{diag}}$ is Turing-recognizable. Then there exists a Turing machine $M_d$ such that $L(M_d) = L_{\text{diag}}$. Since every TM appears in the enumeration, $M_d = M_{w_d}$ for some word $w_d$. Now consider the input $w_d$:
+    $$
+        w_d \in L_{\text{diag}} \iff w_d \notin L(M_{w_d}) \iff w_d \notin L_{\text{diag}}
+    $$
+    This is an immediate contradiction ($X \iff \neg X$). Hence, no such machine $M_d$ can exist.
+\end{proof}
+
+\begin{definition}
+    \textbf{Complement of $L_{\text{diag}}$ ($L_{\text{diag}}^c$, Self-Acceptance):} The complement of $L_{\text{diag}}$ consists of all words $w_i$ whose corresponding Turing machine $M_i$ \textbf{accepts} $w_i$:
+    $$
+        L_{\text{diag}}^c = \{0, 1\}^* \setminus L_{\text{diag}} = \{ w_i \in \{0, 1\}^* \mid w_i \in L(M_i) \}
+    $$
+\end{definition}
+
+\begin{theorem}
+    \textbf{Properties of $L_{\text{diag}}^c$:}
+    \begin{itemize}
+        \item \textbf{Turing-Recognizable ($L_{\text{diag}}^c \in \mathcal{L}_{\text{RE}}$):} On input $w_i$, a machine can decode $w_i$, construct $M_i$, and simulate $M_i$ on input $w_i$ using a universal Turing machine. If $M_i$ accepts $w_i$, the simulation halts and accepts.
+        \item \textbf{Undecidable ($L_{\text{diag}}^c \notin \mathcal{L}_{\text{rec}}$):} If $L_{\text{diag}}^c$ were decidable, its complement $(L_{\text{diag}}^c)^c = L_{\text{diag}}$ would also be recognizable by the complement theorem, contradicting $L_{\text{diag}} \notin \mathcal{L}_{\text{RE}}$.
+    \end{itemize}
+\end{theorem}
 

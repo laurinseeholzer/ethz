@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1792782909.26116 "/home/laurin/dev/ethz/semester3/numcs/numcs.tex" "build/numcs.pdf" "numcs" 1792782909.58323 0
+["pdflatex"] 1793272074.99426 "/home/laurin/dev/ethz/semester3/numcs/numcs.tex" "build/numcs.pdf" "numcs" 1793272075.84573 0
   "../../templates/templateNotes/commands.tex" 1774795684.82424 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
   "../../templates/templateNotes/packages.tex" 1790417146.32119 516 7d64a0165295c034e7941cda1e6365a8 ""
   "../../templates/templateNotes/theorem_styles.tex" 1780227718.45916 2599 ef35b4d09ba532e85d73c0bf2d41006f ""
@@ -15,6 +15,8 @@
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm" 1246382020 940 228d6584342e91276bf566bcf9716b83 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1136768653 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1136768653 1324 c910af8c371558dc20f2d7822f66fe64 ""
+  "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm" 1136768653 1344 8a0be4fe4d376203000810ad4dc81558 ""
+  "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm" 1136768653 1332 1fde11373e221473104d6cc5993f046e ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbxti10.tfm" 1136768653 1532 9162035f4e7176612125649e348e2195 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmex10.tfm" 1136768653 992 662f679a0b3d2d53c1b94050fdaa3f50 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmmi10.tfm" 1136768653 1528 abec98dbc43e172678c11b3b9031252a ""
@@ -33,6 +35,7 @@
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/inconsolata/ot1-zi4r-0.tfm" 1561323594 912 a20aa2a2ed86fa42e5ec387898cd02d6 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb" 1248133631 34811 78b52f49e893bcba91bd7581cdc144c0 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb" 1248133631 32080 340ef9bf63678554ee606688e7b5339d ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb" 1248133631 32166 b0c356b15f19587482a9217ce1d8fa67 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb" 1248133631 36554 b67dc2cfa451409e100b3fcf5f506509 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb" 1248133631 30251 6afa5cb1d0204815a708a080681d4674 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1248133631 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
@@ -119,11 +122,11 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1777593600 43785 66587115382950aca692b5f6e3c2fb74 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1791899270 480835 c97dc259877a20c8c55a62e2e0308238 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1791899253 2299030 e57e8f062effa18901a2245b9f04b477 ""
-  "build/numcs.aux" 1792782909.53741 3607 01a2d6072dd069de82895c7b8e90b6f2 "pdflatex"
-  "build/numcs.toc" 1792782909.53841 2309 e6e4bb6e239d09d3c658fc723df554c2 "pdflatex"
-  "notes/interpolation.tex" 1792782341.81958 23227 4af1e8b63f10bff3d723b70f627f2e7b ""
+  "build/numcs.aux" 1793272075.73593 4273 4c4fa1b05ad401f2fbc636789a20830e "pdflatex"
+  "build/numcs.toc" 1793272075.73602 2770 d35f12f63866bc713309062f63ed7cac "pdflatex"
+  "notes/interpolation.tex" 1792783320.73906 23227 4af1e8b63f10bff3d723b70f627f2e7b ""
   "notes/introduction.tex" 1792780761.64543 11041 bc01265a805a5d7bd4791f91dffbf522 ""
-  "notes/quadrature.tex" 1792782908.69126 12092 bdc1339fc2b4e944cd1bbe8a0c73f17f ""
+  "notes/quadrature.tex" 1793272073.96777 19881 41347f3d131159c7f43533da9ec27957 ""
   "numcs.tex" 1792661806.26537 484 830ff0cc21fee232801eccaa33b2bce0 ""
   (generated)
   "build/numcs.aux"

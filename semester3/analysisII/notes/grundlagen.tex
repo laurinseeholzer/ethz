@@ -302,6 +302,50 @@
     $$ f(x_-) < f(x_0) < f(x_+) $$
 \end{definition}
 
+
+
+\subsection{Globale Extremwerte}
+
+\begin{definition}
+    \textbf{Globale (absolute) Extrema:} Sei $f: D \to \mathbb{R}$ eine Funktion auf $D \subseteq \mathbb{R}^n$. Ein Punkt $x_0 \in D$ heisst \textbf{globales Maximum} (bzw. \textbf{globales Minimum}), wenn für alle $x \in D$ gilt:
+    $$ f(x) \le f(x_0) \quad \text{(bzw. } f(x) \ge f(x_0) \text{)} $$
+    Der Funktionswert $f(x_0)$ heisst absoluter Extremwert (optimaler Wert).
+\end{definition}
+
+\begin{theorem}
+    \textbf{Satz von Weierstraß (Extremwertsatz):} Ist $K \subset \mathbb{R}^n$ nicht-leer und \textbf{kompakt} (abgeschlossen und beschränkt) und $f: K \to \mathbb{R}$ \textbf{stetig}, so nimmt $f$ auf $K$ ihr globales Minimum und ihr globales Maximum garantiert an.
+\end{theorem}
+
 \begin{remark}
-    Wir können globale extrealstellen durch die bestimmung der kritischen punkte und das betrachten der funktion am rande des definitonsbereich finden.
+    \textbf{Intuition und Vorgehen:} Im Gegensatz zu lokalen Extrema sucht man den absolut extremen Wert über das gesamte Gebiet. Auf kompakten Mengen garantiert Weierstraß die Existenz. Daher ist die Berechnung der Hesse-Matrix für globale Extrema überflüssig: Man bestimmt lediglich alle möglichen Kandidaten im Inneren sowie auf dem Rand und vergleicht direkt deren Funktionswerte.
 \end{remark}
+
+\begin{important}
+    \textbf{Die drei Optimierungs-Fälle:}
+    \begin{itemize}
+        \item \textbf{Fall 1: Offenes oder unbeschränktes Gebiet (z.B. ganz $\mathbb{R}^n$)} \\
+        Man bestimmt die inneren kritischen Punkte ($\nabla f = 0$) und prüft zwingend das Verhalten am Rand bzw. im Unendlichen ($\lim_{\|x\|\to\infty} f(x)$). Ist $f$ \textbf{koerziv} ($\lim_{\|x\|\to\infty} f(x) = +\infty$), so wächst die Funktion nach allen Seiten an und es existiert stets ein globales Minimum auf $\mathbb{R}^n$.
+        
+        \item \textbf{Fall 2: Feste Gleichungs-Nebenbedingung ($g(x) = c$)} \\
+        Gesucht sind Extrema auf der Niveaufläche $M = \{x \in \mathbb{R}^n \mid g(x) = c\}$. Gilt die Regularitätsbedingung $\nabla g(x) \neq 0$, so liefert der Ansatz der \textbf{Lagrange-Multiplikatoren} das Gleichungssystem:
+        $$ \nabla f(x) = \lambda \nabla g(x) \quad \text{und} \quad g(x) = c $$
+        Punkte mit $\nabla g(x) = 0$ sowie Randpunkte des Definitionsbereichs von $g$ müssen als Ausnahmen separat geprüft werden.
+        
+        \item \textbf{Fall 3: Ungleichungs-Nebenbedingung ($g(x) \le c$, Berandete Gebiete)} \\
+        Das Problem zerfällt in zwei Teile: Im Inneren ($g(x) < c$) sucht man freie kritische Punkte mit $\nabla f(x) = 0$. Auf dem Rand ($g(x) = c$) sucht man gebundene Extrema via Lagrange ($\nabla f = \lambda \nabla g$) oder Randparametrisierung. Der größte bzw. kleinste Funktionswert aller gefundenen Punkte (inklusive eventueller Ecken) liefert das globale Maximum bzw. Minimum.
+    \end{itemize}
+\end{important}
+
+\begin{remark}
+    \textbf{Geometrische Intuition zu Lagrange:}
+    Im Optimum berühren sich die Niveaulinie von $f$ und die Nebenbedingungskurve $g(x) = c$ \textbf{tangential}. Da der Gradient $\nabla f$ senkrecht auf den Niveaulinien von $f$ steht und $\nabla g$ senkrecht auf der Tangentialebene $T_x M = \ker(Dg(x))$ der Fläche $M$ steht, müssen $\nabla f$ und $\nabla g$ im Berührpunkt parallel sein ($\nabla f = \lambda \nabla g$). Nach dem Satz über implizite Funktionen bildet $M$ eine glatte Untermannigfaltigkeit, solange $\nabla g \neq 0$ gilt.
+\end{remark}
+
+\begin{example}
+    Bestimme die globalen Extrema von $f(x, y) = 2x^2 + y^2 - 2x$ auf der Einheitskreisscheibe $K = \{x^2 + y^2 \le 1\}$.
+    \begin{itemize}
+        \item \textbf{Inneres ($x^2 + y^2 < 1$):} $\nabla f(x, y) = (4x - 2, 2y)^T = 0 \implies (x, y) = \left(\frac{1}{2}, 0\right) \in K^\circ$ mit Funktionswert $f\left(\frac{1}{2}, 0\right) = -\frac{1}{2}$.
+        \item \textbf{Rand ($x^2 + y^2 = 1$):} Mit $y^2 = 1 - x^2$ für $x \in [-1, 1]$ wird die Randfunktion zu $h(x) = 2x^2 + (1 - x^2) - 2x = (x - 1)^2$. Ableitung $h'(x) = 2(x-1) = 0 \implies x = 1$ sowie die Intervallgrenzen $x = \pm 1$ liefern die Punkte $(1, 0)$ mit $f(1, 0) = 0$ und $(-1, 0)$ mit $f(-1, 0) = 4$.
+        \item \textbf{Wertevergleich:} Das globale Minimum ist $-\frac{1}{2}$ bei $\left(\frac{1}{2}, 0\right)$ (im Inneren) und das globale Maximum ist $4$ bei $(-1, 0)$ (auf dem Rand).
+    \end{itemize}
+\end{example}

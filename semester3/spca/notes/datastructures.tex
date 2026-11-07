@@ -1,0 +1,130 @@
+\section{Compiling C Data Structures}
+
+\subsection{Basic Data Types and Machine Representation}
+
+\begin{definition}
+    \textbf{Primitive Data Types in x86-64 Linux (System V ABI):} Primitive types have fixed sizes and alignment requirements:
+    \begin{center}
+        \renewcommand{\arraystretch}{1.15}
+        \setlength{\tabcolsep}{6pt}
+        \begin{tabular}{|l|c|c|c|l|}
+            \hline
+            \textbf{Type} & \textbf{Size} & \textbf{Alignment} & \textbf{Suffix} & \textbf{Description} \\
+            \hline
+            \texttt{char} & 1 B & 1 B & \texttt{b} & Byte \\
+            \texttt{short} & 2 B & 2 B & \texttt{w} & Word (16 bits) \\
+            \texttt{int} & 4 B & 4 B & \texttt{l} & Doubleword (32 bits) \\
+            \texttt{long} & 8 B & 8 B & \texttt{q} & Quadword (64 bits) \\
+            \texttt{long long} & 8 B & 8 B & \texttt{q} & Quadword (64 bits) \\
+            \texttt{T *} (pointer) & 8 B & 8 B & \texttt{q} & Quadword address \\
+            \texttt{float} & 4 B & 4 B & \texttt{s} / \texttt{ss} & Single precision (SSE) \\
+            \texttt{double} & 8 B & 8 B & \texttt{l} / \texttt{sd} & Double precision (SSE) \\
+            \texttt{long double} & 16 B & 16 B & \texttt{t} & Extended precision \\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{definition}
+
+\begin{important}
+    Assembly code does not retain high-level C types. All data is viewed merely as untyped byte sequences in registers or flat virtual memory.
+\end{important}
+
+\subsection{One-Dimensional Arrays}
+
+\begin{definition}
+    An array declaration \texttt{T A[N]} allocates a \textbf{contiguous} block of $N \times L$ bytes, where $L = \text{sizeof}(T)$. The identifier \texttt{A} acts as a pointer pointing to the first element (\texttt{\&A[0]}).
+\end{definition}
+
+\begin{important}
+    C does not perform array bounds checking at compile-time or runtime. Accessing out-of-bounds indices reads or corrupts adjacent memory or triggers segmentation faults.
+\end{important}
+
+\begin{definition}
+    \textbf{Indexing} \texttt{A[i]} is semantically identical to pointer dereferencing \texttt{*(A + i)}. Given starting address $x_A$, the memory address of element $i$ is $\&A[i] = x_A + L \cdot i$
+\end{definition}
+
+\begin{remark}
+    \textbf{Assembly Translation:} Memory operands in x86-64 map directly to array indexing using the scaled index addressing mode $D(R_b, R_i, S)$:
+    $$\text{Mem}[\text{Reg}[R_b] + S \cdot \text{Reg}[R_i] + D]$$
+    where $S \in \{1, 2, 4, 8\}$ corresponds to element size $L$. The address of an element can be computed without reading memory using \texttt{leaq}.
+\end{remark}
+
+
+\subsection{Nested Arrays}
+
+\begin{definition}
+    \textbf{A multidimensional array} declaration \texttt{T A[R][C]} allocates a single contiguous memory block of $R \times C \times L$ bytes, where $R$ is rows, $C$ is columns, and $L = \text{sizeof}(T)$.
+\end{definition}
+
+\begin{remark}
+     C stores nested arrays row-by-row sequentially. All elements of row $0$ are stored first, followed contiguously by row $1$, row $2$, and so forth.
+\end{remark}
+
+\begin{theorem}
+    \textbf{Address Computation:} The starting address of row $i$ (\texttt{A[i]}) is $\&A[i][0] = x_A + i \cdot (C \cdot L)$ and the memory address of element \texttt{A[i][j]} is $\&A[i][j] = x_A + L \cdot (i \cdot C + j) = x_A + (i \cdot C \cdot L) + (j \cdot L)$
+\end{theorem}
+
+\begin{remark}
+    \textbf{Compiler Optimizations:} When the column count $C$ is a constant or a power of two, the compiler avoids costly multiplication instructions (\texttt{imulq}) by replacing $i \cdot C$ with bit shifts (\texttt{salq}) and scaled addition (\texttt{leaq}).
+\end{remark}
+
+\subsection{Multi-Level Arrays}
+
+\begin{definition}
+    A \textbf{multi-level array} declaration \texttt{T *B[R]} allocates an array of $R$ contiguous pointers (each 8 bytes on x86-64), where each entry \texttt{B[i]} holds a pointer to a separate, independently allocated 1D array of elements of type \texttt{T}.
+\end{definition}
+
+\begin{important}
+    Rows are not required to be contiguous to each other and can have variable lengths (ragged/jagged arrays).
+\end{important}
+
+\subsection{Structures and Data Alignment}
+
+\begin{definition}
+    \textbf{Structures (\texttt{struct}):}
+    \begin{itemize}
+        \item A \texttt{struct} groups heterogeneous data fields into a single contiguous memory block.
+        \item Field order is \textbf{strictly preserved} as declared in the C source code.
+        \item The compiler computes fixed byte offsets from the base address for each field at compile time.
+        \item Accessing a struct field compiles to base-plus-displacement addressing: \texttt{movl D(\%rdi), \%eax}.
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    Modern CPU memory architectures and cache lines (typically 64 bytes) fetch data from aligned addresses (multiples of 2, 4, 8, or 64 bytes). If data crosses a cache line or virtual page boundary, accessing it requires multiple memory bus cycles, severely degrading memory bandwidth and CPU performance.
+\end{remark}
+
+\begin{theorem}
+    \textbf{K-byte Alignment Rule:} Any primitive object of size $K$ bytes must reside at a memory address that is a multiple of $K$:
+    $$\text{Address} \equiv 0 \pmod K$$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Structure Alignment and Padding Rules:}
+    \begin{itemize}
+        \item \textbf{Overall Struct Alignment ($K_{\text{struct}}$):} The alignment of the entire struct is dictated by the maximum alignment required by any of its members:
+        $$K_{\text{struct}} = \max_i(K_{\text{field}_i})$$
+        The struct's starting address must be a multiple of $K_{\text{struct}}$.
+        \item \textbf{Internal Padding:} Unused gap bytes inserted between adjacent fields so that each individual field starts at an offset satisfying its own alignment constraint.
+        \item \textbf{External (Trailing) Padding:} Unused gap bytes appended to the end of the struct so that the total struct size is an exact multiple of $K_{\text{struct}}$.
+    \end{itemize}
+\end{theorem}
+
+\begin{important}
+    \textbf{Why External Padding is Mandatory:} External padding ensures that when structs are placed into an array (\texttt{struct S arr[N]}), every element \texttt{arr[i]} starts at an offset that satisfies $K_{\text{struct}}$. Without trailing padding, the second element \texttt{arr[1]} would violate alignment.
+\end{important}
+
+\begin{remark}
+    Because field order is preserved by the compiler, poor ordering introduces wasted internal padding. Ordering fields in \textbf{descending order of size} eliminates or minimizes internal padding.
+\end{remark}
+
+\subsection{Unions}
+
+\begin{definition}
+    \textbf{Unions (\texttt{union}):}
+    \begin{itemize}
+        \item A \texttt{union} allocates all of its member fields at the exact same starting memory address (offset 0), effectively overlaying them.
+        \item Only one member field can be validly stored at any given point in time.
+        \item \textbf{Size and Alignment:} The total size of a union equals the size of its largest member, rounded up to a multiple of its largest alignment constraint ($K_{\text{union}} = \max_i(K_{\text{field}_i})$).
+    \end{itemize}
+\end{definition}
