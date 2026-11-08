@@ -1,0 +1,86 @@
+\section{Nonlinear Equations}
+
+\subsection{Problem Setting and Vector Norms}
+
+\begin{definition}
+    \textbf{Root-Finding Problem:} Given $F: D \subseteq \mathbb{R}^d \to \mathbb{R}^d$ (or $f: \mathbb{C} \to \mathbb{C}$), find $x^* \in D$ such that $F(x^*) = 0$.
+    Key applications include optimization ($\nabla f(x) = 0$), machine learning loss minimization, and implicit time-stepping in stiff ODEs ($y_{k+1} - y_k - h f(t_{k+1}, y_{k+1}) = 0$).
+\end{definition}
+
+\begin{theorem}
+    \textbf{Vector Norms and Equivalence:} Standard norms on $\mathbb{R}^d$ are $\|x\|_2 = \sqrt{\sum x_i^2}$, $\|x\|_1 = \sum |x_i|$, and $\|x\|_\infty = \max |x_i|$. All norms on $\mathbb{R}^d$ are equivalent:
+    $$
+        c_1 \|x\|_a \le \|x\|_b \le c_2 \|x\|_a \quad \forall x \in \mathbb{R}^d
+    $$
+    Thus, iterative convergence $x^{(k)} \to x^*$ is independent of the choice of norm.
+\end{theorem}
+
+\subsection{Convergence Rates and Diagnostics}
+
+\begin{definition}
+    \textbf{Convergence Order:} For error $e_k := \|x^{(k)} - x^*\| \to 0$:
+    \begin{itemize}
+        \item \textbf{Linear ($p = 1$):} $\limsup_{k \to \infty} \frac{e_{k+1}}{e_k} = L < 1$. Error decays geometrically: $e_k \le C L^k$.
+        \item \textbf{Order $p > 1$ (Quadratic for $p=2$):} $\limsup_{k \to \infty} \frac{e_{k+1}}{e_k^p} = C < \infty$. For $p = 2$, correct digits roughly double each step.
+        \item \textbf{Superlinear:} $\lim_{k \to \infty} \frac{e_{k+1}}{e_k} = 0$ (faster than linear, slower than quadratic).
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    \textbf{Error Plots:}
+    \textbf{Lin-Log} ($\log e_k$ vs. $k$) yields a straight line with slope $\log L$ for linear convergence.
+    \textbf{Log-Log} ($\log e_{k+1}$ vs. $\log e_k$) yields a straight line with slope $p$ since $\log e_{k+1} \approx \log C + p \log e_k$.
+\end{remark}
+
+\subsection{Fixed-Point Iterations}
+
+\begin{theorem}
+    \textbf{Banach Fixed-Point Theorem:} Let $x = \Phi(x)$ be consistent with $F(x) = 0$ ($\Phi(x^*) = x^* \iff F(x^*) = 0$). If $\Phi: D \to D$ is a strict contraction on a closed set $D \subseteq \mathbb{R}^d$ ($\|\Phi(x) - \Phi(y)\| \le L \|x - y\|$ with $L < 1$):
+    \begin{enumerate}
+        \item There exists a unique fixed point $x^* \in D$.
+        \item Iteration $x^{(k+1)} = \Phi(x^{(k)})$ converges to $x^*$ for any $x^{(0)} \in D$.
+        \item A posteriori error bound: $\|x^{(k)} - x^*\| \le \frac{L}{1-L} \|x^{(k)} - x^{(k-1)}\|$.
+    \end{enumerate}
+    If $\Phi$ is continuously differentiable, local convergence holds if $\|D\Phi(x^*)\| < 1$. Order $p$ is achieved if $\Phi'(x^*) = \dots = \Phi^{(p-1)}(x^*) = 0$ and $\Phi^{(p)}(x^*) \neq 0$.
+\end{theorem}
+
+\subsection{Numerical Methods}
+
+\begin{definition}
+    \textbf{Bisection Method (1D):} If $f \in C[a, b]$ with $f(a)f(b) < 0$, evaluate midpoint $m = \frac{a+b}{2}$ and halve the bracket. Guarantees global linear convergence ($p = 1$, rate $L = \frac{1}{2}$), but does not generalize to $d > 1$.
+\end{definition}
+
+\begin{theorem}
+    \textbf{Multidimensional Newton's Method:} \\
+    Linearizing $F(x^{(k)} + \Delta x^{(k)}) \approx F(x^{(k)}) + DF(x^{(k)})\Delta x^{(k)} = 0$ yields:
+    $$
+        DF(x^{(k)}) \Delta x^{(k)} = -F(x^{(k)}), \quad x^{(k+1)} = x^{(k)} + \Delta x^{(k)}
+    $$
+    If $DF(x^*)$ is non-singular and $x^{(0)}$ is sufficiently close to $x^*$, Newton converges \textbf{quadratically} ($p = 2$).
+    
+    \textbf{Drawback:} Requires evaluating $DF(x^{(k)})$ and solving a linear system ($\mathcal{O}(d^3)$ LU) at every step, with high sensitivity to $x^{(0)}$.
+\end{theorem}
+
+\begin{remark}
+    \textbf{Newton Variants:}
+    \begin{itemize}
+        \item \textbf{Frozen Newton:} Fix $DF(x^{(0)})$ for all steps. Factorization is done once ($\mathcal{O}(d^2)$ backsubstitutions per step); convergence drops to \textbf{linear} ($p = 1$).
+        \item \textbf{Damped Newton:} $x^{(k+1)} = x^{(k)} + \lambda^{(k)} \Delta x^{(k)}$ with $\lambda^{(k)} \in (0, 1]$ chosen via line search (Armijo condition $\|F(x^{(k+1)})\| < \|F(x^{(k)})\|$) to enlarge the basin of attraction and prevent divergence.
+        \item \textbf{Quasi-Newton / Broyden:} Enforces secant condition $B^{(k+1)}\Delta x^{(k)} = \Delta y^{(k)}$ with $\Delta y^{(k)} = F(x^{(k+1)}) - F(x^{(k)})$. Updating the inverse $H^{(k)} \approx (DF(x^{(k)}))^{-1}$ directly via Sherman-Morrison costs $\mathcal{O}(d^2)$ per step and yields \textbf{superlinear} convergence ($1 < p < 2$):
+        $$
+            H^{(k+1)} = H^{(k)} + \frac{\Delta x^{(k)} - H^{(k)} \Delta y^{(k)}}{(\Delta x^{(k)})^T H^{(k)} \Delta y^{(k)}} (\Delta x^{(k)})^T H^{(k)}
+        $$
+    \end{itemize}
+\end{remark}
+
+\subsection{Termination Criteria}
+
+\begin{important}
+    \textbf{Stopping Criteria:} Iterations terminate when:
+    \begin{enumerate}
+        \item \textbf{A Priori Guard:} $k \ge k_{\max}$ (prevents infinite loops).
+        \item \textbf{Step Size Criterion:} $\|x^{(k+1)} - x^{(k)}\| \le \tau_{\text{abs}} + \tau_{\text{rel}} \|x^{(k+1)}\|$ (measures iterate stagnation).
+        \item \textbf{Residual Criterion:} $\|F(x^{(k)})\| \le \tau_{\text{res}}$ (measures equation satisfaction).
+    \end{enumerate}
+    \textbf{Rule of thumb:} Robust solvers must combine \textbf{step size} and \textbf{residual} tests because a small residual does not guarantee small error if $DF(x^*)$ is ill-conditioned ($\|x^{(k)} - x^*\| \approx \|DF(x^*)^{-1}\| \cdot \|F(x^{(k)})\|$).
+\end{important}

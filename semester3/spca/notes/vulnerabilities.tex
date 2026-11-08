@@ -1,0 +1,98 @@
+\section{Code Vulnerabilities}
+
+\subsection{Buffer Overflows and Stack Corruption}
+
+\begin{definition}
+    \textbf{Buffer Overflow (Stack Smashing):} Occurs when a program writes data beyond the allocated boundary of a stack-allocated buffer. Because C does not perform runtime array bounds checking, excess bytes overwrite adjacent stack data.
+\end{definition}
+
+\begin{definition}
+    \textbf{Unbounded C Library Functions:} Functions that process input without checking destination buffer boundaries are common sources of buffer overflows:
+    \begin{itemize}
+        \item \textbf{\texttt{gets()}:} Reads characters from standard input into a buffer until a newline or EOF is reached, with no mechanism to specify buffer capacity. (Officially deprecated in C99 and removed from the C11 standard).
+        \item \textbf{\texttt{strcpy(dest, src)}:} Copies characters until reaching the null terminator \texttt{'\textbackslash0'} in \texttt{src}, regardless of \texttt{dest}'s size.
+        \item \textbf{\texttt{sprintf(buf, fmt, ...)}:} Formats output into a buffer without checking whether the formatted result fits within \texttt{buf}.
+        \item \textbf{\texttt{scanf("\%s", buf)}:} Reads a space-delimited string without bounding the number of characters read.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Stack Frame Layout Manipulation:}
+    The x86-64 runtime stack grows \textbf{downward} from high addresses to low addresses:
+    \begin{itemize}
+        \item Local buffers reside at lower addresses within a stack frame.
+        \item Saved caller registers (e.g., saved base pointer \texttt{\%rbp}) and the \textbf{saved return address} (\texttt{\%rip}) reside at higher addresses above the local buffer.
+        \item Writing beyond the boundary of a buffer writes \textbf{upward} in memory, sequentially overwriting adjacent local variables, the saved frame pointer, and finally the saved return address.
+        \item When the function finishes and executes \texttt{ret}, the CPU pops the attacker-controlled value into \texttt{\%rip}, hijacking the processor's execution flow.
+    \end{itemize}
+\end{definition}
+
+\subsection{Exploitation and Integer Vulnerabilities}
+
+\begin{definition}
+    \textbf{Arbitrary Shellcode Injection:}
+    In traditional stack-smashing attacks, the attacker supplies a payload containing:
+    \begin{enumerate}
+        \item \textbf{NOP Sled:} A sequence of single-byte No-Operation instructions (\texttt{0x90}) that allows the instruction pointer to slide safely into the shellcode even with imprecise target addresses.
+        \item \textbf{Shellcode:} Handcrafted binary machine instructions designed to perform malicious actions (e.g., executing the \texttt{execve} system call to spawn a root shell \texttt{/bin/sh}).
+        \item \textbf{Overwritten Return Address:} Padded to overwrite the saved return address on the stack with a pointer directed back into the injected buffer.
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    \textbf{Arithmetic Overflow Bugs:}
+    Exploits that abuse integer representation limits to bypass allocation size checks:
+    \begin{itemize}
+        \item \textbf{Multiplication Wraparound:} Common when computing allocation sizes for dynamically sized arrays:
+        $$
+            \texttt{void *p = malloc(ele\_cnt * ele\_size);}
+        $$
+        If an external user controls \texttt{ele\_cnt}, a sufficiently large number causes \texttt{ele\_cnt * ele\_size} to overflow modulo $2^{32}$ (or $2^{64}$), wrapping around to a very small number (e.g., allocating only 16 bytes).
+        \item \textbf{Subsequent Heap Overflow:} The application assumes \texttt{ele\_cnt} elements were safely allocated and proceeds to copy data into the undersized buffer, causing heap corruption (e.g., the classic Sun RPC XDR library vulnerability).
+        \item \textbf{Signedness Issues:} Casting a negative signed integer to an unsigned \texttt{size\_t} transforms it into a very large positive number, bypassing maximum length checks while creating massive memory copies.
+    \end{itemize}
+\end{definition}
+
+\subsection{Defenses and Mitigations}
+
+\begin{definition}
+    \textbf{Bounded String Routines:}
+    Replace unsafe unbounded functions with versions that enforce explicit maximum destination lengths:
+    \begin{itemize}
+        \item Use \texttt{fgets(buf, sizeof(buf), stdin)} instead of \texttt{gets()}.
+        \item Use \texttt{strncpy()} or \texttt{strlcpy()} instead of \texttt{strcpy()}.
+        \item Use \texttt{snprintf(buf, sizeof(buf), fmt, ...)} instead of \texttt{sprintf()}.
+        \item Use explicit width specifiers in formatted input, e.g., \texttt{scanf("\%127s", buf)}.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Stack Canaries (\texttt{-fstack-protector}):}
+    A compiler defense against stack smashing:
+    \begin{itemize}
+        \item Upon function entry (prologue), the compiler generates code that fetches a random secret 8-byte value (canary) from thread-local storage (\texttt{\%fs:40}) and places it on the stack directly between local buffers and the saved return address.
+        \item In the function epilogue immediately before \texttt{ret}, the stored canary is compared against \texttt{\%fs:40}:
+        $$
+            \texttt{xorq \%fs:40, \%rax} \implies \text{checks if canary is unaltered}
+        $$
+        \item If a buffer overflow altered the canary, the program calls \texttt{\_\_stack\_chk\_fail()} and terminates execution immediately, preventing \texttt{ret} from jumping to attacker-controlled code.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Hardware and OS Protections:}
+    \begin{itemize}
+        \item \textbf{Non-Executable Stack (NX / DEP / $W \oplus X$):} Modern CPUs provide an NX (No-Execute) page table bit. Memory pages containing stack and heap data are marked readable and writable, but strictly non-executable ($W \oplus X$: write XOR execute). Attempting to execute code located in the stack triggers an immediate hardware page fault.
+        \item \textbf{Address Space Layout Randomization (ASLR):} The operating system randomizes the starting memory addresses of the stack, heap, and shared libraries (\texttt{libc}) each time the program runs. Attackers cannot predict fixed memory addresses for shellcode or library functions.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Return-Oriented Programming (ROP):}
+    A technique developed to bypass Non-Executable Stack (NX) protections without injecting new executable code:
+    \begin{itemize}
+        \item The attacker locates short sequences of existing machine instructions ending in a \texttt{ret} instruction (known as \textbf{gadgets}) within existing executable memory segments (such as \texttt{.text} or loaded libraries like \texttt{libc}).
+        \item \textbf{Example Gadget:} \texttt{popq \%rdi; ret} (pops an argument off the stack into the first function argument register).
+        \item By constructing a chain of fake stack frames with gadget addresses and argument values, executing \texttt{ret} cascades execution through these gadgets to invoke arbitrary functions (e.g., \texttt{system("/bin/sh")}).
+    \end{itemize}
+\end{definition}

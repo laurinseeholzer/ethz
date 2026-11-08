@@ -122,3 +122,33 @@ compute:
         \item \textbf{\texttt{va\_end(ap)}:} Cleans up the \texttt{va\_list} before the function returns.
     \end{itemize}
 \end{definition}
+\subsection{Unorthodox Control Flow}
+
+\begin{definition}
+    \textbf{Non-Local Jumps (\texttt{setjmp} \& \texttt{longjmp}):} Provide a mechanism in \texttt{<setjmp.h>} to transfer control directly across function boundaries up the call stack:
+    \begin{itemize}
+        \item \textbf{\texttt{setjmp(jmp\_buf env)}:} Saves the caller stack context and register state (\texttt{\%rsp}, \texttt{\%rip}, and callee-saved / preserved registers) into the environment buffer \texttt{env}. Returns \texttt{0} on direct invocation.
+        \item \textbf{\texttt{longjmp(jmp\_buf env, int val)}:} Restores the saved environment from \texttt{env}, jumping back to the \texttt{setjmp} callsite. Execution resumes as if \texttt{setjmp} had returned the value \texttt{val} (if \texttt{val} is \texttt{0}, \texttt{1} is returned instead).
+    \end{itemize}
+\end{definition}
+
+\begin{important}
+    \textbf{Stack Frame Lifetime:} A \texttt{longjmp} can only jump backwards to an active stack frame that has not yet returned. Calling \texttt{longjmp} after the function containing the \texttt{setjmp} callsite has returned leads to undefined behavior, as its stack frame no longer exists.
+\end{important}
+
+\begin{definition}
+    \textbf{Coroutines:}
+    \begin{itemize}
+        \item \textbf{Cooperative Multitasking Paradigm:} Generalizes subroutines beyond rigid call/return semantics. While standard subroutines always start at the entry point and terminate upon return, coroutines can yield execution voluntarily and resume execution at the suspension point with their local state intact.
+        \item \textbf{Context Switching \& Stacks:} Requires explicit stack allocation (e.g., via \texttt{mmap} or \texttt{malloc}) and manual context switching between coroutine control blocks by saving/restoring the stack pointer (\texttt{\%rsp}) and callee-saved registers.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{User-Level Threading (``Not Quite Threads''):}
+    \begin{itemize}
+        \item \textbf{Lightweight Cooperative Threads (\texttt{nathreads}):} Implemented purely in user space using coroutine stack switching without kernel intervention.
+        \item \textbf{Yielding and Scheduling:} Managed by a runtime scheduler using a round-robin loop. Threads voluntarily yield control via \texttt{nathread\_yield()}, saving their stack context and resuming the next ready thread.
+        \item \textbf{Preemptive Multitasking Transition:} Cooperative yielding assumes well-behaved threads that do not starve the CPU. Moving to true preemption requires hardware timer interrupts (signals), kernel scheduling, and synchronization primitives (thread locks / mutexes) to protect shared data structures against race conditions.
+    \end{itemize}
+\end{definition}

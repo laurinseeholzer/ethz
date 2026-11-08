@@ -169,6 +169,40 @@
     $$
 \end{theorem}
 
+\begin{proof}[Proof Outline]
+    Let $L = L_{\mathcal{P}} = \{ \text{Kod}(M) \mid L(M) \in \mathcal{P} \}$ (where $\text{Kod}(M) = \langle M \rangle$ is the encoding of $M$).
+    \begin{enumerate}
+        \item \textbf{Case Distinction:} Let $M_\emptyset$ be a Turing machine with $L(M_\emptyset) = \emptyset$ (i.e., a TM that immediately rejects or loops on all inputs). We check whether $\text{Kod}(M_\emptyset) \in L$:
+        \begin{itemize}
+            \item If $\text{Kod}(M_\emptyset) \notin L$, reduce $L_{H,\lambda} \le_E L$.
+            \item If $\text{Kod}(M_\emptyset) \in L$, reduce $L_{H,\lambda} \le_E L^c$. Since $L$ is decidable if and only if $L^c$ is decidable ($L \le_E L^c$), showing $L^c$ undecidable suffices to prove $L$ undecidable.
+        \end{itemize}
+        Without loss of generality, assume $\text{Kod}(M_\emptyset) \notin L$. Since $\mathcal{P}$ is non-trivial ($\mathcal{P} \neq \emptyset$), there exists at least one Turing machine $\overline{M}$ such that $L(\overline{M}) \in \mathcal{P}$, meaning $\text{Kod}(\overline{M}) \in L$.
+
+        \item \textbf{TM Construction:} Construct a Turing machine $S(x)$ that computes the reduction function $f(x)$ for input $x = \text{Kod}(M)w$:
+        \begin{itemize}
+            \item $S(x)$ builds the description of a new Turing machine $H_x$.
+            \item On input $y$, the machine $H_x$ operates as follows:
+            \begin{enumerate}
+                \item $H_x$ simulates $M$ on $w$.
+                \item If $M$ halts on $w$, $H_x$ simulates the target machine $\overline{M}$ (where $\text{Kod}(\overline{M}) \in L$) on $y$ (accepting if and only if $\overline{M}$ accepts $y$).
+                \item If $M$ does not halt on $w$, $H_x$ loops infinitely, meaning $L(H_x) = \emptyset = L(M_\emptyset)$.
+            \end{enumerate}
+        \end{itemize}
+
+        \item \textbf{Conclusion:} The language recognized by $H_x$ depends directly on whether $M$ halts on $w$:
+        \begin{itemize}
+            \item If $x \in L_{H,\lambda}$ ($M$ halts on $w$), then $L(H_x) = L(\overline{M}) \in \mathcal{P} \implies \text{Kod}(H_x) \in L$.
+            \item If $x \notin L_{H,\lambda}$ ($M$ does not halt on $w$), then $L(H_x) = \emptyset = L(M_\emptyset) \notin \mathcal{P} \implies \text{Kod}(H_x) \notin L$.
+        \end{itemize}
+        Therefore:
+        $$
+            x \in L_{H,\lambda} \iff \text{Kod}(H_x) \in L
+        $$
+        Since the reduction $S$ is computable and $L_{H,\lambda}$ is undecidable, $L$ must also be undecidable.
+    \end{enumerate}
+\end{proof}
+
 \begin{remark}
     \textbf{Power of Rice's Theorem:} Rice's theorem immediately proves the undecidability of virtually every semantic question about program behavior without needing separate manual reductions:
     \begin{itemize}

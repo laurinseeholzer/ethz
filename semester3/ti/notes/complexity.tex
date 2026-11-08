@@ -1,0 +1,83 @@
+\section{Complexity Theory}
+
+\subsection{Fundamental Complexity Classes}
+
+\begin{definition}
+    \textbf{Time and Space Complexity Classes:}
+    \begin{itemize}
+        \item $\text{TIME}(t(n))$: Class of languages decidable by a deterministic TM running in time $O(t(n))$.
+        \item $\text{SPACE}(s(n))$: Class of languages decidable by a deterministic TM using space $O(s(n))$.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Core Deterministic Classes:}
+    \begin{itemize}
+        \item $\text{DLOG} = \text{SPACE}(\log n)$
+        \item $\text{P} = \bigcup_{c} \text{TIME}(n^c)$ (Polynomial Time)
+        \item $\text{PSPACE} = \bigcup_{c} \text{SPACE}(n^c)$ (Polynomial Space)
+        \item $\text{EXPTIME} = \bigcup_{c} \text{TIME}(2^{n^c})$ (Exponential Time)
+    \end{itemize}
+\end{definition}
+
+\subsection{Basic Time vs. Space Relations}
+
+\begin{lemma}
+    \textbf{Time bounds Space:}
+    $$
+        \text{TIME}(t(n)) \subseteq \text{SPACE}(t(n))
+    $$
+    \textit{Reason:} A TM can write to at most one new tape cell per step.
+\end{lemma}
+
+\begin{theorem}
+    \textbf{Space bounds Time:} For space bounds $s(n) \ge \log n$:
+    $$
+        \text{SPACE}(s(n)) \subseteq \text{TIME}(2^{O(s(n))})
+    $$
+\end{theorem}
+
+\begin{proof}[Proof Idea (Configuration Bounding)]
+    An inner configuration of a space-bounded TM is defined by $(q, w, i, j)$ where $q \in Q$ is the state, $w \in \Gamma^{s(n)}$ is the tape content, $i$ is the input head position ($i \le n+2$), and $j$ is the work head position ($j \le s(n)$).
+
+    The total number of unique configurations is bounded by:
+    $$
+        \text{Total Configs} \le |Q| \cdot (n+2) \cdot |\Gamma|^{s(n)} \cdot s(n) \le 2^{O(s(n))}
+    $$
+    If a deterministic TM does not repeat a configuration, it must halt within this many steps.
+\end{proof}
+
+\subsection{Constructibility of Functions}
+
+To avoid pathological edge cases, time/space bounds are assumed to be constructible:
+
+\begin{definition}
+    \textbf{Constructibility:}
+    \begin{itemize}
+        \item \textbf{Space-constructible (\textit{platzkonstruierbar}):} A function $s: \mathbb{N} \to \mathbb{N}$ where a TM can compute/mark $s(n)$ space on input $0^n$ using at most $O(s(n))$ space (e.g., $\lceil \log(n+1) \rceil, n^k, 2^n$).
+        \item \textbf{Time-constructible (\textit{zeitkonstruierbar}):} A function $t: \mathbb{N} \to \mathbb{N}$ where a TM can write $0^{t(n)}$ on input $0^n$ in $O(t(n))$ steps.
+    \end{itemize}
+\end{definition}
+
+\subsection{Main Class Hierarchy \& Separation Theorems}
+
+\begin{theorem}
+    \textbf{Inclusion Chain:}
+    $$
+        \text{DLOG} \subseteq \text{P} \subseteq \text{PSPACE} \subseteq \text{EXPTIME}
+    $$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Hierarchy Theorems (Separating Classes):}
+    \begin{itemize}
+        \item \textbf{Space Hierarchy Theorem:} If $s_1(n) = o(s_2(n))$ and $s_2$ is space-constructible:
+        $$
+            \text{SPACE}(s_1(n)) \subsetneq \text{SPACE}(s_2(n))
+        $$
+        \item \textbf{Time Hierarchy Theorem:} If $t_1(n) \log(t_1(n)) = o(t_2(n))$ and $t_2$ is time-constructible:
+        $$
+            \text{TIME}(t_1(n)) \subsetneq \text{TIME}(t_2(n))
+        $$
+    \end{itemize}
+\end{theorem}

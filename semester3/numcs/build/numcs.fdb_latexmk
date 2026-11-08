@@ -1,9 +1,9 @@
 # Fdb version 4
-["pdflatex"] 1793272074.99426 "/home/laurin/dev/ethz/semester3/numcs/numcs.tex" "build/numcs.pdf" "numcs" 1793272075.84573 0
+["pdflatex"] 1794141599.17278 "/home/laurin/dev/ethz/semester3/numcs/numcs.tex" "build/numcs.pdf" "numcs" 1794141600.06295 0
   "../../templates/templateNotes/commands.tex" 1774795684.82424 70 8bb51bf89ff5a5b47c67ba2c24cdacca ""
   "../../templates/templateNotes/packages.tex" 1790417146.32119 516 7d64a0165295c034e7941cda1e6365a8 ""
   "../../templates/templateNotes/theorem_styles.tex" 1780227718.45916 2599 ef35b4d09ba532e85d73c0bf2d41006f ""
-  "/home/laurin/dev/ethz/semester3/numcs/numcs.tex" 1792661806.26537 484 830ff0cc21fee232801eccaa33b2bce0 ""
+  "/home/laurin/dev/ethz/semester3/numcs/numcs.tex" 1794140433.35137 522 cc24085c704eb73155eb8eaa88bb6f55 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.enc" 1561323594 2496 4d35740f3a177992ff7b134746c0a1db ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
@@ -122,12 +122,13 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1777593600 43785 66587115382950aca692b5f6e3c2fb74 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1791899270 480835 c97dc259877a20c8c55a62e2e0308238 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1791899253 2299030 e57e8f062effa18901a2245b9f04b477 ""
-  "build/numcs.aux" 1793272075.73593 4273 4c4fa1b05ad401f2fbc636789a20830e "pdflatex"
-  "build/numcs.toc" 1793272075.73602 2770 d35f12f63866bc713309062f63ed7cac "pdflatex"
+  "build/numcs.aux" 1794141599.94215 4975 c58bc57e0fe1eff679859ce169435125 "pdflatex"
+  "build/numcs.toc" 1794141599.94315 3226 48d6b9bd0f7cf59fc794c578e24a6e51 "pdflatex"
   "notes/interpolation.tex" 1792783320.73906 23227 4af1e8b63f10bff3d723b70f627f2e7b ""
   "notes/introduction.tex" 1792780761.64543 11041 bc01265a805a5d7bd4791f91dffbf522 ""
+  "notes/nonlinear-equations.tex" 1794141598.97783 5434 154c875b602cc6e3b11cebfe51c14cf5 ""
   "notes/quadrature.tex" 1793272073.96777 19881 41347f3d131159c7f43533da9ec27957 ""
-  "numcs.tex" 1792661806.26537 484 830ff0cc21fee232801eccaa33b2bce0 ""
+  "numcs.tex" 1794140433.35137 522 cc24085c704eb73155eb8eaa88bb6f55 ""
   (generated)
   "build/numcs.aux"
   "build/numcs.log"

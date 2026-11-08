@@ -127,3 +127,33 @@
               $\rightarrow$ Sie tragen die \textbf{volle eigene zivil- und strafrechtliche Verantwortlichkeit} für die publizierten Inhalte.
     \end{itemize}
 \end{remark}
+
+\subsection{Risiko von Cloud-Providern und ausländischem Behördenzugriff}
+
+\begin{definition}
+    \textbf{US CLOUD Act vs. Schweizer Souveränität:} \\
+    Der US CLOUD Act (\textit{Clarifying Lawful Overseas Use of Data Act}) ermächtigt US-Behörden, von IT-Anbietern mit US-Bezug (z.B. Microsoft, AWS, Google) die Herausgabe von Daten zu verlangen -- unabhängig davon, wo die Server physisch stehen (selbst bei Rechenzentren in der Schweiz):
+    \begin{itemize}
+        \item \textbf{Kollision mit Art. 271 StGB (Verbotene Handlungen für einen fremden Staat):} Gemäss Art. 271 Ziff. 1 StGB macht sich strafbar, wer auf schweizerischem Gebiet ohne Bewilligung Handlungen vornimmt, die einer Behörde oder einem Beamten zukommen.
+        \item \textbf{Rechtshilfeweg:} Ausländische Behörden müssen Daten grundsätzlich über den offiziellen internationalen Rechtshilfeweg anfordern. Eine direkte Datenherausgabe an US-Behörden unter Umgehung des Schweizer Rechtshilfeverfahrens verletzt die Schweizer Souveränität und birgt das Risiko einer Strafbarkeit nach Art. 271 StGB.
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}
+    \textbf{Berufsgeheimnisse in der Cloud (Art. 321 StGB, Art. 47 BankG):} \\
+    Berufsgeheimnisträger (Ärzte, Anwälte, Notare, Banken) unterliegen strengen strafbewehrten Schweigepflichten. Bei der Auslagerung vertraulicher Daten in die Cloud stellt sich die Frage nach einer unbefugten Offenbarung:
+    \begin{itemize}
+        \item \textbf{Strafbarkeit nur bei Vorsatz:} Die Verletzung des Berufsgeheimnisses nach Art. 321 StGB ist ein reines Vorsatzdelikt. Fahrlässiges Handeln ist \textbf{strafrechtlich straflos} (führt aber zu zivilrechtlicher Haftung nach Art. 97 OR).
+        \item \textbf{Eventualvorsatz ($\rightarrow$ strafbar):} Der Geheimnisträger hält einen unbefugten Zugriff Dritter oder ausländischer Behörden (z.B. via US CLOUD Act) für ernsthaft möglich und nimmt diesen billigend in Kauf (z.B. bei unverschlüsselter Speicherung sensibler Akten bei US-Hyperscalern).
+        \item \textbf{Bewusste Fahrlässigkeit ($\rightarrow$ straflos nach Art. 321 StGB):} Der Geheimnisträger erkennt das abstrakte Zugriffsrisiko, vertraut jedoch pflichtwidrig und leichtfertig darauf, dass ein unbefugter Zugriff ausbleibt (z.B. gestützt auf technische Sicherheitsvorkehrungen).
+    \end{itemize}
+\end{theorem}
+
+\begin{important}
+    \textbf{Praktische Schutz- und Risikominderungsmassnahmen:}
+    \begin{itemize}
+        \item \textbf{Ende-zu-Ende-Verschlüsselung (BYOK):} Starke Verschlüsselung der Daten vor dem Upload, wobei der Schlüssel ausschliesslich beim Schweizer Geheimnisträger verbleibt (\textit{Bring Your Own Key}). Der Provider kann selbst bei Herausgabeanordnungen nur unlesbaren Ciphertext liefern.
+        \item \textbf{Sovereign Cloud / Schweizer Provider:} Speicherung bei Schweizer Anbietern ohne US-Mutterkonzern, die keinem US-Rechtszugriff unterliegen.
+        \item \textbf{Vertragliche Klauseln:} Pflicht des Providers zur sofortigen Kundenbenachrichtigung bei behördlichen Anfragen und zur Ausschöpfung aller Rechtsmittel.
+    \end{itemize}
+\end{important}

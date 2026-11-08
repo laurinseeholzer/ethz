@@ -33,3 +33,9 @@
 \contentsline {subsubsection}{\numberline {3.4.2}Sparse Grids (Smolyak / Combination Technique)}{26}{}%
 \contentsline {subsubsection}{\numberline {3.4.3}Monte Carlo Integration}{27}{}%
 \contentsline {subsubsection}{\numberline {3.4.4}Quasi-Monte Carlo and Halton Sequences}{29}{}%
+\contentsline {section}{\numberline {4}Nonlinear Equations}{30}{}%
+\contentsline {subsection}{\numberline {4.1}Problem Setting and Vector Norms}{30}{}%
+\contentsline {subsection}{\numberline {4.2}Convergence Rates and Diagnostics}{30}{}%
+\contentsline {subsection}{\numberline {4.3}Fixed-Point Iterations}{30}{}%
+\contentsline {subsection}{\numberline {4.4}Numerical Methods}{31}{}%
+\contentsline {subsection}{\numberline {4.5}Termination Criteria}{31}{}%

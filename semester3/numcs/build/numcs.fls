@@ -229,6 +229,9 @@ INPUT ./notes/quadrature.tex
 INPUT notes/quadrature.tex
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm
+INPUT ./notes/nonlinear-equations.tex
+INPUT ./notes/nonlinear-equations.tex
+INPUT notes/nonlinear-equations.tex
 INPUT build/numcs.aux
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb

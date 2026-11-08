@@ -1,0 +1,165 @@
+\section{Linking}
+
+\subsection{Compiler Pipeline and Object Files}
+
+\begin{definition}
+    \textbf{The Compilation Pipeline:} Translating high-level C source code into an executable involves four sequential driver stages:
+    \begin{enumerate}
+        \item \textbf{Preprocessor (\texttt{cpp}):} Expands directives (\texttt{\#include}, \texttt{\#define}) and strips comments to produce an expanded ASCII source file (\texttt{main.i}):
+        $$
+            \texttt{cpp main.c -o main.i}
+        $$
+        \item \textbf{Compiler (\texttt{cc1}):} Translates the preprocessed C source into an ASCII assembly file (\texttt{main.s}):
+        $$
+            \texttt{cc1 main.i -O2 -o main.s}
+        $$
+        \item \textbf{Assembler (\texttt{as}):} Assembles assembly instructions into binary machine instructions, packaging them into a relocatable object file (\texttt{main.o}):
+        $$
+            \texttt{as main.s -o main.o}
+        $$
+        \item \textbf{Linker (\texttt{ld}):} Combines multiple relocatable object files and libraries into a standalone executable binary:
+        $$
+            \texttt{ld -o prog main.o ...}
+        $$
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    \textbf{Three Forms of Object Files (ELF):} On modern Linux x86-64 systems, object files adhere to the \textbf{Executable and Linkable Format (ELF)}:
+    \begin{itemize}
+        \item \textbf{Relocatable Object File (\texttt{.o}):} Binary machine code and data ready to be linked with other relocatable files to produce an executable or shared library.
+        \item \textbf{Executable Object File:} Fully resolved binary machine code that can be loaded directly into memory and executed by the operating system.
+        \item \textbf{Shared Object File (\texttt{.so}):} Relocatable code that can be loaded and linked dynamically at load time or at runtime.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{ELF Relocatable Object File Structure:}
+    \begin{itemize}
+        \item \textbf{ELF Header:} 16-byte magic number, word size (64-bit), endianness (little-endian), file type, architecture, and section header table offsets.
+        \item \textbf{\texttt{.text}:} Machine instructions of the compiled program.
+        \item \textbf{\texttt{.rodata}:} Read-only data (string literals, switch statement jump tables).
+        \item \textbf{\texttt{.data}:} Initialized global and static C variables.
+        \item \textbf{\texttt{.bss} (Block Started by Symbol):} Uninitialized global and static C variables, or variables initialized to zero. Occupies no disk space in the file; the section header merely records the required runtime size. Initialized to zero by the OS loader.
+        \item \textbf{\texttt{.symtab}:} Symbol table containing information about functions and global variables defined and referenced in the module.
+        \item \textbf{\texttt{.rel.text}:} Relocation entries specifying instructions in \texttt{.text} that must be modified when combined into an executable.
+        \item \textbf{\texttt{.rel.data}:} Relocation entries for global variable references initialized with pointers to other global variables or functions.
+        \item \textbf{Section Header Table:} Describes fixed offsets, sizes, and permissions of all sections.
+    \end{itemize}
+\end{definition}
+
+\begin{important}
+    Local non-static C variables are managed on the runtime stack at execution time; they are not placed in \texttt{.data} or \texttt{.bss} and do not appear in \texttt{.symtab}.
+\end{important}
+
+\subsection{Symbol Resolution}
+
+\begin{definition}
+    \textbf{Categories of Linker Symbols:} Every relocatable module $m$ manages symbols relative to its context:
+    \begin{itemize}
+        \item \textbf{Global Symbols:} Functions and global variables defined by $m$ that can be referenced by other modules (non-static functions and non-static global variables).
+        \item \textbf{External Symbols:} Global symbols referenced by $m$ but defined by some other module (declared via \texttt{extern}).
+        \item \textbf{Local Static Symbols:} Functions and global variables defined with the \texttt{static} keyword inside $m$. They are stored in \texttt{.data} or \texttt{.bss} and visible exclusively within $m$.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Strong vs. Weak Symbols:} The compiler exports each global symbol to the assembler as either strong or weak:
+    \begin{itemize}
+        \item \textbf{Strong Symbols:} Functions and initialized global variables.
+        \item \textbf{Weak Symbols:} Uninitialized global variables (or variables declared with \texttt{\_\_attribute\_\_((weak))}).
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}
+    \textbf{Linker Symbol Resolution Rules:} When resolving multiply-defined global symbols across different modules:
+    \begin{enumerate}
+        \item \textbf{Rule 1:} Multiple strong symbols with the same name are strictly forbidden (leads to a linker error: \texttt{multiple definition of ...}).
+        \item \textbf{Rule 2:} Given a single strong symbol and one or more weak symbols with the same name, the linker chooses the strong symbol.
+        \item \textbf{Rule 3:} Given multiple weak symbols with the same name, the linker arbitrarily chooses one of the weak symbols.
+    \end{enumerate}
+\end{theorem}
+
+\begin{important}
+    \textbf{Silent Corruption Pitfall (Rule 3):} If module $A$ defines an uninitialized \texttt{int x} and module $B$ defines an uninitialized \texttt{double x}, the linker merges both under the larger 8-byte symbol without error. Writing to \texttt{x} in module $B$ will overwrite adjacent memory in module $A$! Compile with \texttt{-fno-common} or \texttt{-Werror} to catch weak symbol collisions.
+\end{important}
+
+\subsection{Relocation}
+
+\begin{definition}
+    \textbf{The Relocation Process:} Once symbol resolution is complete, the linker performs relocation in two steps:
+    \begin{enumerate}
+        \item \textbf{Relocating Sections and Symbol Definitions:} The linker merges all sections of the same type from the input files into a single unified section (e.g., all input \texttt{.data} sections become one aggregated \texttt{.data} section). It then assigns run-time memory addresses to the new sections and to every symbol defined by the modules.
+        \item \textbf{Relocating Symbol References (Patching):} The linker iterates through the relocation entries in \texttt{.rel.text} and \texttt{.rel.data}, updating every memory reference to point to the resolved absolute memory address of the target symbol.
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    \textbf{Relocation Entries (ELF):} An ELF relocation entry structure contains:
+    \begin{itemize}
+        \item \texttt{r\_offset}: Section offset of the 4-byte or 8-byte reference requiring modification.
+        \item \texttt{r\_info}: Symbol table index and relocation type.
+        \item \texttt{r\_addend}: Constant signed addend used in computing the target address.
+    \end{itemize}
+    Common relocation types for x86-64 include:
+    \begin{itemize}
+        \item \textbf{\texttt{R\_X86\_64\_PC32}:} PC-relative 32-bit address. Used for function calls and relative references. The patched value is calculated as:
+        $$
+            \text{ref\_val} = \text{target\_addr} + \text{addend} - \text{ref\_addr}
+        $$
+        \item \textbf{\texttt{R\_X86\_64\_32}:} Absolute 32-bit direct memory address.
+        \item \textbf{\texttt{R\_X86\_64\_64}:} Absolute 64-bit full memory address.
+    \end{itemize}
+\end{definition}
+
+\subsection{Libraries and Dynamic Linking}
+
+\begin{definition}
+    \textbf{Static Libraries (\texttt{.a} Archives):} A static library is an archive file (\texttt{ar}) packaging multiple relocatable object files (\texttt{.o}) into a single file with an index of symbol definitions.
+    \begin{itemize}
+        \item \textbf{Selective Copying:} During linking, only the object files that resolve currently outstanding unresolved external references are extracted and copied into the final binary.
+        \item \textbf{Command-Line Order Dependence:} The linker processes command-line arguments sequentially from left to right. It maintains three sets:
+        \begin{itemize}
+            \item $E$: Set of object files that will be combined into the executable.
+            \item $U$: Set of currently unresolved external symbol references.
+            \item $D$: Set of symbol definitions accumulated so far.
+        \end{itemize}
+        If a static library appears before an object file that requires symbols from it, the unresolved symbols have not yet entered $U$, and the library will be ignored, causing an \texttt{undefined reference} error. Libraries must always be placed \textbf{after} the modules that call them.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Shared Libraries (\texttt{.so} / Dynamic Shared Objects):}
+    Shared libraries are dynamic modules linked at load time or runtime to save disk and memory space:
+    \begin{itemize}
+        \item A single copy of the library's \texttt{.text} section is shared in physical memory across multiple running processes.
+        \item \textbf{Position-Independent Code (PIC, \texttt{-fPIC}):} Code compiled so that it can execute correctly regardless of where it is mapped in virtual memory:
+        \begin{itemize}
+            \item \textbf{Global Offset Table (GOT):} Located in the \texttt{.data} section, holding absolute addresses of global variables. Code accesses variables via PC-relative offsets to the GOT.
+            \item \textbf{Procedure Linkage Table (PLT):} Executable code stubs in \texttt{.text} that implement \textbf{lazy binding}. A library function's address is resolved by the dynamic linker (\texttt{ld-linux.so}) on its first call and cached in the GOT.
+        \end{itemize}
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Dynamic Linking Mechanisms:}
+    \begin{itemize}
+        \item \textbf{Load-Time Dynamic Linking:} The executable contains a \texttt{.interp} section naming the dynamic linker. When the program is launched, the OS maps the dynamic linker, which maps required \texttt{.so} libraries and performs relocations before passing control to \texttt{main}.
+        \item \textbf{Run-Time Explicit Linking (\texttt{<dlfcn.h>}):} Applications load libraries on demand during execution using explicit system calls:
+        \begin{itemize}
+            \item \texttt{dlopen("lib.so", flags)}: Loads the shared library into memory.
+            \item \texttt{dlsym(handle, "symbol")}: Looks up the address of a function or variable.
+            \item \texttt{dlclose(handle)}: Unloads the library when no longer needed.
+            \item \texttt{dlerror()}: Returns a human-readable string describing the last error.
+        \end{itemize}
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    \textbf{Library Interpositioning:} A technique allowing developers to intercept calls to shared library functions:
+    \begin{itemize}
+        \item \textbf{Compile-Time Interpositioning:} Uses preprocessor macros (\texttt{-I}) to redirect function names (e.g., \texttt{\#define malloc(s) my\_malloc(s)}).
+        \item \textbf{Link-Time Interpositioning:} Uses the GNU linker's \texttt{--wrap=symbol} flag to redirect calls to \texttt{\_\_wrap\_symbol}.
+        \item \textbf{Run-Time Interpositioning:} Uses the environment variable \texttt{LD\_PRELOAD} to force the dynamic linker to search a custom shared library before any standard libraries, overriding symbols like \texttt{malloc} or \texttt{printf}.
+    \end{itemize}
+\end{remark}

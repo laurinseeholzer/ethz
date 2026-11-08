@@ -1,0 +1,104 @@
+\section{Verträge mit IT- und Internet-Providern}
+
+\subsection{Vertragstypen und rechtliche Qualifikation}
+
+\begin{definition}
+    \textbf{Klassische gesetzliche Vertragstypen im IT-Recht:}
+    Da das Schweizerische Obligationenrecht (OR) keine spezifischen ,,IT-Verträge`` kennt, werden IT-Leistungen den klassischen Vertragstypen zugeordnet:
+    \begin{itemize}
+        \item \textbf{Werkvertrag (Art. 363 ff. OR):} Geschuldet ist die Herstellung und termingerechte Ablieferung eines \textbf{messbaren Erfolgs bzw. Arbeitsergebnisses} (z.B. Programmierung von Individualsoftware, Erstellung einer Website nach Pflichtenheft, Konfiguration, individuelle Anpassungen). Gesetzliche Mängelrechte (Art. 368 OR), formeller Abnahmeprozess und 2 Jahre Gewährleistungsfrist.
+        \item \textbf{Auftrag (Art. 394 ff. OR):} Geschuldet ist das \textbf{sorgfältige Tätigwerden / Dienstleistung} ohne Erfolgsgarantie (z.B. IT-Consulting, Projektleitung, Support, Schulung, reine Überwachung). Strenge Treue- und Sorgfaltspflicht (Art. 398 OR) sowie \textbf{jederzeitiges zwingendes Kündigungsrecht} (Art. 404 OR).
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Gemischte Verträge und Innominatverträge (Cloud- und SaaS-Modelle):}
+    Moderne IT- und Providerverträge vereinen Elemente verschiedener Vertragstypen:
+    \begin{itemize}
+        \item \textbf{SaaS / ASP:} Kombination aus Miete (Softwareüberlassung über das Internet) und Auftrag/Werkvertrag (Betrieb, Datensicherung, Störungsbehebung).
+        \item \textbf{IaaS / Hosting:} Miete virtueller Infrastruktur kombiniert mit werkvertraglicher Verfügbarkeit.
+        \item \textbf{IT-Wartungsverträge:} Mischung aus Werkvertrag (konkrete Fehlerbehebungen) und Auftrag (Supportbereitschaft, Updates).
+    \end{itemize}
+\end{definition}
+
+\subsection{Wesentliche Vertragsinhalte und Service Level Agreements (SLAs)}
+
+\begin{definition}
+    \textbf{Service Level Agreements (SLAs):}
+    SLAs sind standardisierte vertragliche Vereinbarungen zur präzisen Definition, Messung und Durchsetzung der Qualität von IT-Dauerleistungen:
+    \begin{itemize}
+        \item \textbf{Verfügbarkeit (Uptime):} Prozentualer Anteil der vereinbarten Betriebszeit, in dem das System voll funktionsfähig ist (z.B. $99.9\%$ Verfügbarkeit pro Kalenderjahr, bereinigt um geplante, vorab angekündigte Wartungsfenster).
+        \item \textbf{Fehlerklassen:} Strukturierung nach Schweregrad:
+        \begin{itemize}
+            \item \textit{Kritisch / Blocker:} Gesamtausfall des Systems oder geschäftskritischer Kernfunktionen.
+            \item \textit{Schwerwiegend:} Erhebliche Beeinträchtigung, jedoch mit Workaround nutzbar.
+            \item \textit{Leicht:} Geringfügige Mängel (z.B. kosmetische UI-Fehler), Kernbetrieb ungestört.
+        \end{itemize}
+        \item \textbf{Reaktions- und Behebungszeiten:}
+        \begin{itemize}
+            \item \textit{Reaktionszeit (Response Time):} Maximale Zeitspanne von der Störungsmeldung bis zum Beginn der aktiven Fehleranalyse durch qualifiziertes Personal.
+            \item \textit{Wiederherstellungszeit (Recovery Time):} Maximal garantierte Dauer bis zur Behebung oder Bereitstellung eines funktionierenden Workarounds.
+        \end{itemize}
+        \item \textbf{Sanktionen bei SLA-Verletzung:} Vereinbarung von \textbf{Service Credits} (Gutschriften auf nachfolgende Monatsrechnungen) oder Konventionalstrafen (Pönale) sowie ausserordentliche Kündigungsrechte bei wiederholter Nichterreichung der Service-Levels.
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    \textbf{Mitwirkungspflichten und Leistungsabgrenzung:}
+    Ein Provider kann vertragliche Leistungen nur erbringen, wenn der Kunde vereinbarte Mitwirkungspflichten erfüllt (z.B. Bereitstellung von Testdaten, Berechtigungsmanagement, IT-Infrastruktur, rechtzeitige Abnahme). Leistungsstörungen infolge verletzter Kundenmitwirkung entlasten den Provider von seiner Haftung.
+\end{remark}
+
+\subsection{Mängelrechte und Gewährleistung im Werkvertrag}
+
+\begin{definition}
+    \textbf{Begriff des Werkmangels:}
+    Ein Werkmangel liegt vor, wenn das abgelieferte Werk:
+    \begin{itemize}
+        \item vertraglich ausdrücklich zugesicherte Eigenschaften nicht aufweist (z.B. Nichteinhalten definierter Spezifikationen im Pflichtenheft), oder
+        \item mit Mängeln behaftet ist, die den Wert oder die Tauglichkeit zum vorausgesetzten Gebrauch aufheben oder mindern (z.B. schwere Software-Crashes oder Datenverlust).
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}
+    \textbf{Mängelrechte des Bestellers (Art. 368 OR):}
+    Liegt ein Werkmangel vor und wurde dieser rechtzeitig gerügt, hat der Besteller folgende gesetzliche Wahlrechte:
+    \begin{enumerate}
+        \item \textbf{Nachbesserung (Art. 368 Abs. 2 OR):} Kostenlose Beseitigung des Mangels durch den Unternehmer innert angemessener Frist, sofern dies dem Unternehmer keine unverhältnismässigen Kosten verursacht (Hauptanspruch in der IT-Praxis).
+        \item \textbf{Minderung (Art. 368 Abs. 2 OR):} Herabsetzung des Werklohns um den Minderwert, wenn der Mangel nicht behoben werden kann oder eine Nachbesserung fehlgeschlagen ist.
+        \item \textbf{Wandelung (Art. 368 Abs. 1 OR):} Rückgängigmachung des gesamten Vertrages (Rückzahlung des Werklohns gegen Rückgabe der Software). Nur zulässig bei derart erheblichen Mängeln, dass die Annahme für den Besteller unzumutbar ist.
+        \item \textbf{Schadenersatz (Art. 368 Abs. 1/2 OR):} Kumulativ zu den obigen Rechten kann bei schuldhafter Vertragsverletzung Schadenersatz für Mangelfolgeschäden geltend gemacht werden (Art. 97 OR).
+    \end{enumerate}
+\end{theorem}
+
+\begin{important}
+    \textbf{Prüf- und Rügeobliegenheiten (Verwirkungsfalle, Art. 367 / 370 OR):}
+    \begin{itemize}
+        \item \textbf{Prüfpflicht (Art. 367 Abs. 1 OR):} Der Besteller muss das Werk nach der Ablieferung so bald prüfen, wie es nach dem üblichen Geschäftsgange tunlich ist (z.B. Durchführung von Abnahmetests).
+        \item \textbf{Rügepflicht:} Erkannte Mängel müssen dem Unternehmer \textbf{sofort} (in der Praxis innert 2 bis maximal 7 Tagen) detailliert angezeigt werden.
+        \item \textbf{Versteckte Mängel (Art. 370 Abs. 3 OR):} Mängel, die bei ordnungsgemässer Prüfung nicht erkennbar waren, müssen sofort nach ihrer Entdeckung gerügt werden.
+        \item \textbf{Verwirkung:} Versäumt der Besteller die rechtzeitige Rüge, gilt das Werk als \textbf{stillschweigend genehmigt}. Sämtliche gesetzlichen Mängelrechte gehen unwiederbringlich verloren!
+    \end{itemize}
+\end{important}
+
+\begin{remark}
+    \textbf{Verjährungsfristen (Art. 371 OR):}
+    Mängelansprüche bei beweglichen Werken (einschliesslich Standard- und Individualsoftware) verjähren nach \textbf{zwei Jahren} ab Ablieferung des Werks.
+\end{remark}
+
+\subsection{Vertragsbeendigung}
+
+\begin{theorem}
+    \textbf{Kündigung im Auftragsrecht (Art. 404 OR):}
+    \begin{itemize}
+        \item \textbf{Jederzeitiges Kündigungsrecht (Art. 404 Abs. 1 OR):} Ein Auftrag kann von beiden Parteien \textbf{jederzeit} fristlos und ohne Angabe von Gründen widerrufen oder gekündigt werden. Dieses Kündigungsrecht ist zwingend und kann vertraglich nicht wegbedungen werden.
+        \item \textbf{Kündigung zur Unzeit (Art. 404 Abs. 2 OR):} Erfolgt die Kündigung zur Unzeit (ohne sachlichen Grund in einem ungünstigen Moment, sodass dem Vertragspartner unnötige Nachteile entstehen), ist die kündigende Partei zum Ersatz des daraus entstehenden Schadens (negatives Interesse) verpflichtet.
+    \end{itemize}
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Beendigung von Werkverträgen (Art. 377 OR):}
+    \begin{itemize}
+        \item Solange das Werk unvollendet ist, kann der Besteller jederzeit gegen \textbf{vollständige Schadloshaltung} des Unternehmers vom Vertrag zurücktreten.
+        \item Der Besteller muss dem Unternehmer die bereits geleistete Arbeit voll vergüten und zusätzlich den entgangenen Gewinn für das gesamte Restprojekt ersetzen.
+    \end{itemize}
+\end{theorem}

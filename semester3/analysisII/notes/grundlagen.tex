@@ -349,3 +349,70 @@
         \item \textbf{Wertevergleich:} Das globale Minimum ist $-\frac{1}{2}$ bei $\left(\frac{1}{2}, 0\right)$ (im Inneren) und das globale Maximum ist $4$ bei $(-1, 0)$ (auf dem Rand).
     \end{itemize}
 \end{example}
+
+\subsection{Mehrdimensionale Integration}
+
+\begin{example}
+    \textbf{Motivation und Volumenberechnung:}
+    Betrachte das Volumen unter dem Graphen der Funktion
+    $$ f(x,y) = 2 - (x^2 + y^2) $$
+    über dem quadratischen Bereich $R = [-1,1] \times [-1,1]$.
+    Zur numerischen Annäherung unterteilt man den Bereich $R$ in gleich grosse Teilrechtecke $R_{ij} = [x_{i-1}, x_i] \times [y_{j-1}, y_j]$ mit Flächeninhalt $\Delta A = \Delta x \Delta y$.
+    Das Gesamtvolumen lässt sich durch die Volumina von Säulen bzw. Teilquadern mit Grundfläche $\Delta A$ approximieren:
+    \begin{itemize}
+        \item \textbf{Untersumme:} Summation mit dem minimalen Funktionswert auf jedem Teilrechteck:
+        $$ U(f, \mathcal{Z}) = \sum_{i,j} \inf_{(x,y) \in R_{ij}} f(x,y) \cdot \Delta x \Delta y $$
+        \item \textbf{Obersumme:} Summation mit dem maximalen Funktionswert auf jedem Teilrechteck:
+        $$ O(f, \mathcal{Z}) = \sum_{i,j} \sup_{(x,y) \in R_{ij}} f(x,y) \cdot \Delta x \Delta y $$
+    \end{itemize}
+    Verfeinert man das Gitter ($\Delta x, \Delta y \to 0$), so konvergieren Unter- und Obersumme gegen dasselbe Grenzvolumen.
+\end{example}
+
+\begin{definition}
+    \textbf{Doppelintegral:} \\
+    Für eine stetige Funktion $f$ auf einem beschränkten Gebiet $G \subset \mathbb{R}^2$ ist das bestimmte \textbf{Doppelintegral} definiert als Grenzwert der Riemann-Summen für $\Delta x, \Delta y \to 0$:
+    $$ \int_{G} f \, dA = \lim_{\Delta x \to 0, \Delta y \to 0} \sum_{i,j} f(u_{ij}, v_{ij}) \, \Delta x \Delta y $$
+    wobei $(u_{ij}, v_{ij}) \in R_{ij}$ beliebige Zwischenpunkte in den jeweiligen Teilrechtecken sind.
+    
+    \textbf{Notationsvarianten:}
+    $$ \int_{G} f \, dA = \int_{G} f(x,y) \, dx dy = \iint_{G} f \, dA = \iint_{G} f(x,y) \, dx dy $$
+\end{definition}
+
+\begin{theorem}
+    \textbf{Satz von Fubini (Iterierte Integrale auf Rechtecken):}
+    Sei $f: G \to \mathbb{R}$ stetig auf dem Rechtecksgebiet $G = [a,b] \times [c,d]$. Dann lässt sich das Doppelintegral als zwei hintereinander ausgeführte (iterierte) eindimensionale Integrale berechnen:
+    $$ \int_{G} f \, dA = \int_{c}^{d} \left( \int_{a}^{b} f(x,y) \, dx \right) dy = \int_{a}^{b} \left( \int_{c}^{d} f(x,y) \, dy \right) dx $$
+    Die Integrationsreihenfolge darf somit für stetige Funktionen beliebig vertauscht werden.
+\end{theorem}
+
+\begin{definition}
+    \textbf{Mathematische Formalisierung im $\mathbb{R}^n$:}
+    \begin{itemize}
+        \item \textbf{$n$-dimensionaler Quader:} Ein Quader $Q \subset \mathbb{R}^n$ ist das kartesische Produkt von Intervallen $I_i = [a_i, b_i]$, d.h. $Q = I_1 \times \dots \times I_n$, mit Volumen (Inhalt):
+        $$ \mu(Q) = \prod_{i=1}^{n} |I_i| = \prod_{i=1}^{n} (b_i - a_i) $$
+        \item \textbf{Treppenfunktionen:} Eine Funktion $s: Q \to \mathbb{R}$ heisst Treppenfunktion, falls eine Zerlegung von $Q$ in endlich viele disjunkte Quader $Q_1, \dots, Q_K$ existiert, sodass $s$ auf jedem Teilquader $Q_k$ konstant den Wert $c_k$ annimmt:
+        $$ s = \sum_{k=1}^K c_k \chi_{Q_k}, \quad \text{mit Integral } \int_Q s \, d\mu = \sum_{k=1}^K c_k \mu(Q_k) $$
+        \item \textbf{Unter- und Oberintegral:} Für eine beschränkte Funktion $f: Q \to \mathbb{R}$ definiert man:
+        $$ \underline{\int_Q} f \, d\mu = \sup \left\{ \int_Q s \, d\mu \;\middle|\; s \text{ Treppenfunktion mit } s \le f \right\} $$
+        $$ \overline{\int_Q} f \, d\mu = \inf \left\{ \int_Q s \, d\mu \;\middle|\; s \text{ Treppenfunktion mit } s \ge f \right\} $$
+        \item \textbf{Riemann-Integrierbarkeit:} $f$ heisst auf $Q$ \textbf{Riemann-integrierbar}, falls Unter- und Oberintegral übereinstimmen:
+        $$ \underline{\int_Q} f \, d\mu = \overline{\int_Q} f \, d\mu =: \int_Q f \, d\mu $$
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}
+    \textbf{Eigenschaften des mehrdimensionalen Riemann-Integrals:}
+    Seien $f, g: Q \to \mathbb{R}$ Riemann-integrierbar auf dem Quader $Q \subset \mathbb{R}^n$:
+    \begin{itemize}
+        \item \textbf{Stetigkeit:} Jede stetige Funktion $f \in C^0(\overline{Q})$ auf einem kompakten Quader $\overline{Q}$ ist Riemann-integrierbar.
+        \item \textbf{Monotonie:} Aus $f(x) \le g(x)$ für alle $x \in Q$ folgt:
+        $$ \int_Q f \, d\mu \le \int_Q g \, d\mu $$
+        \item \textbf{Linearität:} Für beliebige $\alpha, \beta \in \mathbb{R}$ ist $\alpha f + \beta g$ integrierbar und es gilt:
+        $$ \int_Q (\alpha f + \beta g) \, d\mu = \alpha \int_Q f \, d\mu + \beta \int_Q g \, d\mu $$
+        \item \textbf{Dreiecksungleichung (Standardabschätzung):}
+        $$ \left|\int_Q f \, d\mu\right| \le \int_Q |f| \, d\mu \le \sup_{x \in Q} |f(x)| \cdot \mu(Q) $$
+        \item \textbf{Min/Max:} Die Funktionen $\min\{f, g\}$ und $\max\{f, g\}$ sind ebenfalls Riemann-integrierbar.
+        \item \textbf{Gleichmässige Konvergenz:} Konvergiert eine Folge integrierbarer Funktionen $(f_k)_{k\in\mathbb{N}}$ gleichmässig auf $Q$ gegen $f$, so ist $f$ integrierbar und Grenzwert und Integral dürfen vertauscht werden:
+        $$ \lim_{k\to\infty} \int_Q f_k \, d\mu = \int_Q \left( \lim_{k\to\infty} f_k \right) d\mu = \int_Q f \, d\mu $$
+    \end{itemize}
+\end{theorem}
