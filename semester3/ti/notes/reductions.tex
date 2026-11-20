@@ -1,215 +1,338 @@
-\section{Reductions and Undecidability}
+\section{Unentscheidbarkeit und Reduktionen}
 
-\subsection{The Concept of Reductions}
+\subsection{Mengentheorie und Cantorsche Diagonalisierung}
 
-\begin{remark}
-    \textbf{Core Idea:} Reductions are the primary tool in computability and complexity theory to compare the relative difficulty of algorithmic problems.
-    If a problem $A$ can be solved using an algorithm (subroutine) for a problem $B$, we say that \textbf{$A$ reduces to $B$} ($A \le B$). This means:
-    $$
-        \text{Problem } B \text{ is at least as hard as problem } A.
-    $$
+Die Frage, welche Probleme prinzipiell algorithmisch gelöst werden können, lässt sich mit mengentheoretischen Mächtigkeitsbetrachtungen grundlegend beantworten.
+
+\begin{definition}[Abzählbarkeit]
+    Eine Menge $A$ heißt \textbf{abzählbar}, falls eine injektive Abbildung $f : A \to \mathbb{N}$ existiert. Ist $A$ zudem unendlich, heißt $A$ \textbf{abzählbar unendlich} (es existiert eine Bijektion $f : A \to \mathbb{N}$). Eine Menge, die nicht abzählbar ist, heißt \textbf{überabzählbar}.
+\end{definition}
+
+\begin{lemma}[Abzählbarkeit von KodTM und Sprachklassen]
+    Für jedes endliche Alphabet $\Sigma$ ist die Menge aller Wörter $\Sigma^*$ abzählbar unendlich (durch quasielexikographische Ordnung). Da jede Turingmaschine als endliches Binärwort $\mathrm{Kod}(M) \in \{0, 1\}^*$ kodiert wird, gilt:
+    \begin{enumerate}
+        \item Die Menge aller Turingmaschinen $\mathrm{KodTM}$ ist abzählbar unendlich.
+        \item Die Menge aller entscheidbaren Sprachen $\mathcal{L}_{\mathrm{rec}}$ und die Menge aller semi-entscheidbaren Sprachen $\mathcal{L}_{\mathrm{RE}}$ sind abzählbar unendlich.
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}[Überabzählbarkeit der Potenzmenge $2^{\Sigma^*}$]
+    Für jedes Alphabet $\Sigma \neq \emptyset$ ist die Potenzmenge $\mathcal{P}(\Sigma^*) = \{L \mid L \subseteq \Sigma^*\}$ (die Menge aller Sprachen über $\Sigma$) überabzählbar:
+    \[
+        |\mathcal{P}(\Sigma^*)| = 2^{\aleph_0} > \aleph_0.
+    \]
+\end{theorem}
+
+\begin{proof}
+    \textbf{Beweisidee:} Wir wenden Cantors zweites Diagonalargument auf die charakteristischen Folgen aller Sprachen an.
+    
+    Sei $w_1, w_2, w_3, \dots$ die kanonische Aufzählung aller Wörter in $\Sigma^*$. Jede Sprache $L \subseteq \Sigma^*$ korrespondiert bijektiv zu einer unendlichen binären Folge (ihrer charakteristischen Funktion) $\chi_L \in \{0, 1\}^\omega$, wobei das $i$-te Bit definiert ist als:
+    \[
+        (\chi_L)_i = \begin{cases} 1 & \text{falls } w_i \in L, \\ 0 & \text{falls } w_i \notin L. \end{cases}
+    \]
+    Angenommen, $\mathcal{P}(\Sigma^*)$ wäre abzählbar. Dann ließen sich alle Sprachen in einer Folge $L_1, L_2, L_3, \dots$ anordnen. Wir konstruieren nun eine Diagonalsprache $L_{\mathrm{anti}}$ über ihre charakteristische Folge:
+    \[
+        (\chi_{L_{\mathrm{anti}}})_i = 1 - (\chi_{L_i})_i \quad \text{für alle } i \in \mathbb{N}.
+    \]
+    Für jedes $k \in \mathbb{N}$ unterscheidet sich $L_{\mathrm{anti}}$ an der $k$-ten Position von $L_k$, da $w_k \in L_{\mathrm{anti}} \iff w_k \notin L_k$. Folglich gilt $L_{\mathrm{anti}} \neq L_k$ für alle $k \in \mathbb{N}$. Dies widerspricht der Annahme, dass die Liste alle Sprachen enthält.
+\end{proof}
+
+\begin{theorem}[Existenz unentscheidbarer Sprachen]
+    Wegen $|\mathrm{KodTM}| = \aleph_0 < 2^{\aleph_0} = |\mathcal{P}(\Sigma^*)|$ gibt es überabzählbar viele Sprachen, die von keiner Turingmaschine entschieden oder aufgeführt werden können. Es gilt:
+    \[
+        |\mathcal{P}(\Sigma^*) \setminus \mathcal{L}_{\mathrm{RE}}| = 2^{\aleph_0}.
+    \]
+\end{theorem}
+
+\begin{definition}[Die Diagonalsprache]
+    Sei $M_1, M_2, M_3, \dots$ die kanonische Aufzählung aller deterministischen 1-Band-Turingmaschinen und $w_1, w_2, w_3, \dots$ die kanonische Aufzählung aller Wörter über $\{0, 1\}^*$. Die \textbf{Diagonalsprache} ist definiert als:
+    \[
+        L_{\mathrm{diag}} = \{w_i \in \{0, 1\}^* \mid w_i \notin L(M_i)\}.
+    \]
+\end{definition}
+
+\begin{theorem}[Unaufzählbarkeit der Diagonalsprache]
+    Die Sprache $L_{\mathrm{diag}}$ ist nicht rekursiv aufzählbar:
+    \[
+        L_{\mathrm{diag}} \notin \mathcal{L}_{\mathrm{RE}} \quad (\text{und somit insbesondere } L_{\mathrm{diag}} \notin \mathcal{L}_{\mathrm{rec}}).
+    \]
+\end{theorem}
+
+\begin{proof}
+    \textbf{Beweisidee:} Wäre $L_{\mathrm{diag}}$ rekursiv aufzählbar, müsste eine TM $M_d$ in der Aufzählung existieren, die $L_{\mathrm{diag}}$ akzeptiert; auf dem Selbstreferenz-Wort $w_d$ führt dies auf einen logischen Widerspruch.
+    
+    Betrachte die unendliche Akzeptanzmatrix $A \in \{0, 1\}^{\mathbb{N} \times \mathbb{N}}$ mit $A_{i,j} = 1 \iff w_j \in L(M_i)$. $L_{\mathrm{diag}}$ invertiert exakt die Diagonale dieser Matrix: $w_i \in L_{\mathrm{diag}} \iff A_{i,i} = 0$.
+    
+    Angenommen, $L_{\mathrm{diag}} \in \mathcal{L}_{\mathrm{RE}}$. Dann existiert eine TM $M_d$ aus unserer Aufzählung mit $L(M_d) = L_{\mathrm{diag}}$. Wir prüfen, ob $w_d \in L(M_d)$ gilt:
+    \[
+        w_d \in L(M_d) \iff w_d \in L_{\mathrm{diag}} \iff w_d \notin L(M_d).
+    \]
+    Dies ist ein unauflösbarer logischer Widerspruch. Daher existiert kein solcher Index $d$, und $L_{\mathrm{diag}} \notin \mathcal{L}_{\mathrm{RE}}$.
+\end{proof}
+
+\begin{theorem}[Komplementsatz von Post]
+    Eine Sprache $L \subseteq \Sigma^*$ ist genau dann rekursiv (entscheidbar), wenn sowohl $L$ als auch ihr Komplement $L^c = \Sigma^* \setminus L$ rekursiv aufzählbar sind:
+    \[
+        L \in \mathcal{L}_{\mathrm{rec}} \iff L \in \mathcal{L}_{\mathrm{RE}} \land L^c \in \mathcal{L}_{\mathrm{RE}}.
+    \]
+\end{theorem}
+
+\begin{proof}
+    \textbf{Beweisidee:} Wir lassen die Akzeptanzprüfungen für $L$ und $L^c$ schrittweise verzahnt (parallel) laufen; genau eine muss terminieren.
+    
+    "$\implies$": Ist $L \in \mathcal{L}_{\mathrm{rec}}$, so existiert ein Entscheider $M$. Durch Vertauschen der Zustände $q_{\mathrm{accept}}$ und $q_{\mathrm{reject}}$ erhalten wir einen Entscheider für $L^c$. Da $\mathcal{L}_{\mathrm{rec}} \subseteq \mathcal{L}_{\mathrm{RE}}$, gilt trivialerweise $L, L^c \in \mathcal{L}_{\mathrm{RE}}$.
+    
+    "$\impliedby$": Seien $M_1, M_2$ Turingmaschinen mit $L(M_1) = L$ und $L(M_2) = L^c$. Wir konstruieren eine 2-Band-DTM $M_{\mathrm{dec}}$: Auf Eingabe $w$ simuliert $M_{\mathrm{dec}}$ auf Band 1 die Maschine $M_1$ auf $w$ und auf Band 2 die Maschine $M_2$ auf $w$ im Reißverschlussverfahren (abwechselnd einen Schritt). Da jedes $w$ entweder in $L$ oder in $L^c$ liegt, hält garantiert genau eine der beiden Maschinen nach endlich vielen Schritten in $q_{\mathrm{accept}}$. Hält $M_1$ akzeptierend, hält $M_{\mathrm{dec}}$ in $q_{\mathrm{accept}}$; hält $M_2$ akzeptierend, hält $M_{\mathrm{dec}}$ in $q_{\mathrm{reject}}$. Damit entscheidet $M_{\mathrm{dec}}$ die Sprache $L$.
+\end{proof}
+
+\begin{theorem}[Das Komplement der Diagonalsprache]
+    Das Komplement der Diagonalsprache
+    \[
+        (L_{\mathrm{diag}})^c = \{w_i \in \{0, 1\}^* \mid w_i \in L(M_i)\}
+    \]
+    liegt in $\mathcal{L}_{\mathrm{RE}} \setminus \mathcal{L}_{\mathrm{rec}}$. Sie ist das Standardbeispiel einer semi-entscheidbaren, aber echt unentscheidbaren Sprache.
+\end{theorem}
+
+\begin{proof}
+    Eine DTM für $(L_{\mathrm{diag}})^c$ liest $w_i$, konstruiert daraus $\mathrm{Kod}(M_i)$ und simuliert $M_i$ auf $w_i$ mittels der universellen Turingmaschine $U$. Akzeptiert $M_i$, so akzeptiert die DTM. Daher gilt $(L_{\mathrm{diag}})^c \in \mathcal{L}_{\mathrm{RE}}$.
+    Wäre $(L_{\mathrm{diag}})^c \in \mathcal{L}_{\mathrm{rec}}$, so müsste nach dem Komplementsatz auch $((L_{\mathrm{diag}})^c)^c = L_{\mathrm{diag}} \in \mathcal{L}_{\mathrm{RE}}$ sein, was dem vorigen Theorem widerspricht.
+\end{proof}
+
+% -----------------------------------------------------------------------------
+\subsection{Reduktionen}
+
+Reduktionen sind das zentrale Werkzeug der theoretischen Informatik, um die algorithmische Schwere eines Problems auf ein anderes zu übertragen.
+
+\begin{definition}[Many-One-Reduktion / Ein-Eingabe-Reduktion]
+    Seien $L_1 \subseteq \Sigma_1^*$ und $L_2 \subseteq \Sigma_2^*$ zwei Sprachen. $L_1$ heißt \textbf{many-one-reduzierbar} (oder \textbf{ein-eingabe-reduzierbar}) auf $L_2$ (notiert als $L_1 \le_{\mathrm{EE}} L_2$ bzw.\ $L_1 \le_m L_2$), falls eine total berechenbare Funktion $f : \Sigma_1^* \to \Sigma_2^*$ existiert, sodass für alle $w \in \Sigma_1^*$ gilt:
+    \[
+        w \in L_1 \iff f(w) \in L_2.
+    \]
+\end{definition}
+
+\begin{definition}[Turing-Reduktion / Orakel-Reduktion]
+    Eine Sprache $L_1$ heißt \textbf{Turing-reduzierbar} auf $L_2$ (notiert als $L_1 \le_R L_2$ bzw.\ $L_1 \le_T L_2$), falls eine deterministische Turingmaschine mit Orakelband für $L_2$ existiert (notiert als $M^{L_2}$), die $L_1$ entscheidet. In einem Orakelschritt kann die Maschine in einem einzigen Zeitschritt abfragen, ob das auf dem Orakelband geschriebene Wort $y$ in $L_2$ liegt.
+\end{definition}
+
+\begin{remark}[Vergleich $\le_{\mathrm{EE}}$ vs. $\le_R$]
+    Die Turing-Reduktion ist echt mächtiger als die Many-One-Reduktion:
+    \begin{itemize}
+        \item Für jede Sprache $L$ gilt trivialerweise $L \le_R L^c$ (die Orakelmaschine fragt das Orakel für $L^c$ ab und kehrt die Antwort um).
+        \item Hingegen gilt für semi-entscheidbare, unentscheidbare Sprachen wie $(L_{\mathrm{diag}})^c$ \textbf{niemals} $(L_{\mathrm{diag}})^c \le_{\mathrm{EE}} L_{\mathrm{diag}}$, da eine $\le_{\mathrm{EE}}$-Reduktion die Eigenschaft der rekursiven Aufzählbarkeit erhält.
+    \end{itemize}
 \end{remark}
 
-\begin{important}
-    \textbf{The Two Ways to Use a Reduction ($A \le B$):}
+\begin{theorem}[Inferenzregeln für Reduktionen]
+    Sei $L_1 \le_{\mathrm{EE}} L_2$ vermöge einer total berechenbaren Funktion $f$. Dann gelten die folgenden Implikationen:
+    \begin{align}
+        L_2 \in \mathcal{L}_{\mathrm{rec}} &\implies L_1 \in \mathcal{L}_{\mathrm{rec}} \label{eq:red_rec_pos} \\
+        L_1 \notin \mathcal{L}_{\mathrm{rec}} &\implies L_2 \notin \mathcal{L}_{\mathrm{rec}} \quad (\text{Härteübertragung per Kontraposition}) \label{eq:red_rec_neg} \\
+        L_2 \in \mathcal{L}_{\mathrm{RE}} &\implies L_1 \in \mathcal{L}_{\mathrm{RE}} \label{eq:red_re_pos} \\
+        L_1 \notin \mathcal{L}_{\mathrm{RE}} &\implies L_2 \notin \mathcal{L}_{\mathrm{RE}} \label{eq:red_re_neg}
+    \end{align}
+\end{theorem}
+
+\begin{proof}
+    Zu (\ref{eq:red_rec_pos}): Sei $M_2$ ein Entscheider für $L_2$. Um $w \in L_1$ zu entscheiden, berechnet $M_1$ die Reduktion $f(w)$ und startet $M_2$ auf $f(w)$. Da $f$ total berechenbar ist und $M_2$ garantiert hält, terminiert $M_1$ auf jeder Eingabe und akzeptiert gdw. $f(w) \in L_2 \iff w \in L_1$.
+    Aussage (\ref{eq:red_rec_neg}) ist die Kontraposition von (\ref{eq:red_rec_pos}).
+    Die Aussagen (\ref{eq:red_re_pos}) und (\ref{eq:red_re_neg}) folgen analog, da $M_2$ bei $f(w) \in L_2$ akzeptiert.
+\end{proof}
+
+% -----------------------------------------------------------------------------
+\subsection{Das Halteproblem und weitere unentscheidbare Sprachen}
+
+Wir etablieren nun die fundamentale Reduktionskette der theoretischen Informatik:
+\[
+    (L_{\mathrm{diag}})^c \le_{\mathrm{EE}} L_U \le_{\mathrm{EE}} L_H \le_{\mathrm{EE}} L_{H,\lambda}.
+\]
+
+\begin{definition}[Fundamentale unentscheidbare Sprachen]
     \begin{itemize}
-        \item \textbf{Positive Direction (Algorithm Design / Decidability):} If problem $B$ is known to be decidable, then problem $A$ is also decidable:
-        $$
-            A \le B \;\land\; B \in \mathcal{L}_{\text{rec}} \implies A \in \mathcal{L}_{\text{rec}}
-        $$
-        \item \textbf{Negative Direction (Impossibility Proofs / Undecidability):} By contraposition, if problem $A$ is known to be undecidable, then problem $B$ must also be undecidable:
-        $$
-            A \le B \;\land\; A \notin \mathcal{L}_{\text{rec}} \implies B \notin \mathcal{L}_{\text{rec}}
-        $$
-        This negative direction is the main method used to establish that newly encountered computational problems are undecidable.
+        \item \textbf{Universelle Sprache:}
+        $L_U = \{\mathrm{Kod}(M)\#w \mid M \text{ akzeptiert } w\}$.
+        \item \textbf{Allgemeines Halteproblem:}
+        $L_H = \{\mathrm{Kod}(M)\#w \mid M \text{ hält auf } w \text{ (in } q_{\mathrm{accept}} \text{ oder } q_{\mathrm{reject}})\}$.
+        \item \textbf{Halteproblem auf leerem Band:}
+        $L_{H,\lambda} = \{\mathrm{Kod}(M) \mid M \text{ hält auf der leeren Eingabe } \lambda\}$.
+        \item \textbf{Leerheitsproblem:}
+        $L_{\mathrm{empty}} = \{\mathrm{Kod}(M) \mid L(M) = \emptyset\}$.
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}[Reduktionskette zur Unentscheidbarkeit]
+    Es gilt:
+    \[
+        (L_{\mathrm{diag}})^c \le_{\mathrm{EE}} L_U \le_{\mathrm{EE}} L_H \le_{\mathrm{EE}} L_{H,\lambda}.
+    \]
+    Damit sind $L_U, L_H$ und $L_{H,\lambda}$ alle unentscheidbar ($\notin \mathcal{L}_{\mathrm{rec}}$).
+\end{theorem}
+
+\begin{proof}
+    \textbf{Beweisidee:} Wir konstruieren für jeden Reduktionsschritt explizit eine berechenbare Abbildung via einer modifizierten Turingmaschine (\emph{Hüllmaschine}).
+    
+    \textbf{1. Schritt: $(L_{\mathrm{diag}})^c \le_{\mathrm{EE}} L_U$:}
+    Gesucht ist $f(w_i)$ mit $w_i \in (L_{\mathrm{diag}})^c \iff f(w_i) \in L_U$.
+    Die Reduktionsfunktion ist definiert durch:
+    \[
+        f(w_i) = \mathrm{Kod}(M_i) \# w_i.
+    \]
+    Da die kanonische Aufzählung $M_i$ aus $w_i$ total berechenbar ist, ist $f$ berechenbar. Es gilt:
+    \[
+        w_i \in (L_{\mathrm{diag}})^c \iff w_i \in L(M_i) \iff \mathrm{Kod}(M_i)\#w_i \in L_U.
+    \]
+    
+    \textbf{2. Schritt: $L_U \le_{\mathrm{EE}} L_H$:}
+    Auf Eingabe $\mathrm{Kod}(M)\#w$ konstruieren wir eine Hüllmaschine $M'$, die wie folgt definiert ist:
+    \begin{itemize}
+        \item $M'$ simuliert $M$ auf $w$.
+        \item Gelangt $M$ in $q_{\mathrm{accept}}$, hält $M'$ an (z.\,B.\ in $q_{\mathrm{accept}}$).
+        \item Gelangt $M$ in $q_{\mathrm{reject}}$, geht $M'$ in eine explizite Endlosschleife (z.\,B.\ $\delta(q_{\mathrm{loop}}, a) = (q_{\mathrm{loop}}, a, \mathrm{R})$).
+    \end{itemize}
+    Die Funktion $f(\mathrm{Kod}(M)\#w) = \mathrm{Kod}(M')\#w$ ist total berechenbar. Offensichtlich hält $M'$ auf $w$ genau dann, wenn $M$ die Eingabe $w$ akzeptiert. Also gilt $\mathrm{Kod}(M)\#w \in L_U \iff f(\mathrm{Kod}(M)\#w) \in L_H$.
+    
+    \textbf{3. Schritt: $L_H \le_{\mathrm{EE}} L_{H,\lambda}$:}
+    Auf Eingabe $\mathrm{Kod}(M)\#w$ konstruieren wir eine Hüllmaschine $M_w$, deren Übergangsfunktion die Eingabe $w$ fest einprogrammiert hat:
+    \begin{itemize}
+        \item Bei Start auf leerem Band ignoriert $M_w$ den Bandinhalt, schreibt das Wort $w$ auf ihr Band und setzt ihren Kopf an den Anfang von $w$.
+        \item Anschließend verzweigt $M_w$ in den Startzustand von $M$ und führt $M$ auf $w$ aus.
+    \end{itemize}
+    Die Funktion $f(\mathrm{Kod}(M)\#w) = \mathrm{Kod}(M_w)$ ist total berechenbar, da die Modifikation des Zustandsdiagramms rein syntaktisch ist. Nun gilt: $M_w$ hält auf $\lambda$ genau dann, wenn $M$ auf $w$ hält. Folglich: $\mathrm{Kod}(M)\#w \in L_H \iff \mathrm{Kod}(M_w) \in L_{H,\lambda}$.
+\end{proof}
+
+\begin{theorem}[Das Leerheitsproblem]
+    Für das Leerheitsproblem
+    \[
+        L_{\mathrm{empty}} = \{\mathrm{Kod}(M) \mid L(M) = \emptyset\}
+    \]
+    gilt: $L_{\mathrm{empty}} \notin \mathcal{L}_{\mathrm{RE}}$ und $(L_{\mathrm{empty}})^c \in \mathcal{L}_{\mathrm{RE}} \setminus \mathcal{L}_{\mathrm{rec}}$.
+\end{theorem}
+
+\begin{proof}
+    \textbf{Beweisidee:} Wir zeigen $L_{H,\lambda} \le_{\mathrm{EE}} (L_{\mathrm{empty}})^c$.
+    
+    Zu gegebener Kodierung $\mathrm{Kod}(M)$ konstruieren wir eine Hüllmaschine $M'$:
+    Auf beliebiger Eingabe $x \in \Sigma^*$ löscht $M'$ das Band und führt $M$ auf der leeren Eingabe $\lambda$ aus. Akzeptiert oder hält $M$ auf $\lambda$, so akzeptiert $M'$ die Eingabe $x$.
+    Damit gilt für die von $M'$ akzeptierte Sprache:
+    \[
+        L(M') = \begin{cases} \Sigma^* & \text{falls } M \text{ auf } \lambda \text{ hält}, \\ \emptyset & \text{falls } M \text{ auf } \lambda \text{ nicht hält}. \end{cases}
+    \]
+    Somit gilt: $M$ hält auf $\lambda \iff L(M') \neq \emptyset \iff \mathrm{Kod}(M') \in (L_{\mathrm{empty}})^c$.
+    Da $L_{H,\lambda} \notin \mathcal{L}_{\mathrm{rec}}$, folgt $(L_{\mathrm{empty}})^c \notin \mathcal{L}_{\mathrm{rec}}$ und damit $L_{\mathrm{empty}} \notin \mathcal{L}_{\mathrm{rec}}$.
+    
+    Wir zeigen nun $(L_{\mathrm{empty}})^c \in \mathcal{L}_{\mathrm{RE}}$ durch \textbf{Dovetailing} (schrittweise Verzahnung):
+    Eine NTM (oder deterministische TM via Paar-Aufzählung) durchläuft alle Paare $(w, t) \in \Sigma^* \times \mathbb{N}$ in quasielexikographischer Reihenfolge und simuliert $M$ auf Eingabe $w$ für $t$ Schritte. Findet sie ein Paar $(w, t)$, bei dem $M$ akzeptiert, hält sie an und akzeptiert. Dies terminiert genau dann, wenn $\exists w: w \in L(M) \iff L(M) \neq \emptyset$.
+    
+    Wäre nun $L_{\mathrm{empty}} \in \mathcal{L}_{\mathrm{RE}}$, so wäre nach dem Postschen Komplementsatz $(L_{\mathrm{empty}})^c \in \mathcal{L}_{\mathrm{rec}}$, ein Widerspruch. Also $L_{\mathrm{empty}} \notin \mathcal{L}_{\mathrm{RE}}$.
+\end{proof}
+
+% -----------------------------------------------------------------------------
+\subsection{Der Satz von Rice}
+
+Der Satz von Rice ist das weitreichendste Unentscheidbarkeitsresultat für Computerprogramme: Jede nichttriviale semantische Frage über das Verhalten eines Programms ist unlösbar.
+
+\begin{definition}[Semantische Spracheigenschaft]
+    Eine Eigenschaft von Sprachen $\mathcal{P} \subseteq \mathcal{L}_{\mathrm{RE}}$ heißt:
+    \begin{itemize}
+        \item \textbf{nichttrivial}, falls $\mathcal{P} \neq \emptyset$ und $\mathcal{P} \neq \mathcal{L}_{\mathrm{RE}}$ gilt (es gibt mindestens eine semi-entscheidbare Sprache mit der Eigenschaft und mindestens eine ohne).
+        \item \textbf{semantisch}, falls sie ausschließlich von der erzeugten Sprache $L(M)$ abhängt, d.\,h.\ $L(M_1) = L(M_2) \implies (\mathrm{Kod}(M_1) \in L_{\mathcal{P}} \iff \mathrm{Kod}(M_2) \in L_{\mathcal{P}})$.
+    \end{itemize}
+    Die zugehörige Kodierungssprache ist:
+    \[
+        L_{\mathcal{P}} = \{\mathrm{Kod}(M) \mid L(M) \in \mathcal{P}\}.
+    \]
+\end{definition}
+
+\begin{theorem}[Satz von Rice]
+    Für jede nichttriviale semantische Eigenschaft $\mathcal{P} \subseteq \mathcal{L}_{\mathrm{RE}}$ ist die Sprache $L_{\mathcal{P}}$ unentscheidbar:
+    \[
+        L_{\mathcal{P}} \notin \mathcal{L}_{\mathrm{rec}}.
+    \]
+\end{theorem}
+
+\begin{proof}
+    \textbf{Beweisidee:} Wir reduzieren das Halteproblem auf leerem Band $L_{H,\lambda}$ auf $L_{\mathcal{P}}$.
+    
+    \textbf{Fall 1: $\emptyset \notin \mathcal{P}$.}
+    Da $\mathcal{P}$ nichttrivial ist, existiert eine Sprache $L_{\mathrm{yes}} \in \mathcal{P}$. Sei $M_{\mathrm{yes}}$ eine feste Turingmaschine mit $L(M_{\mathrm{yes}}) = L_{\mathrm{yes}}$.
+    Zu gegebener Instanz $\mathrm{Kod}(M)$ von $L_{H,\lambda}$ konstruieren wir eine Hüllmaschine $M_w$:
+    \begin{itemize}
+        \item Bei Eingabe $x \in \Sigma^*$ speichert $M_w$ die Eingabe $x$ auf einem separaten Band.
+        \item Zunächst simuliert $M_w$ die Maschine $M$ auf dem leeren Band $\lambda$.
+        \item Falls $M$ auf $\lambda$ hält, startet $M_w$ die Maschine $M_{\mathrm{yes}}$ auf der ursprünglichen Eingabe $x$.
+    \end{itemize}
+    Wir analysieren die Sprache $L(M_w)$:
+    \begin{itemize}
+        \item Hält $M$ auf $\lambda$, so akzeptiert $M_w$ ein Wort $x$ gdw. $M_{\mathrm{yes}}$ das Wort $x$ akzeptiert. Folglich gilt $L(M_w) = L(M_{\mathrm{yes}}) = L_{\mathrm{yes}} \in \mathcal{P}$.
+        \item Hält $M$ auf $\lambda$ nicht, terminiert bereits die erste Phase nie. Folglich wird kein Wort akzeptiert: $L(M_w) = \emptyset \notin \mathcal{P}$.
+    \end{itemize}
+    Damit gilt:
+    \[
+        \mathrm{Kod}(M) \in L_{H,\lambda} \iff L(M_w) \in \mathcal{P} \iff \mathrm{Kod}(M_w) \in L_{\mathcal{P}}.
+    \]
+    Da die Konstruktion von $M_w$ aus $\mathrm{Kod}(M)$ total berechenbar ist, gilt $L_{H,\lambda} \le_{\mathrm{EE}} L_{\mathcal{P}}$. Da $L_{H,\lambda} \notin \mathcal{L}_{\mathrm{rec}}$, folgt $L_{\mathcal{P}} \notin \mathcal{L}_{\mathrm{rec}}$.
+    
+    \textbf{Fall 2: $\emptyset \in \mathcal{P}$.}
+    Wir betrachten das Komplement $\mathcal{P}' = \mathcal{L}_{\mathrm{RE}} \setminus \mathcal{P}$. Dann ist $\mathcal{P}'$ ebenfalls nichttrivial und erfüllt $\emptyset \notin \mathcal{P}'$. Nach Fall 1 ist $L_{\mathcal{P}'}$ unentscheidbar. Da $L_{\mathcal{P}} = (L_{\mathcal{P}'})^c$, ist auch $L_{\mathcal{P}}$ unentscheidbar.
+\end{proof}
+
+\begin{important}[Semantisch vs. Syntaktisch]
+    Der Satz von Rice gilt \textbf{ausschließlich} für semantische Eigenschaften (Spracheigenschaften)! Syntaktische Eigenschaften, die die Kodierung oder den Aufbau der TM betreffen, sind in der Regel trivial entscheidbar:
+    \begin{itemize}
+        \item "`Besitzt $M$ höchstens 42 Zustände?`" $\implies$ \textbf{Entscheidbar} (Zählung in $\mathrm{Kod}(M)$).
+        \item "`Akzeptiert $M$ mindestens ein Palindrom?`" $\implies$ \textbf{Unentscheidbar} (Semantische Eigenschaft).
+        \item "`Enthält die Übergangstabelle eine Regel für $\text{\textcent}$?`" $\implies$ \textbf{Entscheidbar} (Syntaktisch).
+        \item "`Ist $L(M)$ endlich / regulär / leer?`" $\implies$ \textbf{Unentscheidbar} (Rice).
     \end{itemize}
 \end{important}
 
-\subsection{General Reductions ($R$-Reductions)}
+% -----------------------------------------------------------------------------
+\subsection{Das Postsche Korrespondenzproblem (PCP)}
 
-\begin{definition}
-    \textbf{$R$-Reduction (Turing / Oracle Reduction):} Let $L_1 \subseteq \Sigma_1^*$ and $L_2 \subseteq \Sigma_2^*$. We say that $L_1$ is \textbf{$R$-reducible} to $L_2$ (denoted $L_1 \le_R L_2$) if there exists an algorithm (or Turing machine with an oracle for $L_2$) that decides membership in $L_1$, using queries to an imaginary subroutine for $L_2$ as a black box.
+\begin{definition}[Postsches Korrespondenzproblem (PCP)]
+    Gegeben ist eine endliche Folge von Wortpaaren (Dominosteinen) über einem Alphabet $\Sigma$ mit $|\Sigma| \ge 2$:
+    \[
+        P = \left\{ \left[\frac{x_1}{y_1}\right], \left[\frac{x_2}{y_2}\right], \dots, \left[\frac{x_k}{y_k}\right] \right\}, \quad x_i, y_i \in \Sigma^+.
+    \]
+    Das \textbf{PCP} fragt: Existiert eine endliche Indexfolge $i_1, i_2, \dots, i_m \in \{1, \dots, k\}$ ($m \ge 1$), sodass
+    \[
+        x_{i_1} x_{i_2} \dots x_{i_m} = y_{i_1} y_{i_2} \dots y_{i_m}?
+    \]
+    Beim \textbf{modifizierten PCP (MPKP)} muss die Folge zwingend mit dem ersten Paar beginnen ($i_1 = 1$).
 \end{definition}
 
-\begin{theorem}
-    \textbf{Properties of $R$-Reductions:}
-    \begin{itemize}
-        \item \textbf{Reflexivity and Transitivity:} $L \le_R L$, and if $L_1 \le_R L_2$ and $L_2 \le_R L_3$, then $L_1 \le_R L_3$.
-        \item \textbf{Decidability Transfer:} If $L_1 \le_R L_2$ and $L_2 \in \mathcal{L}_{\text{rec}}$, then $L_1 \in \mathcal{L}_{\text{rec}}$.
-        \item \textbf{Complement Invariance:} $L \le_R L^c$ always holds (simply invert the yes/no answer of the subroutine).
-    \end{itemize}
+\begin{theorem}[Unentscheidbarkeit des PCP]
+    Das PCP und das MPKP sind unentscheidbar: $\mathrm{MPKP} \notin \mathcal{L}_{\mathrm{rec}}$ und $\mathrm{PCP} \notin \mathcal{L}_{\mathrm{rec}}$.
 \end{theorem}
 
-\subsection{Many-One Reductions (EE-Reductions)}
-
-\begin{definition}
-    \textbf{EE-Reduction (Eingabe-Eingabe / Many-One Reduction):} A language $L_1 \subseteq \Sigma_1^*$ is called \textbf{EE-reducible} to $L_2 \subseteq \Sigma_2^*$ (written $L_1 \le_{EE} L_2$ or $L_1 \le_m L_2$) if there exists a \textbf{computable total function}
-    $$
-        f : \Sigma_1^* \to \Sigma_2^*
-    $$
-    such that for every word $w \in \Sigma_1^*$:
-    $$
-        w \in L_1 \iff f(w) \in L_2
-    $$
-    The function $f$ is computed by a halting deterministic Turing machine $M_f$ (a transducer).
-\end{definition}
-
-\begin{remark}
-    \textbf{Intuition behind the Name:} It is called an \textit{Eingabe-Eingabe-Reduktion} (input-to-input reduction) because the reduction function $f$ directly maps an input $w$ of problem $L_1$ into a corresponding input $f(w)$ of problem $L_2$, without any post-processing of the decision result:
-    $$
-        \text{Decider for } L_1(w) = \text{Decider for } L_2(f(w))
-    $$
-    Every EE-reduction is a special case of an $R$-reduction: $L_1 \le_{EE} L_2 \implies L_1 \le_R L_2$.
-\end{remark}
-
-\begin{theorem}
-    \textbf{Conservation Theorems for EE-Reductions:} Let $L_1 \le_{EE} L_2$ with reduction function $f$.
-    \begin{enumerate}
-        \item \textbf{Decidability:}
-        \begin{itemize}
-            \item If $L_2 \in \mathcal{L}_{\text{rec}}$, then $L_1 \in \mathcal{L}_{\text{rec}}$.
-            \item If $L_1 \notin \mathcal{L}_{\text{rec}}$, then $L_2 \notin \mathcal{L}_{\text{rec}}$.
-        \end{itemize}
-        \item \textbf{Turing-Recognizability:}
-        \begin{itemize}
-            \item If $L_2 \in \mathcal{L}_{\text{RE}}$, then $L_1 \in \mathcal{L}_{\text{RE}}$.
-            \item If $L_1 \notin \mathcal{L}_{\text{RE}}$, then $L_2 \notin \mathcal{L}_{\text{RE}}$.
-        \end{itemize}
-        \item \textbf{Complements:}
-        $$
-            L_1 \le_{EE} L_2 \iff L_1^c \le_{EE} L_2^c \quad (\text{using the exact same function } f)
-        $$
-    \end{enumerate}
-\end{theorem}
-
-\begin{remark}
-    \textbf{Difference between $\le_R$ and $\le_{EE}$ on Recognizability:}
-    While $L_1 \le_R L_2$ preserves decidability, it does \textbf{not} necessarily preserve Turing-recognizability (for instance, $L_{\text{diag}} \le_R L_{\text{diag}}^c$ holds by flipping the result, but $L_{\text{diag}}^c \in \mathcal{L}_{\text{RE}}$ while $L_{\text{diag}} \notin \mathcal{L}_{\text{RE}}$). In contrast, an EE-reduction \textbf{preserves both} decidability and Turing-recognizability.
-\end{remark}
-
-\subsection{Canonical Undecidable Problems and Classic Reductions}
-
-\begin{definition}
-    \textbf{The Halting Problem ($H$ and $H_\varepsilon$):}
-    \begin{itemize}
-        \item \textbf{General Halting Problem:}
-        $$
-            H = \{ \langle M \rangle \# w \mid M \text{ halts on input } w \}
-        $$
-        \item \textbf{Empty-Tape Halting Problem (Special Halting Problem):}
-        $$
-            H_\varepsilon = \{ \langle M \rangle \mid M \text{ halts on the empty input } \varepsilon \}
-        $$
-    \end{itemize}
-\end{definition}
-
-\begin{example}
-    \textbf{Reduction $L_{\text{univ}} \le_{EE} H$:}
-    Given an instance $\langle M \rangle \# w$ of $L_{\text{univ}}$, construct a Turing machine $M'$ that simulates $M$ on $w$. If $M$ accepts $w$, $M'$ halts. If $M$ rejects $w$, $M'$ enters an intentional infinite loop.
-    Then:
-    $$
-        \langle M \rangle \# w \in L_{\text{univ}} \iff M \text{ accepts } w \iff M' \text{ halts} \iff \langle M' \rangle \# w \in H
-    $$
-    Since $L_{\text{univ}}$ is undecidable, it follows that $H$ is \textbf{undecidable}.
-\end{example}
-
-\begin{example}
-    \textbf{Reduction $H \le_{EE} H_\varepsilon$:}
-    Given an instance $\langle M \rangle \# w$ of $H$, define a reduction function $f(\langle M \rangle \# w) = \langle M_w \rangle$, where $M_w$ is a newly constructed Turing machine that:
-    \begin{enumerate}
-        \item Ignores its own input tape.
-        \item Writes the fixed word $w$ onto its tape.
-        \item Simulates $M$ on $w$.
-    \end{enumerate}
-    When started on the empty word $\varepsilon$, $M_w$ writes $w$ and simulates $M(w)$. Thus:
-    $$
-        M_w \text{ halts on } \varepsilon \iff M \text{ halts on } w
-    $$
-    Therefore, $\langle M \rangle \# w \in H \iff \langle M_w \rangle \in H_\varepsilon$.
-    Because $H$ is undecidable, $H_\varepsilon$ is also \textbf{undecidable}.
-\end{example}
-
-\subsection{The Emptiness Problem and Non-Recognizability}
-
-\begin{definition}
-    \textbf{The Emptiness Problem ($L_\emptyset$):} The language of all Turing machines that accept no words:
-    $$
-        L_\emptyset = \{ \langle M \rangle \mid L(M) = \emptyset \}
-    $$
-    Its complement is $L_{\ne \emptyset} = \{ \langle M \rangle \mid L(M) \neq \emptyset \}$.
-\end{definition}
-
-\begin{theorem}
-    \textbf{Status of $L_\emptyset$ and $L_{\ne \emptyset}$:}
-    \begin{itemize}
-        \item $L_{\ne \emptyset}$ is \textbf{Turing-recognizable} ($L_{\ne \emptyset} \in \mathcal{L}_{\text{RE}}$), via dovetailing simulation across all possible words.
-        \item $L_{\ne \emptyset}$ is \textbf{undecidable} ($H_\varepsilon \le_{EE} L_{\ne \emptyset}$).
-        \item $L_\emptyset$ is \textbf{not Turing-recognizable} ($L_\emptyset \notin \mathcal{L}_{\text{RE}}$).
-    \end{itemize}
-\end{theorem}
-
-\subsection{Rice's Theorem}
-
-\begin{definition}
-    \textbf{Semantic Property of Turing Machines:} A property of Turing machines is called a \textbf{semantic property} (or language property) if it depends solely on the recognized language $L(M)$, not on the specific encoding or implementation details of $M$:
-    $$
-        L(M_1) = L(M_2) \implies (\langle M_1 \rangle \in L_{\mathcal{P}} \iff \langle M_2 \rangle \in L_{\mathcal{P}})
-    $$
-    A property $\mathcal{P} \subseteq \mathcal{L}_{\text{RE}}$ is called \textbf{non-trivial} if there is at least one recognizable language that has property $\mathcal{P}$ and at least one that does not:
-    $$
-        \mathcal{P} \neq \emptyset \quad \text{and} \quad \mathcal{P} \neq \mathcal{L}_{\text{RE}}
-    $$
-\end{definition}
-
-\begin{theorem}
-    \textbf{Rice's Theorem (Satz von Rice):} Every non-trivial semantic property of Turing-recognizable languages is \textbf{undecidable}.
-    That is, if $\emptyset \subsetneq \mathcal{P} \subsetneq \mathcal{L}_{\text{RE}}$, then:
-    $$
-        L_{\mathcal{P}} = \{ \langle M \rangle \mid L(M) \in \mathcal{P} \} \notin \mathcal{L}_{\text{rec}}
-    $$
-\end{theorem}
-
-\begin{proof}[Proof Outline]
-    Let $L = L_{\mathcal{P}} = \{ \text{Kod}(M) \mid L(M) \in \mathcal{P} \}$ (where $\text{Kod}(M) = \langle M \rangle$ is the encoding of $M$).
-    \begin{enumerate}
-        \item \textbf{Case Distinction:} Let $M_\emptyset$ be a Turing machine with $L(M_\emptyset) = \emptyset$ (i.e., a TM that immediately rejects or loops on all inputs). We check whether $\text{Kod}(M_\emptyset) \in L$:
-        \begin{itemize}
-            \item If $\text{Kod}(M_\emptyset) \notin L$, reduce $L_{H,\lambda} \le_E L$.
-            \item If $\text{Kod}(M_\emptyset) \in L$, reduce $L_{H,\lambda} \le_E L^c$. Since $L$ is decidable if and only if $L^c$ is decidable ($L \le_E L^c$), showing $L^c$ undecidable suffices to prove $L$ undecidable.
-        \end{itemize}
-        Without loss of generality, assume $\text{Kod}(M_\emptyset) \notin L$. Since $\mathcal{P}$ is non-trivial ($\mathcal{P} \neq \emptyset$), there exists at least one Turing machine $\overline{M}$ such that $L(\overline{M}) \in \mathcal{P}$, meaning $\text{Kod}(\overline{M}) \in L$.
-
-        \item \textbf{TM Construction:} Construct a Turing machine $S(x)$ that computes the reduction function $f(x)$ for input $x = \text{Kod}(M)w$:
-        \begin{itemize}
-            \item $S(x)$ builds the description of a new Turing machine $H_x$.
-            \item On input $y$, the machine $H_x$ operates as follows:
-            \begin{enumerate}
-                \item $H_x$ simulates $M$ on $w$.
-                \item If $M$ halts on $w$, $H_x$ simulates the target machine $\overline{M}$ (where $\text{Kod}(\overline{M}) \in L$) on $y$ (accepting if and only if $\overline{M}$ accepts $y$).
-                \item If $M$ does not halt on $w$, $H_x$ loops infinitely, meaning $L(H_x) = \emptyset = L(M_\emptyset)$.
-            \end{enumerate}
-        \end{itemize}
-
-        \item \textbf{Conclusion:} The language recognized by $H_x$ depends directly on whether $M$ halts on $w$:
-        \begin{itemize}
-            \item If $x \in L_{H,\lambda}$ ($M$ halts on $w$), then $L(H_x) = L(\overline{M}) \in \mathcal{P} \implies \text{Kod}(H_x) \in L$.
-            \item If $x \notin L_{H,\lambda}$ ($M$ does not halt on $w$), then $L(H_x) = \emptyset = L(M_\emptyset) \notin \mathcal{P} \implies \text{Kod}(H_x) \notin L$.
-        \end{itemize}
-        Therefore:
-        $$
-            x \in L_{H,\lambda} \iff \text{Kod}(H_x) \in L
-        $$
-        Since the reduction $S$ is computable and $L_{H,\lambda}$ is undecidable, $L$ must also be undecidable.
-    \end{enumerate}
+\begin{proof}
+    \textbf{Beweisidee:} Wir kodieren die Konfigurationsübergänge einer TM als Wortpaare, sodass eine Übereinstimmung von oberem und unterem Band einer gültigen Berechnungshistorie (Valid Computation History)
+    \[
+        C_0 \# C_1 \# C_2 \# \dots \# C_{\mathrm{halt}}
+    \]
+    entspricht.
+    
+    Das MPKP erzwingt mit $i_1 = 1$ die Erzeugung der Startkonfiguration $q_0 \text{\textcent} w$. Paare wie $[\frac{a}{a}]$ kopieren unberührte Bandabschnitte, während Paare der Form $[\frac{q a}{b p}]$ lokale Kopfschritte simulieren. Durch Sternchenmarkierungen ($* u_1 * u_2 \dots$) wird das MPKP auf das freie PCP reduziert.
 \end{proof}
 
-\begin{remark}
-    \textbf{Power of Rice's Theorem:} Rice's theorem immediately proves the undecidability of virtually every semantic question about program behavior without needing separate manual reductions:
-    \begin{itemize}
-        \item Is $L(M) = \emptyset$? (Undecidable)
-        \item Is $L(M)$ finite? (Undecidable)
-        \item Is $L(M)$ regular? (Undecidable)
-        \item Does $M$ accept the word $01$? (Undecidable)
-    \end{itemize}
-    \textbf{Warning (Syntactic properties are NOT covered):} Rice's theorem only applies to semantic properties (languages). Syntactic properties (e.g., ,,Does $M$ have more than 5 states?`` or ,,Does $M$ ever execute transition $\delta(q_1, 0)$ on its transition diagram?``) are structural features of the code and are typically easily decidable.
-\end{remark}
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption{Klassifikation ausgewählter Entscheidungsprobleme bezüglich $\mathcal{L}_{\mathrm{rec}}$ und $\mathcal{L}_{\mathrm{RE}}$}
+    \label{tab:unentscheidbarkeit}
+    \vspace{0.5em}
+    \begin{tabular}{p{5.5cm}ll}
+        \toprule
+        \textbf{Problem / Sprache} & \textbf{Status} & \textbf{Beweismethode} \\
+        \midrule
+        $L_{\mathrm{diag}}$ & $\notin \mathcal{L}_{\mathrm{RE}}$ & Cantorsche Diagonalisierung \\
+        $(L_{\mathrm{diag}})^c$ & $\in \mathcal{L}_{\mathrm{RE}} \setminus \mathcal{L}_{\mathrm{rec}}$ & Universelle TM \& Komplementsatz \\
+        Universelle Sprache $L_U$ & $\in \mathcal{L}_{\mathrm{RE}} \setminus \mathcal{L}_{\mathrm{rec}}$ & Reduktion $(L_{\mathrm{diag}})^c \le_{\mathrm{EE}} L_U$ \\
+        Halteproblem $L_H$ & $\in \mathcal{L}_{\mathrm{RE}} \setminus \mathcal{L}_{\mathrm{rec}}$ & Reduktion $L_U \le_{\mathrm{EE}} L_H$ \\
+        Halteproblem auf leerem Band $L_{H,\lambda}$ & $\in \mathcal{L}_{\mathrm{RE}} \setminus \mathcal{L}_{\mathrm{rec}}$ & Reduktion $L_H \le_{\mathrm{EE}} L_{H,\lambda}$ \\
+        Leerheitsproblem $L_{\mathrm{empty}}$ & $\notin \mathcal{L}_{\mathrm{RE}}$ & Reduktion $L_{H,\lambda} \le_{\mathrm{EE}} (L_{\mathrm{empty}})^c$ \\
+        Nicht-Leerheit $(L_{\mathrm{empty}})^c$ & $\in \mathcal{L}_{\mathrm{RE}} \setminus \mathcal{L}_{\mathrm{rec}}$ & Dovetailing über $\Sigma^* \times \mathbb{N}$ \\
+        Nichttriviale semantische Eigenschaft & $\notin \mathcal{L}_{\mathrm{rec}}$ & Satz von Rice \\
+        Postsches Korrespondenzproblem & $\in \mathcal{L}_{\mathrm{RE}} \setminus \mathcal{L}_{\mathrm{rec}}$ & Reduktion via TM-Historien \\
+        \bottomrule
+    \end{tabular}
+\end{table}

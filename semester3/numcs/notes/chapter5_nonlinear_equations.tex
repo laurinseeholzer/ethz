@@ -1,0 +1,94 @@
+\section{Nonlinear Equations \& Systems}
+
+Unlike linear systems $A x = b$, nonlinear equations $F(x) = 0$ generally cannot be solved in a finite sequence of algebraic operations. They must be resolved via iterative processes that generate successively improving approximations.
+
+% -----------------------------------------------------------------------------
+\subsection{Convergence Orders \& 1D Root Finding}
+
+\begin{definition}
+    Let $(x^{(k)})_{k \in \mathbb{N}} \subset \mathbb{R}^d$ converge to a root $x^*$, with error $e^{(k)} = x^{(k)} - x^*$. The method has \textbf{order of convergence} $p \ge 1$ with asymptotic error constant $C > 0$ if:
+    \begin{equation}
+        \lim_{k \to \infty} \frac{\|e^{(k+1)}\|}{\|e^{(k)}\|^p} = C.
+    \end{equation}
+    If $p = 1$ and $C < 1$, convergence is \textbf{linear}. If $1 < p < 2$, it is \textbf{superlinear}. If $p = 2$, convergence is \textbf{quadratic}, meaning the count of correct significant digits doubles at every single iteration.
+\end{definition}
+
+Stopping criteria should combine relative step size and residual checks:
+\begin{equation}
+    \|x^{(k+1)} - x^{(k)}\| \le \tau_{\text{step}} \|x^{(k+1)}\| \quad \text{and} \quad \|F(x^{(k+1)})\| \le \tau_{\text{res}}.
+\end{equation}
+
+In 1D root-finding, the \textbf{bisection method} brackets a root in $[a, b]$ where $f(a) f(b) < 0$. By the Intermediate Value Theorem, evaluating the midpoint $m = \frac{a+b}{2}$ and updating the subinterval containing the sign change guarantees global convergence with linear rate $C = 1/2$. The error after $k$ steps satisfies:
+\begin{equation}
+    |e^{(k)}| \le \frac{b_0 - a_0}{2^{k+1}}.
+\end{equation}
+
+The \textbf{secant method} replaces the analytical derivative with the finite difference slope:
+\begin{equation}
+    x^{(k+1)} = x^{(k)} - f(x^{(k)}) \frac{x^{(k)} - x^{(k-1)}}{f(x^{(k)}) - f(x^{(k-1)})}.
+\end{equation}
+Because $f(x^{(k-1)})$ is reused from the previous step, each iteration requires only one new function evaluation, achieving superlinear convergence with order $p = \frac{1 + \sqrt{5}}{2} \approx 1.618$.
+
+% -----------------------------------------------------------------------------
+\subsection{Fixed-Point Iteration \& Banach Contraction}
+
+Transforming $F(x) = 0$ into the equivalent fixed-point equation $x = \phi(x)$ leads to the iteration $x^{(k+1)} = \phi(x^{(k)})$.
+
+\begin{theorem}
+    In the \textbf{Banach fixed-point theorem}, let $\phi: [a, b] \to [a, b]$ be continuously differentiable. If $|\phi'(x)| \le L < 1$ for all $x \in [a, b]$, there exists a unique fixed point $x^* \in [a, b]$, and the iteration converges linearly with asymptotic rate $C = |\phi'(x^*)|$.
+    
+    Under the \textbf{quadratic condition} where $\phi'(x^*) = 0$ and $\phi''(x^*) \neq 0$, Taylor expanding $\phi(x^{(k)})$ about $x^*$ yields:
+    \begin{equation}
+        x^{(k+1)} - x^* = \frac{\phi''(x^*)}{2}(x^{(k)} - x^*)^2 + \mathcal{O}(|e^{(k)}|^3),
+    \end{equation}
+    guaranteeing \textbf{quadratic convergence} ($p=2$).
+\end{theorem}
+
+On a cobweb diagram, the iteration moves vertically from $x^{(k)}$ to $y = \phi(x^{(k)})$, then horizontally to the line $y = x$. If $|\phi'(x^*)| < 1$, the trajectory spirals inwards to $x^*$. If $|\phi'(x^*)| > 1$, it diverges. When $\phi'(x^*) = 0$, the tangent at the root is horizontal, mapping points infinitesimally close to $x^*$.
+
+% -----------------------------------------------------------------------------
+\subsection{Multidimensional Newton-Raphson \& Globalization}
+
+Let $F: \mathbb{R}^n \to \mathbb{R}^n$ be continuously differentiable with Jacobian $(DF)_{i,j} = \frac{\partial F_i}{\partial x_j}$. Linearizing $F(x^{(k)} + s) \approx F(x^{(k)}) + DF(x^{(k)}) s = 0$ produces the \textbf{Newton system}:
+\begin{equation}
+    DF(x^{(k)}) s^{(k)} = -F(x^{(k)}), \qquad x^{(k+1)} = x^{(k)} + s^{(k)}.
+\end{equation}
+If $DF(x^*)$ is non-singular and the initial guess $x^{(0)}$ is sufficiently close to $x^*$, Newton's method converges \textbf{quadratically}:
+\begin{equation}
+    \|x^{(k+1)} - x^*\| \le C \|x^{(k)} - x^*\|^2.
+\end{equation}
+
+\begin{important}
+    \textbf{Never compute $DF(x)^{-1}$ explicitly!} Explicit matrix inversion requires $2n^3$ flops (three times more work than LU factorization), destroys backward stability, and fills in sparse Jacobians. Always solve the linear system $DF(x^{(k)}) s^{(k)} = -F(x^{(k)})$ via LU factorization with partial pivoting in $\frac{2}{3}n^3 + 2n^2$ flops.
+\end{important}
+
+Pure Newton can diverge when starting far from $x^*$. The \textbf{damped Newton method} scales the step size by $\lambda_k \in (0, 1]$:
+\begin{equation}
+    x^{(k+1)} = x^{(k)} + \lambda_k s^{(k)}.
+\end{equation}
+The step size is chosen via \textbf{Armijo backtracking line search}: starting from $\lambda = 1$, we repeatedly halve $\lambda \leftarrow \lambda / 2$ until the residual reduction condition holds:
+\begin{equation}
+    \|F(x^{(k)} + \lambda s^{(k)})\|_2 \le (1 - \alpha \lambda) \|F(x^{(k)})\|_2, \quad \text{with } \alpha \in (0, 1/2).
+\end{equation}
+This enforces monotonic residual decrease, guaranteeing global convergence. Near the root, $\lambda = 1$ is naturally accepted, recovering full quadratic convergence.
+
+\newpage
+\subsection{Broyden’s Quasi-Newton Method}
+
+Evaluating the analytical Jacobian $DF(x)$ and factoring an $n \times n$ matrix in $\mathcal{O}(n^3)$ flops at every iteration is a major bottleneck in high dimensions. Quasi-Newton methods replace the exact Jacobian with an approximation $B_k \approx DF(x^{(k)})$ satisfying the \textbf{secant equation}:
+\begin{equation}
+    B_{k+1} s^{(k)} = y^{(k)}, \quad \text{where } s^{(k)} = x^{(k+1)} - x^{(k)}, \quad y^{(k)} = F(x^{(k+1)}) - F(x^{(k)}).
+\end{equation}
+
+\begin{theorem}
+    In \textbf{Broyden's method}, the rank-1 update minimizes the Frobenius change $\|B_{k+1} - B_k\|_F$ subject to the secant equation:
+    \begin{equation}
+        B_{k+1} = B_k + \frac{(y^{(k)} - B_k s^{(k)}) (s^{(k)})^T}{\|s^{(k)}\|_2^2}.
+    \end{equation}
+    Applying the \textbf{Sherman-Morrison formula}, the inverse Jacobian approximation $H_k = B_k^{-1}$ is updated directly via:
+    \begin{equation}
+        H_{k+1} = H_k + \frac{(s^{(k)} - H_k y^{(k)}) (s^{(k)})^T H_k}{(s^{(k)})^T H_k y^{(k)}}.
+    \end{equation}
+\end{theorem}
+
+Evaluating the step $s^{(k)} = -H_k F(x^{(k)})$ and updating $H_{k+1}$ requires only matrix-vector multiplications, reducing the per-iteration computational cost from $\mathcal{O}(n^3)$ to \textbf{$\mathcal{O}(n^2)$ flops} while maintaining superlinear convergence.

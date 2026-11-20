@@ -1,0 +1,91 @@
+\section{Least Squares \& Optimization}
+
+In physical experiments and data science, mathematical models frequently involve more measurements than unknown parameters ($m > n$). Due to measurement errors and noise, an exact solution to $A x = b$ almost never exists. Least squares seeks the parameter vector that minimizes the mismatch in the Euclidean norm.
+
+% -----------------------------------------------------------------------------
+\subsection{Linear Least Squares \& The Normal Equations Disaster}
+
+\begin{definition}
+    Let $A \in \mathbb{R}^{m \times n}$ with $m > n$, and $b \in \mathbb{R}^m$. The \textbf{linear least squares problem} seeks $x^* \in \mathbb{R}^n$ minimizing the residual norm:
+    \begin{equation}
+        \min_{x \in \mathbb{R}^n} \frac{1}{2} \|A x - b\|_2^2.
+    \end{equation}
+\end{definition}
+
+Geometrically, $A x$ is a linear combination of the columns of $A$, meaning $A x \in \operatorname{Col}(A) \subset \mathbb{R}^m$. The vector $b$ lies outside $\operatorname{Col}(A)$ due to noise. The closest point in $\operatorname{Col}(A)$ to $b$ is the \textbf{orthogonal projection} of $b$ onto $\operatorname{Col}(A)$. Consequently, the optimal residual vector $r = A x^* - b$ must be strictly perpendicular to every column of $A$:
+\begin{equation}
+    A^T r = 0 \iff A^T (A x^* - b) = 0 \iff A^T A x^* = A^T b.
+\end{equation}
+This linear system represents the celebrated \textbf{normal equations}. If $A$ has full column rank ($\operatorname{rank}(A) = n$), the Gram matrix $A^T A \in \mathbb{R}^{n \times n}$ is symmetric positive definite (SPD).
+
+\begin{important}
+    \textbf{Never form or solve the normal equations directly in floating-point arithmetic!} In the Euclidean 2-norm, forming the Gram matrix squares the condition number:
+    \begin{equation}
+        \operatorname{cond}_2(A^T A) = (\operatorname{cond}_2(A))^2.
+    \end{equation}
+    If $A$ has condition number $\operatorname{cond}_2(A) = 10^8$ (a common occurrence in polynomial fitting or sensor calibration), then $\operatorname{cond}_2(A^T A) = 10^{16} \approx 1/\varepsilon_{\text{mach}}$. In double precision, forming $A^T A$ completely destroys all 16 decimal digits of accuracy.
+\end{important}
+
+% -----------------------------------------------------------------------------
+\subsection{Stable Least Squares Solvers: Economic QR}
+
+To preserve numerical precision, least squares must be solved without ever forming $A^T A$.
+
+\begin{theorem}
+    Let $A = Q_1 R_1$ be the \textbf{economic QR factorization} of $A$, where $Q_1 \in \mathbb{R}^{m \times n}$ has orthonormal columns ($Q_1^T Q_1 = I_n$) and $R_1 \in \mathbb{R}^{n \times n}$ is upper-triangular. Substituting $A = Q_1 R_1$ into the normal equations yields:
+    \begin{equation}
+        (Q_1 R_1)^T (Q_1 R_1) x = (Q_1 R_1)^T b \iff R_1^T (Q_1^T Q_1) R_1 x = R_1^T Q_1^T b \iff R_1^T R_1 x = R_1^T Q_1^T b.
+    \end{equation}
+    Because $R_1$ is invertible for full-rank $A$, multiplying by $(R_1^T)^{-1}$ produces:
+    \begin{equation}
+        R_1 x = Q_1^T b.
+    \end{equation}
+\end{theorem}
+
+Because $Q_1$ has orthonormal columns, applying $Q_1^T$ is a rigid transformation that preserves Euclidean distances. The condition number of the triangular factor matches the original matrix:
+\begin{equation}
+    \operatorname{cond}_2(R_1) = \operatorname{cond}_2(A).
+\end{equation}
+The condition number is \textbf{never squared}. Solving $R_1 x = Q_1^T b$ via backward substitution achieves full machine precision $\varepsilon_{\text{mach}}$ in $2m n^2 + \mathcal{O}(m n)$ flops.
+
+For rank-deficient matrices ($\operatorname{rank}(A) = r < n$), the compact SVD ($A = U_1 \Sigma_r V_1^T$) produces the unique minimal-norm solution via the \textbf{Moore-Penrose pseudoinverse}:
+\begin{equation}
+    x^* = A^+ b = V_1 \Sigma_r^{-1} U_1^T b = \sum_{j=1}^{r} \frac{u_j^T b}{\sigma_j} v_j.
+\end{equation}
+
+% -----------------------------------------------------------------------------
+\subsection{Nonlinear Least Squares \& Gauss-Newton}
+
+Let $F: \mathbb{R}^n \to \mathbb{R}^{m}$ ($m > n$) be a vector of nonlinear residuals $F(x) = (f_1(x), \dots, f_m(x))^T$. We minimize the scalar objective:
+\begin{equation}
+    \Phi(x) := \frac{1}{2} \|F(x)\|_2^2 = \frac{1}{2} \sum_{i=1}^{m} (f_i(x))^2.
+\end{equation}
+Denoting the Jacobian by $J(x) = DF(x) \in \mathbb{R}^{m \times n}$, the exact gradient and Hessian are:
+\begin{equation}
+    \nabla \Phi(x) = J(x)^T F(x), \qquad \nabla^2 \Phi(x) = J(x)^T J(x) + \sum_{i=1}^{m} f_i(x) \nabla^2 f_i(x).
+\end{equation}
+
+Evaluating the second-order tensor term $\sum_{i=1}^m f_i(x) \nabla^2 f_i(x)$ requires $m$ separate $n \times n$ Hessians, which is computationally prohibitive. When residuals are small near the optimum ($f_i(x^*) \approx 0$) or the model is mildly nonlinear, the second-order term is negligible: $\nabla^2 \Phi(x) \approx J(x)^T J(x)$. The Newton step equation $\nabla^2 \Phi(x) s = -\nabla \Phi(x)$ reduces to the \textbf{Gauss-Newton step}:
+\begin{equation}
+    J(x^{(k)})^T J(x^{(k)}) s^{(k)} = -J(x^{(k)})^T F(x^{(k)}).
+\end{equation}
+This is formally identical to the normal equations of the linear least squares subproblem:
+\begin{equation}
+    \min_{s \in \mathbb{R}^n} \|J(x^{(k)}) s + F(x^{(k)})\|_2.
+\end{equation}
+At each iteration, we solve $J(x^{(k)}) s \approx -F(x^{(k)})$ via economic QR in $2m n^2$ flops without ever forming $J^T J$, and update $x^{(k+1)} = x^{(k)} + s$.
+
+% -----------------------------------------------------------------------------
+\subsection{Levenberg-Marquardt (LM) Algorithm}
+
+When $J(x^{(k)})$ is rank-deficient or the iterate is far from the minimum, Gauss-Newton can diverge. The \textbf{Levenberg-Marquardt (LM) method} introduces a diagonal regularizer $\mu^{(k)} \ge 0$:
+\begin{equation}
+    \left( J(x^{(k)})^T J(x^{(k)}) + \mu^{(k)} I \right) s^{(k)} = -J(x^{(k)})^T F(x^{(k)}).
+\end{equation}
+The damping parameter $\mu$ acts as an adaptive controller: when $\mu \to 0$, the method reduces to pure Gauss-Newton ($s \approx -(J^T J)^{-1} J^T F$), providing quadratic-like local convergence; when $\mu \to \infty$, the diagonal dominates ($s \approx -\frac{1}{\mu} \nabla \Phi(x)$), recovering small-step gradient descent in the steepest descent direction.
+
+Computationally, the damped normal equations are solved via the augmented linear least squares problem:
+\begin{equation}
+    \min_{s} \left\| \begin{pmatrix} J(x^{(k)}) \\ \sqrt{\mu} I_n \end{pmatrix} s - \begin{pmatrix} -F(x^{(k)}) \\ 0 \end{pmatrix} \right\|_2,
+\end{equation}
+which is factored via QR in $\mathcal{O}((m+n)n^2)$ flops without ever forming $J^T J$.

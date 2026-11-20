@@ -1,0 +1,186 @@
+\section{Gebundene Extrema \& Geometrische Sätze}
+
+\subsection{Methode der Lagrange-Multiplikatoren}
+
+\begin{definition}
+    \textbf{Gebundenes Optimierungsproblem:} Gegeben seien eine Zielfunktion $f: U \subset \mathbb{R}^n \to \mathbb{R}$ und $k$ Nebenbedingungen $g_1, \dots, g_k: U \to \mathbb{R}$ ($k < n$), zusammengefasst als $g = (g_1, \dots, g_k)^T: U \to \mathbb{R}^k$. Gesucht sind Extrema von $f$ auf der Menge:
+    $$ M := \{ x \in U \mid g(x) = 0 \} = \{ x \in U \mid g_1(x) = 0, \dots, g_k(x) = 0 \} $$
+\end{definition}
+
+\begin{definition}
+    \textbf{Regularitätsbedingung:} Ein Punkt $x_0 \in M$ heisst \textbf{regulärer Punkt} der Nebenbedingung $g$, falls die Jacobi-Matrix $Dg(x_0) \in \mathbb{R}^{k \times n}$ maximalen Rang hat:
+    $$ \operatorname{rang}(Dg(x_0)) = k \iff \nabla g_1(x_0), \dots, \nabla g_k(x_0) \text{ sind linear unabhängig in } \mathbb{R}^n $$
+    Für eine einzelne Nebenbedingung ($k = 1$) vereinfacht sich dies zu: $\nabla g(x_0) \neq 0$.
+\end{definition}
+
+\begin{theorem}
+    \textbf{Satz über Lagrange-Multiplikatoren:}
+    Sei $U \subset \mathbb{R}^n$ \textbf{offen}, $f, g_1, \dots, g_k \in C^1(U)$ und $x_0 \in M = \{x \in U \mid g(x) = 0\}$ ein lokales Extremum von $f|_M$.
+    Ist $x_0$ ein \textbf{regulärer Punkt} ($\operatorname{rang}(Dg(x_0)) = k$), so existieren eindeutig bestimmte Multiplikatoren $\lambda_1, \dots, \lambda_k \in \mathbb{R}$, sodass:
+    $$ \nabla f(x_0) = \sum_{j=1}^k \lambda_j \nabla g_j(x_0) = Dg(x_0)^T \lambda $$
+\end{theorem}
+
+\begin{remark}
+    \textbf{Geometrische Anschauung:}
+    Im Optimum \textbf{berühren sich die Niveaulinie/-fläche} von $f$ und die Nebenbedingungsfläche $M$ tangential. Da $\nabla f(x_0)$ orthogonal auf der Niveaulinie von $f$ steht und die Gradienten $\nabla g_j(x_0)$ das orthogonale Komplement (den Normalenraum) des Tangentialraums $T_{x_0} M$ aufspannen, muss $\nabla f(x_0)$ \textbf{eine Linearkombination der} $\nabla g_j(x_0)$ sein.
+\end{remark}
+
+\begin{definition}
+    \textbf{Lagrange-Funktion:} Man fasst Zielfunktion und Nebenbedingungen zusammen in:
+    $$ L(x, \lambda) := f(x) - \sum_{j=1}^k \lambda_j g_j(x) = f(x) - \lambda^T g(x) $$
+    Die notwendige Bedingung für reguläre Punkte entspricht dem Verschwinden aller partiellen Ableitungen:
+    $$ \nabla_x L(x, \lambda) = \nabla f(x) - \sum_{j=1}^k \lambda_j \nabla g_j(x) = 0 \quad \text{und} \quad \nabla_\lambda L(x, \lambda) = -g(x) = 0 $$
+\end{definition}
+
+\begin{remark}
+    \textbf{Konzept \& Eleganz der Lagrange-Funktion $\mathcal{L}(x, \lambda)$:} \\
+    \textbf{Warum führt man die Hilfsfunktion $\mathcal{L}(x, \lambda)$ ein?} \\
+    Ein gebundenes Optimierungsproblem ist analytisch sperrig, da man die Zielfunktion $f$ nur entlang der gekrümmten Lösungsmenge $M = \{g(x) = 0\}$ variieren darf. Die Lagrange-Funktion $\mathcal{L}(x, \lambda) = f(x) - \sum_{j=1}^k \lambda_j g_j(x)$ vollbringt einen genialen Trick: Sie verwandelt das \textbf{gebundene Problem im $\mathbb{R}^n$} in ein \textbf{ungebundenes Nullstellensystem im $\mathbb{R}^{n+k}$}:
+    \begin{itemize}
+        \item \textbf{Ableitung nach $x$:}
+        $$ \nabla_x \mathcal{L}(x, \lambda) = 0 \iff \nabla f(x) = \sum_{j=1}^k \lambda_j \nabla g_j(x) $$
+        Dies erzwingt die \textbf{Parallelität der Normalenvektoren}: Der Gradient der Zielfunktion muss senkrecht auf der Tangentialebene von $M$ stehen (also im Normalenraum liegen), damit sich der Funktionswert bei infinitesimalen Bewegungen auf der Fläche in 1. Ordnung nicht ändert.
+        \item \textbf{Ableitung nach den Multiplikatoren $\lambda$:}
+        $$ \nabla_\lambda \mathcal{L}(x, \lambda) = 0 \iff g(x) = 0 $$
+        Die partiellen Ableitungen nach den $\lambda_j$ reproduzieren exakt die ursprünglichen Nebenbedingungen!
+    \end{itemize}
+    Statt kompliziert auf einer Mannigfaltigkeit zu rechnen, sucht man schlicht alle stationären Punkte von $\mathcal{L}$ im erweiterten Parameterraum.
+\end{remark}
+
+\begin{remark}
+    \textbf{Klausurfalle: Singuläre Punkte der Nebenbedingung nicht vergessen!}
+    Der Lagrange-Satz gilt \textbf{nur für reguläre Punkte}! Punkte $x \in M$, an denen die Regularitätsbedingung verletzt ist (d.h. $\operatorname{rang}(Dg(x)) < k$ bzw. $\nabla g(x) = 0$ für $k=1$), können lokale oder globale Extrema sein, werden aber vom Lagrange-Ansatz \textbf{nicht erfasst}.
+    \textbf{Regel für Klausuren:} Vor oder nach dem Lagrange-Ansatz immer prüfen, ob Punkte mit $\nabla g(x) = 0$ auf $M$ liegen, und diese als separate Kandidaten aufnehmen!
+\end{remark}
+
+\subsection{Geometrische Grundlagen: Mannigfaltigkeiten \& Tangentialräume}
+
+\begin{definition}
+    \textbf{Untermannigfaltigkeit des $\mathbb{R}^n$:} Eine Teilmenge $M \subset \mathbb{R}^n$ heisst $d$-dimensionale $C^m$-Untermannigfaltigkeit des $\mathbb{R}^n$ ($d \le n$), falls jeder Punkt $x_0 \in M$ eine Umgebung $U \subset \mathbb{R}^n$ besitzt, sodass $M \cap U$ diffeomorph zu einer offenen Teilmenge des $\mathbb{R}^d$ ist.
+    Die Zahl $k = n - d$ heisst \textbf{Kodimension} von $M$.
+\end{definition}
+
+\begin{theorem}
+    \textbf{Niveaumengen als Mannigfaltigkeiten (Satz vom regulären Wert):}
+    Sei $U \subset \mathbb{R}^n$ offen und $g: U \to \mathbb{R}^k$ von Klasse $C^1$ ($k < n$). Ist $b \in \mathbb{R}^k$ ein regulärer Wert (d.h. $\operatorname{rang}(Dg(x)) = k$ für alle $x \in g^{-1}(\{b\})$), so ist das Urbild
+    $$ M = g^{-1}(\{b\}) = \{ x \in U \mid g(x) = b \} $$
+    eine glatte Untermannigfaltigkeit des $\mathbb{R}^n$ der Dimension $d = n - k$.
+\end{theorem}
+
+\begin{definition}
+    \textbf{Tangentialraum und Normalenraum:}
+    \begin{itemize}
+        \item Der \textbf{Tangentialraum} $T_{x_0} M$ an $M$ im Punkt $x_0 \in M$ ist die Menge aller Geschwindigkeitsvektoren differenzierbarer Kurven in $M$ durch $x_0$:
+        $$ T_{x_0} M := \{ \gamma'(0) \mid \gamma: (-\varepsilon, \varepsilon) \to M \text{ differenzierbar mit } \gamma(0) = x_0 \} $$
+        \item Ist $M = \{x \in \mathbb{R}^n \mid g(x) = 0\}$ mit regulärem $x_0$, so ist der Tangentialraum genau der Kern der Jacobi-Matrix:
+        $$ T_{x_0} M = \ker(Dg(x_0)) = \{ v \in \mathbb{R}^n \mid \langle \nabla g_j(x_0), v \rangle = 0 \text{ für alle } j=1, \dots, k \} $$
+        Es gilt: $\dim(T_{x_0} M) = n - k$.
+        \item Der \textbf{Normalenraum} $N_{x_0} M = (T_{x_0} M)^\perp$ wird aufgespannt durch die Zeilenvektoren von $Dg(x_0)$:
+        $$ N_{x_0} M = \operatorname{span}\{ \nabla g_1(x_0), \dots, \nabla g_k(x_0) \}, \quad \dim(N_{x_0} M) = k $$
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    \textbf{Geometrische Anschauung: Reguläre Werte, Mannigfaltigkeiten \& Tangentialraum} \\
+    \textbf{1. Was bedeutet "regulärer Wert" geometrisch?} \\
+    Ein Wert $b \in \mathbb{R}^k$ heisst regulär, wenn $\operatorname{rang}(Dg(x)) = k$ auf dem gesamten Niveau $M = g^{-1}(\{b\})$ gilt (für eine einzelne Nebenbedingung $g(x) = c$ schlicht $\nabla g(x) \neq 0$).
+    \begin{itemize}
+        \item \textbf{Bedeutung:} Die Funktion besitzt überall auf dem Niveau eine echte Steigung und durchstößt das Niveau transversal (kein lokales Verflachen). Nach dem impliziten Funktionensatz lässt sich das Niveau lokal überall als glatter Funktionsgraph darstellen.
+        \item Es gibt \textbf{keine Spitzen, keine Knicke und keine Selbstüberschneidungen}. $M$ ist eine glatte $d$-dimensionale Untermannigfaltigkeit der Dimension $d = n - k$.
+    \end{itemize}
+
+    \textbf{2. Klausur-Gegenbeispiel: Der Doppelkegel (Rangabfall)} \\
+    Betrachte die Niveauflläche $g(x, y, z) = x^2 + y^2 - z^2 = 0$.
+    Der Gradient lautet $\nabla g(x, y, z) = (2x, 2y, -2z)^T$.
+    \begin{itemize}
+        \item Für alle Punkte $(x, y, z) \neq (0, 0, 0)$ ist $\nabla g \neq 0$: Der Kegelmantel ist dort eine glatte 2D-Fläche.
+        \item Im Ursprung $(0, 0, 0)$ gilt $\nabla g(0, 0, 0) = (0, 0, 0)^T$ (Rangabfall von 1 auf 0!). Der Ursprung ist ein singulärer Punkt. Geometrisch besitzt der Doppelkegel dort eine \textbf{nicht-glatte Spitze} (Singularität), in der kein Tangentialraum existiert – das Niveau ist im Ursprung \textbf{keine Mannigfaltigkeit}!
+    \end{itemize}
+
+    \textbf{3. Warum ist der Tangentialraum der Kern: $T_{x_0} M = \ker(Dg(x_0))$?} \\
+    Jede differenzierbare Kurve $\gamma: (-\varepsilon, \varepsilon) \to M$ mit $\gamma(0) = x_0$ verläuft vollständig auf dem Niveau: $g(\gamma(t)) \equiv b$. Differenziert man diese Identität nach $t$ im Punkt $t = 0$ via Kettenregel:
+    $$ 0 = \left. \frac{d}{dt} \right|_{t=0} g(\gamma(t)) = Dg(x_0) \cdot \gamma'(0) $$
+    Der Geschwindigkeitsvektor $v = \gamma'(0)$ liegt also stets im Kern von $Dg(x_0)$. Das bedeutet anschaulich: \textbf{Jeder Tangentialvektor an $M$ steht senkrecht auf allen Gradienten $\nabla g_j(x_0)$} der definierenden Nebenbedingungen!
+\end{remark}
+
+\subsection{Satz über implizite Funktionen}
+
+\begin{definition}
+    \textbf{Problemstellung:} Gegeben sei ein Gleichungssystem aus $m$ nichtlinearen Gleichungen für $n$ Variablen mit $n > m$:
+    $$ F(x, y) = 0, \quad \text{wobei } x \in \mathbb{R}^d, \; y \in \mathbb{R}^m, \; n = d + m $$
+    Lässt sich das System in einer Umgebung eines Lösungspunktes $(x_0, y_0)$ eindeutig nach den $m$ Variablen $y$ in Abhängigkeit der $d$ Variablen $x$ auflösen, d.h. $y = g(x)$?
+\end{definition}
+
+\begin{theorem}
+    \textbf{Satz über implizite Funktionen:}
+    Sei $U \subset \mathbb{R}^d \times \mathbb{R}^m$ \textbf{offen} und $F: U \to \mathbb{R}^m$ eine \textbf{stetig differenzierbare} Funktion ($F \in C^1(U)$). Sei $(x_0, y_0) \in U$ ein Punkt mit:
+    \begin{enumerate}
+        \item $F(x_0, y_0) = 0$.
+        \item Die quadratische Teil-Jacobi-Matrix bezüglich der aufzulösenden Variablen $y$
+        $$ J_y F(x_0, y_0) = D_y F(x_0, y_0) = \left( \frac{\partial F_i}{\partial y_j}(x_0, y_0) \right)_{1 \le i, j \le m} \in \mathbb{R}^{m \times m} $$
+        ist \textbf{invertierbar} ($\det(J_y F(x_0, y_0)) \neq 0$).
+    \end{enumerate}
+    Dann existieren eine offene Umgebung $U_0 \subset \mathbb{R}^d$ von $x_0$, eine offene Umgebung $V_0 \subset \mathbb{R}^m$ von $y_0$ mit $U_0 \times V_0 \subset U$ und eine \textbf{eindeutige $C^1$-Funktion} $g: U_0 \to V_0$, sodass für alle $(x, y) \in U_0 \times V_0$ gilt:
+    $$ F(x, y) = 0 \iff y = g(x) $$
+    Insbesondere gilt $g(x_0) = y_0$.
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Ableitungsformel für die implizite Funktion:}
+    Unter den Voraussetzungen des Satzes ist die Funktion $g$ differenzierbar, und ihre Jacobi-Matrix lautet:
+    $$ Dg(x) = - \big( J_y F(x, g(x)) \big)^{-1} \cdot J_x F(x, g(x)) $$
+    wobei $J_x F = \left( \frac{\partial F_i}{\partial x_k} \right) \in \mathbb{R}^{m \times d}$ die Ableitung nach den unabhängigen Variablen ist.
+\end{theorem}
+
+\begin{lemma}
+    \textbf{Spezialfall im $\mathbb{R}^2$ ($F(x, y) = 0$):}
+    Ist $F(x_0, y_0) = 0$ mit $F_y(x_0, y_0) \neq 0$, so lässt sich die Kurve lokal als $y = g(x)$ schreiben und für die Ableitung gilt:
+    $$ y'(x) = g'(x) = - \frac{F_x(x, y)}{F_y(x, y)} $$
+    \textbf{Zweite Ableitung:} Durch erneutes Differenzieren via Kettenregel erhält man:
+    $$ y''(x) = - \frac{F_{xx} F_y^2 - 2 F_{xy} F_x F_y + F_{yy} F_x^2}{F_y^3} $$
+\end{lemma}
+
+\subsection{Satz über die Umkehrfunktion (Inverser Funktionensatz)}
+
+\begin{theorem}
+    \textbf{Satz über die lokale Umkehrfunktion:}
+    Sei $U \subset \mathbb{R}^n$ \textbf{offen}, $f: U \to \mathbb{R}^n$ von Klasse $C^1(U)$ und $x_0 \in U$ ein Punkt, an dem das Differential invertierbar ist:
+    $$ \det(Df(x_0)) \neq 0 $$
+    Dann existiert eine offene Umgebung $V \subset U$ von $x_0$, sodass:
+    \begin{enumerate}
+        \item Die Bildmenge $W := f(V) \subset \mathbb{R}^n$ \textbf{offen} ist.
+        \item Die Einschränkung $f|_V: V \to W$ bijektiv ist (d.h. $f$ ist ein \textbf{lokaler $C^1$-Diffeomorphismus}).
+        \item Die lokale Umkehrfunktion $f^{-1}: W \to V$ ebenfalls von Klasse $C^1(W)$ ist.
+        \item Das Differential der Umkehrfunktion an der Stelle $y_0 = f(x_0)$ die inverse Matrix ist:
+        $$ D(f^{-1})(f(x_0)) = \big( Df(x_0) \big)^{-1} $$
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+    \textbf{Bedeutung \& Klausurfalle:}
+    $\det(Df(x_0)) \neq 0$ garantiert \textbf{nur lokale} Invertierbarkeit! Es garantiert \textbf{keine globale} Injektivität auf ganz $U$.
+    \textbf{Beispiel:} Polarkoordinaten $\Phi(r, \varphi) = (r\cos\varphi, r\sin\varphi)^T$ auf $(0, \infty) \times \mathbb{R}$: Es gilt $\det(D\Phi) = r > 0$ überall, aber $\Phi$ ist global nicht injektiv (periodisch in $\varphi$).
+\end{remark}
+
+\begin{remark}
+    \textbf{Geometrische Synthese: Implizite Funktionen vs. Umkehrsatz (Klausur-Vergleich)} \\
+    Beide Sätze behandeln im Kern dieselbe fundamentale Frage: \textbf{Wann lässt sich ein nichtlineares System lokal auflösen / invertieren?}
+
+    \textbf{1. Satz über implizite Funktionen ($F(x, y) = 0 \implies y = g(x)$):}
+    \begin{itemize}
+        \item \textbf{Geometrische Bedingung:} Die Teil-Jacobi-Matrix bezüglich der aufzulösenden Variablen $D_y F(x_0, y_0)$ muss invertierbar sein ($\det(D_y F) \neq 0$).
+        \item \textbf{Veranschaulichung im $\mathbb{R}^2$ ($F(x, y) = 0$):} Die Bedingung $F_y(x_0, y_0) \neq 0$ bedeutet anschaulich: \textbf{Die Tangente an die Höhenlinie steht nicht senkrecht!} Bei einer senkrechten Tangente ($F_y = 0$) würde die Kurve nach links oder rechts umbiegen – ein $x$-Wert hätte lokal zwei oder keinen $y$-Partner, wodurch die Eindeutigkeit einer Funktion $y = g(x)$ scheitert.
+        \item \textbf{Merkformel für die Ableitung:} Leitet man die Identität $F(x, g(x)) \equiv 0$ nach $x$ mit der Kettenregel ab ($D_x F + D_y F \cdot g'(x) = 0$), erhält man sofort:
+        $$ g'(x) = - \big( D_y F(x, g(x)) \big)^{-1} \cdot D_x F(x, g(x)) \quad \text{bzw. im 1D: } y'(x) = -\frac{F_x(x, y)}{F_y(x, y)} $$
+    \end{itemize}
+
+    \textbf{2. Satz über die lokale Umkehrfunktion ($y = f(x) \implies x = f^{-1}(y)$):}
+    \begin{itemize}
+        \item \textbf{Geometrische Bedingung:} Eine $C^1$-Abbildung $f: \mathbb{R}^n \to \mathbb{R}^n$ ist lokal um $x_0$ genau dann invertierbar (ein lokaler Diffeomorphismus), wenn das Differential invertierbar ist:
+        $$ \det(Df(x_0)) \neq 0 $$
+        Geometrisch bedeutet das: Die beste lineare Approximation (das Differential) verzerrt den Raum, klappt ihn aber nicht flach (kein Rangverlust / kein lokaler Dimensionskollaps).
+        \item \textbf{Differential der Umkehrfunktion:} Wegen $f^{-1}(f(x)) = x$ ergibt die Kettenregel $D(f^{-1})(f(x_0)) \cdot Df(x_0) = I$, also die prägnante Formel:
+        $$ D(f^{-1})(f(x_0)) = \big( Df(x_0) \big)^{-1} $$
+        Die Jacobi-Matrix der Umkehrfunktion ist exakt die inverse Matrix der Jacobi-Matrix von $f$!
+    \end{itemize}
+\end{remark}

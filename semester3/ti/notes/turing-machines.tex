@@ -1,324 +1,242 @@
-\section{Turing Machines}
+\section{Turingmaschinen und Grundlagen der Berechenbarkeit}
 
-\subsection{Basic Concept}
+\subsection{Das Standardmodell (Deterministische 1-Band-Turingmaschine)}
 
-\begin{remark}
-    A Turing Machine (TM) is a fundamental generalization of finite automata:
+Die Turingmaschine stellt das fundamentale mathematische Modell eines universellen Computers dar. Im Gegensatz zu endlichen Automaten verfügt sie über einen unbeschränkten, beidseitig adressierbaren (im Standardmodell einseitig unendlichen) Arbeitsspeicher in Form eines Bandes sowie einen beweglichen Lese-/Schreibkopf.
+
+\begin{definition}[Deterministische 1-Band-Turingmaschine]
+    Eine deterministische 1-Band-Turingmaschine (DTM) ist ein 7-Tupel
+    \[
+        M = (Q, \Sigma, \Gamma, \delta, q_0, q_{\mathrm{accept}}, q_{\mathrm{reject}}),
+    \]
+    wobei:
     \begin{itemize}
-        \item \textbf{Finite Control:} Like a finite automaton, a TM possesses a finite set of internal states $Q$.
-        \item \textbf{Unbounded Memory (Tape):} Instead of a one-way read-only input, a TM has an infinite (or semi-infinite) tape divided into discrete cells, serving as both input medium and unbounded memory.
-        \item \textbf{Read/Write Head:} A movable head that can read the symbol in the current cell, overwrite it with a new symbol, and move either left ($\mathrm{L}$) or right ($\mathrm{R}$) along the tape.
+        \item $Q$ eine endliche, nichtleere Menge von \textbf{Zuständen} ist,
+        \item $\Sigma$ das endliche \textbf{Eingabealphabet} ist,
+        \item $\Gamma$ das endliche \textbf{Bandalphabet} ist mit $\Sigma \subsetneq \Gamma$,
+        \item $\text{\textcent} \in \Gamma \setminus \Sigma$ das linke \textbf{Randbegrenzungssymbol} (Left-End-Marker) ist,
+        \item $\sqcup \in \Gamma \setminus (\Sigma \cup \{\text{\textcent}\})$ das \textbf{Blanksymbol} (Leersymbol) ist,
+        \item $q_0 \in Q$ der \textbf{Startzustand} ist,
+        \item $q_{\mathrm{accept}} \in Q$ der \textbf{akzeptierende Stoppzustand} ist,
+        \item $q_{\mathrm{reject}} \in Q$ der \textbf{verwerfende Stoppzustand} ist ($q_{\mathrm{accept}} \neq q_{\mathrm{reject}}$),
+        \item $\delta$ die (partielle) \textbf{Übergangsfunktion} ist:
+        \[
+            \delta : (Q \setminus \{q_{\mathrm{accept}}, q_{\mathrm{reject}}\}) \times \Gamma \to Q \times \Gamma \times \{\mathrm{L}, \mathrm{R}\}.
+        \]
     \end{itemize}
-\end{remark}
-
-\subsection{Formal Definition}
-
-\begin{definition}
-    \textbf{Turing Machine:} A deterministic Turing Machine is a 7-tuple
-    $$
-        M = (Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject})
-    $$
-    where:
-    \begin{itemize}
-        \item $Q$ is a finite, non-empty set of states.
-        \item $\Sigma$ is a finite input alphabet.
-        \item $\Gamma$ is a finite tape alphabet such that $\Sigma \subset \Gamma$. It contains:
-              \begin{itemize}
-                  \item the \textbf{blank symbol} $\sqcup \in \Gamma \setminus \Sigma$ (representing empty cells)
-                  \item the \textbf{left-end marker} $\text{\textcent} \in \Gamma \setminus \Sigma$ (marking the left boundary of the tape)
-              \end{itemize}
-        \item $\delta$ is the transition function:
-              $$
-                  \delta : (Q \setminus \{q_{accept}, q_{reject}\}) \times \Gamma \to Q \times \Gamma \times \{\mathrm{L}, \mathrm{R}\}
-              $$
-              with the convention that upon scanning the left-end marker $\text{\textcent}$, the machine cannot overwrite it and must move right:
-              $$
-                  \delta(q, \text{\textcent}) = (p, \text{\textcent}, \mathrm{R}) \quad \text{for some } p \in Q
-              $$
-        \item $q_0 \in Q$ is the starting state.
-        \item $q_{accept} \in Q$ is the accepting halt state.
-        \item $q_{reject} \in Q$ is the rejecting halt state ($q_{accept} \neq q_{reject}$).
-    \end{itemize}
+    \textbf{Randbegrenzungskonvention:} Das Symbol $\text{\textcent}$ darf weder überschrieben noch nach links überschritten werden. Für alle $q \in Q \setminus \{q_{\mathrm{accept}}, q_{\mathrm{reject}}\}$ gilt daher stets:
+    \[
+        \delta(q, \text{\textcent}) = (p, \text{\textcent}, \mathrm{R}) \quad \text{für ein } p \in Q.
+    \]
 \end{definition}
 
-\subsection{Configurations}
-
-\begin{definition}
-    \textbf{Configuration:} A configuration of a Turing Machine captures its current global state, consisting of the tape contents up to the last relevant cell, the current state $q$, and the head position.
-    Formally, the set of all configurations is:
-    $$
-        \mathrm{Konf}(M) = \{\text{\textcent}\} \cdot \Gamma^* \cdot Q \cdot \Gamma^+ \;\cup\; Q \cdot \{\text{\textcent}\} \cdot \Gamma^+
-    $$
-    In this word representation, the state symbol $q \in Q$ is written immediately to the left of the tape cell currently scanned by the read/write head:
+\begin{definition}[Konfiguration und Konfigurationsübergang]
+    Eine \textbf{Konfiguration} beschreibt den vollständigen Gesamtzustand der Turingmaschine zu einem diskreten Zeitschritt. Sie umfasst den aktuellen Zustand, den gesamten nicht-blanken Bandinhalt sowie die Kopfposition.
+    
+    Formell wird eine Konfiguration als Wort aus $\text{\textcent}\Gamma^* Q \Gamma^+ \cup Q\text{\textcent}\Gamma^+$ dargestellt, wobei der Zustand $q \in Q$ unmittelbar links von demjenigen Symbol steht, das der Kopf aktuell liest:
     \begin{itemize}
-        \item If the head scans the left-end marker $\text{\textcent}$:
-              $$
-                  C = q \text{\textcent} u \in Q \cdot \{\text{\textcent}\} \cdot \Gamma^+
-              $$
-        \item If the head scans cell $i \ge 1$ with tape prefix $\text{\textcent} u$:
-              $$
-                  C = \text{\textcent} u q v \in \{\text{\textcent}\} \cdot \Gamma^* \cdot Q \cdot \Gamma^+
-              $$
+        \item $C = q \text{\textcent} u$: Der Kopf liest die linke Randbegrenzung $\text{\textcent}$.
+        \item $C = \text{\textcent} u q a v$ mit $u, v \in \Gamma^*, a \in \Gamma$: Der Kopf liest das Symbol $a$.
     \end{itemize}
-\end{definition}
-
-\begin{definition}
-    \textbf{Start Configuration:} For an input word $x \in \Sigma^*$, the start configuration is:
-    $$
-        C_0(x) = \begin{cases}
-            q_0 \text{\textcent} x \sqcup & \text{if } x \neq \lambda \\
-            q_0 \text{\textcent} \sqcup & \text{if } x = \lambda
-        \end{cases}
-    $$
-    The machine starts in state $q_0$ scanning the left-end marker $\text{\textcent}$, followed by the input $x$ and blank symbols $\sqcup$.
-\end{definition}
-
-\subsection{Computation and Steps}
-
-\begin{definition}
-    \textbf{Computation Step:} A single step is a transition relation $\vdash_M$ between configurations:
+    Die Relation des \textbf{Ein-Schritt-Übergangs} $\vdash_M$ ist für zwei Konfigurationen $C_1, C_2$ definiert durch:
     \begin{itemize}
-        \item \textbf{Move Right ($\mathrm{R}$):} If $\delta(q, a) = (p, b, \mathrm{R})$, then for all $u \in \Gamma^*, v \in \Gamma^+$:
-              $$
-                  u q a v \vdash_M u b p v
-              $$
-              (if $v = \lambda$, the cell is implicitly filled with $\sqcup$).
-        \item \textbf{Move Left ($\mathrm{L}$):} If $\delta(q, a) = (p, b, \mathrm{L})$, then for all $u \in \Gamma^*, c \in \Gamma, v \in \Gamma^+$:
-              $$
-                  u c q a v \vdash_M u p c b v
-              $$
+        \item Rechtsbewegung: $\text{\textcent} u q a v \vdash_M \text{\textcent} u b p v$ falls $\delta(q, a) = (p, b, \mathrm{R})$ (für $v = \lambda$ wird implizit ein $\sqcup$ gelesen: $\text{\textcent} u q a \vdash_M \text{\textcent} u b p \sqcup$).
+        \item Linksbewegung: $\text{\textcent} u c q a v \vdash_M \text{\textcent} u p c b v$ falls $\delta(q, a) = (p, b, \mathrm{L})$.
     \end{itemize}
-    We denote by $\vdash_M^*$ the reflexive and transitive closure of $\vdash_M$ (computation over multiple steps).
+    Die reflexive und transitive Hülle von $\vdash_M$ wird mit $\vdash_M^*$ notiert.
+    
+    Für eine Eingabe $w \in \Sigma^*$ ist die \textbf{Startkonfiguration} definiert als:
+    \[
+        C_0(w) = q_0 \text{\textcent} w \quad (\text{bzw. } q_0 \text{\textcent} \sqcup \text{ falls } w = \lambda).
+    \]
+    Eine Konfiguration heißt \textbf{Stoppkonfiguration}, falls ihr Zustand in $\{q_{\mathrm{accept}}, q_{\mathrm{reject}}\}$ liegt.
 \end{definition}
 
-\begin{definition}
-    \textbf{Computation (Calculation):} A computation of $M$ on input $x$ is a sequence of configurations $C_0, C_1, C_2, \dots$ where $C_0 = C_0(x)$ and $C_i \vdash_M C_{i+1}$ for all $i \ge 0$.
+\begin{definition}[Sprachakzeptanz und Berechenbarkeitsklassen]
+    Eine Turingmaschine $M$ \textbf{akzeptiert} ein Wort $w \in \Sigma^*$, falls
+    \[
+        C_0(w) \vdash_M^* C_{\mathrm{stop}} \quad \text{mit Zustand } q_{\mathrm{accept}}.
+    \]
+    $M$ \textbf{verwirft} $w$, falls $C_0(w) \vdash_M^* C_{\mathrm{stop}}$ mit Zustand $q_{\mathrm{reject}}$. 
+    
+    Die von $M$ akzeptierte Sprache ist
+    \[
+        L(M) = \{w \in \Sigma^* \mid M \text{ akzeptiert } w\}.
+    \]
+    Wir unterscheiden zwei fundamentale Sprachklassen:
+    \begin{enumerate}
+        \item \textbf{Rekursiv aufzählbare / semi-entscheidbare Sprachen ($\mathcal{L}_{\mathrm{RE}}$):}
+        Eine Sprache $L \subseteq \Sigma^*$ liegt in $\mathcal{L}_{\mathrm{RE}}$, falls eine TM $M$ existiert mit $L = L(M)$. Für $w \notin L$ darf $M$ in $q_{\mathrm{reject}}$ stoppen oder in eine Endlosschleife geraten ($M$ divergiert).
+        \item \textbf{Rekursive / entscheidbare Sprachen ($\mathcal{L}_{\mathrm{rec}}$):}
+        Eine Sprache $L \subseteq \Sigma^*$ liegt in $\mathcal{L}_{\mathrm{rec}}$, falls eine TM $M$ existiert mit $L = L(M)$, die auf \textbf{jeder} Eingabe $w \in \Sigma^*$ garantiert nach endlich vielen Schritten in $q_{\mathrm{accept}}$ oder $q_{\mathrm{reject}}$ stoppt ($M$ ist ein \textbf{Entscheider}).
+    \end{enumerate}
+    Offensichtlich gilt $\mathcal{L}_{\mathrm{rec}} \subseteq \mathcal{L}_{\mathrm{RE}}$.
+\end{definition}
+
+\begin{definition}[Berechenbare Funktionen]
+    Eine Funktion $f : \Sigma^* \to \Gamma^*$ heißt:
     \begin{itemize}
-        \item \textbf{Halting:} The computation terminates if the machine reaches a halting state ($q_{accept}$ or $q_{reject}$), since $\delta$ is not defined for these states.
-        \item \textbf{Infinite Loop:} If no halting state is ever reached, the computation runs forever ($M$ does not terminate on $x$).
+        \item \textbf{partiell berechenbar}, falls eine DTM $M$ existiert, die auf Eingabe $w \in \mathrm{Def}(f)$ in $q_{\mathrm{accept}}$ mit Bandinhalt $\text{\textcent} f(w) \sqcup \sqcup \dots$ stoppt, und für $w \notin \mathrm{Def}(f)$ entweder nicht stoppt oder in $q_{\mathrm{reject}}$ stoppt.
+        \item \textbf{(total) berechenbar}, falls $f$ partiell berechenbar ist und $\mathrm{Def}(f) = \Sigma^*$.
     \end{itemize}
 \end{definition}
 
-\subsection{Multi-Tape Turing Machines}
+\begin{beispiel}[Palindromerkennung auf einer 1-Band-TM]
+    Betrachte $L = \{w \in \{0, 1\}^* \mid w = w^R\}$. Ein 1-Band-Algorithmus liest das erste Symbol hinter $\text{\textcent}$, überschreibt es mit $\sqcup$, merkt sich das Bit im Zustand, läuft nach rechts bis zum Wortende, vergleicht das letzte Symbol, löscht es und läuft zurück zu $\text{\textcent}$. Dies wiederholt sich, bis das Wort leer ist. Die Laufzeit auf Eingabe der Länge $n$ ist $\Theta(n^2)$.
+\end{beispiel}
 
-\begin{definition}
-    \textbf{Multi-Tape Turing Machine ($k$-Tape TM):} A $k$-tape Turing Machine ($k \ge 1$) consists of a finite control and $k$ independent, semi-infinite tapes, each equipped with its own independently moving read/write head:
-    $$
-        M = (Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject})
-    $$
-    where the transition function is defined as:
-    $$
-        \delta : (Q \setminus \{q_{accept}, q_{reject}\}) \times \Gamma^k \to Q \times \Gamma^k \times \{\mathrm{L}, \mathrm{R}, \mathrm{S}\}^k
-    $$
-    In a single computation step, the machine reads the $k$-tuple of symbols currently under the $k$ heads $(a_1, \dots, a_k) \in \Gamma^k$, transitions to a new state $p \in Q$, writes new symbols $(b_1, \dots, b_k) \in \Gamma^k$, and moves each head independently according to $(D_1, \dots, D_k) \in \{\mathrm{L}, \mathrm{R}, \mathrm{S}\}^k$ (where $\mathrm{S}$ denotes staying stationary).
-\end{definition}
+% -----------------------------------------------------------------------------
+\subsection{Erweiterungen und Äquivalenzsätze}
 
-\begin{remark}
-    \textbf{Start Configuration:} On input $x \in \Sigma^*$, Tape 1 contains the input word preceded by the left-end marker $\text{\textcent} x \sqcup \dots$, while all other $k-1$ work tapes are initially empty ($\text{\textcent} \sqcup \dots$). All $k$ heads initially scan the left-end marker $\text{\textcent}$.
-\end{remark}
+In der Praxis modellieren wir Algorithmen gerne mit mehreren Bändern oder nichtdeterministischen Verzweigungen. Wir beweisen nun, dass diese Modellerweiterungen die Klasse der berechenbaren Probleme nicht erweitern.
 
-\begin{remark}
-    \textbf{Why Use Multi-Tape Machines?}
+\begin{definition}[Mehrband-Turingmaschine (MTM)]
+    Eine deterministische $k$-Band-Turingmaschine besitzt:
     \begin{itemize}
-        \item \textbf{Natural Algorithm Design:} A multi-tape TM provides a much more intuitive programming paradigm than a single-tape TM. Dedicated tapes can be designated for specific roles (e.g., an input tape, one or more scratch/work tapes, and an output tape).
-        \item \textbf{Modularity:} Multiple tapes allow implementing modular subroutines (e.g., copying strings, arithmetic, or counting) without continually traversing and corrupting the primary input.
+        \item Ein separates, unidirektionales oder bidirektionales \textbf{Nur-Lese-Eingabeband} mit Randmarkierungen $\text{\textcent} w \$$,
+        \item $k \ge 1$ separate, beidseitig (oder einseitig) unendliche \textbf{Arbeitsbänder} mit jeweils eigenem Lese-/Schreibkopf.
     \end{itemize}
-\end{remark}
-
-\begin{theorem}
-    \textbf{Equivalence of Single-Tape and Multi-Tape TMs:} Multi-tape Turing machines have exactly the same computational power as standard single-tape Turing machines. A language $L$ is Turing-recognizable (resp. decidable) by a $k$-tape TM if and only if it is Turing-recognizable (resp. decidable) by a single-tape TM:
-    $$
-        \mathcal{L}(\text{Multi-Tape TM}) = \mathcal{L}(\text{Single-Tape TM})
-    $$
-\end{theorem}
-
-\begin{remark}
-    \textbf{Simulation via Tracks (Spurtechnik):} A single-tape TM $S$ can simulate a $k$-tape TM $M$ by dividing its single tape into $2k$ tracks using an expanded tape alphabet $\Gamma_S \cong (\Gamma \times \{0, 1\})^k$:
-    \begin{itemize}
-        \item For each tape $i \in \{1, \dots, k\}$, one track stores the contents of tape $i$, and a second track stores a head marker flag (a bit $1$ or a marked symbol $\hat{a}$) indicating the current position of head $i$.
-        \item To simulate one step of $M$, machine $S$ sweeps across the tape from the leftmost head marker to the rightmost head marker, records all $k$ scanned symbols in its finite control, applies $\delta$, and sweeps back to write the replacement symbols and shift the head markers.
-    \end{itemize}
-\end{remark}
-
-\begin{definition}
-    \textbf{Church-Turing Thesis (Church'sche These):}
-    \begin{quote}
-    \emph{Every algorithmically computable function or intuitive effective procedure can be carried out by a standard Turing Machine.}
-    \end{quote}
+    Die Übergangsfunktion liest in jedem Schritt die Symbole aller $k+1$ Köpfe und bestimmt für jedes Band unabhängig ein neues Symbol sowie eine Kopfbewegung $\{\mathrm{L}, \mathrm{R}, \mathrm{N}\}$.
 \end{definition}
 
-\begin{remark}
-    \textbf{Significance and Robustness:}
-    \begin{itemize}
-        \item Augmenting a Turing machine with multiple tapes, multi-dimensional tapes, random-access memory (RAMs), or non-determinism does not expand the class of decidable languages. This demonstrates the exceptional robustness of the Turing machine model.
-        \item Independent models of computability ($\lambda$-calculus, $\mu$-recursive functions, RAMs, and modern programming languages) define the exact same class of computable functions.
-        \item \textbf{Extended Church-Turing Thesis:} Any physically realistic computational model can be simulated by a deterministic single-tape Turing machine with at most a polynomial slowdown. Because simulating a $k$-tape TM on a 1-tape TM incurs only a quadratic slowdown, the multi-tape TM fully complies with the Extended Church-Turing Thesis.
-    \end{itemize}
-\end{remark}
-
-\begin{definition}
-    \textbf{Time Complexity:} Let $T : \mathbb{N} \to \mathbb{N}$. A Turing Machine $M$ runs in time $T(n)$ if for every input word $x \in \Sigma^*$ of length $n = |x|$, the computation of $M$ on $x$ halts within at most $T(n)$ steps.
-\end{definition}
-
-\begin{theorem}
-    \textbf{Quadratic Simulation Theorem (Hartmanis \& Stearns):} Let $M$ be a $k$-tape Turing machine that decides a language $L$ in time $T(n)$. Then there exists a single-tape Turing machine $S$ that decides $L$ in time $\mathcal{O}(T(n)^2)$:
-    $$
-        \mathrm{TIME}_{k\text{-tape}}(T(n)) \subseteq \mathrm{TIME}_{1\text{-tape}}(T(n)^2)
-    $$
-\end{theorem}
-
-\begin{remark}
-    \textbf{Derivation of Quadratic Overhead:}
-    \begin{itemize}
-        \item In $T(n)$ steps, each head of $M$ can travel at most distance $T(n)$ from the left-end marker. Hence, all $k$ head markers on the single tape of $S$ are contained within a span of at most $k \cdot T(n) = \mathcal{O}(T(n))$ cells.
-        \item For every single step of $M$, machine $S$ sweeps over this span to read the symbols under the $k$ head markers and sweeps back to update them, requiring $\mathcal{O}(T(n))$ steps per simulated step.
-        \item Total simulation time for $T(n)$ steps is therefore:
-        $$
-            T(n) \cdot \mathcal{O}(T(n)) = \mathcal{O}(T(n)^2)
-        $$
-    \end{itemize}
-\end{remark}
-
-\begin{example}
-    \textbf{Separation: Palindrome Recognition ($L_{pal}$):}
-    Consider the palindrome language $L_{pal} = \{ w \in \{0, 1\}^* \mid w = w^R \}$:
-    \begin{itemize}
-        \item \textbf{2-Tape TM:} Copies $w$ to Tape 2 in $n$ steps, moves head 2 back to the left in $n$ steps, and compares Tape 1 and Tape 2 in $n$ steps. Total time: $\mathcal{O}(n)$ (linear time).
-        \item \textbf{1-Tape TM:} Must shuttle back and forth between the opposing ends of $w$ to compare characters, which takes $\Omega(n^2)$ steps. (Formally proven via crossing sequences).
-    \end{itemize}
-    This proves that a 2-tape TM can achieve a quadratic speedup over a 1-tape TM, and the $\mathcal{O}(T(n)^2)$ simulation bound is asymptotically tight.
-\end{example}
-
-\begin{remark}
-    \textbf{Invariance of Class $\mathbf{P}$:} Because the overhead of simulating multi-tape TMs on single-tape TMs is polynomial ($\mathcal{O}(T(n)^2)$), the fundamental complexity class $\mathbf{P}$ (problems solvable in polynomial time) is invariant under the number of tapes:
-    $$
-        \mathbf{P}_{1\text{-tape}} = \mathbf{P}_{k\text{-tape}}
-    $$
-\end{remark}
-
-\subsection{Nondeterministic Turing Machines}
-
-\begin{definition}
-    \textbf{Nondeterministic Turing Machine (NTM):} An NTM is defined similarly to a deterministic TM, but its transition function allows multiple alternative transitions for any given state and tape symbol:
-    $$
-        \delta : (Q \setminus \{q_{accept}, q_{reject}\}) \times \Gamma \to \mathcal{P}(Q \times \Gamma \times \{\mathrm{L}, \mathrm{R}\})
-    $$
-    At each step, the machine may choose any transition from $\delta(q, a)$. If $\delta(q, a) = \emptyset$, that computation branch halts without accepting.
-\end{definition}
-
-\begin{definition}
-    \textbf{Computation Tree and Acceptance:} The set of all possible computations on an input $x$ forms a \textbf{computation tree} rooted at the start configuration $C_0(x)$.
-    An NTM $M$ \textbf{accepts} $x$ if \textbf{at least one} computation path in the tree halts in $q_{accept}$:
-    $$
-        x \in L(M) \iff \exists \text{ path s.t. } C_0(x) \vdash_M^* u q_{accept} v \quad (\text{for some } u, v \in \Gamma^*)
-    $$
-    $M$ rejects $x$ if all computation branches halt in $q_{reject}$ (or fail to reach $q_{accept}$).
-\end{definition}
-
-\begin{theorem}
-    \textbf{Equivalence of DTMs and NTMs:} For every nondeterministic Turing machine $N$, there exists an equivalent deterministic Turing machine $D$ such that:
-    $$
-        L(D) = L(N)
-    $$
-    Hence, nondeterminism does not increase the computational power of Turing machines (the class of recognizable languages remains identical).
-\end{theorem}
-
-\begin{remark}
-    \textbf{BFS Simulation and Time Complexity:}
-    \begin{itemize}
-        \item \textbf{Breadth-First Search (BFS):} The deterministic simulator $D$ systematically explores the computation tree of $N$ level by level. A depth-first search would not suffice, as it could get trapped in an infinite non-accepting branch.
-        \item \textbf{Exponential Overhead:} If the shortest accepting path has length $T(n)$ and the maximum branching factor is $b$, the tree contains up to $b^{T(n)}$ configurations. The deterministic simulation runs in \textbf{exponential time} $\mathcal{O}(b^{T(n)})$, which motivates the $\mathbf{P} \overset{?}{=} \mathbf{NP}$ question.
-    \end{itemize}
-\end{remark}
-
-\subsection{Recognizability and Decidability}
-
-\begin{definition}
-    \textbf{Accepted Language:} A word $x \in \Sigma^*$ is accepted by $M$ if the computation of $M$ on $x$ halts in $q_{accept}$:
-    $$
-        L(M) = \{ x \in \Sigma^* \mid C_0(x) \vdash_M^* u q_{accept} v \text{ for some } u, v \in \Gamma^* \}
-    $$
-\end{definition}
-
-\begin{definition}
-    \textbf{Decidable (Recursive) Language:} A language $L \subseteq \Sigma^*$ is called \textbf{decidable} (or \textbf{recursive}) if there exists a Turing Machine $M$ that \textbf{halts on every input} $x \in \Sigma^*$ such that:
-    $$
-        x \in L \iff M \text{ halts in } q_{accept}
-    $$
-    $$
-        x \notin L \iff M \text{ halts in } q_{reject}
-    $$
-    A Turing machine with this property is called a \textbf{decider}.
-\end{definition}
-
-\begin{definition}
-    \textbf{Turing-Recognizable (Recursively Enumerable) Language:} A language $L \subseteq \Sigma^*$ is called \textbf{Turing-recognizable} (or \textbf{recursively enumerable} / semi-decidable) if there exists a Turing Machine $M$ such that:
-    $$
-        L(M) = L
-    $$
-    For words $x \notin L$, $M$ is allowed to halt in $q_{reject}$ or loop indefinitely.
-\end{definition}
-
-\begin{remark}
-    Every decidable language is Turing-recognizable, but the converse does not hold. For example, the Halting Problem $H = \{ \langle M, w \rangle \mid M \text{ halts on } w \}$ is Turing-recognizable but undecidable.
-\end{remark}
-
-\begin{theorem}
-    \textbf{Decidability via Complements:} A language $L \subseteq \Sigma^*$ is \textbf{decidable} if and only if both $L$ and its complement $L^c = \Sigma^* \setminus L$ are \textbf{Turing-recognizable}:
-    $$
-        L \in \mathcal{L}_{\text{rec}} \iff L \in \mathcal{L}_{\text{RE}} \land L^c \in \mathcal{L}_{\text{RE}}
-    $$
-\end{theorem}
-
-\subsection{Universal Turing Machine and Universal Language}
-
-\begin{definition}
-    \textbf{Universal Language ($L_{\text{univ}}$):} Let $\langle M \rangle \in \{0, 1\}^*$ denote a binary encoding of a Turing machine $M$. The \textbf{Universal Language} $L_{\text{univ}}$ (also denoted $L_U$ or $A_{\text{TM}}$) consists of all pairs of machine encodings and input words accepted by that machine:
-    $$
-        L_{\text{univ}} = \{ \langle M \rangle \# w \mid w \in L(M) \}
-    $$
-\end{definition}
-
-\subsection{The Diagonal Language ($L_{\text{diag}}$) and Its Complement ($L_{\text{diag}}^c$)}
-
-\begin{definition}
-    \textbf{Canonical TM Enumeration:} Let $w_1, w_2, w_3, \dots$ be the canonical lexicographic ordering of all words in $\{0, 1\}^*$. Every word $w_i$ can be uniquely interpreted as an encoding of a Turing machine $M_i = M_{w_i}$ (if $w_i$ is not a syntactically valid encoding, $M_i$ is defined as a dummy TM with $L(M_i) = \emptyset$).
-\end{definition}
-
-\begin{definition}
-    \textbf{Diagonal Language ($L_{\text{diag}}$):} The diagonal language contains all words $w_i$ whose corresponding Turing machine $M_i$ does \textbf{not} accept its own encoding $w_i$:
-    $$
-        L_{\text{diag}} = \{ w_i \in \{0, 1\}^* \mid w_i \notin L(M_i) \}
-    $$
-\end{definition}
-
-\begin{theorem}
-    \textbf{Non-Recognizability of $L_{\text{diag}}$ (Diagonalization):} The diagonal language is \textbf{not Turing-recognizable}:
-    $$
-        L_{\text{diag}} \notin \mathcal{L}_{\text{RE}}
-    $$
+\begin{theorem}[Äquivalenz von Mehrband- und 1-Band-TMs]
+    Zu jeder $k$-Band-Turingmaschine $M$, die auf Eingaben der Länge $n$ in Zeit $T(n)$ anhält, existiert eine äquivalente 1-Band-Turingmaschine $M'$ mit $L(M') = L(M)$, die in Zeit $O((T(n))^2)$ arbeitet.
 \end{theorem}
 
 \begin{proof}
-    Assume for contradiction that $L_{\text{diag}}$ is Turing-recognizable. Then there exists a Turing machine $M_d$ such that $L(M_d) = L_{\text{diag}}$. Since every TM appears in the enumeration, $M_d = M_{w_d}$ for some word $w_d$. Now consider the input $w_d$:
-    $$
-        w_d \in L_{\text{diag}} \iff w_d \notin L(M_{w_d}) \iff w_d \notin L_{\text{diag}}
-    $$
-    This is an immediate contradiction ($X \iff \neg X$). Hence, no such machine $M_d$ can exist.
+    \textbf{Beweisidee:} Wir simulieren die $k$ Arbeitsbänder und das Eingabeband durch eine \emph{Spurtechnik} (Tracks) auf einem einzigen Band, wobei virtuelle Kopfpositionen durch markierte Symbole repräsentiert werden.
+    
+    Das Bandalphabet $\Gamma'$ von $M'$ besteht aus Tupeln: Für jedes der $k+1$ Bänder führt $\Gamma'$ zwei Komponenten:
+    \begin{enumerate}
+        \item Das auf dem Band gespeicherte Symbol $a \in \Gamma$.
+        \item Ein Markierungsbit $\hat{a} \in \{0, 1\}$, das anzeigt, ob sich der virtuelle Kopf des jeweiligen Bandes auf dieser Zelle befindet.
+    \end{enumerate}
+    Ein Rechenschritt von $M$ wird von $M'$ wie folgt simuliert:
+    \begin{enumerate}
+        \item $M'$ scannt das Band von ganz links nach rechts bis zur am weitesten rechts stehenden Kopfmarkierung und sammelt im Zustand die $k+1$ gelesenen Symbole ein.
+        \item Entsprechend der Übergangsfunktion $\delta$ von $M$ läuft $M'$ zurück nach links, aktualisiert die Bandinhalte der Spuren und verschiebt die Kopfmarkierungen um höchstens eine Zelle nach links, rechts oder lässt sie neutral.
+        \item Erfordert ein Schritt das Erweitern des Bandes nach rechts, werden die Spuren um eine Zelle verschoben.
+    \end{enumerate}
+    Nach $t$ Schritten können die Köpfe von $M$ höchstens $t$ Zellen vom linken Rand entfernt sein. Ein Sweep von $M'$ über alle markierten Zellen benötigt daher höchstens $O(t)$ Schritte. Für $T(n)$ Schritte von $M$ ergibt sich die Gesamtlaufzeit:
+    \[
+        \sum_{t=1}^{T(n)} O(t) = O((T(n))^2).
+    \]
 \end{proof}
 
-\begin{definition}
-    \textbf{Complement of $L_{\text{diag}}$ ($L_{\text{diag}}^c$, Self-Acceptance):} The complement of $L_{\text{diag}}$ consists of all words $w_i$ whose corresponding Turing machine $M_i$ \textbf{accepts} $w_i$:
-    $$
-        L_{\text{diag}}^c = \{0, 1\}^* \setminus L_{\text{diag}} = \{ w_i \in \{0, 1\}^* \mid w_i \in L(M_i) \}
-    $$
+\begin{definition}[Nichtdeterministische Turingmaschine (NTM)]
+    Eine nichtdeterministische Turingmaschine ist ein 7-Tupel $N = (Q, \Sigma, \Gamma, \delta, q_0, q_{\mathrm{accept}}, q_{\mathrm{reject}})$, bei dem die Übergangsfunktion durch eine Relation ersetzt ist:
+    \[
+        \delta : (Q \setminus \{q_{\mathrm{accept}}, q_{\mathrm{reject}}\}) \times \Gamma \to \mathcal{P}(Q \times \Gamma \times \{\mathrm{L}, \mathrm{R}, \mathrm{N}\}).
+    \]
+    Ein Wort $w \in \Sigma^*$ wird von $N$ \textbf{akzeptiert}, wenn im Berechnungsbaum mindestens ein endlicher Berechnungspfad existiert, der von $C_0(w)$ in eine akzeptierende Stoppkonfiguration führt:
+    \[
+        L(N) = \{w \in \Sigma^* \mid \exists \text{ endliche Folge } C_0(w) \vdash_N C_1 \vdash_N \dots \vdash_N C_m \text{ mit Zustand } q_{\mathrm{accept}}\}.
+    \]
 \end{definition}
 
-\begin{theorem}
-    \textbf{Properties of $L_{\text{diag}}^c$:}
-    \begin{itemize}
-        \item \textbf{Turing-Recognizable ($L_{\text{diag}}^c \in \mathcal{L}_{\text{RE}}$):} On input $w_i$, a machine can decode $w_i$, construct $M_i$, and simulate $M_i$ on input $w_i$ using a universal Turing machine. If $M_i$ accepts $w_i$, the simulation halts and accepts.
-        \item \textbf{Undecidable ($L_{\text{diag}}^c \notin \mathcal{L}_{\text{rec}}$):} If $L_{\text{diag}}^c$ were decidable, its complement $(L_{\text{diag}}^c)^c = L_{\text{diag}}$ would also be recognizable by the complement theorem, contradicting $L_{\text{diag}} \notin \mathcal{L}_{\text{RE}}$.
-    \end{itemize}
+\begin{theorem}[Simulation von NTMs durch DTMs]
+    Jede nichtdeterministische Turingmaschine $N$ kann durch eine deterministische 3-Band-Turingmaschine $D$ simuliert werden, d.\,h.\ $L(D) = L(N)$. Insbesondere gilt:
+    \[
+        \mathcal{L}(NTM) = \mathcal{L}(DTM) = \mathcal{L}_{\mathrm{RE}}.
+    \]
 \end{theorem}
 
+\begin{proof}
+    \textbf{Beweisidee:} Der Berechnungsbaum von $N$ wird systematisch mittels \emph{Breitensuche} traversiert, um zu verhindern, dass die deterministische Maschine in einem unendlich langen, nicht-akzeptierenden Pfad verhungert.
+    
+    Sei $b = \max_{(q, a)} |\delta(q, a)|$ der maximale Verzweigungsgrad des Berechnungsbaumes. Jeder Rechenpfad der Länge $m$ lässt sich eindeutig durch eine Ziffernfolge $d_1 d_2 \dots d_m \in \{1, \dots, b\}^m$ adressieren.
+    
+    $D$ verwendet drei Bänder:
+    \begin{itemize}
+        \item \textbf{Band 1:} Speichert permanent die unveränderte Eingabe $w$.
+        \item \textbf{Band 2 (Adressband):} Erzeugt sukzessive alle Wörter aus $\{1, \dots, b\}^*$ in quasielexikographischer Reihenfolge:
+        \[
+            \lambda, 1, 2, \dots, b, 11, 12, \dots, 1b, \dots, bb, 111, \dots
+        \]
+        \item \textbf{Band 3 (Simulationsband):} Kopiert $w$ von Band 1 und führt die Berechnung von $N$ deterministisch entlang der auf Band 2 vorgegebenen Verzweigungen aus.
+    \end{itemize}
+    Erreicht die Simulation auf Band 3 den Zustand $q_{\mathrm{accept}}$, hält $D$ an und akzeptiert. Ist ein Pfad ungültig oder endet in $q_{\mathrm{reject}}$ vor Abarbeitung aller Adressziffern, bricht $D$ die Simulation ab, löscht Band 3, inkrementiert Band 2 zur nächsten Pfadadresse und wiederholt den Zyklus.
+\end{proof}
+
+\begin{important}[Warum Breitensuche und keine Tiefensuche?]
+    Für entscheidbare Sprachen mit garantierter Zeitschranke wäre eine Tiefensuche denkbar. Für allgemeine semi-entscheidbare Sprachen ($\mathcal{L}_{\mathrm{RE}}$) versagt die Tiefensuche (DFS) jedoch fundamental: Besitzt der Berechnungsbaum einen linken Ast unendlicher Länge ohne akzeptierende Konfiguration, würde sich eine DFS-Simulation für immer in diesem unendlichen Pfad verlieren und einen existierenden akzeptierenden Zustand in einem Nachbarast niemals entdecken! Die Breitensuche garantiert, dass jeder endliche Rechenpfad nach endlich vielen Schritten vollständig exploriert wird.
+\end{important}
+
+\begin{theorem}[Church-Turing-These]
+    Die Klasse der intuitiv im algorithmischen Sinne berechenbaren Funktionen stimmt exakt mit der Klasse der Turing-berechenbaren Funktionen überein.
+\end{theorem}
+
+\begin{remark}[Wissenschaftstheoretischer Status]
+    Die Church-Turing-These ist kein mathematischer Satz im formalen Sinn, sondern eine empirisch fundierte Hypothese über die physikalische Realisierbarkeit von Informationsverarbeitung. Sämtliche historisch vorgeschlagenen Formalisierungen (Gödels $\mu$-rekursive Funktionen, Churchs $\lambda$-Kalkül, Postsche Produktionssysteme, Registermaschinen, Random-Access-Machines, moderne Programmiersprachen) erwiesen sich als beweisbar äquivalent zur Turingmaschine.
+\end{remark}
+
+% -----------------------------------------------------------------------------
+\subsection{Kodierung von Turingmaschinen und die Universelle Turingmaschine}
+
+Um Turingmaschinen selbst als Eingaben für Algorithmen verarbeiten zu können, müssen wir sie in eine standardisierte Bitfolge übersetzen (Gödelisierung).
+
+\begin{definition}[Standardkodierung einer Turingmaschine]
+    Sei $M = (Q, \Sigma, \Gamma, \delta, q_0, q_{\mathrm{accept}}, q_{\mathrm{reject}})$. Ohne Einschränkung nummerieren wir:
+    \begin{itemize}
+        \item Zustände: $Q = \{q_1, q_2, \dots, q_{|Q|}\}$ mit $q_0 = q_1$, $q_{\mathrm{accept}} = q_2$, $q_{\mathrm{reject}} = q_3$.
+        \item Symbole: $\Gamma = \{s_1, s_2, \dots, s_{|\Gamma|}\}$ mit $s_1 = 0$, $s_2 = 1$, $s_3 = \sqcup$, $s_4 = \text{\textcent}$.
+        \item Richtungen: $D_1 = \mathrm{L}$, $D_2 = \mathrm{R}$.
+    \end{itemize}
+    Jede Übergangsregel $\delta(q_i, s_j) = (q_k, s_l, D_m)$ wird als Zeichenkette über $\{0, 1, \#\}$ kodiert:
+    \[
+        \mathrm{kod}(\delta_r) = 0^i \# 0^j \# 0^k \# 0^l \# 0^m.
+    \]
+    Die gesamte Maschine $M$ wird durch Aneinanderreihung aller $R$ Übergänge kodiert:
+    \[
+        \mathrm{Kod}'(M) = \#\# \mathrm{kod}(\delta_1) \#\# \mathrm{kod}(\delta_2) \#\# \dots \#\# \mathrm{kod}(\delta_R) \#\#.
+    \]
+    Durch den injektiven Homomorphismus $h : \{0, 1, \#\}^* \to \{0, 1\}^*$ mit
+    \[
+        h(0) = 00, \quad h(1) = 11, \quad h(\#) = 01
+    \]
+    erhalten wir eine reine Binärkodierung $\mathrm{Kod}(M) = h(\mathrm{Kod}'(M)) \in \{0, 1\}^*$.
+\end{definition}
+
+\begin{lemma}[Kanonische Aufzählung aller Turingmaschinen]
+    Die Menge aller syntaktisch gültigen Turingmaschinen-Kodierungen ist eine entscheidbare Teilmenge $\mathrm{KodTM} \subset \{0, 1\}^*$. Indem man jedem ungültigen Binärwort per Konvention eine feste, sofort verwerfende Turingmaschine $M_\emptyset$ zuordnet, induziert die quasielexikographische Ordnung auf $\{0, 1\}^*$ eine bijektive Abzählung aller Turingmaschinen:
+    \[
+        M_1, M_2, M_3, M_4, \dots
+    \]
+\end{lemma}
+
+\begin{theorem}[Die Universelle Turingmaschine]
+    Es existiert eine universelle deterministische Turingmaschine $U$, die auf Eingabe von $\mathrm{Kod}(M) \# w$ das Verhalten der Turingmaschine $M$ auf $w$ exakt simuliert:
+    \[
+        L(U) = L_U = \{\mathrm{Kod}(M) \# w \mid M \text{ akzeptiert } w\} \in \mathcal{L}_{\mathrm{RE}}.
+    \]
+\end{theorem}
+
+\begin{proof}
+    \textbf{Beweisidee:} $U$ verwaltet den Bandinhalt von $M$ und den Zustand von $M$ auf getrennten Arbeitsspuren und sucht für jeden Einzelschritt von $M$ die passende Übergangsregel in der Kodierung.
+    
+    $U$ arbeitet als 3-Band-TM:
+    \begin{itemize}
+        \item \textbf{Band 1:} Enthält die Eingabe $\mathrm{Kod}(M) \# w$. Zunächst wird die syntaktische Korrektheit von $\mathrm{Kod}(M)$ verifiziert.
+        \item \textbf{Band 2:} Simuliert das Arbeitsband von $M$. Zu Beginn wird $w$ auf Band 2 kopiert.
+        \item \textbf{Band 3:} Speichert den aktuellen Zustand $q_i$ von $M$ in Unärkodierung $0^i$ (initialisiert mit $0^1$ für $q_0$).
+    \end{itemize}
+    In jeder Simulationsrunde liest $U$ das Symbol $s_j$ unter dem Kopf von Band 2, durchsucht Band 1 nach dem Teilblock $\#\# 0^i \# 0^j \# 0^k \# 0^l \# 0^m \#\#$, ersetzt auf Band 3 den Zustand durch $0^k$, überschreibt auf Band 2 das Symbol $s_j$ mit $s_l$ und bewegt den Kopf von Band 2 gemäß $D_m$.
+    Erreicht Band 3 den Zustand $0^2$ ($q_{\mathrm{accept}}$), hält $U$ und akzeptiert. Erreicht Band 3 $0^3$ ($q_{\mathrm{reject}}$) oder existiert kein passender Übergang, hält $U$ und verwirft.
+\end{proof}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Vergleich der Turingmaschinen-Varianten und deren Leistungsmerkmale}
+    \label{tab:tm_modelle}
+    \vspace{0.5em}
+    \begin{tabular}{llll}
+        \toprule
+        \textbf{Modell} & \textbf{Sprachklasse} & \textbf{Zeit-Overhead (Simulation)} & \textbf{Speicherzugriff} \\
+        \midrule
+        1-Band-DTM & $\mathcal{L}_{\mathrm{RE}} / \mathcal{L}_{\mathrm{rec}}$ & Referenzmodell & 1 Lese-/Schreibkopf \\
+        $k$-Band-DTM & $\mathcal{L}_{\mathrm{RE}} / \mathcal{L}_{\mathrm{rec}}$ & $O((T(n))^2)$ auf 1-Band & $k$ unabhängige Köpfe \\
+        NTM & $\mathcal{L}_{\mathrm{RE}} / \mathcal{L}_{\mathrm{rec}}$ & $2^{O(T(n))}$ via BFS & Nichtdet. Baumverzweigung \\
+        Universelle TM $U$ & $\mathcal{L}_{\mathrm{RE}}$ & $O(T(n) \cdot |\mathrm{Kod}(M)|)$ & Interpretiert $\mathrm{Kod}(M)\#w$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}

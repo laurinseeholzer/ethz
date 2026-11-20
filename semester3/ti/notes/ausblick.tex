@@ -1,0 +1,122 @@
+\section{Ausblick: Weiterführende Kernkonzepte der Theoretischen Informatik}
+
+Dieses Kapitel bietet einen kompakten, präzisen Überblick über drei wesentliche weiterführende Säulen der Vorlesung: die Approximation von NP-schweren Optimierungsproblemen, die Nutzung von Zufall als algorithmische Ressource sowie die Hierarchie formaler Grammatiken.
+
+\subsection{Approximation und Optimierung}
+
+Da unter der allgemein akzeptierten Annahme $\mathrm{P} \neq \mathrm{NP}$ keine effizienten Algorithmen für NP-schwere Probleme existieren, weicht man in der Praxis auf Heuristiken mit bewiesener Gütegarantie aus.
+
+\begin{definition}[Approximationsalgorithmus und Güte]
+    Sei $U = (I, \mathrm{sol}, \mathrm{cost}, \mathrm{goal})$ ein NPO-Problem. Ein Algorithmus $A \in \mathrm{P}$ heißt \textbf{$\delta$-Approximation} ($\delta \ge 1$), falls er für jedes $x \in I$ eine Lösung $A(x) \in \mathrm{sol}(x)$ liefert mit:
+    \[
+        R_A(x) = \max \left\{ \frac{\mathrm{cost}(A(x))}{\mathrm{Opt}(x)}, \frac{\mathrm{Opt}(x)}{\mathrm{cost}(A(x))} \right\} \le \delta.
+    \]
+    \begin{itemize}
+        \item $\mathrm{APX}$: Klasse aller NPO-Probleme mit $\delta$-Approximationsalgorithmus für ein konstantes $\delta > 1$.
+        \item $\mathrm{PTAS}$ (Polynomial Time Approximation Scheme): Für jedes feste $\varepsilon > 0$ existiert ein polynomieller $(1+\varepsilon)$-Approximationsalgorithmus (Laufzeit $n^{O(1/\varepsilon)}$).
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}[2-Approximation für Minimales Vertex-Cover]
+    Das Problem \textsc{Min-Vertex-Cover} liegt in $\mathrm{APX}$.
+\end{theorem}
+
+\begin{proof}
+    \textbf{Beweisidee:} Wir bestimmen ein maximales Matching (eine bezüglich Inklusion nicht erweiterbare Menge kantendisjunkter Kanten) und wählen beide Endpunkte jeder Matchingkante aus.
+    
+    Sei $M \subseteq E$ ein maximales Matching in $G=(V, E)$. Wir setzen $C = \bigcup_{\{u, v\} \in M} \{u, v\}$.
+    \begin{enumerate}
+        \item \textbf{Zulässigkeit:} Wäre eine Kante $e \in E$ nicht durch $C$ überdeckt, wären beide Endknoten von $e$ nicht in $M$ enthalten. Dann ließe sich $M \cup \{e\}$ zu einem größeren Matching erweitern, im Widerspruch zur Maximalität von $M$.
+        \item \textbf{Approximationsschranke:} Da alle Kanten in $M$ knotendisjunkt sind, muss jede gültige Knotenüberdeckung mindestens einen Endknoten von jeder Kante in $M$ enthalten. Daher gilt $\mathrm{Opt}(G) \ge |M|$. Da $|C| = 2|M|$, folgt:
+        \[
+            |C| = 2|M| \le 2 \cdot \mathrm{Opt}(G).
+        \]
+    \end{enumerate}
+\end{proof}
+
+\begin{theorem}[Inapproximierbarkeit von TSP]
+    \begin{enumerate}
+        \item \textbf{Allgemeines TSP:} Falls $\mathrm{P} \neq \mathrm{NP}$, existiert für kein $\alpha \ge 1$ ein polynomieller $\alpha$-Approximationsalgorithmus für das allgemeine Travelling Salesperson Problem.
+        \item \textbf{Metrisches TSP:} Gilt die Dreiecksungleichung, existiert eine 2-Approximation via Spannbäumen sowie eine $\frac{3}{2}$-Approximation via Christofides-Heuristik.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}[Beweisskizze zu 1]
+    Wir reduzieren das Hamiltonkreis-Problem $\mathrm{HAM\text{-}CYCLE} \le_p \mathrm{TSP}$:
+    Gegeben ein Graph $G=(V, E)$ mit $n = |V|$. Wir definieren auf einem vollständigen Graphen $K_n$ Kantenkosten: $c(e) = 1$ falls $e \in E$, und $c(e) = \alpha n + 1$ falls $e \notin E$.
+    Besitzt $G$ einen Hamiltonkreis, so hat die optimale TSP-Tour die Kosten $n$. Besitzt $G$ keinen, muss jede Tour mindestens eine Nicht-Graph-Kante nutzen und hat Kosten $> \alpha n$. Ein $\alpha$-Approximationsalgorithmus könnte somit das NP-vollständige Hamiltonkreis-Problem in polynomieller Zeit exakt entscheiden.
+\end{proof}
+
+% -----------------------------------------------------------------------------
+\subsection{Randomisierte Algorithmen und probabilistische Klassen}
+
+\begin{definition}[Probabilistische Turingmaschine und Sprachklassen]
+    Eine probabilistische Turingmaschine (PTM) ist eine TM mit echten Zufallsentscheidungen (Münzwürfe an Verzweigungspunkten mit Wahrscheinlichkeit $1/2$). Alle Pfade terminieren in polynomieller Zeit.
+    \begin{itemize}
+        \item $\mathrm{RP}$ (Randomized Polynomial Time): Einseitiger Fehler.
+        \begin{align*}
+            w \in L &\implies \Pr[M(w) \text{ akzeptiert}] \ge \tfrac{1}{2}, \\
+            w \notin L &\implies \Pr[M(w) \text{ akzeptiert}] = 0.
+        \end{align*}
+        \item $\mathrm{co\text{-}RP}$: Dualer einseitiger Fehler ($w \notin L \implies \Pr[\text{verwirft}] \ge \frac{1}{2}$, $w \in L \implies \Pr[\text{verwirft}] = 0$).
+        \item $\mathrm{BPP}$ (Bounded-error Probabilistic Polynomial Time): Zweiseitiger Fehler.
+        \begin{align*}
+            w \in L &\implies \Pr[M(w) \text{ akzeptiert}] \ge \tfrac{2}{3}, \\
+            w \notin L &\implies \Pr[M(w) \text{ akzeptiert}] \le \tfrac{1}{3}.
+        \end{align*}
+        \item $\mathrm{ZPP} = \mathrm{RP} \cap \mathrm{co\text{-}RP}$: Las-Vegas-Algorithmen (liefern stets das exakt korrekte Ergebnis in erwarteter Polynomialzeit).
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}[Wahrscheinlichkeitsverstärkung (Error Amplification)]
+    Durch $k$-fache unabhängige Wiederholung lässt sich die Fehlerwahrscheinlichkeit exponentiell absenken:
+    \begin{itemize}
+        \item Für $\mathrm{RP}$: Nach $k$ Durchläufen sinkt die Wahrscheinlichkeit eines Falsch-Negativ-Fehlers auf höchstens $(1/2)^k$.
+        \item Für $\mathrm{BPP}$: Durch Mehrheitsentscheidung (Majority Vote) über $k$ unabhängige Durchläufe fällt die Fehlerwahrscheinlichkeit nach der Chernoff-Schranke exponentiell mit $e^{-\Omega(k)}$.
+    \end{itemize}
+\end{theorem}
+
+% -----------------------------------------------------------------------------
+\subsection{Formale Grammatiken und die Chomsky-Hierarchie}
+
+\begin{definition}[Formale Grammatik]
+    Eine formale Grammatik ist ein 4-Tupel $G = (V, \Sigma, R, S)$, wobei $V$ die Variablen, $\Sigma$ die Terminale ($V \cap \Sigma = \emptyset$), $S \in V$ das Startsymbol und $R \subseteq (V \cup \Sigma)^* V (V \cup \Sigma)^* \times (V \cup \Sigma)^*$ die endliche Menge von Ersetzungsregeln $\alpha \to \beta$ ist.
+\end{definition}
+
+\begin{definition}[Die Chomsky-Hierarchie]
+    \begin{itemize}
+        \item \textbf{Typ 0 (Allgemein):} Keine Restriktion an Regeln $\alpha \to \beta$.
+        Korrespondiert exakt zu den Turingmaschinen ($\mathcal{L}(\text{Typ 0}) = \mathcal{L}_{\mathrm{RE}}$).
+        \item \textbf{Typ 1 (Kontextsensitiv):} Regeln $\alpha \to \beta$ mit $|\alpha| \le |\beta|$ ($S \to \lambda$ erlaubt).
+        Korrespondiert zu nichtdeterministischen linear beschränkten Automaten (LBA, $\mathrm{NSPACE}(n)$).
+        \item \textbf{Typ 2 (Kontextfrei, CFG):} Regeln $A \to \alpha$ mit $A \in V$ und $\alpha \in (V \cup \Sigma)^*$.
+        Korrespondiert zu nichtdeterministischen Kellerautomaten (PDA).
+        \item \textbf{Typ 3 (Regulär):} Regeln $A \to a B$ oder $A \to a$ mit $A, B \in V, a \in \Sigma$ (rechtslinear).
+        Korrespondiert zu endlichen Automaten (DFA / NFA).
+    \end{itemize}
+    Es gilt die strikte Inklusionshierarchie:
+    \[
+        \mathcal{L}(\text{Typ 3}) \subsetneq \mathcal{L}(\text{Typ 2}) \subsetneq \mathcal{L}(\text{Typ 1}) \subsetneq \mathcal{L}(\text{Typ 0}) = \mathcal{L}_{\mathrm{RE}}.
+    \]
+\end{definition}
+
+\begin{theorem}[Pumping-Lemma für kontextfreie Sprachen (Bar-Hillel)]
+    Für jede kontextfreie Sprache $L$ existiert eine Konstante $n \ge 1$, sodass sich jedes Wort $z \in L$ mit $|z| \ge n$ zerlegen lässt in $z = u v w x y$, sodass gilt:
+    \begin{enumerate}
+        \item $|v x| \ge 1$ (mindestens eines der beiden Teilwörter $v, x$ ist nichtleer),
+        \item $|v w x| \le n$,
+        \item Für alle $i \ge 0$ gilt: $u v^i w x^i y \in L$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \textbf{Beweisidee:} Im Ableitungsbaum eines hinreichend langen Wortes muss auf einem Wurzel-Blatt-Pfad nach dem Schubfachprinzip eine Variable $A \in V$ doppelt vorkommen.
+    
+    Sei die Grammatik in Chomsky-Normalform (alle Regeln $A \to BC$ oder $A \to a$). Ein Binärbaum der Tiefe $|V|+1$ erzeugt ein Wort der Länge $\ge 2^{|V|}$. Wähle $n = 2^{|V|}$. Jeder Pfad der Länge $> |V|$ muss eine Variable $A$ enthalten, die zweimal auftritt ($A \Rightarrow^* v A x \Rightarrow^* v w x$). Wiederholtes Einsetzen oder Auslassen des Teilbaums unter dem oberen $A$ ergibt die gepumpten Wörter $u v^i w x^i y \in L$.
+\end{proof}
+
+\begin{beispiel}[Nachweis der Nicht-Kontextfreiheit]
+    Die Sprache $L = \{a^k b^k c^k \mid k \ge 0\}$ ist nicht kontextfrei.
+    Angenommen, $L$ wäre kontextfrei mit Pumping-Zahl $n$. Betrachte $z = a^n b^n c^n \in L$. Nach dem Pumping-Lemma existiert eine Zerlegung $z = u v w x y$ mit $|v w x| \le n$ und $|v x| \ge 1$. Da $|v w x| \le n$, kann der Teilstring $v w x$ höchstens zwei verschiedene Buchstabensorten (also entweder nur $a$, nur $b$, nur $c$, oder $a$ und $b$, oder $b$ und $c$) enthalten.
+    Pumpen wir mit $i=2$, so werden in $u v^2 w x^2 y$ nur die Anzahlen der in $v x$ enthaltenen Buchstabensorten erhöht, während die dritte Buchstabensorte unberührt bleibt. Die Ausgewogenheit der Buchstaben geht verloren, weshalb $u v^2 w x^2 y \notin L$, ein Widerspruch.
+\end{beispiel}

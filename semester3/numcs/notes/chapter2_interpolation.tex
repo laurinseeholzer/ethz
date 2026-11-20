@@ -1,0 +1,164 @@
+\section{Polynomial \& Piecewise Interpolation}
+
+Approximating unknown, complicated, or discrete data by smooth functions is a central pillar of numerical computation. We analyze global polynomial interpolation, its mathematical limits, and how piecewise polynomials (splines) provide robust, local alternatives.
+
+% -----------------------------------------------------------------------------
+\subsection{Polynomial Interpolation \& The Vandermonde Matrix}
+
+\begin{definition}
+    Given $n+1$ distinct interpolation nodes $x_0 < x_1 < \dots < x_n$ and target values $y_0, y_1, \dots, y_n \in \mathbb{R}$, the \textbf{1D polynomial interpolation problem} seeks a polynomial $p_n \in \mathcal{P}_n$ of degree at most $n$ such that:
+    \begin{equation}
+        p_n(x_i) = y_i, \quad \forall i = 0, 1, \dots, n.
+    \end{equation}
+\end{definition}
+
+By the Fundamental Theorem of Algebra, a non-zero polynomial of degree at most $n$ can have at most $n$ distinct real roots. The difference between any two interpolating polynomials in $\mathcal{P}_n$ vanishes at $n+1$ points, which guarantees that the solution is unique.
+
+In the canonical monomial basis $\{1, x, x^2, \dots, x^n\}$, $p_n(x) = \sum_{j=0}^{n} \alpha_j x^j$. The interpolation conditions form the linear system $V \underline{\alpha} = \underline{y}$, where $V \in \mathbb{R}^{(n+1) \times (n+1)}$ is the \textbf{Vandermonde matrix}:
+\begin{equation}
+    V = \begin{pmatrix}
+        1 & x_0 & x_0^2 & \dots & x_0^n \\
+        1 & x_1 & x_1^2 & \dots & x_1^n \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        1 & x_n & x_n^2 & \dots & x_n^n
+    \end{pmatrix}.
+\end{equation}
+Its determinant is given by:
+\begin{equation}
+    \det(V) = \prod_{0 \le i < j \le n} (x_j - x_i) \neq 0.
+\end{equation}
+
+\begin{important}
+    On any compact interval (such as $[0, 1]$), the \textbf{monomial basis} $\{1, x, \dots, x^n\}$ suffers severe \textbf{ill-conditioning}. As powers increase, the basis functions $x^j$ become nearly identical, causing the columns of $V$ to become nearly collinear. The condition number grows exponentially:
+    \begin{equation}
+        \operatorname{cond}_2(V) \sim \mathcal{O}(e^{c n}).
+    \end{equation}
+    For $n \ge 15$, $\operatorname{cond}_2(V) > 10^{16} \approx 1/\varepsilon_{\text{mach}}$, meaning solving $V \underline{\alpha} = \underline{y}$ via Gaussian elimination in $\mathcal{O}(n^3)$ flops loses all 16 digits of accuracy. The monomial basis should never be used for numerical fitting.
+\end{important}
+
+If monomial coefficients $\alpha_j$ are already known, $p_n(x)$ is evaluated stably via \textbf{Horner's scheme} in $2n$ flops ($\mathcal{O}(n)$) using nested factorization:
+\begin{equation}
+    p_n(x) = \alpha_0 + x \left(\alpha_1 + x \left(\alpha_2 + \dots + x(\alpha_{n-1} + x \alpha_n)\dots\right)\right).
+\end{equation}
+
+% -----------------------------------------------------------------------------
+\subsection{Newton Basis \& Divided Differences}
+
+To decouple the interpolation equations, we switch to the \textbf{Newton basis polynomials}:
+\begin{equation}
+    N_0(x) \equiv 1, \qquad N_j(x) := \prod_{k=0}^{j-1} (x - x_k), \quad j = 1, \dots, n.
+\end{equation}
+The interpolant takes the triangular form:
+\begin{equation}
+    p_n(x) = \sum_{j=0}^{n} a_j N_j(x) = a_0 + a_1(x - x_0) + a_2(x - x_0)(x - x_1) + \dots + a_n \prod_{k=0}^{n-1}(x - x_k).
+\end{equation}
+Because $N_j(x_i) = 0$ for all $i < j$, the interpolation matrix is lower-triangular. At $x_0$, only $N_0(x_0) \neq 0$, fixing $a_0 = y_0$. At $x_1$, only $N_0(x_1)$ and $N_1(x_1)$ are non-zero, fixing $a_1$ without altering $a_0$. The coefficients $a_j = y[x_0, \dots, x_j]$ are the \textbf{divided differences}, defined recursively:
+\begin{align}
+    y[x_i] &:= y_i, \\
+    y[x_i, \dots, x_{i+k}] &:= \frac{y[x_{i+1}, \dots, x_{i+k}] - y[x_i, \dots, x_{i+k-1}]}{x_{i+k} - x_i}, \quad k \ge 1.
+\end{align}
+
+The divided differences table is computed in-place within a single vector in $\mathcal{O}(n^2)$ flops and $\mathcal{O}(n)$ memory. Crucially, the Newton basis possesses the \textbf{streaming property}: appending a new measurement $(x_{n+1}, y_{n+1})$ requires computing only one additional entry $a_{n+1}$ in $\mathcal{O}(n)$ flops, leaving all previous coefficients $a_0, \dots, a_n$ unchanged.
+
+% -----------------------------------------------------------------------------
+\subsection{Barycentric Interpolation}
+
+The cardinal Lagrange basis polynomials satisfy $\ell_i(x_j) = \delta_{ij}$, expressing the interpolant directly as:
+\begin{equation}
+    p_n(x) = \sum_{i=0}^{n} y_i \ell_i(x).
+\end{equation}
+Evaluating this naive form takes $\mathcal{O}(n^2)$ flops per query point.
+
+\begin{theorem}
+    Define the nodal polynomial $\ell(x) = \prod_{j=0}^{n} (x - x_j)$ and the \textbf{barycentric weights}:
+    \begin{equation}
+        \lambda_j := \frac{1}{\ell'(x_j)} = \prod_{\substack{k=0 \\ k \neq j}}^{n} \frac{1}{x_j - x_k}, \quad j = 0, \dots, n.
+    \end{equation}
+    The \textbf{second (true) barycentric interpolation formula} is:
+    \begin{equation}
+        p_n(x) = \frac{\sum_{j=0}^{n} \frac{\lambda_j}{x - x_j} y_j}{\sum_{j=0}^{n} \frac{\lambda_j}{x - x_j}}.
+    \end{equation}
+\end{theorem}
+
+The second barycentric formula represents $p_n(x)$ as a normalized weighted average of the data $y_j$. Multiplying all weights $\lambda_j$ by any non-zero constant cancels out identically between numerator and denominator. Higham (2004) proved that this formula is backward stable in floating-point arithmetic. Precomputing the weights takes $\mathcal{O}(n^2)$ flops once (or $\mathcal{O}(n)$ analytically for Chebyshev nodes), after which evaluating $p_n(x)$ at any new query point costs only $\mathcal{O}(n)$ flops.
+
+% -----------------------------------------------------------------------------
+\subsection{The Runge Phenomenon \& Chebyshev Nodes}
+
+For $f \in C^{n+1}([a, b])$, the interpolation error satisfies the \textbf{Cauchy remainder formula}:
+\begin{equation}
+    f(x) - p_n(x) = \omega_{n+1}(x) \frac{f^{(n+1)}(\xi)}{(n+1)!}, \quad \text{where } \omega_{n+1}(x) := \prod_{j=0}^{n} (x - x_j).
+\end{equation}
+On equidistant nodes, the nodal product $\omega_{n+1}(x)$ oscillates with massive spikes near the boundaries $\pm 1$. For Runge's function $f(x) = \frac{1}{1 + 25x^2}$, increasing polynomial degree causes wild boundary oscillations where error diverges:
+\begin{equation}
+    \lim_{n \to \infty} \|f - p_n\|_\infty = \infty.
+\end{equation}
+
+\begin{theorem}
+    The \textbf{Chebyshev polynomials of the first kind} on $[-1, 1]$ are defined by:
+    \begin{equation}
+        T_n(x) := \cos(n \arccos x).
+    \end{equation}
+    The monic Chebyshev polynomial $\widetilde{T}_{n+1}(x) = 2^{-n} T_{n+1}(x)$ equioscillates with $n+2$ extrema of equal amplitude $2^{-n}$, uniquely minimizing the maximum norm over all monic polynomials of degree $n+1$:
+    \begin{equation}
+        \min_{\substack{p \in \mathcal{P}_{n+1} \\ p \text{ monic}}} \|p\|_{L^\infty([-1, 1])} = \|\widetilde{T}_{n+1}\|_\infty = 2^{-n}.
+    \end{equation}
+    The optimal nodes that minimize $\|\omega_{n+1}\|_\infty$ are the roots of $T_{n+1}(x)$:
+    \begin{equation}
+        x_k = \cos\left( \frac{2k + 1}{2n + 2} \pi \right), \quad k = 0, \dots, n.
+    \end{equation}
+\end{theorem}
+
+Geometrically, Chebyshev nodes correspond to placing $n+1$ points equidistantly along a semicircle over $[-1, 1]$ and projecting them vertically down onto the $x$-axis. Due to circular curvature, the points cluster densely near the boundaries $\pm 1$ and spread out near $0$, flattening the boundary spikes of $\omega_{n+1}(x)$ and eliminating the Runge phenomenon.
+
+For the \textbf{Chebyshev-Lobatto extrema nodes} $\tilde{x}_k = \cos(k\pi/n)$, barycentric weights have an exact closed form:
+\begin{equation}
+    \lambda_k = (-1)^k \delta_k, \qquad \delta_0 = \delta_n = \frac{1}{2}, \quad \delta_k = 1 \text{ for } 1 \le k \le n-1.
+\end{equation}
+Clenshaw's recurrence evaluates $\sum c_k T_k(x)$ in $\mathcal{O}(n)$ flops without trigonometric calls.
+
+% -----------------------------------------------------------------------------
+\subsection{Piecewise Interpolation \& Splines}
+
+Global polynomials fail for functions with local roughness or on arbitrary fixed grids. Piecewise polynomial interpolation partitions $[a, b]$ into $N$ subintervals $I_j = [x_{j-1}, x_j]$ and fits low-degree polynomials locally.
+
+\textbf{Piecewise Linear Interpolation:} Connects adjacent points with straight lines, achieving $C^0$ continuity and an error bound:
+\begin{equation}
+    \|f - s_\Delta\|_\infty \le \frac{h^2}{8} \|f''\|_\infty = \mathcal{O}(h^2),
+\end{equation}
+but introduces derivative jumps at every knot.
+
+\textbf{PCHIP (Shape-Preserving Hermite):} Piecewise Cubic Hermite Interpolating Polynomials construct a $C^1$ curve from function values $y_j$ and slopes $c_j$. Standard splines often introduce unphysical wiggles in monotonic data. PCHIP enforces the \textbf{Fritsch-Carlson conditions}: if neighboring secant slopes have opposite signs (indicating a local extremum), PCHIP sets slope:
+\begin{equation}
+    c_j = 0,
+\end{equation}
+guaranteeing that no spurious overshoots are created.
+
+\begin{definition}
+    A function $s: [a, b] \to \mathbb{R}$ on mesh $\Delta: a = x_0 < \dots < x_N = b$ is a \textbf{cubic spline} if:
+    \begin{enumerate}
+        \item $s(x_j) = y_j$ for $j=0, \dots, N$ (Interpolation),
+        \item $s|_{I_j} \in \mathcal{P}_3$ for each subinterval (Piecewise Cubic),
+        \item $s \in C^2([a, b])$ (Continuous function, first, and second derivatives at interior knots).
+    \end{enumerate}
+    The $N$ cubic polynomials have $4N$ parameters, constrained by $2N$ interpolation conditions and $2N-2$ internal continuity conditions ($C^1$ and $C^2$). This leaves an exact deficit of \textbf{2 boundary conditions} to close the system:
+    \begin{itemize}
+        \item \textbf{Natural Spline:} $s''(a) = s''(b) = 0$.
+        \item \textbf{Clamped Spline:} End slopes $s'(a) = c_0$ and $s'(b) = c_N$ are prescribed.
+        \item \textbf{Periodic Spline:} $s'(a) = s'(b)$ and $s''(a) = s''(b)$ for periodic data ($y_0 = y_N$).
+        \item \textbf{Not-a-Knot Spline:} Third derivative $s'''$ continuous across $x_1$ and $x_{N-1}$.
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}
+    By \textbf{Holladay's minimum bending energy theorem}, the natural cubic spline uniquely minimizes total elastic bending energy:
+    \begin{equation}
+        \int_{a}^{b} |s''(x)|^2 dx \le \int_{a}^{b} |g''(x)|^2 dx, \quad \forall g \in C^2([a, b]) \text{ interpolating } (x_j, y_j).
+    \end{equation}
+\end{theorem}
+
+Mechanically, a natural cubic spline models a flexible wooden beam constrained by duck weights at the data points, which bends naturally to minimize internal strain energy. Expressing $C^2$ continuity in terms of slopes $c_j = s'(x_j)$ yields a strictly diagonally dominant tridiagonal system:
+\begin{equation}
+    \frac{1}{h_j} c_{j-1} + 2\left(\frac{1}{h_j} + \frac{1}{h_{j+1}}\right) c_j + \frac{1}{h_{j+1}} c_{j+1} = 3\left( \frac{y_j - y_{j-1}}{h_j^2} + \frac{y_{j+1} - y_j}{h_{j+1}^2} \right).
+\end{equation}
+The \textbf{Thomas algorithm} solves this tridiagonal system in $\mathcal{O}(N)$ flops and $\mathcal{O}(N)$ memory without pivoting, making cubic splines scalable to millions of knots.

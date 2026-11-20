@@ -1,99 +1,94 @@
-\section{Rechtsanwendung im Internet}
+\section{Welches Recht gilt im Netz? (IPRG, LugÜ, StGB)}
 
-\subsection{Grundlagen}
+\subsection{Souveränitätsprinzip und Anknüpfung im Internet}
 
-\begin{definition}
-    \textbf{DSGVO:} Die Datenschutz-Grundverordnung der EU regelt den Umgang und
-    die Verarbeitung von Personen-bezogenen Daten in und ausserhalb der EU.
-\end{definition}
-
-\begin{remark}
-    Die DSGVO findet Anwendung, wenn
-    \begin{itemize}
-        \item Dienstleistungen in der EU angeboten werden
-        \item Das Verhalten von Personen in der EU beobachtet wird (sofern
-              dieses Verhalten in der EU stattfindet)
-    \end{itemize}
-\end{remark}
+Das Internet kennt keinen eigenen, staatsfreien Rechtsraum. Völkerrechtlich gilt der fundamentale Grundsatz der staatlichen Souveränität: Jeder Staat bestimmt den räumlichen und sachlichen Anwendungsbereich seiner Gesetze autonom und für sich selbst. Gerichte wenden daher stets ihr eigenes internationales Privatrecht (in der Schweiz das IPRG bzw. das Lugano-Übereinkommen LugÜ) an, um zu ermitteln, ob sie örtlich zuständig sind und welches materielle Recht zur Beurteilung des Sachverhalts herangezogen werden muss.
 
 \begin{theorem}
-    Jeder \textbf{Staat bestimmt selbst}, wo das eigene Recht Anwendung findet.
+    \textbf{Das Auswirkungsprinzip im Netz:} \\
+    Die \textbf{blosse weltweite Abrufbarkeit} einer Website oder eines Online-Dienstes genügt nach ständiger Schweizer Rechtsprechung \textbf{nicht}, um Schweizer Recht anzuwenden oder einen Gerichtsstand in der Schweiz zu begründen. Massgebend ist das \textbf{Auswirkungsprinzip}: Ein ausländischer Anbieter untersteht Schweizer Recht nur dann, wenn sich sein Online-Angebot gezielt auf das Schweizer Publikum ausrichtet.
 \end{theorem}
 
+Als Kriterien für eine solche gezielte Ausrichtung auf die Schweiz gelten beispielsweise Preise in Schweizer Franken (CHF), die Angabe von Schweizer Liefer- und Zollkonditionen, eine Schweizer Telefonvorwahl, Werbung auf Schweizer Plattformen oder die Verwendung der länderspezifischen Domainendung \texttt{.ch}. Demgegenüber ist der physische Standort des Webservers für die Bestimmung des anwendbaren Zivil- und Konsumentenrechts in über 95\% der Fälle rechtlich \textbf{völlig irrelevant}.
+
+\subsection{Konsumentenverträge im E-Commerce (Art. 120 IPRG / Art. 15 LugÜ)}
+
+Bei grenzüberschreitenden Online-Käufen zwischen gewerblichen Händlern und privaten Endverbrauchern (B2C) geniessen Konsumenten einen gesteigerten verfahrens- und materiellrechtlichen Schutz. Hat der Anbieter seine berufliche oder gewerbliche Tätigkeit auf den Staat ausgerichtet, in dem der Konsument seinen gewöhnlichen Aufenthalt hat, greift die Schutzordnung des internationalen Rechts:
+
 \begin{definition}
-    \textbf{Anknüpfungspunkt:} Sachverhalt welchen Rechtsfall mit einem
-    Land/Behörde in Beziehung setzt, respektive eine relevanz legitimiert.
+    \textbf{Gerichtsstand und anwendbares Recht beim Konsumentenvertrag:}
+    \begin{itemize}
+        \item \textbf{Gerichtsstand (Art. 16 Abs. 1 LugÜ, Art. 114 IPRG):} Der Konsument kann den ausländischen Anbieter wahlweise an dessen Sitz oder an seinem \textbf{eigenen Wohnsitz} einklagen. Der Unternehmer hingegen darf den Konsumenten nur an dessen Wohnsitz belangen.
+        \item \textbf{Anwendbares Recht (Art. 120 Abs. 1 IPRG):} Der Vertrag untersteht zwingend dem Recht am gewöhnlichen Aufenthalt des Konsumenten (somit Schweizer Recht für Besteller mit Wohnsitz in der Schweiz).
+        \item \textbf{Ausschluss der Rechtswahl (Art. 120 Abs. 2 IPRG):} Eine vertragliche Rechtswahl in den AGB des Händlers zuungunsten des Konsumenten ist \textbf{zwingend ausgeschlossen und nichtig}.
+    \end{itemize}
 \end{definition}
 
 \begin{remark}
-    Die blosse Abrufbarkeit einer Website in einem Land genügt in der Regel
-    nicht als Anknüpfungspunkt; entscheidend ist meist, ob ein Angebot auf ein
-    Publikum im Land ausgerichtet ist oder dort Auswirkungen hat.
+    \textbf{Die grosse Falle beim EU-Konsumentenschutz:} \\
+    Bestellt ein Schweizer Konsument in einem deutschen Online-Shop Waren in die Schweiz, untersteht der Vertrag nach Art. 120 IPRG dem schweizerischen Recht. Da das Schweizer Recht im Gegensatz zum europäischen Recht kein allgemeines gesetzliches Widerrufsrecht im E-Commerce kennt, hat der Schweizer Kunde \textbf{keinen gesetzlichen Anspruch auf das 14-tägige EU-Widerrufsrecht}! Er kann sich rechtlich nur auf Schweizer Recht berufen, es sei denn, der Händler räumt ihm das Rückgaberecht in den AGB freiwillig ein.
 \end{remark}
 
-\begin{definition}
-    \textbf{Souveränität:} Amtshandlungen auf Schweizer Boden sind grundsätzlich
-    den Schweizer Behörden vorbehalten. Ausländische Herausgabebefehle auf z.B.
-    Rechenzentren in der Schweiz können mit dem Schutz der Schweizer
-    Souveränität über Art. 271 StGB (verbotene Handlungen für einen fremden
-    Staat) kollidieren.
-\end{definition}
+\subsection{Unerlaubte Handlungen und Lauterkeitsrecht (Art. 129, 133, 136 IPRG)}
 
-\subsection{Ermittlung des anwendbaren Rechts}
+Wird über das Internet ein Schaden verursacht (z.B. durch Denial-of-Service-Attacken, Hacking oder die Verbreitung von Schadsoftware), regeln Art. 129 und Art. 133 IPRG die deliktische Zuständigkeit und das anwendbare Recht:
 
 \begin{theorem}
-    Die Ermittlung des anwendbaren Rechts passiert in Schritten:
+    \textbf{Erfolgsort vs. blosse Folgeschäden (Art. 129 Abs. 1 / 133 Abs. 2 IPRG):}
     \begin{itemize}
-        \item \textbf{Örtlich zuständige Behörde ermitteln:} \\
-              Dies können Gerichte in mehreren Staaten gleichzeitig sein. \\
-              Die Schweiz anerkennt und vollstreckt unter gewissen Bedingungen
-              auch von ausländischen Gerichten ergangene Urteile.
-        \item \textbf{Behörde bestimmt das anwendbare Recht nach eigenem Recht:}
-              \\
-              Schweizer Zivilgerichte wenden etwaige internationale ankommen
-              sowie das Bundesgesetz über das internationale Privatrecht (IPRG)
-              an um das anzuwendende Recht zu bestimmen.\\
-              Schweizer Verwaltungs- und Strafbehörden wenden das
-              Territorialprinzip an.
+        \item Die geschädigte Partei kann wahlweise am \textbf{Handlungsort} (wo der Täter agierte) oder am \textbf{Erfolgsort} klagen.
+        \item \textbf{Erfolgsort} ist ausschliesslich der Ort, an dem \textbf{unmittelbar und primär in das geschützte Rechtsgut eingegriffen} wurde (z.B. der physische Standort des sabotierten Servers oder der kompromittierten Datenbank).
+        \item \textbf{Blosse Folgeschäden} (z.B. finanzielle Vermögenseinbussen am Banksitz des Opfers oder entgangener Gewinn am Wohnsitz) begründen rechtlich \textbf{keinen Erfolgsort}!
     \end{itemize}
 \end{theorem}
 
-\begin{remark}
-    \textbf{Rechtliche Vorkehrungen:}
+Für unlauteren Wettbewerb (z.B. irreführende Online-Werbung, unlautere Kundenabfangung im Web) statuiert Art. 136 Abs. 1 IPRG das sogenannte \textbf{Marktortprinzip}: Ansprüche unterstehen stets dem Recht desjenigen Staates, auf dessen Markt die unlautere Massnahme ihre tatsächliche Wirkung entfaltet.
+
+\subsection{Persönlichkeitsverletzungen und Datenschutz (Art. 139 IPRG)}
+
+Ehrverletzungen, Shitstorms oder Datenschutzverstösse auf Online-Plattformen und in sozialen Medien berühren regelmässig die Privatsphäre von Personen in mehreren Ländern. Um dem Geschädigten einen effektiven Rechtsschutz zu garantieren, gewährt ihm das Schweizer Recht ein weitgehendes Wahlrecht:
+
+\begin{definition}
+    \textbf{Das dreifache Wahlrecht des Opfers (Art. 139 Abs. 1 IPRG):} \\
+    Bei Persönlichkeitsverletzungen durch Medien oder das Internet kann die geschädigte Person wählen, ob ihre Ansprüche beurteilt werden nach:
+    \begin{enumerate}
+        \item dem Recht des Staates, in dem sie ihren \textbf{gewöhnlichen Aufenthalt} hat (sofern der Schädiger mit einem Erfolgseintritt in diesem Staat rechnen musste),
+        \item dem Recht des Staates, in dem der Schädiger seine \textbf{Niederlassung oder seinen gewöhnlichen Aufenthalt} hat, oder
+        \item dem Recht des Staates, in dem der \textbf{Erfolg der Verletzung} eingetreten ist (sofern der Schädiger mit diesem Erfolgseintritt rechnen musste).
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    \textbf{Leitfälle zu Art. 139 IPRG:}
     \begin{itemize}
-        \item Rechtswahl in B2B-Verträgen
-        \item Günstiger Standort des eigenen Unternehmens (EU/nicht-EU/EU-Land)
-        \item Disclaimer
-        \item Abstimmung des Angebots auf die wichtigsten Rechtsordnungen
-        \item Abstimmung des Angebots auf die strengsten Rechtsordnungen
-        \item Günstige Wahl des Server-Standorts
-        \item Günstige Wahl des Providers
+        \item \textbf{Google Street View (BGE 138 II 346):} Google fotografierte Schweizer Strassen und stellte unzureichend verpixelte Gesichter und Autokennzeichen ins Netz. Da Schweizer Bürger an ihrem gewöhnlichen Aufenthalt betroffen waren und Google sich gezielt an den Schweizer Markt wandte, war Schweizer Datenschutzrecht (revDSG) uneingeschränkt anwendbar.
+        \item \textbf{Rotten Neighbor:} Auf einem in den USA gehosteten Bewertungsportal wurden ehrverletzende Anschuldigungen über Schweizer Nachbarn publiziert. Obwohl Betreiber und Server in den USA sassen, konnten die Betroffenen gestützt auf Art. 139 Abs. 1 lit. a IPRG vor Schweizer Gerichten nach Schweizer Recht auf Beseitigung und Genugtuung klagen.
     \end{itemize}
-\end{remark}
-
-\subsection{Beispiele}
-
-\begin{example}
-    \textbf{Konsumentenverträge:} Unterliegen strengen Sonderregeln zum Schutz
-    von Konsumenten. Kunden können bei grenzüberschreitenden Online-Geschäften
-    oft an ihrem Wohnsitz klagen und sich auf das Recht ihres Aufenthaltsortes
-    berufen (z. B. deutsches Konsumentenschutzrecht für Kunden aus Deutschland)
 \end{example}
 
-\begin{example}
-    \textbf{Unerlaubte Handlung:} Auf Schadenersatz geklagt werden kann in der
-    Schweiz i.d.R. am Ort de Beklagten oder am Hanldungs- oder Erfolgsort. Falls
-    der Täter je erwischt wird. Bis dahin verfolgen die Behörden am Ort des
-    Opfers die Straftat.
-\end{example}
+\subsection{Staatliche Souveränität vs. US CLOUD Act}
 
-\begin{example}
-    \textbf{Urheberrecht:} Immaterialgüterrechte unterstehen grundsätzlich dem
-    Recht des Staates, für den der Schutz beansprucht wird (Art. 110 IPRG).
-\end{example}
+Zwischen internationalen Ermittlungsbefugnissen und der staatlichen Souveränität besteht im Cloud-Zeitalter ein schwerwiegender Normkonflikt:
 
-\begin{example}
-    \textbf{Aufsichtsrecht:} Unterliegt dem Territorialitätsprinzip bzw. dem
-    Auswirkungsprinzip (z. B. Verbot von Alkoholwerbung für Jugendliche in der
-    Schweiz).
-\end{example}
+\begin{definition}
+    \textbf{Der Konflikt zwischen Art. 271 StGB und US CLOUD Act:}
+    \begin{itemize}
+        \item \textbf{Art. 271 StGB (Verbotene Handlungen für einen fremden Staat):} Schützt die Schweizer Gebietshoheit. Wer auf schweizerischem Boden ohne behördliche Bewilligung für einen fremden Staat Handlungen vornimmt, die einer Behörde oder einem Beamten zukommen (z.B. Beschlagnahme von Daten, hoheitliche Beweiserhebung), macht sich strafbar (Freiheitsstrafe bis 3 Jahre).
+        \item \textbf{US CLOUD Act:} US-Bundesgesetz, das US-Behörden ermächtigt, von IT-Dienstleistern mit US-Bezug (z.B. Microsoft, AWS, Google) die Herausgabe gespeicherter Daten zu erzwingen -- unabhängig davon, wo die Server physisch stehen (selbst in Schweizer Rechenzentren).
+        \item \textbf{Rechtsfolge:} Folgt eine Schweizer Tochtergesellschaft oder ein Schweizer Administrator direkt einer US-Herausgabeanordnung und liefert in der Schweiz lagernde Daten ohne ordentliches Rechtshilfeverfahren an das FBI oder US-Gerichte aus, begeht sie eine \textbf{Amtsanmassung nach Art. 271 StGB}. Der zwischenstaatliche \textbf{Rechtshilfeweg ist zwingend}!
+    \end{itemize}
+\end{definition}
+
+\begin{important}
+    \textbf{Typische MC-Fallen zu Kapitel 1:}
+    \begin{itemize}
+        \item \textbf{Falle 1 (Abrufbarkeit begründet Gerichtsstand):} ,,Weil eine Website weltweit abrufbar ist, kann ein geschädigter Schweizer den ausländischen Betreiber immer an Schweizer Gerichten nach Schweizer Recht verklagen.`` \\
+        $\rightarrow$ \textbf{FALSCH!} Die blosse Abrufbarkeit reicht \textbf{nie}. Erforderlich ist das \textbf{Auswirkungsprinzip} (gezielte Ausrichtung auf das Schweizer Publikum).
+        \item \textbf{Falle 2 (Automatisches EU-Widerrufsrecht):} ,,Ein Zürcher kauft bei einem Berliner Online-Shop einen Laptop. Er kann gestützt auf das EU-Verbraucherrecht innert 14 Tagen grundlos vom Kauf zurücktreten.`` \\
+        $\rightarrow$ \textbf{FALSCH!} Nach Art. 120 IPRG gilt Schweizer Recht am Konsumentenwohnsitz. Das Schweizer Recht kennt kein Widerrufsrecht im E-Commerce. Der Schweizer profitiert \textbf{nicht} vom EU-Widerrufsrecht!
+        \item \textbf{Falle 3 (Folgeschaden als Erfolgsort):} ,,Wird der Server eines Cloud-Providers in Frankfurt gehackt und erleidet ein Zürcher Kunde dadurch einen Kontoverlust, ist Zürich Erfolgsort nach Art. 129 IPRG.`` \\
+        $\rightarrow$ \textbf{FALSCH!} Erfolgsort ist nur der Ort des direkten Angriffs (Frankfurt). Ein reiner finanzieller Folgeschaden begründet \textbf{keinen} Erfolgsort!
+        \item \textbf{Falle 4 (Direkte Herausgabe nach US CLOUD Act):} ,,Da Microsoft der US-Jurisdiktion untersteht, dürfen Schweizer Administratoren Kundendaten aus dem Rechenzentrum Zürich direkt an US-Ermittler aushändigen.`` \\
+        $\rightarrow$ \textbf{FALSCH!} Die direkte Herausgabe auf Schweizer Staatsgebiet ohne Schweizer Bewilligung verletzt die staatliche Souveränität und ist nach \textbf{Art. 271 StGB strafbar}.
+    \end{itemize}
+\end{important}

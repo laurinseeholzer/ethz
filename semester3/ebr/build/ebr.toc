@@ -1,47 +1,43 @@
-\contentsline {section}{\numberline {1}Rechtsanwendung im Internet}{4}{}%
-\contentsline {subsection}{\numberline {1.1}Grundlagen}{4}{}%
-\contentsline {subsection}{\numberline {1.2}Ermittlung des anwendbaren Rechts}{4}{}%
-\contentsline {subsection}{\numberline {1.3}Beispiele}{5}{}%
-\contentsline {section}{\numberline {2}Schutz fremder und eigener Inhalte}{6}{}%
-\contentsline {subsection}{\numberline {2.1}Einführung und Beispiele}{6}{}%
-\contentsline {subsection}{\numberline {2.2}Das Urheberrecht}{6}{}%
-\contentsline {subsection}{\numberline {2.3}Verwertungs- und Persönlichkeitsrechte}{7}{}%
-\contentsline {subsection}{\numberline {2.4}Beschaffung von Rechten und Lizenzierung}{7}{}%
-\contentsline {subsection}{\numberline {2.5}Haftung von Plattformen und Hosting-Diensten}{8}{}%
-\contentsline {subsection}{\numberline {2.6}Gesetzliche Schranken und Digital Rights Management}{8}{}%
-\contentsline {subsection}{\numberline {2.7}KI und Urheberrecht}{9}{}%
-\contentsline {subsection}{\numberline {2.8}Rechtsfolgen und Schutz ausserhalb des URG}{9}{}%
-\contentsline {subsection}{\numberline {2.9}Domain-Namen}{10}{}%
-\contentsline {subsubsection}{\numberline {2.9.1}Grundlagen und Aufbau}{10}{}%
-\contentsline {subsubsection}{\numberline {2.9.2}Vergabesystem und Akteure}{10}{}%
-\contentsline {subsubsection}{\numberline {2.9.3}Rechtliche Natur und Vergabe}{10}{}%
-\contentsline {subsubsection}{\numberline {2.9.4}Kennzeichenfunktion und Schutzrechte}{11}{}%
-\contentsline {subsubsection}{\numberline {2.9.5}Rechtsverletzung und Verwechslungsgefahr}{11}{}%
-\contentsline {subsubsection}{\numberline {2.9.6}Sonderkonstellationen und Schranken}{11}{}%
-\contentsline {subsubsection}{\numberline {2.9.7}Streitbeilegung und Schlichtungsverfahren}{12}{}%
-\contentsline {section}{\numberline {3}Haftung und Rechtsverfolgung im Netz}{14}{}%
-\contentsline {subsection}{\numberline {3.1}Ausgangslage und Cyberrisiken}{14}{}%
-\contentsline {subsection}{\numberline {3.2}Grundvoraussetzungen der Haftung}{14}{}%
-\contentsline {subsubsection}{\numberline {3.2.1}Strafrechtliche Verantwortlichkeit}{14}{}%
-\contentsline {subsubsection}{\numberline {3.2.2}Zivilrechtliche Haftung (Schadenersatz)}{15}{}%
-\contentsline {subsection}{\numberline {3.3}Haftungsverteilung, Rückgriff und Organverantwortung}{15}{}%
-\contentsline {subsubsection}{\numberline {3.3.1}Haftung im Unternehmen und Regress}{15}{}%
-\contentsline {subsubsection}{\numberline {3.3.2}Verantwortung des Verwaltungsrats und Sorgfaltsmassstab}{16}{}%
-\contentsline {subsection}{\numberline {3.4}Provider-Haftung und Rechtsdurchsetzung}{17}{}%
-\contentsline {subsection}{\numberline {3.5}Risiko von Cloud-Providern und ausländischem Behördenzugriff}{18}{}%
-\contentsline {section}{\numberline {4}Verträge im Netz}{20}{}%
-\contentsline {subsection}{\numberline {4.1}Vertragsschluss und Konsensus im E-Commerce}{20}{}%
-\contentsline {subsection}{\numberline {4.2}Allgemeine Geschäftsbedingungen (AGB)}{21}{}%
-\contentsline {subsection}{\numberline {4.3}Informationspflichten und Konsumentenschutz}{22}{}%
-\contentsline {subsection}{\numberline {4.4}Beweis, Schriftform und Elektronische Signatur}{23}{}%
-\contentsline {section}{\numberline {5}Datenschutzrecht (DSG)}{24}{}%
-\contentsline {subsection}{\numberline {5.1}Grundbegriffe und Geltungsbereich}{24}{}%
-\contentsline {subsection}{\numberline {5.2}Bearbeitungsgrundsätze (Art. 6 und 7 DSG)}{25}{}%
-\contentsline {subsection}{\numberline {5.3}Rollenverteilung und Datenübermittlung}{25}{}%
-\contentsline {subsection}{\numberline {5.4}Betroffenenrechte und Organisatorisches}{26}{}%
-\contentsline {subsection}{\numberline {5.5}Sonderfälle und Begleitgesetze}{27}{}%
-\contentsline {section}{\numberline {6}Verträge mit IT- und Internet-Providern}{29}{}%
-\contentsline {subsection}{\numberline {6.1}Vertragstypen und rechtliche Qualifikation}{29}{}%
-\contentsline {subsection}{\numberline {6.2}Wesentliche Vertragsinhalte und Service Level Agreements (SLAs)}{29}{}%
-\contentsline {subsection}{\numberline {6.3}Mängelrechte und Gewährleistung im Werkvertrag}{30}{}%
-\contentsline {subsection}{\numberline {6.4}Vertragsbeendigung}{31}{}%
+\contentsline {section}{\numberline {1}Welches Recht gilt im Netz? (IPRG, LugÜ, StGB)}{3}{}%
+\contentsline {subsection}{\numberline {1.1}Souveränitätsprinzip und Anknüpfung im Internet}{3}{}%
+\contentsline {subsection}{\numberline {1.2}Konsumentenverträge im E-Commerce (Art. 120 IPRG / Art. 15 LugÜ)}{3}{}%
+\contentsline {subsection}{\numberline {1.3}Unerlaubte Handlungen und Lauterkeitsrecht (Art. 129, 133, 136 IPRG)}{4}{}%
+\contentsline {subsection}{\numberline {1.4}Persönlichkeitsverletzungen und Datenschutz (Art. 139 IPRG)}{4}{}%
+\contentsline {subsection}{\numberline {1.5}Staatliche Souveränität vs. US CLOUD Act}{5}{}%
+\contentsline {section}{\numberline {2}Inhalte, Urheberrecht \& Domain-Namen (URG, MSchG, UWG, ZGB)}{7}{}%
+\contentsline {subsection}{\numberline {2.1}Das Immaterialgüterrecht: Idee, Werk und Werkexemplar}{7}{}%
+\contentsline {subsection}{\numberline {2.2}Schutzvoraussetzungen des Urheberrechts (Art. 2 URG)}{7}{}%
+\contentsline {subsection}{\numberline {2.3}Der Lichtbildschutz (Art. 2 Abs. 3bis URG)}{8}{}%
+\contentsline {subsection}{\numberline {2.4}Rechteübertragung im Arbeits- und Auftragsverhältnis}{8}{}%
+\contentsline {subsection}{\numberline {2.5}Gesetzliche Schranken des Urheberrechts (Numerus Clausus)}{9}{}%
+\contentsline {subsection}{\numberline {2.6}KI-Training, Text- und Data-Mining (TDM) und LLMs}{9}{}%
+\contentsline {subsection}{\numberline {2.7}Schutz marktreifer Arbeitsergebnisse (Art. 5 lit. c UWG)}{10}{}%
+\contentsline {subsection}{\numberline {2.8}Domain-Namen: Rechtsnatur, Namensrecht und Streitbeilegung}{10}{}%
+\contentsline {section}{\numberline {3}Haftung \& Rechtsverfolgung im Netz (OR, StGB, DSG)}{13}{}%
+\contentsline {subsection}{\numberline {3.1}Zivilrechtliche Haftungsgrundlagen: Delikt vs. Vertrag}{13}{}%
+\contentsline {subsection}{\numberline {3.2}Haftungsfreizeichnung und Hilfspersonen (Art. 100 / 101 OR)}{13}{}%
+\contentsline {subsection}{\numberline {3.3}Strafrecht, Berufsgeheimnis und Cloud-Auslagerung}{14}{}%
+\contentsline {subsection}{\numberline {3.4}Provider-Haftung im Internet}{15}{}%
+\contentsline {subsection}{\numberline {3.5}Organhaftung des Verwaltungsrats und Governance}{16}{}%
+\contentsline {section}{\numberline {4}Verträge im E-Business (OR, UWG, ZertES)}{18}{}%
+\contentsline {subsection}{\numberline {4.1}Vertragsschluss und Phasen im Webshop}{18}{}%
+\contentsline {subsection}{\numberline {4.2}Preisirrtum, Microspot-Fall und Willensmängel}{18}{}%
+\contentsline {subsection}{\numberline {4.3}Verbindlichkeit autonomer Systeme: Der Fall Air Canada}{19}{}%
+\contentsline {subsection}{\numberline {4.4}Allgemeine Geschäftsbedingungen (AGB) und Inhaltskontrolle}{19}{}%
+\contentsline {subsection}{\numberline {4.5}Konsumentenschutz im E-Commerce: Schweiz vs. EU}{20}{}%
+\contentsline {subsection}{\numberline {4.6}Schriftform und Elektronische Signaturen (ZertES)}{20}{}%
+\contentsline {section}{\numberline {5}Datenschutzrecht (revDSG ab Sept. 2023)}{22}{}%
+\contentsline {subsection}{\numberline {5.1}Geltungsbereich und der relative Personenbezug}{22}{}%
+\contentsline {subsection}{\numberline {5.2}Besonders schützenswerte Daten und die Finanzdaten-Falle}{22}{}%
+\contentsline {subsection}{\numberline {5.3}Systemvergleich: Opt-out (Schweiz) vs. Verbotsprinzip (EU DSGVO)}{23}{}%
+\contentsline {subsection}{\numberline {5.4}Rollenverteilung: Verantwortlicher vs. Auftragsbearbeiter}{23}{}%
+\contentsline {subsection}{\numberline {5.5}Auslandstransfer von Daten (Art. 16 f. DSG)}{24}{}%
+\contentsline {subsection}{\numberline {5.6}Betroffenenrechte und Data Breaches}{24}{}%
+\contentsline {subsection}{\numberline {5.7}Strafbestimmungen: Bussen bis CHF 250'000 (Art. 60 ff. DSG)}{24}{}%
+\contentsline {subsection}{\numberline {5.8}Marketing: Spam-Verbot (UWG) vs. Cookies (FMG)}{25}{}%
+\contentsline {subsection}{\numberline {5.9}Künstliche Intelligenz: revDSG vs. EU AI Act}{25}{}%
+\contentsline {section}{\numberline {6}Provider- \& IT-Verträge (OR Art. 363 ff. \& 394 ff.)}{27}{}%
+\contentsline {subsection}{\numberline {6.1}Vertragsqualifikation: Werkvertrag vs. Auftrag}{27}{}%
+\contentsline {subsection}{\numberline {6.2}Das zwingende Kündigungsrecht nach Art. 404 OR und SaaS-Verträge}{27}{}%
+\contentsline {subsection}{\numberline {6.3}Mängelrechte und die Rüge-Falle im Werkvertrag (Art. 367--370 OR)}{28}{}%
+\contentsline {subsection}{\numberline {6.4}Service Level Agreements (SLAs) und Qualitätskriterien}{29}{}%

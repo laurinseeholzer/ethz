@@ -5,6 +5,12 @@
 \input{../../templates/templateNotes/commands}
 \input{../../templates/templateNotes/theorem_styles}
 
+\usepackage{booktabs}
+\usepackage{textcomp}
+\usepackage[colorlinks=true, linkcolor=blue!70!black, citecolor=blue!70!black, urlcolor=blue!70!black]{hyperref}
+
+\newtheorem{beispiel}[definition]{Beispiel}
+
 \title{\Huge\textbf{Theoretische Informatik}}
 \author{Laurin Seeholzer}
 \date{\today}
@@ -16,9 +22,11 @@
 \newpage
 
 \input{notes/introduction}
+\input{notes/words-and-languages}
 \input{notes/finite-automata}
 \input{notes/turing-machines}
 \input{notes/reductions}
 \input{notes/complexity}
+\input{notes/ausblick}
 
 \end{document}

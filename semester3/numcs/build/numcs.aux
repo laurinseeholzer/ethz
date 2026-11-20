@@ -1,44 +1,72 @@
 \relax 
 \providecommand\zref@newlabel[2]{}
-\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Why Numercial Methods in Computer Science}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.1.1}Approximation Strategies: Promises and Limitations}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.1.2}Core Topics in Numerical Methods}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.1.3}Key Design Goals in Numerical Methods}{4}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Rounding Errors}{4}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.2.1}Machine Numbers}{4}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.2.2}Numerical Differentiation}{5}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.2.3}Convergence Acceleration via Richardson Extrapolation}{6}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3}Matrices \& Compute-Work}{7}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2}Interpolation}{8}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Newton}{8}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Lagrange}{9}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Barycentric Interpolation-formula}{9}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Chebyshev}{10}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Trigonometric Interpolation}{11}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.6}Piecewise Polynomial Interpolation}{14}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.7}Piecewise Linear Interpolation}{15}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.8}Cubic Hermite Interpolation}{16}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.9}Spline Interpolation}{17}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3}Quadrature}{20}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Polynomial Interpolation}{20}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Composite Quadrature Rules}{21}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}The Midpoint Rule}{21}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}The Trapezoidal Rule}{21}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.3}Simpson's Rule}{22}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.4}Smoothness}{22}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.5}Romberg Extrapolation}{23}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.6}High-Order Rules}{23}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Adaptive Quadrature}{24}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Higher-Dimensional Quadrature}{25}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.1}Tensor Product Rules (Standard Approach)}{25}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.2}Sparse Grids (Smolyak / Combination Technique)}{26}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.3}Monte Carlo Integration}{27}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.4}Quasi-Monte Carlo and Halton Sequences}{29}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4}Nonlinear Equations}{30}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Problem Setting and Vector Norms}{30}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Convergence Rates and Diagnostics}{30}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Fixed-Point Iterations}{30}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Numerical Methods}{31}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Termination Criteria}{31}{}\protected@file@percent }
-\gdef \@abspage@last{32}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Foundations, Roundoff Errors \& Computational Work}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Floating-Point Representation \& Machine Precision}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Conditioning \& Catastrophic Cancellation}{5}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3}Numerical Differentiation \& The Complex-Step Trick}{6}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.4}Richardson Extrapolation \& Error Expansions}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.5}Computational Work \& Structured Matrix Products}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.5.1}Diagonal Matrix Multiplication}{9}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.5.2}Upper Triangular Rank-1 Matrix-Vector Multiplication}{9}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.5.3}Kronecker Product Matrix-Vector Multiplication}{9}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.6}Python Implementations for Chapter 1}{10}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}1D Polynomial \& Chebyshev Interpolation}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}The 1D Polynomial Interpolation Problem}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}The Monomial Basis \& The Vandermonde Matrix}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}The Newton Basis \& Divided Differences}{12}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}The Lagrange Basis \& Barycentric Interpolation}{13}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Interpolation Error, Lebesgue Constant \& Runge's Phenomenon}{14}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6}Chebyshev Interpolation \& Minimax Optimality}{15}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.7}Trigonometric Interpolation \& The Fast Fourier Transform (FFT)}{16}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.8}Python Implementations for Chapter 2}{17}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Piecewise Polynomial Interpolation \& Splines}{19}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Piecewise Linear Interpolation}{19}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Cubic Hermite Interpolation \& Shape-Preserving Splines (PCHIP)}{19}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Cubic Splines}{20}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.1}Derivation of the Tridiagonal System for Slopes}{21}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.2}The Four Standard Boundary Conditions}{21}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}B-Splines \& Cox-de Boor Algorithm}{22}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Python Implementations for Chapter 3}{22}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Numerical Quadrature}{24}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}The Newton-Cotes Failure}{24}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Composite Classical Rules \& Euler-Maclaurin Super-Convergence}{25}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Gauss-Legendre Quadrature \& Golub-Welsch Algorithm}{26}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Clenshaw-Curtis Quadrature \& Waldvogel's Method}{27}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Adaptive Quadrature}{27}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}High-Dimensional Quadrature: Sparse Grids \& Monte Carlo}{27}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.6.1}Full Tensor Grids \& The Curse of Dimensionality}{27}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.6.2}Smolyak Sparse Grids (Combination Technique)}{28}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.6.3}Monte Carlo Integration}{28}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.7}Python Implementations for Chapter 4}{29}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Nonlinear Equations \& Root-Finding}{31}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Fixed-Point Iteration \& Banach Fixed-Point Theorem}{31}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}One-Dimensional Root Finding: Bisection vs. Secant Method}{32}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Multidimensional Newton-Raphson Method}{32}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Damped Newton Method \& Armijo Line Search (Globalization)}{33}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Quasi-Newton Methods \& Broyden's Rank-1 Update}{33}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Python Implementations for Chapter 5}{34}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Numerical Linear Algebra (NLA)}{36}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Solving $A x = b$ \& The Golden Rule of Numerical Linear Algebra}{36}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}LU Decomposition \& Gaussian Elimination}{36}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Cholesky Decomposition for SPD Systems}{37}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Orthogonal Transformations \& QR Decomposition}{38}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}The Singular Value Decomposition (SVD)}{39}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.6}Sparse Matrix Technology (\texttt  {scipy.sparse})}{40}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.7}Python Implementations for Chapter 6}{40}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Least Squares (Ausgleichsrechnung) \& Optimization}{42}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Linear Least Squares Problem \& Geometric Projection}{42}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}The Normal Equations \& The Condition Squaring Disaster}{42}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Stable Solvers: Reduced QR \& The Moore-Penrose Pseudoinverse}{43}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.3.1}Reduced (Economic) QR Decomposition}{43}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.3.2}SVD \& The Moore-Penrose Pseudoinverse}{43}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Nonlinear Least Squares \& The Gauss-Newton Method}{43}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.5}The Levenberg-Marquardt Algorithm \& Modern Optimizers}{44}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.5.1}Comparison of Modern Optimization Algorithms}{45}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.6}Python Implementations for Chapter 7}{45}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Deep Neural Networks (DNNs) as Numerical Least Squares}{47}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1}Supervised Learning as High-Dimensional Function Fitting}{47}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}Feedforward Neural Network Architecture}{47}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3}Backpropagation \& Automatic Differentiation}{48}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.4}Physics-Informed Neural Networks (PINNs)}{49}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.5}Python Implementations for Chapter 8}{49}{}\protected@file@percent }
+\gdef \@abspage@last{50}

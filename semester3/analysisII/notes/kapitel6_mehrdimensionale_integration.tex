@@ -1,0 +1,243 @@
+\section{Mehrdimensionale Integralrechnung}
+
+\subsection{Riemann-Integral auf Quadern}
+
+\begin{definition}
+    \textbf{Quader und Volumen im $\mathbb{R}^n$:}
+    Ein kompakter $n$-dimensionaler \textbf{Quader} $Q \subset \mathbb{R}^n$ ist das kartesische Produkt von $n$ kompakten Intervallen:
+    $$ Q = [a_1, b_1] \times [a_2, b_2] \times \dots \times [a_n, b_n] $$
+    Sein $n$-dimensionales \textbf{Volumen} (Inhalt) ist das Produkt der Kantenlängen:
+    $$ \mu(Q) := \prod_{i=1}^n (b_i - a_i) $$
+\end{definition}
+
+\begin{definition}
+    \textbf{Zerlegung und Treppenfunktionen:}
+    \begin{itemize}
+        \item Eine \textbf{Zerlegung} $P = \{Q_1, \dots, Q_K\}$ von $Q$ unterteilt $Q$ in endlich viele achsenparallele Teilquader $Q_k$, deren Inneres paarweise disjunkt ist ($\interior(Q_j) \cap \interior(Q_k) = \emptyset$) und deren Vereinigung $Q$ ergibt.
+        \item Eine Funktion $s: Q \to \mathbb{R}$ heisst \textbf{Treppenfunktion}, falls eine Zerlegung $P$ existiert, sodass $s$ auf jedem Teilquader $\interior(Q_k)$ konstant den Wert $c_k$ annimmt:
+        $$ s(x) = \sum_{k=1}^K c_k \chi_{Q_k}(x), \quad \text{mit Integral } \int_Q s \, d\mu := \sum_{k=1}^K c_k \mu(Q_k) $$
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Unter- und Oberintegral:} \\
+    Für eine beschränkte Funktion $f: Q \to \mathbb{R}$ definiert man:
+    \begin{itemize}
+        \item \textbf{Unteres Riemann-Integral:} $\underline{\int}_Q f \, d\mu := \sup \left\{ \int_Q s \, d\mu \;\middle|\; s \text{ Treppenfunktion mit } s \le f \right\}$.
+        \item \textbf{Oberes Riemann-Integral:} $\overline{\int}_Q f \, d\mu := \inf \left\{ \int_Q t \, d\mu \;\middle|\; t \text{ Treppenfunktion mit } t \ge f \right\}$.
+        \item $f$ heisst auf $Q$ \textbf{Riemann-integrierbar}, falls $\underline{\int}_Q f \, d\mu = \overline{\int}_Q f \, d\mu$. Der gemeinsame Wert heisst das \textbf{Riemann-Integral}:
+        $$ \int_Q f \, d\mu = \int_Q f(x) \, dx = \int_Q f(x_1, \dots, x_n) \, d(x_1, \dots, x_n) $$
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}
+    \textbf{Eigenschaften des Riemann-Integrals:} \\
+    Seien $f, g: Q \to \mathbb{R}$ Riemann-integrierbar:
+    \begin{itemize}
+        \item \textbf{Linearität:} $\int_Q (\alpha f + \beta g) \, d\mu = \alpha \int_Q f \, d\mu + \beta \int_Q g \, d\mu$ für alle $\alpha, \beta \in \mathbb{R}$.
+        \item \textbf{Monotonie:} Gilt $f(x) \le g(x)$ für alle $x \in Q$, so folgt $\int_Q f \, d\mu \le \int_Q g \, d\mu$.
+        \item \textbf{Dreiecksungleichung / Standardabschätzung:} $|f|$ ist integrierbar und es gilt:
+        $$ \left| \int_Q f \, d\mu \right| \le \int_Q |f| \, d\mu \le \sup_{x \in Q} |f(x)| \cdot \mu(Q) $$
+        \item \textbf{Gebietsadditivität:} Zerfällt $Q = Q_1 \cup Q_2$ mit $\interior(Q_1) \cap \interior(Q_2) = \emptyset$, so gilt:
+        $$ \int_Q f \, d\mu = \int_{Q_1} f \, d\mu + \int_{Q_2} f \, d\mu $$
+    \end{itemize}
+\end{theorem}
+
+\subsection{Satz von Fubini (Iterierte Integrale)}
+
+\begin{theorem}
+    \textbf{Satz von Fubini auf Quadern:}
+    Sei $Q = Q_1 \times Q_2 \subset \mathbb{R}^r \times \mathbb{R}^s$ ein kompakter Quader und $f: Q \to \mathbb{R}$ Riemann-integrierbar.
+    Ist für jedes feste $x \in Q_1$ die Schnittfunktion $y \mapsto f(x, y)$ über $Q_2$ Riemann-integrierbar, so ist die Funktion $x \mapsto \int_{Q_2} f(x, y) \, dy$ über $Q_1$ Riemann-integrierbar und es gilt:
+    $$ \int_Q f(x, y) \, d(x, y) = \int_{Q_1} \left( \int_{Q_2} f(x, y) \, dy \right) dx = \int_{Q_2} \left( \int_{Q_1} f(x, y) \, dx \right) dy $$
+    \textbf{Praxis-Bedeutung:} Mehrdimensionale Integrale über Quadern dürfen als hintereinander ausgeführte 1D-Integrale in beliebiger Reihenfolge berechnet werden!
+\end{theorem}
+
+\subsection{Jordan-Messbarkeit und Nullmengen}
+
+\begin{definition}
+    \textbf{Lebesgue-Nullmenge im $\mathbb{R}^n$:}
+    Eine Teilmenge $N \subset \mathbb{R}^n$ heisst (Lebesgue-)Nullmenge, falls zu jedem $\varepsilon > 0$ eine Folge von offenen oder abgeschlossenen Quadern $(Q_k)_{k \in \mathbb{N}}$ existiert mit:
+    $$ N \subset \bigcup_{k=1}^\infty Q_k \quad \text{und} \quad \sum_{k=1}^\infty \mu(Q_k) < \varepsilon $$
+\end{definition}
+
+\begin{example}
+    Einzelne Punkte, abzählbare Punktmengen sowie glatte Untermannigfaltigkeiten der Dimension $d < n$ (z.B. Hyperebenen, glatte Randkurven im $\mathbb{R}^2$ oder glatte Flächen im $\mathbb{R}^3$) sind Nullmengen im $\mathbb{R}^n$.
+\end{example}
+
+\begin{remark}
+    \textbf{Warum genügen nicht endlich viele Quader?} \\
+    In der Definition einer Nullmenge fordert man die Überdeckung durch eine \textbf{abzählbar unendliche Folge} von Quadern mit $\sum_{k=1}^\infty \mu(Q_k) < \varepsilon$, anstatt nur endlich viele Quader zu verlangen. Warum dieser fundamentale Unterschied?
+
+    \textbf{Das Standardbeispiel $\mathbb{Q} \cap [0, 1]$:}
+    \begin{itemize}
+        \item Die rationalen Zahlen im Einheitsintervall sind abzählbar: Wir nummerieren sie durch als $q_1, q_2, q_3, \dots$
+        \item Um jede rationale Zahl $q_k$ legen wir ein winziges offenes Intervall $I_k = \left( q_k - \frac{\varepsilon}{2^{k+1}}, q_k + \frac{\varepsilon}{2^{k+1}} \right)$ mit Länge $\mu(I_k) = \frac{\varepsilon}{2^k}$.
+        \item Die Vereinigung $\bigcup_{k=1}^\infty I_k$ überdeckt garantiert ganz $\mathbb{Q} \cap [0, 1]$. Ihre Gesamtlänge berechnet sich über die konvergente geometrische Reihe:
+        $$ \sum_{k=1}^\infty \mu(I_k) = \sum_{k=1}^\infty \frac{\varepsilon}{2^k} = \varepsilon \cdot \sum_{k=1}^\infty 2^{-k} = \varepsilon \cdot 1 = \varepsilon $$
+        Da $\varepsilon > 0$ beliebig klein gewählt werden kann, ist $\mathbb{Q} \cap [0, 1]$ zweifelsfrei eine \textbf{Lebesgue-Nullmenge}.
+    \end{itemize}
+    \textbf{Warum endlich viele Quader kläglich scheitern:} \\
+    Würde man nur endlich viele Quader $Q_1, \dots, Q_m$ fordern, so wäre deren endliche Vereinigung $\bigcup_{k=1}^m Q_k$ abgeschlossen. Da $\mathbb{Q} \cap [0, 1]$ \textbf{dicht} in $[0, 1]$ liegt, ist ihr topologischer Abschluss das gesamte Intervall $[0, 1]$:
+    $$ \overline{\mathbb{Q} \cap [0, 1]} = [0, 1] $$
+    Jede endliche Quaderüberdeckung von $\mathbb{Q} \cap [0, 1]$ müsste also automatisch auch jeden irrationalen Punkt enthalten und ganz $[0, 1]$ überdecken – ihr Gesamtvolumen wäre \textbf{stets mindestens 1} und könnte niemals $< \varepsilon$ gemacht werden! Erst die abzählbar unendliche Folge erlaubt es, "löchrige", dichte Mengen als maßtheoretisch vernachlässigbar zu erkennen.
+\end{remark}
+
+\begin{theorem}
+    \textbf{Lebesguesches Integrabilitätskriterium:}
+    Eine beschränkte Funktion $f: Q \to \mathbb{R}$ auf einem kompakten Quader $Q$ ist genau dann Riemann-integrierbar, wenn die Menge ihrer Unstetigkeitsstellen eine Lebesgue-Nullmenge ist (d.h. $f$ ist fast überall stetig).
+\end{theorem}
+
+\begin{definition}
+    \textbf{Jordan-Messbarkeit \& Jordan-Volumen:}
+    Eine beschränkte Teilmenge $B \subset \mathbb{R}^n$ heisst \textbf{Jordan-messbar}, falls ihre charakteristische Funktion
+    $$ \chi_B(x) = \begin{cases} 1, & x \in B \\ 0, & x \notin B \end{cases} $$
+    über einem Quader $Q \supset B$ Riemann-integrierbar ist. In diesem Fall ist das \textbf{Jordan-Volumen} definiert als:
+    $$ \operatorname{vol}(B) = \mu(B) := \int_Q \chi_B(x) \, dx = \int_B 1 \, dx $$
+    Für eine Funktion $f: B \to \mathbb{R}$ setzt man $\int_B f \, dx := \int_Q \tilde{f} \, dx$ mit $\tilde{f} = f \cdot \chi_B$.
+\end{definition}
+
+\begin{theorem}
+    \textbf{Rand-Kriterium für Jordan-Messbarkeit:}
+    Eine beschränkte Menge $B \subset \mathbb{R}^n$ ist genau dann Jordan-messbar, wenn ihr topologischer Rand $\partial B$ eine Lebesgue-Nullmenge ist:
+    $$ B \text{ ist Jordan-messbar} \iff \mu(\partial B) = 0 $$
+\end{theorem}
+
+\begin{remark}
+    \textbf{Jordan-Messbarkeit $\iff$ Der Rand ist eine Nullmenge:}
+    \begin{enumerate}
+        \item \textbf{Definition:} Ein beschränktes Gebiet $B \subset \mathbb{R}^n$ ist Jordan-messbar genau dann, wenn das Volumen $\operatorname{vol}(B) = \int_Q \chi_B(x) \, dx$ als Riemann-Integral existiert.
+        \item \textbf{Lebesgue-Kriterium:} Die charakteristische Funktion $\chi_B$ ist genau dann Riemann-integrierbar, wenn ihre Unstetigkeitsstellen eine Nullmenge bilden.
+        \item \textbf{Wo springt $\chi_B$?}
+        \begin{itemize}
+            \item Im Inneren $\interior(B)$ ist $\chi_B \equiv 1$ lokal konstant $\implies$ $\chi_B$ ist stetig.
+            \item Im Äusseren $\mathbb{R}^n \setminus \overline{B}$ ist $\chi_B \equiv 0$ lokal konstant $\implies$ $\chi_B$ ist stetig.
+            \item An jedem Randpunkt $x \in \partial B$ enthält jede noch so kleine Umgebung sowohl Punkte aus $B$ ($\chi_B = 1$) als auch Punkte ausserhalb ($\chi_B = 0$). Die Funktion macht dort einen Sprung der Höhe $1$.
+        \end{itemize}
+        Die Menge aller Unstetigkeitsstellen von $\chi_B$ ist also \textbf{exakt der topologische Rand $\partial B$}!
+    \end{enumerate}
+    \textbf{Die fundamentale Erkenntnis:}
+    $$ \text{\textbf{$B$ ist Jordan-messbar}} \iff \text{\textbf{Der Rand $\partial B$ ist eine Lebesgue-Nullmenge ($\mu(\partial B) = 0$)}} $$
+    \textbf{Bedeutung für die Praxis:} \\
+    Nahezu alle in Geometrie, Physik und Klausuren relevanten Körper (Polygone, Ellipsoide, Zylinder, Tori sowie alle Bereiche mit stückweise $C^1$-glatten Begrenzungsflächen) besitzen Ränder der Dimension $n-1$. Da glatte Hyperflächen im $\mathbb{R}^n$ stets Nullmengen sind, sind \textbf{praktisch alle Standardkörper garantiert Jordan-messbar}. Nicht messbar sind nur pathologische Mengen mit "ausuferndem / fraktalem" Rand (wie z.B. $B = \mathbb{Q} \cap [0, 1]$, dessen Rand das gesamte Intervall $[0, 1]$ mit $\mu(\partial B) = 1 \neq 0$ ist).
+\end{remark}
+
+
+\subsection{Normalbereiche im $\mathbb{R}^2$ und $\mathbb{R}^3$}
+
+\begin{definition}
+    \textbf{Normalbereich im $\mathbb{R}^2$:}
+    \begin{itemize}
+        \item Ein \textbf{Normalbereich bezüglich der $y$-Achse} (vertikal einfach) hat die Form:
+        $$ B = \{ (x, y) \in \mathbb{R}^2 \mid a \le x \le b, \; g(x) \le y \le h(x) \} $$
+        wobei $g, h: [a, b] \to \mathbb{R}$ stetig sind. Nach Fubini gilt:
+        $$ \iint_B f(x, y) \, dA = \int_{x=a}^b \left( \int_{y=g(x)}^{h(x)} f(x, y) \, dy \right) dx $$
+        \item Ein \textbf{Normalbereich bezüglich der $x$-Achse} (horizontal einfach) hat die Form:
+        $$ B = \{ (x, y) \in \mathbb{R}^2 \mid c \le y \le d, \; \varphi(y) \le x \le \psi(y) \} $$
+        $$ \iint_B f(x, y) \, dA = \int_{y=c}^d \left( \int_{x=\varphi(y)}^{\psi(y)} f(x, y) \, dx \right) dy $$
+    \end{itemize}
+\end{definition}
+
+\begin{example}
+    \textbf{Normalbereiche für Mehrfachintegrale aufstellen}
+    
+    \begin{enumerate}
+        \item \textbf{Skizze anfertigen:} Zeichne die begrenzenden Randkurven und schraffiere das Integrationsgebiet $B$.
+        \item \textbf{Schnittpunkte bestimmen:} Finde alle Schnittpunkte der Randkurven durch Gleichsetzen der Funktionen.
+        \item \textbf{Integrationsreihenfolge wählen:}
+        Prüfe, welche Variable feste Konstanten als Grenzen hat und ob eine Zerlegung in Teilbereiche nötig ist:
+        \begin{itemize}
+            \item Lässt sich $B$ durch eine untere Funktion $g(x)$ und obere Funktion $h(x)$ beschreiben? $\implies$ Erst nach $y$, dann nach $x$ integrieren.
+            \item Lässt sich $B$ durch eine linke Kurve $\varphi(y)$ und rechte Kurve $\psi(y)$ beschreiben? $\implies$ Erst nach $x$, dann nach $y$ integrieren.
+        \end{itemize}
+        \item \textbf{Goldene Regel für Grenzen (Feste Grenzen immer nach aussen!):}
+        \begin{center}
+            \fbox{Die \textbf{äussersten} Integrationsgrenzen müssen zwingend \textbf{feste reelle Konstanten} sein!}
+        \end{center}
+        Im inneren Integral dürfen Grenzen von der äusseren Variablen abhängen (z.B. $y \in [g(x), h(x)]$), aber \textbf{niemals umgekehrt}!
+        \item \textbf{Integral schrittweise von innen nach aussen berechnen:}
+        Inneres Integral ausführen, Zwischenergebnis vereinfachen und schliesslich das äussere 1D-Integral lösen.
+    \end{enumerate}
+\end{example}
+
+\subsection{Transformationssatz (Koordinatenwechsel im $\mathbb{R}^n$)}
+
+\begin{theorem}
+    \textbf{Transformationssatz für Mehrfachintegrale:}
+    Seien $U, V \subset \mathbb{R}^n$ offen und $\Phi: U \to V$ ein \textbf{$C^1$-Diffeomorphismus} (d.h. $\Phi$ ist bijektiv, stetig differenzierbar und $\det(D\Phi(u)) \neq 0$ für alle $u \in U$).
+    Sei $\Omega \subset U$ eine beschränkte, Jordan-messbare Menge und $f: \Phi(\Omega) \to \mathbb{R}$ Riemann-integrierbar.
+    Dann ist das transformierte Gebiet $B = \Phi(\Omega)$ Jordan-messbar und es gilt:
+    $$ \int_{\Phi(\Omega)} f(x) \, dx = \int_\Omega f(\Phi(u)) \cdot \big| \det(D\Phi(u)) \big| \, du $$
+\end{theorem}
+
+\begin{remark}
+    \textbf{Bedeutung der Funktionaldeterminante (Jacobi-Determinante):}
+    Die Matrix $D\Phi(u)$ beschreibt die lokale lineare Verzerrung. Der Betrag der Determinante $|\det(D\Phi(u))|$ ist der \textbf{lokale Volumen-Verzerrungsfaktor}: Ein infinitesimaler Quader mit Volumen $du_1 \dots du_n$ wird durch $\Phi$ auf ein Parallelepiped mit Volumen $dx_1 \dots dx_n = |\det(D\Phi(u))| \, du_1 \dots du_n$ abgebildet.
+\end{remark}
+
+\begin{example}
+    \textbf{Koordinatentransformation anwenden}
+    
+    \begin{enumerate}
+        \item \textbf{Symmetrie erkennen:} Kreissymmetrie $\implies$ Polarkoordinaten; Zylindersymmetrie um $z$-Achse $\implies$ Zylinderkoordinaten; Kugelsymmetrie $\implies$ Kugelkoordinaten.
+        \item \textbf{Transformationsabbildung $x = \Phi(u)$ formulieren} und die Jacobi-Matrix $D\Phi(u)$ sowie deren Funktionaldeterminante $\det(D\Phi(u))$ bestimmen.
+        \item \textbf{Neuen Integrationsbereich $\Omega$ bestimmen:}
+        Löse die Gebietsbegrenzungen nach den neuen Parametern auf (oft entstehen einfache Rechtecke oder Quader!).
+        \item \textbf{Integral transformieren:}
+        Ersetze alle $x_i$ durch $\Phi_i(u)$, multipliziere den Integranden mit dem Betrag der Determinante $|\det(D\Phi(u))|$:
+        $$ \int_B f(x) \, dx = \int_\Omega f(\Phi(u)) \cdot |\det(D\Phi(u))| \, du $$
+        \item \textbf{Berechnung:} Integriere nun über dem meist entkoppelten Bereich $\Omega$.
+    \end{enumerate}
+\end{example}
+
+\subsection{Spezielle Koordinatensysteme}
+
+\begin{definition}
+    \textbf{1. Ebene Polarkoordinaten ($\mathbb{R}^2$):}
+    \begin{itemize}
+        \item \textbf{Transformation:} $\Phi(r, \varphi) = \begin{pmatrix} x(r, \varphi) \\ y(r, \varphi) \end{pmatrix} = \begin{pmatrix} r \cos\varphi \\ r \sin\varphi \end{pmatrix}$ mit $r \ge 0, \; \varphi \in [0, 2\pi)$.
+        \item \textbf{Jacobi-Matrix \& Determinante:}
+        $$ D\Phi(r, \varphi) = \begin{pmatrix} \cos\varphi & -r \sin\varphi \\ \sin\varphi & r \cos\varphi \end{pmatrix} \implies \det(D\Phi) = r(\cos^2\varphi + \sin^2\varphi) = r $$
+        \item \textbf{Flächenelement:} $dx \, dy \longrightarrow r \, dr \, d\varphi$.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{2. Zylinderkoordinaten ($\mathbb{R}^3$):}
+    \begin{itemize}
+        \item \textbf{Transformation:} $\Phi(r, \varphi, z) = \begin{pmatrix} r \cos\varphi \\ r \sin\varphi \\ z \end{pmatrix}$ mit $r \ge 0, \; \varphi \in [0, 2\pi), \; z \in \mathbb{R}$.
+        \item \textbf{Jacobi-Matrix \& Determinante:}
+        $$ D\Phi(r, \varphi, z) = \begin{pmatrix} \cos\varphi & -r \sin\varphi & 0 \\ \sin\varphi & r \cos\varphi & 0 \\ 0 & 0 & 1 \end{pmatrix} \implies \det(D\Phi) = r $$
+        \item \textbf{Volumenelement:} $dx \, dy \, dz \longrightarrow r \, dr \, d\varphi \, dz$.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{3. Kugelkoordinaten / Sphärische Koordinaten ($\mathbb{R}^3$):}
+    \begin{itemize}
+        \item \textbf{Transformation:} $\Phi(r, \theta, \varphi) = \begin{pmatrix} x(r, \theta, \varphi) \\ y(r, \theta, \varphi) \\ z(r, \theta, \varphi) \end{pmatrix} = \begin{pmatrix} r \sin\theta \cos\varphi \\ r \sin\theta \sin\varphi \\ r \cos\theta \end{pmatrix}$
+        \begin{itemize}
+            \item $r \ge 0$: Abstand zum Ursprung ($x^2 + y^2 + z^2 = r^2$).
+            \item $\theta \in [0, \pi]$: \textbf{Polwinkel} (vom Nordpol $\theta = 0$ über Äquator $\theta = \frac{\pi}{2}$ zum Südpol $\theta = \pi$).
+            \item $\varphi \in [0, 2\pi)$: \textbf{Azimutwinkel} in der $xy$-Ebene.
+        \end{itemize}
+        \item \textbf{Jacobi-Matrix:}
+        $$ D\Phi = \begin{pmatrix}
+            \sin\theta \cos\varphi & r \cos\theta \cos\varphi & -r \sin\theta \sin\varphi \\
+            \sin\theta \sin\varphi & r \cos\theta \sin\varphi & r \sin\theta \cos\varphi \\
+            \cos\theta & -r \sin\theta & 0
+        \end{pmatrix} $$
+        \item \textbf{Funktionaldeterminante:} $\det(D\Phi) = r^2 \sin\theta$. Da $\theta \in [0, \pi]$, ist $\sin\theta \ge 0$ und $|\det(D\Phi)| = r^2 \sin\theta$.
+        \item \textbf{Volumenelement:} $dx \, dy \, dz \longrightarrow r^2 \sin\theta \, dr \, d\theta \, d\varphi$.
+    \end{itemize}
+\end{definition}
+
+\begin{example}
+    \textbf{Kompakte Beispielrechnungen:}
+    \begin{itemize}
+        \item \textbf{Fläche der Kreisscheibe $B_R(0)$ via Polarkoordinaten:}
+        $$ \operatorname{vol}(B_R) = \int_0^{2\pi} \int_0^R r \, dr \, d\varphi = \left( \int_0^{2\pi} 1 \, d\varphi \right) \left( \int_0^R r \, dr \right) = 2\pi \cdot \left[ \frac{r^2}{2} \right]_0^R = \pi R^2 $$
+        \item \textbf{Volumen der Vollkugel $K_R(0)$ via Kugelkoordinaten:}
+        $$ \operatorname{vol}(K_R) = \int_0^{2\pi} d\varphi \int_0^\pi \sin\theta \, d\theta \int_0^R r^2 \, dr = 2\pi \cdot [-\cos\theta]_0^\pi \cdot \left[ \frac{r^3}{3} \right]_0^R = 2\pi \cdot 2 \cdot \frac{R^3}{3} = \frac{4}{3} \pi R^3 $$
+    \end{itemize}
+\end{example}

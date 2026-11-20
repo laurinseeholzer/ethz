@@ -1,0 +1,99 @@
+\section{Trigonometric Interpolation \& Discrete Fourier Transform}
+
+When data arises from wave phenomena, acoustic signals, or periodic processes, polynomial interpolation is unsuited. Trigonometric interpolation expresses functions as linear combinations of harmonic waves, providing exponential accuracy for smooth periodic signals and forming the foundation of digital signal processing.
+
+% -----------------------------------------------------------------------------
+\subsection{Trigonometric Polynomials \& Periodic Functions}
+
+\begin{definition}
+    A complex \textbf{trigonometric polynomial} of degree at most $m$ on $[0, 1)$ is defined by:
+    \begin{equation}
+        p(t) = \sum_{k=-m}^{m-1} c_k \mathrm{e}^{2\pi \mathrm{i} k t}, \quad c_k \in \mathbb{C}, \quad t \in [0, 1).
+    \end{equation}
+\end{definition}
+
+For a 1-periodic function $f \in C^r(\mathbb{R})$, its continuous Fourier coefficients satisfy algebraic decay:
+\begin{equation}
+    |\hat{f}(k)| \le \frac{\|f^{(r)}\|_{L^1}}{(2\pi |k|)^r} = \mathcal{O}(|k|^{-r}).
+\end{equation}
+If $f$ is analytic and periodic, Fourier coefficients decay exponentially:
+\begin{equation}
+    |\hat{f}(k)| \le C \mathrm{e}^{-\sigma |k|}.
+\end{equation}
+This exponential decay is known as \textbf{spectral convergence}.
+
+Trigonometric functions inherently treat $[0, 1)$ as a closed circle ($t = 0 \equiv 1$). If $f(0) = f(1)$ and all boundary derivatives match, the periodic extension is smooth, resulting in rapid exponential convergence. However, if $f(0) \neq f(1)$, the periodic extension creates a jump discontinuity at integer boundaries. This slows Fourier decay to $\mathcal{O}(|k|^{-1})$ and induces the \textbf{Gibbs phenomenon}: near the jump, the trigonometric polynomial persistently overshoots the true values by approximately $9\%$ of the jump height, regardless of how many frequencies are added.
+
+% -----------------------------------------------------------------------------
+\subsection{DFT \& The Fourier Matrix}
+
+\begin{definition}
+    Given sample vector $y = (y_0, \dots, y_{N-1})^T \in \mathbb{C}^N$ sampled at $t_j = j/N$, the \textbf{Discrete Fourier Transform} (DFT) computes frequency coefficients $c = (c_0, \dots, c_{N-1})^T$:
+    \begin{equation}
+        c_k = \sum_{j=0}^{N-1} y_j \omega_N^{k j}, \quad k = 0, \dots, N-1, \quad \text{where } \omega_N := \mathrm{e}^{-\frac{2\pi \mathrm{i}}{N}}.
+    \end{equation}
+    In matrix form, $c = F_N y$, where $F_N \in \mathbb{C}^{N \times N}$ is the \textbf{Fourier matrix} with entries $(F_N)_{k,j} = \omega_N^{k j}$.
+\end{definition}
+
+\begin{theorem}
+    The columns of the Fourier matrix are mutually \textbf{orthogonal}:
+    \begin{equation}
+        F_N^H F_N = N I_N.
+    \end{equation}
+    Consequently, the normalized matrix $\frac{1}{\sqrt{N}} F_N$ is unitary, and the matrix inverse requires no Gaussian elimination:
+    \begin{equation}
+        F_N^{-1} = \frac{1}{N} F_N^H = \frac{1}{N} \overline{F_N}.
+    \end{equation}
+    The \textbf{Inverse Discrete Fourier Transform} (iDFT) reconstructs time-domain samples via:
+    \begin{equation}
+        y_j = \frac{1}{N} \sum_{k=0}^{N-1} c_k \omega_N^{-k j}.
+    \end{equation}
+\end{theorem}
+
+Geometrically, the Fourier matrix represents a rigid unitary rotation in $N$-dimensional complex space. Each column is a discrete harmonic wave sampled on the complex unit circle. Naive matrix-vector multiplication $F_N y$ takes $2N^2$ flops ($\mathcal{O}(N^2)$).
+
+% -----------------------------------------------------------------------------
+\subsection{The Cooley-Tukey Radix-2 FFT}
+
+\begin{theorem}
+    In the \textbf{radix-2 Cooley-Tukey FFT decomposition}, let $N = 2M = 2^p$. Partitioning the DFT sum into even and odd indices yields:
+    \begin{equation}
+        c_k = \sum_{m=0}^{M-1} y_{2m} \left(\omega_N^2\right)^{k m} + \omega_N^k \sum_{m=0}^{M-1} y_{2m+1} \left(\omega_N^2\right)^{k m}.
+    \end{equation}
+    Because $\omega_N^2 = \mathrm{e}^{-\frac{2\pi \mathrm{i}}{N/2}} = \omega_{M}$, each sum is a half-sized DFT of length $M = N/2$:
+    \begin{equation}
+        c_k = c_k^{\text{even}} + \omega_N^k c_k^{\text{odd}}, \quad k = 0, \dots, N-1.
+    \end{equation}
+    Using the half-period shift $\omega_N^{k + N/2} = -\omega_N^k$, the \textbf{butterfly operation} computes two outputs simultaneously:
+    \begin{equation}
+        c_k = c_k^{\text{even}} + \omega_N^k c_k^{\text{odd}}, \qquad c_{k + N/2} = c_k^{\text{even}} - \omega_N^k c_k^{\text{odd}}, \quad \text{for } k = 0, \dots, \frac{N}{2}-1.
+    \end{equation}
+\end{theorem}
+
+The Fast Fourier Transform replaces one size-$N$ problem with two size-$(N/2)$ problems, plus an $\mathcal{O}(N)$ recombination step. The work recurrence $T(N) = 2 T(N/2) + \mathcal{O}(N)$ resolves to:
+\begin{equation}
+    \mathcal{O}(N \log_2 N) \text{ flops}.
+\end{equation}
+For $N = 2^{20} \approx 10^6$, naive DFT requires $N^2 \approx 10^{12}$ operations (hours of computation), whereas the FFT requires $N \log_2 N \approx 2 \times 10^7$ operations (under 5 milliseconds).
+
+% -----------------------------------------------------------------------------
+\subsection{Discrete Convolution \& Zero-Padding}
+
+Linear convolution $(u * v)_k = \sum_j u_j v_{k-j}$ of signals $u \in \mathbb{C}^n$ and $v \in \mathbb{C}^m$ costs $\mathcal{O}(n m)$ flops in the time domain. By contrast, the Discrete Fourier Transform diagonalizes circulant matrices, leading to the \textbf{Discrete Convolution Theorem}:
+\begin{equation}
+    \operatorname{DFT}(u \circledast v) = \operatorname{DFT}(u) \odot \operatorname{DFT}(v),
+\end{equation}
+where $\circledast$ denotes circular (periodic) convolution, and $\odot$ denotes pointwise vector multiplication.
+
+Because the standard DFT assumes periodic boundary conditions, circular convolution wraps the tail of the output signal around to the beginning, corrupting the result with circular wrap-around aliasing. The true linear convolution has support of length:
+\begin{equation}
+    L = n + m - 1.
+\end{equation}
+To prevent wrap-around corruption, both vectors must be \textbf{zero-padded} to length at least $L$ (typically chosen as the next power of 2 for FFT efficiency).
+
+\begin{remark}
+    In the \textbf{fast linear convolution pipeline}, linear convolution is evaluated in $\mathcal{O}(L \log_2 L)$ flops via:
+    \begin{equation}
+        u * v = \operatorname{iFFT}\left( \operatorname{FFT}(u_{\text{pad}}) \odot \operatorname{FFT}(v_{\text{pad}}) \right).
+    \end{equation}
+\end{remark}

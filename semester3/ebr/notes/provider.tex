@@ -1,104 +1,96 @@
-\section{Verträge mit IT- und Internet-Providern}
+\section{Provider- \& IT-Verträge (OR Art. 363 ff. \& 394 ff.)}
 
-\subsection{Vertragstypen und rechtliche Qualifikation}
+\subsection{Vertragsqualifikation: Werkvertrag vs. Auftrag}
 
-\begin{definition}
-    \textbf{Klassische gesetzliche Vertragstypen im IT-Recht:}
-    Da das Schweizerische Obligationenrecht (OR) keine spezifischen ,,IT-Verträge`` kennt, werden IT-Leistungen den klassischen Vertragstypen zugeordnet:
-    \begin{itemize}
-        \item \textbf{Werkvertrag (Art. 363 ff. OR):} Geschuldet ist die Herstellung und termingerechte Ablieferung eines \textbf{messbaren Erfolgs bzw. Arbeitsergebnisses} (z.B. Programmierung von Individualsoftware, Erstellung einer Website nach Pflichtenheft, Konfiguration, individuelle Anpassungen). Gesetzliche Mängelrechte (Art. 368 OR), formeller Abnahmeprozess und 2 Jahre Gewährleistungsfrist.
-        \item \textbf{Auftrag (Art. 394 ff. OR):} Geschuldet ist das \textbf{sorgfältige Tätigwerden / Dienstleistung} ohne Erfolgsgarantie (z.B. IT-Consulting, Projektleitung, Support, Schulung, reine Überwachung). Strenge Treue- und Sorgfaltspflicht (Art. 398 OR) sowie \textbf{jederzeitiges zwingendes Kündigungsrecht} (Art. 404 OR).
-    \end{itemize}
-\end{definition}
-
-\begin{definition}
-    \textbf{Gemischte Verträge und Innominatverträge (Cloud- und SaaS-Modelle):}
-    Moderne IT- und Providerverträge vereinen Elemente verschiedener Vertragstypen:
-    \begin{itemize}
-        \item \textbf{SaaS / ASP:} Kombination aus Miete (Softwareüberlassung über das Internet) und Auftrag/Werkvertrag (Betrieb, Datensicherung, Störungsbehebung).
-        \item \textbf{IaaS / Hosting:} Miete virtueller Infrastruktur kombiniert mit werkvertraglicher Verfügbarkeit.
-        \item \textbf{IT-Wartungsverträge:} Mischung aus Werkvertrag (konkrete Fehlerbehebungen) und Auftrag (Supportbereitschaft, Updates).
-    \end{itemize}
-\end{definition}
-
-\subsection{Wesentliche Vertragsinhalte und Service Level Agreements (SLAs)}
-
-\begin{definition}
-    \textbf{Service Level Agreements (SLAs):}
-    SLAs sind standardisierte vertragliche Vereinbarungen zur präzisen Definition, Messung und Durchsetzung der Qualität von IT-Dauerleistungen:
-    \begin{itemize}
-        \item \textbf{Verfügbarkeit (Uptime):} Prozentualer Anteil der vereinbarten Betriebszeit, in dem das System voll funktionsfähig ist (z.B. $99.9\%$ Verfügbarkeit pro Kalenderjahr, bereinigt um geplante, vorab angekündigte Wartungsfenster).
-        \item \textbf{Fehlerklassen:} Strukturierung nach Schweregrad:
-        \begin{itemize}
-            \item \textit{Kritisch / Blocker:} Gesamtausfall des Systems oder geschäftskritischer Kernfunktionen.
-            \item \textit{Schwerwiegend:} Erhebliche Beeinträchtigung, jedoch mit Workaround nutzbar.
-            \item \textit{Leicht:} Geringfügige Mängel (z.B. kosmetische UI-Fehler), Kernbetrieb ungestört.
-        \end{itemize}
-        \item \textbf{Reaktions- und Behebungszeiten:}
-        \begin{itemize}
-            \item \textit{Reaktionszeit (Response Time):} Maximale Zeitspanne von der Störungsmeldung bis zum Beginn der aktiven Fehleranalyse durch qualifiziertes Personal.
-            \item \textit{Wiederherstellungszeit (Recovery Time):} Maximal garantierte Dauer bis zur Behebung oder Bereitstellung eines funktionierenden Workarounds.
-        \end{itemize}
-        \item \textbf{Sanktionen bei SLA-Verletzung:} Vereinbarung von \textbf{Service Credits} (Gutschriften auf nachfolgende Monatsrechnungen) oder Konventionalstrafen (Pönale) sowie ausserordentliche Kündigungsrechte bei wiederholter Nichterreichung der Service-Levels.
-    \end{itemize}
-\end{definition}
-
-\begin{remark}
-    \textbf{Mitwirkungspflichten und Leistungsabgrenzung:}
-    Ein Provider kann vertragliche Leistungen nur erbringen, wenn der Kunde vereinbarte Mitwirkungspflichten erfüllt (z.B. Bereitstellung von Testdaten, Berechtigungsmanagement, IT-Infrastruktur, rechtzeitige Abnahme). Leistungsstörungen infolge verletzter Kundenmitwirkung entlasten den Provider von seiner Haftung.
-\end{remark}
-
-\subsection{Mängelrechte und Gewährleistung im Werkvertrag}
-
-\begin{definition}
-    \textbf{Begriff des Werkmangels:}
-    Ein Werkmangel liegt vor, wenn das abgelieferte Werk:
-    \begin{itemize}
-        \item vertraglich ausdrücklich zugesicherte Eigenschaften nicht aufweist (z.B. Nichteinhalten definierter Spezifikationen im Pflichtenheft), oder
-        \item mit Mängeln behaftet ist, die den Wert oder die Tauglichkeit zum vorausgesetzten Gebrauch aufheben oder mindern (z.B. schwere Software-Crashes oder Datenverlust).
-    \end{itemize}
-\end{definition}
+Da das Schweizerische Obligationenrecht (OR) keine eigenen Bestimmungen für moderne ,,IT-Verträge`` kennt, müssen IT-Leistungen den klassischen Vertragstypen zugeordnet werden. Die rechtliche Qualifikation entscheidet über fundamentale Rechtsfolgen wie Haftung, Gewährleistung und Beendigungsrechte:
 
 \begin{theorem}
-    \textbf{Mängelrechte des Bestellers (Art. 368 OR):}
-    Liegt ein Werkmangel vor und wurde dieser rechtzeitig gerügt, hat der Besteller folgende gesetzliche Wahlrechte:
-    \begin{enumerate}
-        \item \textbf{Nachbesserung (Art. 368 Abs. 2 OR):} Kostenlose Beseitigung des Mangels durch den Unternehmer innert angemessener Frist, sofern dies dem Unternehmer keine unverhältnismässigen Kosten verursacht (Hauptanspruch in der IT-Praxis).
-        \item \textbf{Minderung (Art. 368 Abs. 2 OR):} Herabsetzung des Werklohns um den Minderwert, wenn der Mangel nicht behoben werden kann oder eine Nachbesserung fehlgeschlagen ist.
-        \item \textbf{Wandelung (Art. 368 Abs. 1 OR):} Rückgängigmachung des gesamten Vertrages (Rückzahlung des Werklohns gegen Rückgabe der Software). Nur zulässig bei derart erheblichen Mängeln, dass die Annahme für den Besteller unzumutbar ist.
-        \item \textbf{Schadenersatz (Art. 368 Abs. 1/2 OR):} Kumulativ zu den obigen Rechten kann bei schuldhafter Vertragsverletzung Schadenersatz für Mangelfolgeschäden geltend gemacht werden (Art. 97 OR).
-    \end{enumerate}
+    \textbf{Die Grundsatzabgrenzung im IT-Recht:}
+    \begin{itemize}
+        \item \textbf{Werkvertrag (Art. 363 ff. OR):}
+        \begin{itemize}
+            \item \textbf{Leistungspflicht:} Geschuldet ist ein \textbf{objektiv messbarer Arbeitserfolg / Werk} (z.B. Erstellung einer Individualsoftware nach Pflichtenheft, Website-Programmierung, garantierte Migration einer Datenbank).
+            \item \textbf{Prüfung und Abnahme:} Das Werk wird nach Fertigstellung vom Besteller formell abgenommen.
+            \item \textbf{Gewährleistung (Art. 368 OR):} Gesetzliche Mängelrechte (Nachbesserung, Minderung, Wandelung); Verjährung nach \textbf{2 Jahren} (Art. 371 OR).
+            \item \textbf{Keine freie Kündbarkeit:} Eine vorzeitige Beendigung nach Art. 377 OR ist nur gegen \textbf{vollständige Schadloshaltung} des Unternehmers zulässig (Arbeitslohn plus voller entgangener Gewinn!).
+            \item \textbf{Treuepflicht:} Es besteht keine allgemeine gesetzliche Treuepflicht; der Unternehmer schuldet nur das Werk.
+        \end{itemize}
+        \item \textbf{Auftrag (Art. 394 ff. OR):}
+        \begin{itemize}
+            \item \textbf{Leistungspflicht:} Geschuldet ist ein \textbf{sorgfältiges Tätigwerden} im Kundeninteresse, \textbf{kein bestimmter Erfolg} (z.B. IT-Consulting, Coaching, Projektmanagement, Hotline-Support, reine Systemüberwachung).
+            \item \textbf{Keine Abnahme:} Es gibt keinen Abnahmeprozess und keine Gewährleistungsansprüche.
+            \item \textbf{Haftungsmassstab:} Haftung entsteht ausschliesslich bei Verletzung der vertraglichen Sorgfaltspflicht (Art. 398 Abs. 2 OR). Regelverjährung: \textbf{10 Jahre} (Art. 127 OR).
+            \item \textbf{Zwingende Beendigung (Art. 404 OR):} Der Auftrag ist von beiden Parteien \textbf{jederzeit fristlos kündbar}!
+            \item \textbf{Treuepflicht:} Den Beauftragten trifft eine strenge gesetzliche Treue- und Verschwiegenheitspflicht.
+        \end{itemize}
+    \end{itemize}
 \end{theorem}
+
+\subsection{Das zwingende Kündigungsrecht nach Art. 404 OR und SaaS-Verträge}
+
+Das jederzeitige Beendigungsrecht des Auftragsrechts sorgt in der IT-Praxis für erhebliche vertragliche Spannungen:
+
+\begin{theorem}
+    \textbf{Zwingender Charakter von Art. 404 OR:} \\
+    Gemäss Art. 404 Abs. 1 OR kann ein Auftrag von jeder Partei \textbf{jederzeit fristlos widerrufen oder gekündigt werden}. Nach ständiger Rechtsprechung des Bundesgerichts ist dieses Recht \textbf{zwingender Natur}! Es kann vertraglich \textbf{weder wegbedungen noch durch Konventionalstrafen oder Kündigungsfristen eingeschränkt werden}. Erfolgt die Kündigung zur Unzeit (ohne sachlichen Grund in einem ungünstigen Moment), schuldet der Kündigende lediglich den Ersatz des \textbf{negativen Vertragsinteresses} (Art. 404 Abs. 2 OR).
+\end{theorem}
+
+\begin{definition}
+    \textbf{Gemischte Verträge (Cloud, SaaS und Managed Services):} \\
+    Moderne Software-as-a-Service- (SaaS) und Cloud-Verträge vereinen miet-, werk- und auftragsrechtliche Elemente. Das Handelsgericht Zürich (Urteil 2022) stellte klar: Ob ein SaaS-Vertrag vorzeitig nach Art. 404 OR gekündigt werden kann, entscheidet der \textbf{Schwerpunkt der Leistung}:
+    \begin{itemize}
+        \item Steht ein \textbf{persönliches Vertrauensverhältnis} oder eine laufende beratende Unterstützung im Vordergrund $\to$ \textbf{Art. 404 OR greift zwingend}.
+        \item Steht die \textbf{standardisierte technische Bereitstellung} von Software und Speicherplatz im Vordergrund $\to$ es gelten \textbf{feste werk- und mietvertragliche Bindungsfristen} (kein freies Kündigungsrecht nach Art. 404 OR!).
+    \end{itemize}
+\end{definition}
+
+\subsection{Mängelrechte und die Rüge-Falle im Werkvertrag (Art. 367--370 OR)}
+
+Ist eine gelieferte Software oder IT-Leistung mangelhaft, regelt Art. 368 OR die gesetzlichen Wahlrechte des Bestellers:
+
+\begin{definition}
+    \textbf{Die gesetzlichen Mängelrechte im Werkvertrag (Art. 368 OR):}
+    \begin{enumerate}
+        \item \textbf{Nachbesserung (Art. 368 Abs. 2 OR):} Kostenlose Mängelbeseitigung (Bugfixing, Nachprogrammierung). Dies ist der wichtigste Anspruch in der IT-Praxis, sofern dem Unternehmer keine unverhältnismässigen Kosten entstehen.
+        \item \textbf{Minderung (Art. 368 Abs. 2 OR):} Herabsetzung des Werklohns um den Minderwert des Werks.
+        \item \textbf{Wandelung (Art. 368 Abs. 1 OR):} Rückgängigmachung des Vertrages (Geld zurück gegen Rückgabe der Software). Die Wandelung ist \textbf{nur bei derart gravierenden Mängeln} zulässig, dass das Werk für den Besteller gänzlich unbrauchbar ist.
+        \item \textbf{Schadenersatz:} Kann kumulativ bei schuldhafter Vertragsverletzung geltend gemacht werden (Art. 97 OR).
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    \textbf{Die berüchtigte Rüge-Falle (Art. 370 OR):} \\
+    Ein Unternehmen lässt sich für CHF 100'000.-- eine massgeschneiderte E-Commerce-Plattform entwickeln. Nach der Übergabe verzögert das Unternehmen die Tests und rügt schwere Fehler erst nach vier Wochen. \\
+    $\to$ \textbf{Rechtsfolge (Vollständige Verwirkung!):} Gemäss Art. 367 Abs. 1 OR muss der Besteller das Werk nach Ablieferung sofort prüfen und erkannte Mängel \textbf{sofort rügen} (nach ständiger Gerichtspraxis innert \textbf{2 bis maximal 7 Werktagen}!). Unterbleibt die sofortige Rüge, gilt das Werk nach Art. 370 Abs. 2 OR als \textbf{stillschweigend genehmigt}. Sämtliche gesetzlichen Mängelrechte (Nachbesserung, Minderung, Wandelung) sind \textbf{unwiderruflich verwirkt}!
+\end{example}
+
+\subsection{Service Level Agreements (SLAs) und Qualitätskriterien}
+
+In IT-Dauerverträgen (Hosting, Cloud, Wartung) werden Qualitätskriterien durch Service Level Agreements (SLAs) standardisiert operationalisiert:
+
+\begin{definition}
+    \textbf{Kernkomponenten eines SLA:}
+    \begin{itemize}
+        \item \textbf{Verfügbarkeit (Uptime in \%):} Prozentualer Anteil der vereinbarten Betriebszeit (z.B. $99.5\%$ pro Monat). Achtung: Der SLA muss exakt regeln, ob geplante Wartungsfenster aus der Berechnung herausgerechnet werden.
+        \item \textbf{Reaktionszeit vs. Behebungszeit:}
+        \begin{itemize}
+            \item \textit{Reaktionszeit (Response Time):} Zeitspanne von der Störungsmeldung bis zum \textbf{Beginn der Analyse} durch einen Techniker.
+            \item \textit{Behebungszeit (Recovery Time):} Zeitspanne bis zur \textbf{vollständigen Behebung} des Mangels oder Bereitstellung eines Workarounds.
+        \end{itemize}
+        \item \textbf{Service Credits und Pönalen:} Werden die garantierten Service Levels verfehlt, schuldet der Provider vertraglich definierte Gutschriften auf Folgerechnungen (\textit{Service Credits}) oder Konventionalstrafen.
+    \end{itemize}
+\end{definition}
 
 \begin{important}
-    \textbf{Prüf- und Rügeobliegenheiten (Verwirkungsfalle, Art. 367 / 370 OR):}
+    \textbf{Typische MC-Fallen zu Kapitel 6:}
     \begin{itemize}
-        \item \textbf{Prüfpflicht (Art. 367 Abs. 1 OR):} Der Besteller muss das Werk nach der Ablieferung so bald prüfen, wie es nach dem üblichen Geschäftsgange tunlich ist (z.B. Durchführung von Abnahmetests).
-        \item \textbf{Rügepflicht:} Erkannte Mängel müssen dem Unternehmer \textbf{sofort} (in der Praxis innert 2 bis maximal 7 Tagen) detailliert angezeigt werden.
-        \item \textbf{Versteckte Mängel (Art. 370 Abs. 3 OR):} Mängel, die bei ordnungsgemässer Prüfung nicht erkennbar waren, müssen sofort nach ihrer Entdeckung gerügt werden.
-        \item \textbf{Verwirkung:} Versäumt der Besteller die rechtzeitige Rüge, gilt das Werk als \textbf{stillschweigend genehmigt}. Sämtliche gesetzlichen Mängelrechte gehen unwiederbringlich verloren!
+        \item \textbf{Falle 1 (Wegbedingung des Kündigungsrechts nach Art. 404 OR):} ,,In einem Beratungs- und Supportvertrag vereinbaren die Parteien eine unkündbare Mindestlaufzeit von 3 Jahren. Eine vorzeitige Kündigung wird ausgeschlossen.`` \\
+        $\rightarrow$ \textbf{FALSCH!} Art. 404 OR ist \textbf{zwingendes Recht}. Das jederzeitige Kündigungsrecht kann vertraglich \textbf{weder wegbedungen noch durch Strafen erschwert werden}!
+        \item \textbf{Falle 2 (SaaS-Vertrag ist immer Auftrag):} ,,Ein Cloud-SaaS-Abonnement untersteht rechtlich immer dem Auftragsrecht und kann deshalb nach Art. 404 OR täglich fristlos beendet werden.`` \\
+        $\rightarrow$ \textbf{FALSCH!} Bei rein technischen Bereitstellungsleistungen ohne persönliches Vertrauensverhältnis greifen werk- und mietvertragliche Elemente; es gelten \textbf{feste vertragliche Mindestlaufzeiten}.
+        \item \textbf{Falle 3 (Verwirkung nach Softwareablieferung):} ,,Ein Kunde testet eine abgelieferte Individualsoftware erst nach einem Monat, stellt Mängel fest und verlangt Nachbesserung.`` \\
+        $\rightarrow$ \textbf{ABGELEHNT!} Durch die verspätete Rüge gilt das Werk als genehmigt (Art. 370 OR). Sämtliche Gewährleistungsansprüche sind \textbf{unwiderruflich verwirkt}!
+        \item \textbf{Falle 4 (Wandelung bei Bagatellfehlern):} ,,Der Besteller kann bei jedem Programmierfehler im Werkvertrag sofort die Wandelung (Vertragsrücktritt) erklären.`` \\
+        $\rightarrow$ \textbf{FALSCH!} Wandelung setzt voraus, dass das Werk für den Besteller \textbf{gänzlich unbrauchbar} ist (Art. 368 Abs. 1 OR). Bei behebbaren Fehlern greift primär die Nachbesserung.
     \end{itemize}
 \end{important}
-
-\begin{remark}
-    \textbf{Verjährungsfristen (Art. 371 OR):}
-    Mängelansprüche bei beweglichen Werken (einschliesslich Standard- und Individualsoftware) verjähren nach \textbf{zwei Jahren} ab Ablieferung des Werks.
-\end{remark}
-
-\subsection{Vertragsbeendigung}
-
-\begin{theorem}
-    \textbf{Kündigung im Auftragsrecht (Art. 404 OR):}
-    \begin{itemize}
-        \item \textbf{Jederzeitiges Kündigungsrecht (Art. 404 Abs. 1 OR):} Ein Auftrag kann von beiden Parteien \textbf{jederzeit} fristlos und ohne Angabe von Gründen widerrufen oder gekündigt werden. Dieses Kündigungsrecht ist zwingend und kann vertraglich nicht wegbedungen werden.
-        \item \textbf{Kündigung zur Unzeit (Art. 404 Abs. 2 OR):} Erfolgt die Kündigung zur Unzeit (ohne sachlichen Grund in einem ungünstigen Moment, sodass dem Vertragspartner unnötige Nachteile entstehen), ist die kündigende Partei zum Ersatz des daraus entstehenden Schadens (negatives Interesse) verpflichtet.
-    \end{itemize}
-\end{theorem}
-
-\begin{theorem}
-    \textbf{Beendigung von Werkverträgen (Art. 377 OR):}
-    \begin{itemize}
-        \item Solange das Werk unvollendet ist, kann der Besteller jederzeit gegen \textbf{vollständige Schadloshaltung} des Unternehmers vom Vertrag zurücktreten.
-        \item Der Besteller muss dem Unternehmer die bereits geleistete Arbeit voll vergüten und zusätzlich den entgangenen Gewinn für das gesamte Restprojekt ersetzen.
-    \end{itemize}
-\end{theorem}

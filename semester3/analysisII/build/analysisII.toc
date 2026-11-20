@@ -1,9 +1,33 @@
-\contentsline {section}{\numberline {1}Grundlagen}{3}{}%
-\contentsline {subsection}{\numberline {1.1}Grundlagen des $\mathbb {R}^n$}{3}{}%
-\contentsline {subsection}{\numberline {1.2}Folgen in $\mathbb {R}^n$}{3}{}%
-\contentsline {subsection}{\numberline {1.3}Topologische Grundbegriffe}{3}{}%
-\contentsline {subsection}{\numberline {1.4}Funktionen}{4}{}%
-\contentsline {subsection}{\numberline {1.5}Ableitungen}{5}{}%
-\contentsline {subsection}{\numberline {1.6}Hesse-Matrix, Laplace-Operator und Lokale Extrema}{8}{}%
-\contentsline {subsection}{\numberline {1.7}Globale Extremwerte}{11}{}%
-\contentsline {subsection}{\numberline {1.8}Mehrdimensionale Integration}{13}{}%
+\contentsline {section}{\numberline {1}Topologie \& Grundlagen im $\mathbb {R}^n$}{3}{}%
+\contentsline {subsection}{\numberline {1.1}Geometrische Grundlagen im $\mathbb {R}^n$}{3}{}%
+\contentsline {subsection}{\numberline {1.2}Folgen im $\mathbb {R}^n$ und Konvergenz}{4}{}%
+\contentsline {subsection}{\numberline {1.3}Topologische Grundbegriffe im $\mathbb {R}^n$}{4}{}%
+\contentsline {subsection}{\numberline {1.4}Kompaktheit im $\mathbb {R}^n$}{6}{}%
+\contentsline {section}{\numberline {2}Vektorwertige Funktionen \& Stetigkeit}{8}{}%
+\contentsline {subsection}{\numberline {2.1}Grundlagen mehrdimensionaler Funktionen}{8}{}%
+\contentsline {subsection}{\numberline {2.2}Grenzwerte von Funktionen}{8}{}%
+\contentsline {subsection}{\numberline {2.3}Stetigkeit mehrdimensionaler Funktionen}{10}{}%
+\contentsline {section}{\numberline {3}Differenzialrechnung im $\mathbb {R}^n$}{12}{}%
+\contentsline {subsection}{\numberline {3.1}Partielle Ableitungen und Gradient}{12}{}%
+\contentsline {subsection}{\numberline {3.2}Richtungsableitungen}{12}{}%
+\contentsline {subsection}{\numberline {3.3}Totale Differenzierbarkeit und Jacobi-Matrix}{13}{}%
+\contentsline {subsection}{\numberline {3.4}Geometrische Eigenschaften des Gradienten}{15}{}%
+\contentsline {subsection}{\numberline {3.5}Mehrdimensionale Kettenregel}{15}{}%
+\contentsline {subsection}{\numberline {3.6}Höhere Ableitungen und Satz von Schwarz}{16}{}%
+\contentsline {section}{\numberline {4}Taylor-Approximation \& Lokale Extrema}{18}{}%
+\contentsline {subsection}{\numberline {4.1}Mehrdimensionale Taylor-Entwicklung}{18}{}%
+\contentsline {subsection}{\numberline {4.2}Lokale Extrema und kritische Punkte}{19}{}%
+\contentsline {subsection}{\numberline {4.3}Klassifikation über Definitheit der Hesse-Matrix}{20}{}%
+\contentsline {subsection}{\numberline {4.4}Globale Extrema auf kompakten Mengen}{21}{}%
+\contentsline {section}{\numberline {5}Gebundene Extrema \& Geometrische Sätze}{23}{}%
+\contentsline {subsection}{\numberline {5.1}Methode der Lagrange-Multiplikatoren}{23}{}%
+\contentsline {subsection}{\numberline {5.2}Geometrische Grundlagen: Mannigfaltigkeiten \& Tangentialräume}{24}{}%
+\contentsline {subsection}{\numberline {5.3}Satz über implizite Funktionen}{25}{}%
+\contentsline {subsection}{\numberline {5.4}Satz über die Umkehrfunktion (Inverser Funktionensatz)}{26}{}%
+\contentsline {section}{\numberline {6}Mehrdimensionale Integralrechnung}{29}{}%
+\contentsline {subsection}{\numberline {6.1}Riemann-Integral auf Quadern}{29}{}%
+\contentsline {subsection}{\numberline {6.2}Satz von Fubini (Iterierte Integrale)}{30}{}%
+\contentsline {subsection}{\numberline {6.3}Jordan-Messbarkeit und Nullmengen}{30}{}%
+\contentsline {subsection}{\numberline {6.4}Normalbereiche im $\mathbb {R}^2$ und $\mathbb {R}^3$}{32}{}%
+\contentsline {subsection}{\numberline {6.5}Transformationssatz (Koordinatenwechsel im $\mathbb {R}^n$)}{33}{}%
+\contentsline {subsection}{\numberline {6.6}Spezielle Koordinatensysteme}{33}{}%

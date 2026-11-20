@@ -1,159 +1,113 @@
-\section{Haftung und Rechtsverfolgung im Netz}
+\section{Haftung \& Rechtsverfolgung im Netz (OR, StGB, DSG)}
 
-\subsection{Ausgangslage und Cyberrisiken}
+\subsection{Zivilrechtliche Haftungsgrundlagen: Delikt vs. Vertrag}
+
+Tritt im Internet ein Schaden ein (z.B. durch Datenverlust, Sabotage, Systemausfall oder Persönlichkeitsverletzung), kommen nach dem Schweizerischen Obligationenrecht zwei grundlegende Haftungstatbestände in Betracht: die ausservertragliche Deliktshaftung (Art. 41 OR) und die Vertragshaftung (Art. 97 OR). Beide Anspruchsgrundlagen setzen vier Voraussetzungen kumulativ voraus: Schaden, adäquater Kausalzusammenhang, Widerrechtlichkeit (oder Vertragswidrigkeit) und Verschulden.
+
+\begin{theorem}
+    \textbf{Die fundamentale Beweislastdifferenz (Art. 41 OR vs. Art. 97 OR):}
+    \begin{itemize}
+        \item \textbf{Deliktshaftung (Art. 41 OR):} Findet Anwendung, wenn zwischen Schädiger und Geschädigtem kein Vertrag besteht. Der Kläger trägt nach Art. 8 ZGB die \textbf{volle Beweislast für das Verschulden} (Vorsatz oder Fahrlässigkeit) des Beklagten. Verjährungsfrist: \textbf{3 Jahre} relativ ab Kenntnis des Schadens, absolut \textbf{10 Jahre} (Art. 60 OR).
+        \item \textbf{Vertragshaftung (Art. 97 OR):} Setzt einen gültigen Vertrag voraus. Bei Nichterfüllung oder Schlechterfüllung einer Vertragspflicht wird das \textbf{Verschulden gesetzlich vermutet} (Beweislastumkehr). Der Schuldner muss sich aktiv durch den Nachweis entlasten, dass ihn keinerlei Verschulden trifft (\textit{Exkulpationsbeweis}). Regelverjährung: \textbf{10 Jahre} (Art. 127 OR).
+    \end{itemize}
+\end{theorem}
+
+\subsection{Haftungsfreizeichnung und Hilfspersonen (Art. 100 / 101 OR)}
+
+Unternehmen versuchen in AGB und Verträgen regelmässig, ihre Haftungsrisiken abzuwälzen. Das Gesetz zieht hierbei jedoch strikte Schranken:
+
+\begin{theorem}
+    \textbf{Eigene Haftung (Art. 100 OR) vs. Hilfspersonenhaftung (Art. 101 OR):}
+    \begin{itemize}
+        \item \textbf{Wegbedingung für eigenes Verschulden (Art. 100 Abs. 1 OR):} Eine Vereinbarung, welche die Haftung für \textbf{Absicht oder grobe Fahrlässigkeit ausschliesst, ist zwingend NICHTIG}! Vertraglich wegbedungen werden kann ausschliesslich die Haftung für \textbf{leichte Fahrlässigkeit}.
+        \item \textbf{Freizeichnung für Hilfspersonen (Art. 101 Abs. 2 OR):} Lässt ein Schuldner seine Pflichten durch Hilfspersonen (z.B. Angestellte, externe IT-Dienstleister, Cloud-Provider) erfüllen, kann die Haftung für diese Hilfspersonen \textbf{auch für grobe Fahrlässigkeit vollständig wegbedungen werden} (ausser im konzessionierten Gewerbe).
+        \item \textbf{Unwirksamkeit von E-Mail-Disclaimern:} Einseitige Haftungsausschlüsse am Ende von E-Mails oder Hinweistexte auf Websites (,,Für Folgeschäden wird jede Haftung abgelehnt``) begründen keinen Konsens und sind zur Enthaftung \textbf{völlig wirkungslos}.
+    \end{itemize}
+\end{theorem}
+
+\subsection{Strafrecht, Berufsgeheimnis und Cloud-Auslagerung}
+
+Im Strafrecht gilt der Grundsatz, dass prinzipiell nur die schuldhaft handelnde \textbf{natürliche Person} bestraft wird. Für Berufsgeheimnisträger (Ärzte, Anwälte, Notare nach Art. 321 StGB sowie Banker nach Art. 47 BankG) ist die Auslagerung sensibler Daten in externe Cloud-Systeme mit strafrechtlichen Risiken verbunden:
+
+\begin{definition}
+    \textbf{Verschuldensstufen beim Berufsgeheimnis (Art. 321 StGB):}
+    \begin{itemize}
+        \item \textbf{Reines Vorsatzdelikt:} Die Verletzung des Berufsgeheimnisses ist ausschliesslich bei vorsätzlichem Handeln strafbar (Freiheitsstrafe bis 3 Jahre oder Geldstrafe).
+        \item \textbf{Eventualvorsatz ($\to$ strafbar):} Der Täter hält einen unbefugten Zugriff Dritter (oder ausländischer Ermittlungsbehörden via US CLOUD Act) für ernsthaft möglich und nimmt diesen billigend in Kauf.
+        \item \textbf{Bewusste Fahrlässigkeit ($\to$ STRAFLOS!):} Der Geheimnisträger erkennt das abstrakte Zugriffsrisiko, vertraut jedoch gestützt auf angemessene Vorkehrungen pflichtwidrig und leichtfertig darauf, dass ein unbefugter Zugriff ausbleibt. \textbf{Fahrlässigkeit ist nach Art. 321 StGB straflos!}
+    \end{itemize}
+\end{definition}
 
 \begin{example}
-    \textbf{Cyberrisiken (z.B. Ransomware-Angriffe):} \\
-    Angreifer verschlüsseln geschäftskritische Daten oder legen IT-Systeme lahm und fordern Lösegeld für die Freigabe (oder drohen bei \textit{Double Extortion} mit der Veröffentlichung gestohlener Daten). Dies führt zu massiven Betriebsunterbrüchen, Wiederherstellungskosten, Reputationsschäden und möglichen Ansprüchen geschädigter Dritter.
+    \textbf{Fälle zur Risikoabwägung in der Cloud:}
+    \begin{itemize}
+        \item \textbf{Die Banken-Cloud:} Eine Schweizer Privatbank lagert verschlüsselte Kundendaten in eine Microsoft-Azure-Cloud aus. Da Microsoft dem US CLOUD Act untersteht, besteht ein abstraktes Zugriffsrisiko der US-Behörden. Weil die Bank jedoch starke Verschlüsselung (Bring Your Own Key, BYOK) einsetzt und ISO 27001 implementiert hat, nimmt sie einen Datenabfluss nicht billigend in Kauf. Es liegt kein Eventualvorsatz vor; das Handeln ist \textbf{nach Art. 321 StGB straflos}.
+        \item \textbf{Comparis-Ransomware-Angriff:} Beim Cyberangriff auf Comparis wurden Daten verschlüsselt und erpresst. Wurden die anerkannten Standards der IT-Sicherheit eingehalten, haftet das Management zivilrechtlich nicht wegen Fahrlässigkeit und macht sich strafrechtlich nicht strafbar.
+    \end{itemize}
 \end{example}
 
-\begin{important}
-    \textbf{Grundproblem der Rechtsverfolgung im Netz:} \\
-    Die eigentlichen Täter (z.B. Hacker oder Urheber von Rechtsverletzungen) agieren meist \textbf{anonym} und aus dem \textbf{Ausland}. Sie sind rechtlich und faktisch kaum greifbar. \\
-    $\rightarrow$ Geschädigte und Behörden nehmen daher für die Haftung und Rechtsdurchsetzung primär greifbare Akteure in der Schweiz ins Visier, insbesondere betroffene \textbf{Unternehmen, deren Organe sowie IT-Dienstleister und Provider}.
-\end{important}
+\begin{definition}
+    \textbf{Kaskadenhaftung bei Mediendelikten (Art. 28 StGB):} \\
+    Wird eine strafbare Handlung durch Veröffentlichung in einem Medium (z.B. Ehrverletzung in einem Online-Magazin oder Blog) begangen, gilt das strikte Kaskadenprinzip:
+    \begin{enumerate}
+        \item \textbf{Primär haftet ausschliesslich der Urheber/Autor} der Mitteilung.
+        \item Der Verleger bzw. Betreiber/Host haftet nur dann subsidiär, wenn der Autor \textbf{nicht ermittelt} werden kann oder der Beitrag \textbf{ohne dessen Wissen} publiziert wurde.
+    \end{enumerate}
+    \textit{(Achtung MC-Falle: Ein Host-/Plattformbetreiber haftet im Strafrecht nicht automatisch als Mittäter, solange der Urheber greifbar ist!)}
+\end{definition}
 
-\subsection{Grundvoraussetzungen der Haftung}
+\subsection{Provider-Haftung im Internet}
+
+Das Schweizer Recht kennt kein Spezialgesetz für Intermediäre (wie den Digital Services Act der EU). Die Verantwortlichkeit richtet sich nach allgemeinen zivil- und strafrechtlichen Grundsätzen:
 
 \begin{theorem}
-    \textbf{Prinzip der gesetzlichen Grundlage:} \\
-    Jede rechtliche Verantwortlichkeit (straf- wie zivilrechtlich) setzt eine \textbf{gesetzliche Grundlage} voraus. Für das Greifen einer Rechtsfolge müssen grundsätzlich drei Ebenen erfüllt sein:
-    \begin{enumerate}
-        \item \textbf{Objektiver Tatbestand:} Äussere Merkmale einer Rechtsverletzung oder Straftat (Tathandlung, Taterfolg, Kausalzusammenhang).
-        \item \textbf{Subjektiver Tatbestand (Verschulden):} Innere Einstellung bzw. Vorwerfbarkeit:
-              \begin{itemize}
-                  \item \textit{Vorsatz:} Wissen und Wollen der Tatbestandsverwirklichung.
-                  \item \textit{Eventualvorsatz:} Ernstnehmen der Möglichkeit des Erfolgs und Inkaufnahme desselben ("billigend in Kauf nehmen").
-                  \item \textit{Fahrlässigkeit:} Pflichtwidrige Unvorsichtigkeit (Missachtung der nach den Umständen und persönlichen Verhältnissen gebotenen Sorgfalt).
-              \end{itemize}
-        \item \textbf{Fehlen von Rechtfertigungsgründen:} Keine gesetzliche Erlaubnis, keine gültige Einwilligung des Verletzten, keine Notwehr oder Notstand.
-    \end{enumerate}
+    \textbf{Abstufung nach Provider-Kategorien:}
+    \begin{itemize}
+        \item \textbf{Access-Provider (Reine Durchleitung / \textit{mere conduit}):} Vermitteln lediglich den Zugang zum Netz (z.B. Swisscom, Sunrise). Sie haften \textbf{nicht} für Rechtsverletzungen Dritter, die über ihre Leitungen begangen werden, und sind im Zivilrecht nicht zu proaktiven Netzsperren verpflichtet.
+        \item \textbf{Hosting-Provider (Speicheranbieter):} Speichern fremde Inhalte auf eigenen Servern. Sie trifft \textbf{keine allgemeine Vorab-Überwachungspflicht}. Sie haften erst, wenn sie konkrete Kenntnis von einer Rechtsverletzung erlangen und den Inhalt nicht unverzüglich entfernen (\textbf{Notice-and-Takedown}).
+        \item \textbf{Stay-down-Pflicht (Art. 39d URG):} Hosting-Dienste, die eine besondere Gefahr für Urheberrechtsverletzungen geschaffen haben, müssen das wiederholte Hochladen bereits gemeldeter Werke durch technische Massnahmen aktiv verhindern.
+        \item \textbf{IP-Aufzeichnung (Art. 77i URG):} Als gesetzliche Reaktion auf das Bundesgerichtsurteil \textit{Logistep} dürfen Rechteinhaber IP-Adressen von Filesharern zur Erstattung von Strafanzeigen aufzeichnen.
+    \end{itemize}
 \end{theorem}
 
-\subsubsection{Strafrechtliche Verantwortlichkeit}
+\begin{example}
+    \textbf{BGE 145 III 72 (Swisscom / Pirate Bay):} \\
+    Rechteinhaber verlangten von Swisscom als Access-Provider, den Zugang zu ausländischen Piraterie-Plattformen (The Pirate Bay) per DNS-Sperre zu blockieren. Das Bundesgericht wies die Klage ab: Der reine Zugangsvermittler leistet keinen adäquat-kausalen Gehilfenschaftsbeitrag zur Urheberrechtsverletzung; eine gesetzliche Pflicht zu zivilrechtlichen Netzsperren existiert in der Schweiz nicht (Ausnahme: behördliche Sperrlisten nach dem Geldspielgesetz BGS).
+\end{example}
 
 \begin{remark}
-    \textbf{Typische Cyber-Straftatbestände der Angreifer (StGB):} \\
-    Im Strafrecht gilt ein strenges Legalitätsprinzip (\textit{nulla poena sine lege}, Art. 1 StGB); strafbar ist in der Regel nur vorsätzliches (inkl. eventualvorsätzliches) Handeln, sofern das Gesetz Fahrlässigkeit nicht ausdrücklich unter Strafe stellt. Angreifer machen sich insbesondere strafbar wegen:
-    \begin{itemize}
-        \item \textbf{Unbefugtes Eindringen in ein Datenverarbeitungssystem (Hacking, Art. 143bis StGB):} Eindringen in fremde, gegen unbefugten Zugriff besonders gesicherte Systeme auf elektronischem Weg.
-        \item \textbf{Unbefugte Datenbeschaffung (Art. 143 StGB):} Beschaffen elektronisch gespeicherter, nicht für den Täter bestimmter und besonders gesicherter Daten in Bereicherungsabsicht.
-        \item \textbf{Datenbeschädigung (Art. 144bis StGB):} Unbefugtes Ändern, Löschen oder Unbrauchbarmachen elektronisch gespeicherter Daten (z.B. Verschlüsselung durch Ransomware, DDoS-Attacken) sowie das Herstellen/Verbreiten von Schadsoftware (Malware).
-        \item \textbf{Erpressung (Art. 156 StGB) und Nötigung (Art. 181 StGB):} Erzwingen einer Lösegeldzahlung (z.B. in Kryptowährungen) durch Androhung ernstlicher Nachteile (Datenverlust oder Veröffentlichung sensibler Daten).
-        \item \textbf{Betrügerischer Missbrauch einer Datenverarbeitungsanlage (Art. 147 StGB):} Vermögensverschiebung durch unrichtige, unvollständige oder unbefugte Verwendung von Daten (z.B. Phishing).
-    \end{itemize}
+    \textbf{Netzsperren nach Geldspielgesetz (BGS Art. 86 ff.):} \\
+    Während Access-Provider im Zivil- und Immaterialgüterrecht keine Netzsperren errichten müssen (keine Gehilfenschaft bei Urheberrechtsverletzungen Dritter), gilt im \textbf{öffentlichen Recht eine zwingende Ausnahme}: Schweizer Access-Provider sind gesetzlich verpflichtet, auf Anordnung der Geldspielbehörden (Gespa / Eidg. Spielbankenkommission ESBK) \textbf{DNS-Netzsperren für illegale ausländische Online-Casinos} aufzuschalten. Das Bundesgericht hat die Verfassungsmässigkeit dieser DNS-Sperren im Mai 2022 bestätigt.
 \end{remark}
 
-\subsubsection{Zivilrechtliche Haftung (Schadenersatz)}
+\subsection{Organhaftung des Verwaltungsrats und Governance}
 
-\begin{definition}
-    \textbf{Voraussetzungen der zivilrechtlichen Haftung (Art. 41 ff. OR / Art. 97 ff. OR):} \\
-    Damit ein Geschädigter zivilrechtlich Schadenersatz fordern kann, müssen \textbf{vier Voraussetzungen kumulativ} nachgewiesen werden:
-    \begin{enumerate}
-        \item \textbf{Vermögensschaden:} Nachgewiesene, unfreiwillige Vermögensverminderung (Differenztheorie: Bestandesabnahme, Passivenzunahme oder entgangener Gewinn).
-        \item \textbf{Widerrechtlichkeit oder Vertragswidrigkeit:}
-              \begin{itemize}
-                  \item \textit{Ausservertraglich (Delikt, Art. 41 OR):} Verletzung eines absolut geschützten Rechtsguts (z.B. Eigentum, Persönlichkeit, Urheberrecht) oder Verstoss gegen eine spezifische Schutznorm.
-                  \item \textit{Vertraglich (Art. 97 OR):} Verletzung einer Pflicht aus einem bestehenden Schuldverhältnis (z.B. Hosting-Vertrag, SLA, Sorgfaltspflichten).
-              \end{itemize}
-        \item \textbf{Adäquater Kausalzusammenhang:} Das schädigende Verhalten muss nach dem gewöhnlichen Lauf der Dinge und der allgemeinen Lebenserfahrung geeignet sein, einen Erfolg von der Art des eingetretenen herbeizuführen.
-        \item \textbf{Verschulden (Absicht oder Fahrlässigkeit):} Subjektive Vorwerfbarkeit (im Vertragsrecht wird das Verschulden gesetzlich vermutet, d.h. der Schuldner muss sich exkulpieren, Art. 97 Abs. 1 OR; im Deliktsrecht muss der Geschädigte das Verschulden beweisen).
-    \end{enumerate}
-\end{definition}
-
-\subsection{Haftungsverteilung, Rückgriff und Organverantwortung}
-
-\subsubsection{Haftung im Unternehmen und Regress}
-
-\begin{remark}
-    \textbf{Haftung für eigenes Verhalten, Angestellte und Hilfspersonen:}
-    \begin{itemize}
-        \item \textbf{Primäre Unternehmenshaftung:} Unternehmen haften im Aussenverhältnis gegenüber Kunden und Dritten primär selbst für Schäden, die durch ihre Organe (Art. 55 ZGB / Art. 722 OR), ihre Arbeitnehmer oder beigezogene Hilfspersonen (z.B. externe IT-Dienstleister, Subunternehmer) verursacht werden.
-        \item \textbf{Vertragliche Hilfspersonenhaftung (Art. 101 OR):} Wer die Erfüllung einer Schuldpflicht durch eine Hilfsperson (z.B. Mitarbeiter, Cloud-Anbieter) vornehmen lässt, haftet dem Vertragspartner für den von der Hilfsperson in Ausübung ihrer Verrichtung verursachten Schaden ohne eigenes Verschulden.
-        \item \textbf{Deliktische Geschäftsherrenhaftung (Art. 55 OR):} Als Geschäftsherr haftet das Unternehmen für Schäden durch Arbeitnehmer/Hilfspersonen, sofern es nicht nachweist, dass es alle nach den Umständen gebotene Sorgfalt angewendet hat (\textbf{Cura in eligendo, instruendo et custodiendo}).
-        \item \textbf{Eingeschränkter Rückgriff (Regress auf Arbeitnehmer, Art. 321e OR):} Hat das Unternehmen den Schaden im Aussenverhältnis gedeckt, ist der interne Rückgriff auf fehlbare Angestellte (z.B. Mitarbeiter klickt auf Phishing-Mail) stark eingeschränkt. Bei leichter Fahrlässigkeit (Alltagsversehen) trägt in der Regel der Arbeitgeber das Betriebsrisiko; ein voller oder teilweiser Rückgriff ist meist nur bei grober Fahrlässigkeit oder Vorsatz unter Berücksichtigung des Berufsrisikos, des Bildungsgrades und der Lohnhöhe zulässig.
-    \end{itemize}
-\end{remark}
-
-\subsubsection{Verantwortung des Verwaltungsrats und Sorgfaltsmassstab}
-
-\begin{definition}
-    \textbf{Verantwortung des Verwaltungsrats (Art. 716a \& Art. 754 OR):} \\
-    Der Verwaltungsrat (VR) trägt die unübertragbare und unentziehbare Oberleitung des Unternehmens, einschliesslich der Ausgestaltung des Risikomanagements und der Internen Kontrolle (IKS). \\
-    Delegiert der VR operative Aufgaben (z.B. IT-Security an die Geschäftsleitung oder den CISO), haftet er für die sorgfältige:
-    \begin{enumerate}
-        \item \textbf{Auswahl (\textit{Cura in eligendo}):} Einsetzen fachlich und persönlich qualifizierter Personen.
-        \item \textbf{Instruktion (\textit{Cura in instruendo}):} Klare Weisungen, Richtlinien, Sicherheitskonzepte und Zielvorgaben.
-        \item \textbf{Überwachung (\textit{Cura in custodiendo}):} Regelmässige Kontrolle, Audits, Reporting und Einschreiten bei Missständen.
-    \end{enumerate}
-\end{definition}
-
-\begin{definition}
-    \textbf{Three Lines of Defence Modell (Risikomanagement \& Compliance):} \\
-    Anerkanntes Governance-Modell zur systematischen Steuerung von Risiken (insb. Cyber- und IT-Risiken) und zur Sicherstellung der Compliance im Unternehmen:
-    \begin{enumerate}
-        \item \textbf{1st Line of Defence (Operatives Management \& Fachabteilungen):} Die operativen Einheiten und der IT-Betrieb identifizieren, bewerten und steuern Risiken direkt im Tagesgeschäft durch technische und organisatorische Schutzmassnahmen (z.B. Patch-Management, Firewalls, Zugriffskontrollen).
-        \item \textbf{2nd Line of Defence (Risikomanagement, Compliance \& IT-Security/CISO):} Überwacht und unterstützt die erste Linie, gibt Sicherheitsrichtlinien und Rahmenwerke vor und prüft die Einhaltung gesetzlicher sowie interner Vorgaben.
-        \item \textbf{3rd Line of Defence (Interne Revision / Internal Audit):} Prüft völlig unabhängig von den operativen Prozessen die Wirksamkeit der ersten und zweiten Verteidigungslinie und rapportiert direkt an den Verwaltungsrat (bzw. das Audit Committee).
-    \end{enumerate}
-\end{definition}
-
-\begin{important}
-    \textbf{Sorgfaltsmassstab und Branchenstandards (Ausschluss der Fahrlässigkeit):} \\
-    Es gibt im Netz keine absolute (100\%-ige) Sicherheit gegen Cyberangriffe. \\
-    \textbf{Grundsatz:} Wer anerkannte \textbf{Branchenstandards} (Stand der Technik, z.B. ISO 27001, NIST Cybersecurity Framework, IKT-Minimalstandard des Bundes) angemessen umsetzt, eine funktionierende Governance (z.B. \textit{Three Lines of Defence}) pflegt und die gebotene Sorgfalt walten lässt, \textbf{haftet nicht wegen Fahrlässigkeit}, selbst wenn es dennoch zu einem erfolgreichen Angriff oder Sicherheitsvorfall kommt.
-\end{important}
-
-\subsection{Provider-Haftung und Rechtsdurchsetzung}
+Nach Art. 716a Abs. 1 OR trägt der Verwaltungsrat (VR) die unübertragbare und unentziehbare Verantwortung für die Oberleitung der Gesellschaft sowie für die Ausgestaltung des internen Kontrollsystems (IKS) und des Risikomanagements:
 
 \begin{theorem}
-    \textbf{Grundprinzip der Provider-Verantwortlichkeit:} \\
-    In der Schweiz existiert kein allgemeines Spezialgesetz für sämtliche Online-Provider (anders als z.B. der Digital Services Act in der EU); es gelten die allgemeinen zivil- und strafrechtlichen Regeln (mit einzelnen Spezialnormen wie Art. 39d URG). \\
-    Als Faustregel gilt: \textbf{Je näher ein Provider an den Daten und Inhalten ist (Kontroll- und Einflussmöglichkeit), desto weitreichender sind seine Prüf-, Sorgfalts- und Handlungspflichten.}
-\end{theorem}
-
-\begin{remark}
-    \textbf{Abstufung nach Provider-Typen:}
+    \textbf{Organhaftung (Art. 754 OR) und Three Lines of Defence:}
     \begin{itemize}
-        \item \textbf{Access-Provider (Zugangsvermittler, z.B. Swisscom, Sunrise):} \\
-              Vermitteln lediglich den technischen Zugang zum Internet (reine Durchleitung / \textit{Mere Conduit}) und haben weder Kenntnis noch Kontrolle über die transportierten Datenpakete. \\
-              $\rightarrow$ Sie haften \textbf{in der Regel nicht} für Rechtsverletzungen Dritter, die über ihren Zugang begangen werden, und sind grundsätzlich auch nicht zu Netzsperren wegen zivilrechtlicher Ansprüche verpflichtet (Bundesgerichtspraxis; Ausnahmen nur bei expliziter gesetzlicher Grundlage wie Geldspiel-Sperrlisten nach BGS).
-        \item \textbf{Hosting-Provider (Speicherplatzanbieter \& Plattformen, z.B. Webhoster, Cloud-Anbieter, Social Media):} \\
-              Speichern fremde Inhalte im Auftrag ihrer Nutzer auf eigenen Servern und halten diese zum Abruf bereit. \\
-              $\rightarrow$ Sie haben zwar \textbf{keine allgemeine Vorab-Prüfpflicht} (keine Pflicht zur proaktiven Überwachung sämtlicher hochgeladener Inhalte), sind jedoch zur \textbf{Entfernung rechtswidriger Inhalte verpflichtet}, sobald sie konkrete Kenntnis von einer Rechtsverletzung erlangen (\textbf{Notice-and-Takedown}-Prinzip, vgl. auch Art. 39d URG für Urheberrechte mit \textit{Stay-down}-Pflicht bei besonderer Gefahr). \\
-              $\rightarrow$ Für Unterlassungs- und Beseitigungsansprüche (z.B. Löschung persönlichkeitsverletzender Beiträge gemäss Art. 28 ZGB) können Hosting-Provider als Mitwirkende direkt ins Recht gefasst werden, auch ohne eigenes Verschulden.
-        \item \textbf{Content-Provider (Inhalteanbieter):} \\
-              Stellen eigene Inhalte ins Netz oder machen sich fremde Inhalte zu eigen. \\
-              $\rightarrow$ Sie tragen die \textbf{volle eigene zivil- und strafrechtliche Verantwortlichkeit} für die publizierten Inhalte.
-    \end{itemize}
-\end{remark}
-
-\subsection{Risiko von Cloud-Providern und ausländischem Behördenzugriff}
-
-\begin{definition}
-    \textbf{US CLOUD Act vs. Schweizer Souveränität:} \\
-    Der US CLOUD Act (\textit{Clarifying Lawful Overseas Use of Data Act}) ermächtigt US-Behörden, von IT-Anbietern mit US-Bezug (z.B. Microsoft, AWS, Google) die Herausgabe von Daten zu verlangen -- unabhängig davon, wo die Server physisch stehen (selbst bei Rechenzentren in der Schweiz):
-    \begin{itemize}
-        \item \textbf{Kollision mit Art. 271 StGB (Verbotene Handlungen für einen fremden Staat):} Gemäss Art. 271 Ziff. 1 StGB macht sich strafbar, wer auf schweizerischem Gebiet ohne Bewilligung Handlungen vornimmt, die einer Behörde oder einem Beamten zukommen.
-        \item \textbf{Rechtshilfeweg:} Ausländische Behörden müssen Daten grundsätzlich über den offiziellen internationalen Rechtshilfeweg anfordern. Eine direkte Datenherausgabe an US-Behörden unter Umgehung des Schweizer Rechtshilfeverfahrens verletzt die Schweizer Souveränität und birgt das Risiko einer Strafbarkeit nach Art. 271 StGB.
-    \end{itemize}
-\end{definition}
-
-\begin{theorem}
-    \textbf{Berufsgeheimnisse in der Cloud (Art. 321 StGB, Art. 47 BankG):} \\
-    Berufsgeheimnisträger (Ärzte, Anwälte, Notare, Banken) unterliegen strengen strafbewehrten Schweigepflichten. Bei der Auslagerung vertraulicher Daten in die Cloud stellt sich die Frage nach einer unbefugten Offenbarung:
-    \begin{itemize}
-        \item \textbf{Strafbarkeit nur bei Vorsatz:} Die Verletzung des Berufsgeheimnisses nach Art. 321 StGB ist ein reines Vorsatzdelikt. Fahrlässiges Handeln ist \textbf{strafrechtlich straflos} (führt aber zu zivilrechtlicher Haftung nach Art. 97 OR).
-        \item \textbf{Eventualvorsatz ($\rightarrow$ strafbar):} Der Geheimnisträger hält einen unbefugten Zugriff Dritter oder ausländischer Behörden (z.B. via US CLOUD Act) für ernsthaft möglich und nimmt diesen billigend in Kauf (z.B. bei unverschlüsselter Speicherung sensibler Akten bei US-Hyperscalern).
-        \item \textbf{Bewusste Fahrlässigkeit ($\rightarrow$ straflos nach Art. 321 StGB):} Der Geheimnisträger erkennt das abstrakte Zugriffsrisiko, vertraut jedoch pflichtwidrig und leichtfertig darauf, dass ein unbefugter Zugriff ausbleibt (z.B. gestützt auf technische Sicherheitsvorkehrungen).
+        \item \textbf{Sorgfaltspflichten bei Aufgabendelegation:} Delegiert der VR operative IT-Aufgaben an die Geschäftsleitung oder Externe, haftet er bei Schäden nur dann nicht, wenn er drei Pflichten erfüllt:
+        \begin{enumerate}
+            \item \textbf{Cura in eligendo:} Sorgfältige Auswahl qualifizierter Spezialisten und Dienstleister.
+            \item \textbf{Cura in instruendo:} Sorgfältige Erteilung klarer Richtlinien, Sicherheitsvorgaben und Prioritäten.
+            \item \textbf{Cura in custodiendo:} Laufende, dokumentierte Überwachung und Einschreiten bei Mängeln.
+        \end{enumerate}
+        \item \textbf{Three Lines of Defence Modell:} Anerkanntes Governance-Modell zur Risikosteuerung: (1) Operative Fachbereiche/IT, (2) Risk Management, Compliance und CISO, (3) Unabhängige Interne Revision.
+        \item \textbf{Ausschluss der Fahrlässigkeit:} Wer die anerkannten \textbf{Branchenstandards} (Stand der Technik, z.B. ISO 27001, BSI, NIST) nachweisbar umsetzt und überwacht, \textbf{haftet nicht wegen Fahrlässigkeit}, selbst wenn es dennoch zu einem Sicherheitsvorfall kommt!
     \end{itemize}
 \end{theorem}
 
 \begin{important}
-    \textbf{Praktische Schutz- und Risikominderungsmassnahmen:}
+    \textbf{Typische MC-Fallen zu Kapitel 3:}
     \begin{itemize}
-        \item \textbf{Ende-zu-Ende-Verschlüsselung (BYOK):} Starke Verschlüsselung der Daten vor dem Upload, wobei der Schlüssel ausschliesslich beim Schweizer Geheimnisträger verbleibt (\textit{Bring Your Own Key}). Der Provider kann selbst bei Herausgabeanordnungen nur unlesbaren Ciphertext liefern.
-        \item \textbf{Sovereign Cloud / Schweizer Provider:} Speicherung bei Schweizer Anbietern ohne US-Mutterkonzern, die keinem US-Rechtszugriff unterliegen.
-        \item \textbf{Vertragliche Klauseln:} Pflicht des Providers zur sofortigen Kundenbenachrichtigung bei behördlichen Anfragen und zur Ausschöpfung aller Rechtsmittel.
+        \item \textbf{Falle 1 (Haftungsausschluss für Hilfspersonen):} ,,Eine AGB-Klausel, die jegliche Haftung für grob fahrlässiges Verhalten von beigezogenen Cloud-Providern ausschliesst, ist nach Art. 100 OR zwingend nichtig.`` \\
+        $\rightarrow$ \textbf{FALSCH!} Für \textbf{Hilfspersonen} erlaubt Art. 101 Abs. 2 OR die Wegbedingung auch für \textbf{grobe Fahrlässigkeit}! Art. 100 Abs. 1 OR verbietet nur den Ausschluss für \textbf{eigenes} grobes Verschulden.
+        \item \textbf{Falle 2 (Fahrlässige Berufsgeheimnisverletzung):} ,,Ein Rechtsanwalt speichert Klientenakten fahrlässig in einer ungesicherten Cloud. Er macht sich nach Art. 321 StGB strafbar.`` \\
+        $\rightarrow$ \textbf{FALSCH!} Art. 321 StGB bestraft \textbf{nur Vorsatz} (inkl. Eventualvorsatz). Bewusste und unbewusste Fahrlässigkeit sind im Strafrecht \textbf{straflos}!
+        \item \textbf{Falle 3 (Access-Provider und Netzsperren):} ,,Ein Urheber kann einen Schweizer Access-Provider gerichtlich dazu zwingen, eine illegale Streaming-Website per DNS-Sperre zu blockieren.`` \\
+        $\rightarrow$ \textbf{FALSCH!} Nach BGE 145 III 72 (*Swisscom*) haften Access-Provider als reine Durchleiter (\textit{mere conduit}) nicht und schulden keine zivilrechtlichen Netzsperren.
+        \item \textbf{Falle 4 (Garantie gegen Cyberrisiken):} ,,Wird eine Schweizer Bank trotz ISO-27001-Zertifizierung Opfer einer Erpressungssoftware, haftet der Verwaltungsrat persönlich nach Art. 754 OR.`` \\
+        $\rightarrow$ \textbf{FALSCH!} Es gibt keine Pflicht zu absoluter Sicherheit. Wer den \textbf{Stand der Technik} nachweisbar implementiert hat, hat seine Sorgfaltspflicht erfüllt und haftet \textbf{nicht wegen Fahrlässigkeit}.
     \end{itemize}
 \end{important}

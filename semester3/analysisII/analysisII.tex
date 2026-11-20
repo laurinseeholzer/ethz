@@ -5,6 +5,22 @@
 \input{../../templates/templateNotes/commands}
 \input{../../templates/templateNotes/theorem_styles}
 
+% Adjust geometry for compact, exam-focused readability (target: 15-25 pages)
+\geometry{top=2.0cm, bottom=2.0cm, left=2.0cm, right=2.0cm}
+
+% Additional Math Operators & Shortcuts for Analysis II
+\DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\dive}{div}
+\DeclareMathOperator{\rot}{rot}
+\DeclareMathOperator{\spur}{Spur}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\rang}{rang}
+\DeclareMathOperator{\vol}{vol}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\interior}{int}
+
 \title{\Huge\textbf{Analysis II}}
 \author{Laurin Seeholzer}
 \date{\today}
@@ -15,6 +31,11 @@
 \tableofcontents
 \newpage
 
-\input{notes/grundlagen.tex}
+\input{notes/kapitel1_topologie}
+\input{notes/kapitel2_funktionen_stetigkeit}
+\input{notes/kapitel3_differenzialrechnung}
+\input{notes/kapitel4_taylor_extrema}
+\input{notes/kapitel5_gebundene_extrema_implizit}
+\input{notes/kapitel6_mehrdimensionale_integration}
 
 \end{document}

@@ -5,7 +5,47 @@
 \input{../../templates/templateNotes/commands}
 \input{../../templates/templateNotes/theorem_styles}
 
-\title{\Huge\textbf{Numerical Methods for Computer Science}}
+% Professional geometry for clean study notes (target: 35-48 pages)
+\geometry{top=2.2cm, bottom=2.2cm, left=2.2cm, right=2.2cm}
+
+% Additional Math Operators for NumCS
+\DeclareMathOperator{\cond}{cond}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\spanop}{span}
+\DeclareMathOperator{\argmin}{arg\,min}
+\DeclareMathOperator{\argmax}{arg\,max}
+\DeclareMathOperator{\Vol}{Vol}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+% Enhanced Code Listing Styling for Python
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue!80!black}\bfseries,
+    commentstyle=\color{green!50!black}\itshape,
+    stringstyle=\color{red!70!black},
+    numbers=left,
+    numberstyle=\tiny\color{black!40},
+    stepnumber=1,
+    numbersep=8pt,
+    frame=single,
+    rulecolor=\color{black!20},
+    backgroundcolor=\color{black!2},
+    tabsize=4,
+    showspaces=false,
+    showstringspaces=false,
+    breaklines=true,
+    breakatwhitespace=true,
+    xleftmargin=15pt,
+    framexleftmargin=12pt
+}
+
+\title{\Huge\textbf{Numerical Methods for Computer Science}\\
+\Large Course 401-0663-00 --- ETH Zurich}
 \author{Laurin Seeholzer}
 \date{\today}
 
@@ -15,9 +55,13 @@
 \tableofcontents
 \newpage
 
-\input{notes/introduction.tex}
-\input{notes/interpolation.tex}
-\input{notes/quadrature.tex}
-\input{notes/nonlinear-equations.tex}
+\input{notes/chapter1_foundations.tex}
+\input{notes/chapter2_interpolation.tex}
+\input{notes/chapter3_trig_fft.tex}
+\input{notes/chapter4_quadrature.tex}
+\input{notes/chapter5_nonlinear_equations.tex}
+\input{notes/chapter6_linear_algebra.tex}
+\input{notes/chapter7_least_squares.tex}
+\input{notes/chapter8_neural_networks.tex}
 
 \end{document}

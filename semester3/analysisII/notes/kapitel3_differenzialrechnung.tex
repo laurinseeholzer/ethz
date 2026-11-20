@@ -1,0 +1,197 @@
+\section{Differenzialrechnung im $\mathbb{R}^n$}
+
+\subsection{Partielle Ableitungen und Gradient}
+
+\begin{definition}
+    \textbf{Partielle Ableitung:} Sei $U \subset \mathbb{R}^n$ \textbf{offen}, $f: U \to \mathbb{R}$ und $x \in U$. Die \textbf{partielle Ableitung} von $f$ nach der $i$-ten Koordinate $x_i$ an der Stelle $x$ ist definiert als der 1D-Grenzwert (sofern er existiert):
+    $$ \partial_i f(x) = \frac{\partial f}{\partial x_i}(x) := \lim_{h \to 0} \frac{f(x + h e_i) - f(x)}{h} = \lim_{h \to 0} \frac{f(x_1, \dots, x_i + h, \dots, x_n) - f(x_1, \dots, x_n)}{h} $$
+\end{definition}
+
+\begin{remark}
+    \textbf{Geometrische Bedeutung:} $\frac{\partial f}{\partial x_i}(x)$ ist die Steigung der Tangente an die Schnittkurve des Funktionsgraphen mit der Ebene parallel zur $x_i$-Achse durch $x$ (alle anderen Variablen $x_j$ mit $j \neq i$ werden als Konstanten festgehalten).
+\end{remark}
+
+\begin{remark}
+    \textbf{Geometrische Anschauung: Warum muss die Definitionsmenge $U$ offen sein?} \\
+    \textbf{Warum genügt kein abgeschlossenes Intervall / Bereich mit Rand?}
+    \begin{itemize}
+        \item Der Grenzwert im Differenzenquotienten
+        $$ \lim_{h \to 0} \frac{f(x + h e_i) - f(x)}{h} $$
+        ist ein \textbf{zweiseitiger Limes}: $h$ nähert sich der $0$ sowohl von rechts ($h > 0$) als auch von links ($h < 0$).
+        \item Damit $x + h e_i$ für alle hinreichend kleinen $|h|$ überhaupt in der Definitionsmenge liegt, benötigt man um den Punkt $x$ \textbf{"Spielraum" in alle Richtungen} – und exakt das garantiert eine offene Menge $U$, da zu jedem $x \in U$ eine Kugel $B_\varepsilon(x) \subset U$ existiert.
+        \item Läge $x \in \partial U$ auf dem Rand (z.B. am Rand einer abgeschlossenen Kreisscheibe oder eines Intervalls $[a, b]$), so würde der Schritt $x - h e_i$ oder $x + h e_i$ unmittelbar aus dem Definitionsbereich herausführen. Ohne die Theorie einseitiger Ableitungen wäre der Differenzenquotient dort schlicht undefiniert.
+    \end{itemize}
+\end{remark}
+
+\begin{definition}
+    \textbf{Gradient:} Sei $U \subset \mathbb{R}^n$ offen und $f: U \to \mathbb{R}$ in $x \in U$ partiell differenzierbar. Der \textbf{Gradient} von $f$ in $x$ ist der Spaltenvektor aller ersten partiellen Ableitungen:
+    $$ \nabla f(x) = \operatorname{grad} f(x) := \begin{pmatrix} \frac{\partial f}{\partial x_1}(x) \\ \vdots \\ \frac{\partial f}{\partial x_n}(x) \end{pmatrix} \in \mathbb{R}^n $$
+\end{definition}
+
+\subsection{Richtungsableitungen}
+
+\begin{definition}
+    \textbf{Richtungsableitung:} Sei $U \subset \mathbb{R}^n$ offen, $f: U \to \mathbb{R}$, $x \in U$ und $v \in \mathbb{R}^n$ ein \textbf{normierter Richtungsvektor} ($\|v\| = 1$). Die \textbf{Richtungsableitung} von $f$ in Richtung $v$ an der Stelle $x$ ist:
+    $$ \partial_v f(x) = D_v f(x) := \left. \frac{d}{ds} \right|_{s=0} f(x + s v) = \lim_{s \to 0} \frac{f(x + s v) - f(x)}{s} $$
+    Für $v = e_i$ erhält man die partielle Ableitung: $\partial_{e_i} f(x) = \partial_i f(x)$.
+\end{definition}
+
+\begin{theorem}
+    \textbf{Berechnung bei totaler Differenzierbarkeit:} Ist $f$ in $x$ total differenzierbar, so existiert die Richtungsableitung in jede beliebige Richtung $v$ ($\|v\|=1$) und berechnet sich als Skalarprodukt:
+    $$ \partial_v f(x) = \langle \nabla f(x), v \rangle = \nabla f(x)^T v = \sum_{i=1}^n \frac{\partial f}{\partial x_i}(x) v_i $$
+\end{theorem}
+
+\begin{remark}
+    \textbf{Richtungsableitungen garantieren keine Differenzierbarkeit!}
+    Die Existenz aller Richtungsableitungen in einem Punkt impliziert \textbf{weder} Stetigkeit \textbf{noch} totale Differenzierbarkeit! Zudem gilt die Formel $\partial_v f(x) = \langle \nabla f(x), v \rangle$ im Allgemeinen \textbf{nur dann}, wenn $f$ total differenzierbar ist.
+    
+    \textbf{egenbeispiel:} Sei $f: \mathbb{R}^2 \to \mathbb{R}$ definiert durch:
+    $$ f(x, y) = \begin{cases} \frac{x^2 y}{x^4 + y^2}, & (x, y) \neq (0, 0) \\ 0, & (x, y) = (0, 0) \end{cases} $$
+    \begin{itemize}
+        \item Für jeden Richtungsvektor $v = (v_1, v_2)^T \neq 0$:
+        Falls $v_2 \neq 0$: $\frac{f(s v_1, s v_2)}{s} = \frac{s^3 v_1^2 v_2}{s (s^4 v_1^4 + s^2 v_2^2)} = \frac{v_1^2 v_2}{s^2 v_1^4 + v_2^2} \xrightarrow{s \to 0} \frac{v_1^2}{v_2}$.
+        Falls $v_2 = 0$: $f(s v_1, 0) / s = 0 \to 0$.
+        Also \textbf{existieren alle Richtungsableitungen} in $(0, 0)$!
+        \item Aber entlang der Parabel $y = x^2$ gilt $f(x, x^2) = \frac{x^4}{2x^4} = \frac{1}{2} \neq 0$, daher ist $f$ in $(0, 0)$ \textbf{nicht einmal stetig} und erst recht \textbf{nicht total differenzierbar}!
+    \end{itemize}
+\end{remark}
+
+\subsection{Totale Differenzierbarkeit und Jacobi-Matrix}
+
+\begin{definition}
+    \textbf{Totale Differenzierbarkeit:} Sei $U \subset \mathbb{R}^n$ offen und $x_0 \in U$. Eine Funktion $f: U \to \mathbb{R}^m$ heisst \textbf{total differenzierbar} in $x_0$, falls eine lineare Abbildung $L: \mathbb{R}^n \to \mathbb{R}^m$ existiert, sodass:
+    $$ \lim_{h \to 0} \frac{\|f(x_0 + h) - f(x_0) - L(h)\|}{\|h\|} = 0 \iff f(x_0 + h) = f(x_0) + L(h) + o(\|h\|) $$
+    Die lineare Abbildung $L$ heisst das \textbf{totale Differential} von $f$ in $x_0$, bezeichnet mit $df(x_0)$ oder $Df(x_0)$.
+\end{definition}
+
+\begin{lemma}
+    \textbf{Jacobi-Matrix:} Das Differential $Df(x_0)$ ist eindeutig. Seine Matrixdarstellung bezüglich der Standardbasen ist die $m \times n$-Matrix der ersten partiellen Ableitungen:
+    $$ Df(x_0) = J_f(x_0) = \begin{pmatrix}
+        \frac{\partial f_1}{\partial x_1}(x_0) & \cdots & \frac{\partial f_1}{\partial x_n}(x_0) \\
+        \vdots & \ddots & \vdots \\
+        \frac{\partial f_m}{\partial x_1}(x_0) & \cdots & \frac{\partial f_m}{\partial x_n}(x_0)
+    \end{pmatrix} = \begin{pmatrix} \nabla f_1(x_0)^T \\ \vdots \\ \nabla f_m(x_0)^T \end{pmatrix} \in \mathbb{R}^{m \times n} $$
+    Für $m = 1$ ist $Df(x_0) = \nabla f(x_0)^T$ ein Zeilenvektor ($1 \times n$).
+\end{lemma}
+
+\begin{definition}
+    \textbf{Tangentialebene:} Für eine differenzierbare Funktion $f: U \subset \mathbb{R}^2 \to \mathbb{R}$ lautet die Gleichung der Tangentialebene an den Graphen im Punkt $(x_0, y_0, f(x_0, y_0))$:
+    $$ z = f(x_0, y_0) + \frac{\partial f}{\partial x}(x_0, y_0)(x - x_0) + \frac{\partial f}{\partial y}(x_0, y_0)(y - y_0) = f(x_0, y_0) + \nabla f(x_0, y_0)^T \begin{pmatrix} x - x_0 \\ y - y_0 \end{pmatrix} $$
+\end{definition}
+
+\begin{remark}
+    \textbf{Geometrische Anschauung: Die Ableitung als beste lineare Abbildung} \\
+    \textbf{Warum eine lineare Abbildung statt einer Zahl?} \\
+    Im Eindimensionalen ist die Ableitung $f'(x_0) = \lim_{h \to 0} \frac{f(x_0+h) - f(x_0)}{h}$ eine reelle Zahl (die Tangentensteigung). Im $\mathbb{R}^n$ ist der Zuwachs $h \in \mathbb{R}^n$ jedoch ein Vektor – und man kann im $\mathbb{R}^n$ \textbf{nicht durch Vektoren dividieren}!
+    
+    Die moderne Analysis formuliert Differenzierbarkeit daher nicht als Division, sondern als \textbf{optimale lineare Approximation}:
+    $$ f(x_0 + h) - f(x_0) = Df(x_0) \cdot h + o(\|h\|) $$
+    Die Ableitung ist die eindeutig bestimmte \textbf{lineare Abbildung} $h \mapsto Df(x_0) h$ (dargestellt durch die Jacobi-Matrix $Df(x_0)$), die die tatsächliche Funktionsänderung bis auf einen Fehler approximiert, der schneller als jede lineare Funktion schrumpft ($\frac{\|o(\|h\|)\|}{\|h\|} \to 0$).
+
+    \textbf{Zusammenhang mit der Tangentialebene:} \\
+    Für eine reellwertige Funktion $f: \mathbb{R}^2 \to \mathbb{R}$ spannt die affine Abbildung
+    $$ (x, y) \mapsto f(x_0, y_0) + Df(x_0, y_0) \begin{pmatrix} x - x_0 \\ y - y_0 \end{pmatrix} = f(x_0, y_0) + \nabla f(x_0, y_0)^T \begin{pmatrix} x - x_0 \\ y - y_0 \end{pmatrix} $$
+    exakt die \textbf{Tangentialebene} auf. Sie ist die bestmögliche ebene Annäherung an den gekrümmten Graphen im Berührpunkt $(x_0, y_0, f(x_0, y_0))$.
+\end{remark}
+
+\begin{remark}
+    \textbf{Differenzierbarkeitshierarchie:} Für $f: U \subset \mathbb{R}^n \to \mathbb{R}^m$ ($U$ offen) gelten die Implikationen:
+    \begin{center}
+        \fbox{$f \in C^1(U)$} $\implies$ \fbox{$f$ total diff.bar} $\implies$ \fbox{$f$ stetig $\;\land\;$ alle $\partial_v f$ existieren} $\implies$ \fbox{alle $\partial_i f$ existieren}
+    \end{center}
+    \textbf{Achtung:} Keine der Umkehrungen gilt im Allgemeinen!
+\end{remark}
+
+\begin{example}
+    \textbf{Der 3-Schritte-Beweis für totale Differenzierbarkeit an $(0,0)$}
+    Besonders an Ausnahmestellen (wie $(0,0)$ bei abschnittsweise definierten Funktionen) versagt das $C^1$-Kriterium oft, weil Ableitungen dort springen können. Gehe stets in drei klaren Schritten vor:
+
+    \textbf{Schritt 1: Partielle Ableitungen im Punkt via 1D-Limes berechnen}
+    $$ a := f_x(0,0) = \lim_{h_1 \to 0} \frac{f(h_1, 0) - f(0,0)}{h_1}, \quad b := f_y(0,0) = \lim_{h_2 \to 0} \frac{f(0, h_2) - f(0,0)}{h_2} $$
+    \textit{Existiert einer dieser 1D-Grenzwerte nicht, bricht man sofort ab: $f$ ist nicht total differenzierbar!}
+
+    \textbf{Schritt 2: Lineare Approximation $L(h)$ aufstellen}
+    Kombiniere die berechneten Koeffizienten zur linearen Abbildung:
+    $$ L(h_1, h_2) := a \cdot h_1 + b \cdot h_2 = \begin{pmatrix} a & b \end{pmatrix} \begin{pmatrix} h_1 \\ h_2 \end{pmatrix} $$
+
+    \textbf{Schritt 3: Limes des Fehlerterms prüfen}
+    Untersuche den Grenzwert des relativen Approximationsfehlers für $h = (h_1, h_2)^T \to (0,0)$:
+    $$ \lim_{(h_1, h_2) \to (0,0)} \frac{\big| f(h_1, h_2) - f(0,0) - (a h_1 + b h_2) \big|}{\sqrt{h_1^2 + h_2^2}} \stackrel{?}{=} 0 $$
+    \begin{itemize}
+        \item \textbf{Ist der Limes $= 0$} (Beweis via Polarkoordinaten mit $\varphi$-unabhängiger Majorante $\le g(r) \to 0$), so ist $f$ in $(0,0)$ \textbf{total differenzierbar} mit $Df(0,0) = \begin{pmatrix} a & b \end{pmatrix}$.
+        \item \textbf{Ist der Limes $\neq 0$ oder existiert nicht} (Widerlegung via Geradentest $h_2 = m h_1$), so ist $f$ in $(0,0)$ \textbf{nicht total differenzierbar}.
+    \end{itemize}
+\end{example}
+
+\subsection{Geometrische Eigenschaften des Gradienten}
+
+\begin{theorem}
+    \textbf{Eigenschaften des Gradienten:} Sei $f: U \subset \mathbb{R}^n \to \mathbb{R}$ in $x_0 \in U$ total differenzierbar.
+    \begin{enumerate}
+        \item \textbf{Richtung des steilsten Anstiegs:} Da $\partial_v f(x_0) = \langle \nabla f(x_0), v \rangle = \|\nabla f(x_0)\| \cos \theta$, wird die Richtungsableitung maximal für $\cos \theta = 1$, also für $v = \frac{\nabla f(x_0)}{\|\nabla f(x_0)\|}$. Der Gradient $\nabla f(x_0)$ zeigt in die Richtung des steilsten Anstiegs.
+        \item \textbf{Maximale Anstiegsrate:} Die maximale Richtungsableitung beträgt $\|\nabla f(x_0)\|$.
+        \item \textbf{Steilster Abstieg:} $-\nabla f(x_0)$ zeigt in die Richtung des steilsten Abstiegs (Grundlage des Gradientenabstiegsverfahrens).
+        \item \textbf{Orthogonalität auf Niveaumengen:} Sei $N_c(f) = \{x \in U \mid f(x) = c\}$ die Niveaumenge durch $x_0$. Für jede differenzierbare Kurve $\gamma: (-\varepsilon, \varepsilon) \to N_c(f)$ mit $\gamma(0) = x_0$ gilt nach der Kettenregel:
+        $$ 0 = \left. \frac{d}{dt} \right|_{t=0} f(\gamma(t)) = \nabla f(x_0) \cdot \gamma'(0) $$
+        Somit steht $\nabla f(x_0)$ senkrecht auf dem Tangentialvektor $\gamma'(0)$ und damit \textbf{orthogonal auf der Niveaumenge $N_c(f)$}.
+    \end{enumerate}
+\end{theorem}
+
+\subsection{Mehrdimensionale Kettenregel}
+
+\begin{theorem}
+    \textbf{Kettenregel im $\mathbb{R}^n$:} Seien $U \subset \mathbb{R}^n$ und $V \subset \mathbb{R}^m$ offen. Sei $f: U \to V$ differenzierbar in $x_0 \in U$ und $g: V \to \mathbb{R}^k$ differenzierbar in $y_0 = f(x_0) \in V$.
+    Dann ist die Komposition $h = g \circ f: U \to \mathbb{R}^k$ differenzierbar in $x_0$, und für das Differential gilt:
+    $$ D(g \circ f)(x_0) = Dg(f(x_0)) \cdot Df(x_0) $$
+    \textbf{Dimensionskontrolle:} Die Jacobi-Matrizen multiplizieren sich als $(k \times m) \cdot (m \times n) = (k \times n)$.
+\end{theorem}
+
+\begin{lemma}
+    \textbf{Spezialfall Kurven (Ableitung entlang eines Pfades):}
+    Sei $\gamma: I \subset \mathbb{R} \to \mathbb{R}^n$ eine differenzierbare Kurve und $f: \mathbb{R}^n \to \mathbb{R}$. Dann ist $h(t) = f(\gamma(t))$ differenzierbar und:
+    $$ h'(t) = \frac{d}{dt} f(\gamma(t)) = \nabla f(\gamma(t)) \cdot \gamma'(t) = \sum_{i=1}^n \frac{\partial f}{\partial x_i}(\gamma(t)) \cdot \gamma_i'(t) $$
+\end{lemma}
+
+\subsection{Höhere Ableitungen und Satz von Schwarz}
+
+\begin{definition}
+    \textbf{Höhere partielle Ableitungen:} Ist $f: U \subset \mathbb{R}^n \to \mathbb{R}$ partiell differenzierbar und sind die Ableitungsfunktionen $\partial_j f: U \to \mathbb{R}$ ihrerseits nach $x_i$ partiell differenzierbar, so heisst
+    $$ \partial_i \partial_j f(x) = \frac{\partial^2 f}{\partial x_i \partial x_j}(x) := \frac{\partial}{\partial x_i} \left( \frac{\partial f}{\partial x_j} \right)(x) $$
+    die \textbf{zweite partielle Ableitung} von $f$ nach $x_j$ und $x_i$ (von rechts nach links gelesen).
+\end{definition}
+
+\begin{theorem}
+    \textbf{Satz von Schwarz (Symmetrie zweiter Ableitungen):}
+    Sei $U \subset \mathbb{R}^n$ \textbf{offen} und $f: U \to \mathbb{R}$ eine \textbf{zweimal stetig differenzierbare} Funktion ($f \in C^2(U)$).
+    Dann sind die gemischten partiellen Ableitungen vertauschbar:
+    $$ \frac{\partial^2 f}{\partial x_i \partial x_j}(x) = \frac{\partial^2 f}{\partial x_j \partial x_i}(x) \quad \forall i, j \in \{1, \dots, n\}, \; \forall x \in U $$
+    Allgemein gilt für $f \in C^k(U)$, dass die Reihenfolge von partiellen Ableitungen bis zur Ordnung $k$ beliebig permutiert werden darf.
+\end{theorem}
+
+\begin{example}
+    \textbf{Der Satz von Schwarz erfordert $C^2$!}
+    Existieren die 2. partiellen Ableitungen, sind aber \textbf{nicht stetig}, so kann $\partial_x \partial_y f \neq \partial_y \partial_x f$ gelten!
+    \textbf{Standard-Gegenbeispiel (Peano):}
+    $$ f(x, y) = \begin{cases} \frac{x y (x^2 - y^2)}{x^2 + y^2}, & (x, y) \neq (0, 0) \\ 0, & (x, y) = (0, 0) \end{cases} $$
+    \begin{itemize}
+        \item Für $y \neq 0$: $f_x(0, y) = \lim_{h \to 0} \frac{f(h, y) - f(0, y)}{h} = \lim_{h \to 0} \frac{h y (h^2 - y^2)}{h (h^2 + y^2)} = \frac{-y^3}{y^2} = -y$.
+        \item Daraus folgt: $f_{yx}(0, 0) = \frac{\partial}{\partial y} \left( \frac{\partial f}{\partial x} \right)(0, 0) = \lim_{k \to 0} \frac{f_x(0, k) - f_x(0, 0)}{k} = \lim_{k \to 0} \frac{-k - 0}{k} = -1$.
+        \item Analog für $x \neq 0$: $f_y(x, 0) = \lim_{k \to 0} \frac{f(x, k) - f(x, 0)}{k} = \lim_{k \to 0} \frac{x k (x^2 - k^2)}{k (x^2 + k^2)} = \frac{x^3}{x^2} = x$.
+        \item Daraus folgt: $f_{xy}(0, 0) = \frac{\partial}{\partial x} \left( \frac{\partial f}{\partial y} \right)(0, 0) = \lim_{h \to 0} \frac{f_y(h, 0) - f_y(0, 0)}{h} = \lim_{h \to 0} \frac{h - 0}{h} = +1$.
+    \end{itemize}
+    Es gilt $f_{yx}(0, 0) = -1 \neq 1 = f_{xy}(0, 0)$! Der Grund: Die 2. partiellen Ableitungen sind in $(0, 0)$ unstetig ($f \notin C^2$).
+\end{example}
+
+\begin{remark}
+    \textbf{Intuition \& Voraussetzungen zum Satz von Schwarz} \\
+    \textbf{1. Warum ist die Bedingung $f \in C^2(U)$ unverzichtbar?} \\
+    Die bloße punktweise Existenz aller zweiten partiellen Ableitungen reicht \textbf{nicht} aus! Ohne deren \textbf{Stetigkeit} können die Richtungsdifferenzen beim Grenzübergang unkontrolliert kippen – genau das geschieht im obigen Peano-Gegenbeispiel, bei dem $f_{yx}(0,0) = -1 \neq 1 = f_{xy}(0,0)$ vorliegt.
+
+    \textbf{2. Warum muss die Definitionsmenge $U$ zwingend offen sein?}
+    \begin{itemize}
+        \item \textbf{Umgebung für erste Ableitungen:} Um eine partielle Ableitung $\partial_j f$ in einem Punkt nochmals differenzieren zu können, muss $\partial_j f$ bereits auf einer vollen offenen Kugel um diesen Punkt existieren.
+        \item \textbf{Beweisidee auf kleinen 2D-Rechtecken (Doppelter Mittelwertsatz):} Der Beweis des Satzes von Schwarz stützt sich auf die Doppel-Differenz
+        $$ \Delta(h, k) := f(x+h, y+k) - f(x+h, y) - f(x, y+k) + f(x, y) $$
+        über dem achsenparallelen Rechteck $[x, x+h] \times [y, y+k]$. Man wendet den 1D-Mittelwertsatz nacheinander bezüglich $x$ und $y$ an. Damit das Rechteck für alle hinreichend kleinen Schritte $h, k$ überhaupt \textbf{vollständig im Definitionsbereich} liegt, benötigt man zwingend die Offenheit von $U$. Beim Limes $(h, k) \to (0, 0)$ erzwingt schließlich die Stetigkeit der zweiten Ableitungen die Gleichheit $f_{xy}(x, y) = f_{yx}(x, y)$.
+    \end{itemize}
+\end{remark}

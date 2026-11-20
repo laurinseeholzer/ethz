@@ -1,0 +1,181 @@
+\section{Topologie \& Grundlagen im $\mathbb{R}^n$}
+
+\subsection{Geometrische Grundlagen im $\mathbb{R}^n$}
+
+\begin{definition}
+    \textbf{Euklidischer Raum $\mathbb{R}^n$:} Der Raum $\mathbb{R}^n = \{(x_1, \dots, x_n)^T \mid x_i \in \mathbb{R}\}$ ist ein $n$-dimensionaler reeller Vektorraum mit der kanonischen Standardbasis $\{e_1, \dots, e_n\}$, wobei $e_i = (0, \dots, 1, \dots, 0)^T$ an der $i$-ten Stelle eine 1 besitzt.
+\end{definition}
+
+\begin{definition}
+    \textbf{Standardskalarprodukt:} \\
+    Für Vektoren $x, y \in \mathbb{R}^n$ ist das Standard-Skalarprodukt definiert durch:
+    $$ \langle x, y \rangle := x^T y = \sum_{i=1}^n x_i y_i $$
+    Es erfüllt die Eigenschaften:
+    \begin{itemize}
+        \item \textbf{Bilinearität:} $\langle \alpha x + \beta y, z \rangle = \alpha \langle x, z \rangle + \beta \langle y, z \rangle$ für alle $\alpha, \beta \in \mathbb{R}$.
+        \item \textbf{Symmetrie:} $\langle x, y \rangle = \langle y, x \rangle$.
+        \item \textbf{Positive Definitheit:} $\langle x, x \rangle \ge 0$ und $\langle x, x \rangle = 0 \iff x = 0$.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Euklidische Norm \& Euklidischer Abstand:}
+    \begin{itemize}
+        \item Die durch das Skalarprodukt induzierte \textbf{Euklidische Norm} (Länge) eines Vektors $x \in \mathbb{R}^n$ ist:
+        $$ \|x\| := \sqrt{\langle x, x \rangle} = \sqrt{\sum_{i=1}^n x_i^2} $$
+        \item Der \textbf{Euklidische Abstand} zweier Punkte $x, y \in \mathbb{R}^n$ ist die Metrik:
+        $$ d(x, y) := \|x - y\| = \sqrt{\sum_{i=1}^n (x_i - y_i)^2} $$
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}
+    \textbf{Cauchy-Schwarz-Ungleichung:} Für alle $x, y \in \mathbb{R}^n$ gilt:
+    $$ |\langle x, y \rangle| \le \|x\| \cdot \|y\| $$
+    Gleichheit gilt genau dann, wenn $x$ und $y$ linear abhängig sind (d.h. $\exists \lambda \in \mathbb{R}$ mit $x = \lambda y$ oder $y = 0$).
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Dreiecksungleichung:} Für alle $x, y, z \in \mathbb{R}^n$ gilt:
+    $$ \|x + y\| \le \|x\| + \|y\| \quad \text{bzw.} \quad \|x - z\| \le \|x - y\| + \|y - z\| $$
+    Zudem gilt die umgekehrte Dreiecksungleichung: $\big| \|x\| - \|y\| \big| \le \|x - y\|$.
+\end{theorem}
+
+\begin{definition}
+    \textbf{$p$-Normen und Maximumsnorm:} Für $x \in \mathbb{R}^n$ definiert man:
+    \begin{itemize}
+        \item $p$-Norm ($1 \le p < \infty$): $\|x\|_p := \left( \sum_{i=1}^n |x_i|^p \right)^{1/p}$.
+        \item Maximumsnorm ($p = \infty$): $\|x\|_\infty := \max_{1 \le i \le n} |x_i|$.
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}
+    \textbf{Satz von der Normenäquivalenz im $\mathbb{R}^n$:} Auf dem endlichdimensionalen Vektorraum $\mathbb{R}^n$ sind alle Normen zueinander äquivalent. Das heisst: Zu zwei beliebigen Normen $\|\cdot\|_a$ und $\|\cdot\|_b$ auf $\mathbb{R}^n$ existieren Konstanten $c, C > 0$, sodass für alle $x \in \mathbb{R}^n$ gilt:
+    $$ c \|x\|_a \le \|x\|_b \le C \|x\|_a $$
+    \textbf{Konsequenz für Prüfungen:} Konvergenz von Folgen, Offenheit, Abgeschlossenheit und Kompaktheit von Mengen sind völlig unabhängig von der gewählten Norm im $\mathbb{R}^n$.
+\end{theorem}
+
+\subsection{Folgen im $\mathbb{R}^n$ und Konvergenz}
+
+\begin{definition}
+    \textbf{Konvergenz einer Vektorfolge:} Eine Folge $(x_k)_{k \in \mathbb{N}} \subset \mathbb{R}^n$ konvergiert gegen den Grenzwert $x^* \in \mathbb{R}^n$ (notiert als $\lim_{k \to \infty} x_k = x^*$ oder $x_k \to x^*$), falls:
+    $$ \forall \varepsilon > 0 \; \exists N \in \mathbb{N} \; \forall k > N: \|x_k - x^*\| < \varepsilon $$
+    Existiert kein solcher Grenzwert, heisst die Folge divergent.
+\end{definition}
+
+\begin{lemma}
+    \textbf{Eigenschaften von Vektorfolgen:}
+    \begin{enumerate}
+        \item \textbf{Eindeutigkeit:} Der Grenzwert einer konvergenten Folge im $\mathbb{R}^n$ ist eindeutig.
+        \item \textbf{Beschränktheit:} Jede konvergente Folge im $\mathbb{R}^n$ ist beschränkt (d.h. $\exists M > 0 \; \forall k: \|x_k\| \le M$).
+        \item \textbf{Koordinatenweise Konvergenz:} Eine Vektorfolge $x_k = (x_{1,k}, \dots, x_{n,k})^T$ konvergiert genau dann im $\mathbb{R}^n$ gegen $x^* = (x_1^*, \dots, x_n^*)^T$, wenn jede Koordinatenfolge in $\mathbb{R}$ konvergiert:
+        $$ \lim_{k \to \infty} x_k = x^* \iff \forall i \in \{1, \dots, n\}: \lim_{k \to \infty} x_{i,k} = x_i^* $$
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}
+    \textbf{Satz von Bolzano-Weierstraß im $\mathbb{R}^n$:} Jede beschränkte Folge $(x_k)_{k \in \mathbb{N}}$ im $\mathbb{R}^n$ besitzt mindestens eine konvergente Teilfolge.
+\end{theorem}
+
+\begin{remark}
+    \textbf{Beweisidee:} Wende den 1D-Satz von Bolzano-Weierstraß sukzessive $n$-mal an: Erst Teilfolge wählen, die in der 1. Koordinate konvergiert, daraus Teilfolge für die 2. Koordinate usw. Nach $n$ Schritten konvergieren alle $n$ Koordinaten.
+\end{remark}
+
+\subsection{Topologische Grundbegriffe im $\mathbb{R}^n$}
+
+\begin{definition}
+    \textbf{Offene und abgeschlossene Bälle:} Für $x_0 \in \mathbb{R}^n$ und Radius $r > 0$ definiert man:
+    \begin{itemize}
+        \item \textbf{Offener Ball:} $B_r(x_0) := \{x \in \mathbb{R}^n \mid \|x - x_0\| < r\}$.
+        \item \textbf{Abgeschlossener Ball:} $\overline{B}_r(x_0) := \{x \in \mathbb{R}^n \mid \|x - x_0\| \le r\}$.
+        \item \textbf{Sphäre (Kugeloberfläche):} $S_r(x_0) := \{x \in \mathbb{R}^n \mid \|x - x_0\| = r\}$.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Offene und abgeschlossene Mengen:} Sei $A \subset \mathbb{R}^n$.
+    \begin{itemize}
+        \item $A$ heisst \textbf{offen}, wenn jeder Punkt von $A$ ein innerer Punkt ist:
+        $$ \forall x \in A \; \exists r > 0: B_r(x) \subset A $$
+        \item $A$ heisst \textbf{abgeschlossen}, wenn ihr Komplement $A^c = \mathbb{R}^n \setminus A$ offen ist.
+    \end{itemize}
+\end{definition}
+
+\begin{important}
+    \textbf{Offen vs. Abgeschlossen:} Mengen sind keine Türen! Eine Menge kann offen, abgeschlossen, keines von beidem (z.B. $[0, 1) \subset \mathbb{R}$) oder beides gleichzeitig sein (in $\mathbb{R}^n$ sind nur $\emptyset$ und $\mathbb{R}^n$ sowohl offen als auch abgeschlossen, sogenannte \textit{clopen sets}).
+\end{important}
+
+\begin{lemma}
+    \textbf{Schnitt- und Vereinigungseigenschaften:}
+    \begin{itemize}
+        \item Beliebige (auch überabzählbare) Vereinigungen offener Mengen sind offen.
+        \item Endliche Durchschnitte offener Mengen sind offen.
+        \item Beliebige Durchschnitte abgeschlossener Mengen sind abgeschlossen.
+        \item Endliche Vereinigungen abgeschlossener Mengen sind abgeschlossen.
+    \end{itemize}
+\end{lemma}
+
+\begin{definition}
+    \textbf{Inneres, Abschluss und Rand:} Für eine Teilmenge $A \subset \mathbb{R}^n$ definiert man:
+    \begin{itemize}
+        \item \textbf{Inneres ($A^\circ$ bzw. $\interior(A)$):} Die Menge aller inneren Punkte, d.h. die grösste offene Teilmenge von $A$ (Vereinigung aller offenen Teilmengen von $A$).
+        \item \textbf{Abschluss ($\overline{A}$ bzw. $\operatorname{cl}(A)$):} Der Schnitt aller abgeschlossenen Mengen, die $A$ enthalten (kleinste abgeschlossene Obermenge von $A$).
+        \item \textbf{Topologischer Rand ($\partial A$):} Die Differenz $\partial A := \overline{A} \setminus A^\circ$.
+    \end{itemize}
+\end{definition}
+
+\begin{lemma}
+    \textbf{Charakterisierung über den Rand:}
+    \begin{itemize}
+        \item $A$ ist offen $\iff A \cap \partial A = \emptyset$ (kein Randpunkt gehört zu $A$).
+        \item $A$ ist abgeschlossen $\iff \partial A \subset A$ (alle Randpunkte gehören zu $A$).
+        \item Es gilt stets die disjunkte Zerlegung des Gesamtraums: $\mathbb{R}^n = A^\circ \;\dot{\cup}\; \partial A \;\dot{\cup}\; (\mathbb{R}^n \setminus \overline{A})$.
+    \end{itemize}
+\end{lemma}
+
+\begin{theorem}
+    \textbf{Folgencharakterisierung von Topologie:}
+    \begin{itemize}
+        \item \textbf{Abgeschlossenheit:} $A \subset \mathbb{R}^n$ ist abgeschlossen genau dann, wenn für jede Folge $(x_k)_{k \in \mathbb{N}} \subset A$, die im $\mathbb{R}^n$ gegen einen Grenzwert $x^*$ konvergiert, bereits $x^* \in A$ gilt (Abgeschlossenheit unter Grenzwertbildung).
+        \item \textbf{Offenheit:} $A \subset \mathbb{R}^n$ ist offen genau dann, wenn für jedes $x \in A$ und jede Folge $x_k \to x$ ein Index $N \in \mathbb{N}$ existiert mit $x_k \in A$ für alle $k > N$.
+    \end{itemize}
+\end{theorem}
+
+\subsection{Kompaktheit im $\mathbb{R}^n$}
+
+\begin{definition}
+    \textbf{Begriffe der Kompaktheit:}
+    \begin{itemize}
+        \item \textbf{Folgenkompaktheit:} Eine Teilmenge $K \subset \mathbb{R}^n$ heisst folgenkompakt, wenn jede Folge $(x_k)_{k \in \mathbb{N}} \subset K$ eine Teilfolge besitzt, die gegen einen Punkt in $K$ konvergiert.
+        \item \textbf{Überdeckungskompaktheit:} $K \subset \mathbb{R}^n$ heisst kompakt, wenn jede offene Überdeckung $\{U_i\}_{i \in I}$ von $K$ (d.h. $K \subset \bigcup_{i \in I} U_i$ mit $U_i$ offen) eine endliche Teilüberdeckung besitzt: $\exists i_1, \dots, i_m \in I: K \subset U_{i_1} \cup \dots \cup U_{i_m}$.
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    \textbf{Geometrische Anschauung: Warum Überdeckungskompaktheit? (Klausurklassiker)} \\
+    \textbf{Warum scheitert das offene Intervall $(0, 1)$?} \\
+    Die formale Forderung nach einer \textit{endlichen} Teilüberdeckung wirkt zunächst abstrakt. Ihre geometrische Kraft versteht man am besten an Mengen, die \textbf{nicht} kompakt sind.
+    
+    Betrachte das offene Intervall $K = (0, 1) \subset \mathbb{R}$ und die Familie offener Mengen
+    $$ U_n := \left( \frac{1}{n}, 1 \right) \quad \text{für } n \ge 2 $$
+    \begin{itemize}
+        \item \textbf{Die Mengen bilden eine offene Überdeckung:} Für jedes noch so kleine $x \in (0, 1)$ existiert nach dem archimedischen Axiom ein $n \in \mathbb{N}$ mit $\frac{1}{n} < x$. Also gilt tatsächlich $(0, 1) \subset \bigcup_{n=2}^\infty U_n$.
+        \item \textbf{Keine endliche Teilüberdeckung reicht aus:} Wählt man endlich viele Indizes $\{n_1, \dots, n_m\}$ und setzt $N := \max(n_1, \dots, n_m)$, so gilt:
+        $$ U_{n_1} \cup \dots \cup U_{n_m} = \left( \frac{1}{N}, 1 \right) $$
+        Jeder Punkt $x \in \left( 0, \frac{1}{N} \right]$ (wie etwa $x = \frac{1}{2N}$) wird von dieser endlichen Auswahl \textbf{nicht überdeckt}!
+    \end{itemize}
+    \textbf{Der geometrische Grund:} Weil der Randpunkt $0$ nicht zu $(0, 1)$ gehört, können sich die offenen Mengen immer näher an $0$ heranschleichen, ohne den Punkt jemals zu erfassen. Bei einem abgeschlossenen Intervall $[0, 1]$ müsste mindestens eine offene Menge den Punkt $0$ enthalten und würde damit automatisch eine ganze Umgebung $[0, \varepsilon)$ mit abdecken – dieses "Entwischen" wäre unmöglich!
+
+    \textbf{Kernaussage für Prüfungen (Satz von Heine-Borel):} \\
+    Im endlichdimensionalen Raum $\mathbb{R}^n$ fallen alle drei zentralen Kompaktheitsbegriffe zusammen:
+    $$ \text{\textbf{Überdeckungskompakt}} \iff \text{\textbf{Folgenkompakt}} \iff \text{\textbf{Abgeschlossen \& Beschränkt}} $$
+    In Klausuren beweist man Kompaktheit im $\mathbb{R}^n$ fast immer über \textbf{"abgeschlossen und beschränkt"}!
+\end{remark}
+
+\begin{theorem}
+    \textbf{Satz von Heine-Borel:} Für eine Teilmenge $K \subset \mathbb{R}^n$ sind äquivalent:
+    \begin{enumerate}
+        \item $K$ ist kompakt (überdeckungskompakt).
+        \item $K$ ist folgenkompakt.
+        \item $K$ ist \textbf{abgeschlossen} und \textbf{beschränkt} (d.h. $\exists M > 0: \|x\| \le M$ für alle $x \in K$).
+    \end{enumerate}
+\end{theorem}

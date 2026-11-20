@@ -1,0 +1,192 @@
+\section{Taylor-Approximation \& Lokale Extrema}
+
+\subsection{Mehrdimensionale Taylor-Entwicklung}
+
+\begin{definition}
+    \textbf{Multiindex-Notation:} Für $\alpha = (\alpha_1, \dots, \alpha_n) \in \mathbb{N}_0^n$, $x = (x_1, \dots, x_n)^T \in \mathbb{R}^n$ und $f \in C^{|\alpha|}$:
+    \begin{itemize}
+        \item \textbf{Ordnung:} $|\alpha| := \alpha_1 + \dots + \alpha_n$.
+        \item \textbf{Fakultät:} $\alpha! := \alpha_1! \cdot \alpha_2! \dots \alpha_n!$.
+        \item \textbf{Monom:} $x^\alpha := x_1^{\alpha_1} x_2^{\alpha_2} \dots x_n^{\alpha_n}$.
+        \item \textbf{Partielle Ableitung:} $\partial^\alpha f := \frac{\partial^{|\alpha|} f}{\partial x_1^{\alpha_1} \dots \partial x_n^{\alpha_n}}$.
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}
+    \textbf{Satz von Taylor im $\mathbb{R}^n$:} Sei $U \subset \mathbb{R}^n$ offen und $f \in C^{k+1}(U)$. Sei $x_0 \in U$ und $h \in \mathbb{R}^n$ so, dass die Verbindungsstrecke $\{x_0 + t h \mid t \in [0, 1]\} \subset U$ liegt. Dann gilt:
+    $$ f(x_0 + h) = \sum_{|\alpha| \le k} \frac{\partial^\alpha f(x_0)}{\alpha!} h^\alpha + R_k(x_0, h) $$
+    mit dem Lagrange-Restterm: $R_k(x_0, h) = \sum_{|\alpha| = k+1} \frac{\partial^\alpha f(x_0 + \vartheta h)}{\alpha!} h^\alpha$ für ein $\vartheta \in (0, 1)$.
+\end{theorem}
+
+\begin{definition}
+    \textbf{Hesse-Matrix \& Laplace-Operator:} Sei $U \subset \mathbb{R}^n$ offen und $f \in C^2(U)$.
+    \begin{itemize}
+        \item Die \textbf{Hesse-Matrix} $H_f(x) = D^2 f(x) \in \mathbb{R}^{n \times n}$ ist die Matrix aller zweiten partiellen Ableitungen:
+        $$ H_f(x) := \begin{pmatrix}
+            \frac{\partial^2 f}{\partial x_1^2}(x) & \cdots & \frac{\partial^2 f}{\partial x_1 \partial x_n}(x) \\
+            \vdots & \ddots & \vdots \\
+            \frac{\partial^2 f}{\partial x_n \partial x_1}(x) & \cdots & \frac{\partial^2 f}{\partial x_n^2}(x)
+        \end{pmatrix} = \left( \frac{\partial^2 f}{\partial x_i \partial x_j}(x) \right)_{1 \le i, j \le n} $$
+        Nach dem Satz von Schwarz ist $H_f(x)$ für $f \in C^2(U)$ \textbf{stets reell symmetrisch} ($H_f(x) = H_f(x)^T$).
+        \item Der \textbf{Laplace-Operator} $\Delta$ ist die Spur der Hesse-Matrix:
+        $$ \Delta f(x) := \operatorname{tr}(H_f(x)) = \sum_{i=1}^n \frac{\partial^2 f}{\partial x_i^2}(x) $$
+        Gilt $\Delta f(x) = 0$ auf $U$, so heisst $f$ \textbf{harmonisch}. Harmonische Funktionen besitzen im Inneren von Gebieten niemals isolierte lokale Extrema (Maximumprinzip).
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    \textbf{Geometrische und physikalische Anschauung des Laplace-Operators $\Delta$}\\
+    \textbf{Matrix-Zusammenhang \& Krümmung:} \\
+    Der Laplace-Operator ist die \textbf{Spur der Hesse-Matrix}:
+    $$ \Delta f(x) = \operatorname{tr}(H_f(x)) = \sum_{i=1}^n \lambda_i $$
+    Da die Eigenwerte $\lambda_i$ von $H_f$ die Hauptkrümmungen des Graphen in den Eigenvektorrichtungen angeben, misst $\Delta f$ direkt die \textbf{mittlere Gesamtkrümmung} der Fläche.
+
+    \textbf{Physikalische Bedeutung (Abweichung vom Umgebungsmittelwert):} \\
+    Im 2D-Gitter mit Schrittweite $h$ lässt sich der Laplace-Operator diskretisieren:
+    \begin{align*}
+        \Delta f(x, y) &\approx \frac{f(x+h, y) + f(x-h, y) + f(x, y+h) + f(x, y-h) - 4f(x, y)}{h^2} \\
+        &= \frac{4}{h^2} \big( \bar{f}_{\text{Nachbarn}} - f(x, y) \big)
+    \end{align*}
+    $\Delta f(x)$ misst also quantitativ, wie stark der Funktionswert am Punkt $x$ vom \textbf{Mittelwert seiner unmittelbaren Nachbarschaft} abweicht:
+    \begin{itemize}
+        \item $\Delta f(x) < 0$: Der Funktionswert ist \textbf{höher} als der Durchschnitt der Umgebung (Bergkuppe / Wärmequelle).
+        \item $\Delta f(x) > 0$: Der Funktionswert ist \textbf{tiefer} als der Durchschnitt der Umgebung (Mulde / Wärmesenke).
+        \item $\Delta f(x) = 0$ (\textbf{Harmonische Funktion}): Der Punkt stimmt exakt mit dem Mittelwert jeder kleinen Kugeloberfläche um ihn herum überein (Mittelwerteigenschaft). Folglich kann eine harmonische Funktion im Inneren eines Gebiets \textbf{niemals ein isoliertes lokales Maximum oder Minimum} annehmen – jedes Extremum liegt zwingend auf dem Gebietsrand!
+    \end{itemize}
+\end{remark}
+
+\begin{theorem}
+    \textbf{Quadratisches Taylor-Polynom:} Für $f \in C^2(U)$ lautet das Taylor-Polynom 2. Ordnung um den Entwicklungspunkt $x_0 \in U$ für Auslenkungen $h = x - x_0$:
+    $$ T_2(x_0 + h) = f(x_0) + \nabla f(x_0)^T h + \frac{1}{2} h^T H_f(x_0) h $$
+    wobei $f(x_0 + h) = T_2(x_0 + h) + o(\|h\|^2)$ für $\|h\| \to 0$ gilt.
+\end{theorem}
+
+\subsection{Lokale Extrema und kritische Punkte}
+
+\begin{definition}
+    \textbf{Lokale Extrema \& Sattelpunkte:} Sei $f: D \subset \mathbb{R}^n \to \mathbb{R}$ und $x_0 \in D$.
+    \begin{itemize}
+        \item $f$ hat in $x_0$ ein \textbf{lokales Minimum} (bzw. \textbf{Maximum}), wenn eine Umgebung $B_\varepsilon(x_0)$ existiert mit:
+        $$ f(x) \ge f(x_0) \quad \text{(bzw. } f(x) \le f(x_0) \text{)} \quad \forall x \in B_\varepsilon(x_0) \cap D $$
+        Gilt die Ungleichung für alle $x \neq x_0$ strikt ($>$ bzw. $<$), so heisst das Extremum \textbf{strikt} (isoliert).
+        \item Ein \textbf{kritischer (stationärer) Punkt} ist ein Punkt $x_0 \in U$ (mit $U$ offen, $f \in C^1$), an dem der Gradient verschwindet:
+        $$ \nabla f(x_0) = 0 \iff \frac{\partial f}{\partial x_1}(x_0) = \dots = \frac{\partial f}{\partial x_n}(x_0) = 0 $$
+        \item Ein kritischer Punkt $x_0$ heisst \textbf{Sattelpunkt}, wenn er kein lokales Extremum ist (in jeder Umgebung $B_\varepsilon(x_0)$ gibt es Punkte mit $f(x) > f(x_0)$ und Punkte mit $f(x) < f(x_0)$).
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}
+    \textbf{Notwendige Bedingung 1. Ordnung:} Sei $U \subset \mathbb{R}^n$ \textbf{offen} und $f \in C^1(U)$.
+    Besitzt $f$ in $x_0 \in U$ ein lokales Extremum, so ist $x_0$ zwingend ein kritischer Punkt:
+    $$ \nabla f(x_0) = 0 $$
+\end{theorem}
+
+\subsection{Klassifikation über Definitheit der Hesse-Matrix}
+
+\begin{definition}
+    \textbf{Definitheit reeller symmetrischer Matrizen:} Eine symmetrische Matrix $A = A^T \in \mathbb{R}^{n \times n}$ heisst:
+    \begin{itemize}
+        \item \textbf{positiv definit} ($A > 0$): $v^T A v > 0$ für alle $v \neq 0 \iff$ alle Eigenwerte $\lambda_i > 0$.
+        \item \textbf{negativ definit} ($A < 0$): $v^T A v < 0$ für alle $v \neq 0 \iff$ alle Eigenwerte $\lambda_i < 0$.
+        \item \textbf{indefinit}: $\exists v, w \in \mathbb{R}^n$ mit $v^T A v > 0$ und $w^T A w < 0 \iff \exists \lambda_i > 0$ und $\exists \lambda_j < 0$.
+        \item \textbf{positiv/negativ semidefinit}: $v^T A v \ge 0$ (bzw. $\le 0$) für alle $v \iff \lambda_i \ge 0$ (bzw. $\le 0$).
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}
+    \textbf{Hinreichende Bedingung 2. Ordnung:} Sei $U \subset \mathbb{R}^n$ offen, $f \in C^2(U)$ und $x_0 \in U$ ein kritischer Punkt ($\nabla f(x_0) = 0$).
+    \begin{enumerate}
+        \item $H_f(x_0)$ ist \textbf{positiv definit} $\implies f$ besitzt in $x_0$ ein \textbf{striktes lokales Minimum}.
+        \item $H_f(x_0)$ ist \textbf{negativ definit} $\implies f$ besitzt in $x_0$ ein \textbf{striktes lokales Maximum}.
+        \item $H_f(x_0)$ ist \textbf{indefinit} $\implies f$ besitzt in $x_0$ einen \textbf{Sattelpunkt}.
+        \item $H_f(x_0)$ ist \textbf{semidefinit / degeneriert} ($\det(H_f(x_0)) = 0$ mit gleichen Vorzeichen der restlichen Eigenwerte) $\implies$ \textbf{Keine Aussage möglich!} (Entscheidung erfordert höhere Ableitungen oder Kurventests).
+    \end{enumerate}
+\end{theorem}
+
+\begin{example}
+    \textbf{Klassifikation lokaler Extrema ($2 \times 2$-Hesse-Diskriminante)}
+    
+    Gegeben: $f(x, y) \in C^2$.
+    \begin{enumerate}
+        \item \textbf{Kritische Punkte bestimmen:} Löse das nichtlineare Gleichungssystem:
+        $$ \nabla f(x, y) = \begin{pmatrix} f_x(x, y) \\ f_y(x, y) \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} $$
+        Notiere alle reellen Lösungspunkte $(x_0, y_0)$.
+        \item \textbf{Hesse-Matrix \& Determinante aufstellen:} Berechne $f_{xx}, f_{yy}, f_{xy}$ und die Diskriminante:
+        $$ D := \det(H_f(x_0, y_0)) = f_{xx}(x_0, y_0) \cdot f_{yy}(x_0, y_0) - \big( f_{xy}(x_0, y_0) \big)^2 $$
+        \item \textbf{Entscheidungstabelle anwenden:}
+        \begin{itemize}
+            \item \textbf{Fall $D > 0$:} Eigenwerte haben gleiches Vorzeichen $\implies$ echtes lokales Extremum!
+            \begin{itemize}
+                \item Ist $f_{xx}(x_0, y_0) > 0$ (oder $f_{yy} > 0$): \textbf{Striktes lokales Minimum}.
+                \item Ist $f_{xx}(x_0, y_0) < 0$ (oder $f_{yy} < 0$): \textbf{Striktes lokales Maximum}.
+            \end{itemize}
+            \item \textbf{Fall $D < 0$:} Eigenwerte haben unterschiedliche Vorzeichen $\implies$ \textbf{Sattelpunkt}.
+            \item \textbf{Fall $D = 0$:} Mindestens ein Eigenwert ist $0 \implies$ \textbf{Test liefert keine Entscheidung!}
+            \textit{Vorgehen bei $D = 0$:} Untersuche $f(x, y) - f(x_0, y_0)$ entlang spezieller Pfade (z.B. $y = 0$, $x = 0$, $y = mx$, $y = x^2$), um Vorzeichenwechsel nachzuweisen.
+        \end{itemize}
+    \end{enumerate}
+\end{example}
+
+\begin{theorem}
+    \textbf{Sylvester-Kriterium (Hurwitz-Kriterium für $n \times n$-Matrizen):}
+    Sei $A \in \mathbb{R}^{n \times n}$ symmetrisch und $\Delta_k = \det(A_{1..k, 1..k})$ der $k$-te führende Hauptminor (Determinante der linken oberen $k \times k$-Teilmatrix).
+    \begin{itemize}
+        \item $A$ ist \textbf{positiv definit} $\iff$ Alle führenden Hauptminoren sind strikt positiv:
+        $$ \Delta_1 > 0, \quad \Delta_2 > 0, \quad \Delta_3 > 0, \quad \dots, \quad \Delta_n > 0 $$
+        \item $A$ ist \textbf{negativ definit} $\iff$ Die führenden Hauptminoren alternieren im Vorzeichen (startend mit negativ):
+        $$ \Delta_1 < 0, \quad \Delta_2 > 0, \quad \Delta_3 < 0, \quad \dots, \quad (-1)^k \Delta_k > 0 $$
+    \end{itemize}
+\end{theorem}
+
+\begin{example}
+    \textbf{Sylvester-Kriterium für Definitheit \& Extrema}
+    Für die symmetrische Hesse-Matrix $H = H_f(x_0) \in \mathbb{R}^{n \times n}$ berechnet man die führenden Hauptminoren:
+    $$ \Delta_1 = h_{11}, \quad \Delta_2 = \det\begin{pmatrix} h_{11} & h_{12} \\ h_{21} & h_{22} \end{pmatrix}, \quad \dots, \quad \Delta_n = \det(H) $$
+
+    \textbf{Klassifikation kritischer Punkte:}
+    \begin{itemize}
+        \item \textbf{Positiv definit $\implies$ Lokales Minimum:} \\
+        Alle führenden Hauptminoren sind strikt positiv:
+        $$ \Delta_1 > 0, \quad \Delta_2 > 0, \quad \Delta_3 > 0, \quad \dots, \quad \Delta_n > 0 $$
+        \item \textbf{Negativ definit $\implies$ Lokales Maximum:} \\
+        Alternierende Vorzeichen, beginnend mit \textbf{negativ} ($(-1)^k \Delta_k > 0$):
+        $$ \Delta_1 < 0, \quad \Delta_2 > 0, \quad \Delta_3 < 0, \quad \Delta_4 > 0, \quad \dots $$
+        \item \textbf{Indefinit $\implies$ Sattelpunkt:} \\
+        Die Minoren sind $\neq 0$, verletzen aber \textbf{beide} oberen Muster (z.B. $\Delta_1 > 0$, aber $\Delta_2 < 0$; oder $\Delta_1 < 0$ und $\Delta_2 < 0$).
+        \item \textbf{Semidefinit / Degeneriert ($\det(H) = 0$):} \\
+        Ist mindestens ein $\Delta_k = 0$, liefert das Sylvester-Kriterium \textbf{keine Entscheidung} über lokale Extrema (Untersuchung höherer Terme oder Pfadanalysen nötig).
+    \end{itemize}
+\end{example}
+
+\subsection{Globale Extrema auf kompakten Mengen}
+
+\begin{important}
+    \textbf{Kochrezept: Globale Extrema auf kompakten Gebieten (4-Schritte-Verfahren)}
+    
+    Gegeben sei eine stetige Funktion $f: K \to \mathbb{R}$ auf einem beschränkten, abgeschlossenen Gebiet $K \subset \mathbb{R}^n$ mit Rand $\partial K$. Nach dem Satz von Weierstraß existieren globales Minimum und Maximum garantiert!
+    
+    \textbf{Schritt 1: Inneres $\interior(K)$ untersuchen (freie Extrema)}
+    \begin{itemize}
+        \item Bestimme alle kritischen Punkte von $f$ über $\nabla f(x) = 0$.
+        \item \textbf{Filter:} Behalte \textit{nur} diejenigen Punkte, die echt im Inneren liegen ($x \in \interior(K)$). Punkte ausserhalb von $K$ oder auf $\partial K$ werden hier verworfen.
+    \end{itemize}
+
+    \textbf{Schritt 2: Glatten Rand $\partial K$ untersuchen (gebundene Extrema)}
+    \begin{itemize}
+        \item \textbf{Methode A (Randparametrisierung):} Lässt sich der Rand durch eine Kurve $\gamma(t)$ darstellen (z.B. Kreis via $\gamma(t) = (R\cos t, R\sin t)^T$), setze $h(t) = f(\gamma(t))$ an und bestimme 1D-Kandidaten via $h'(t) = 0$.
+        \item \textbf{Methode B (Lagrange-Multiplikatoren):} Ist der Rand durch $g(x) = 0$ gegeben, löse $\nabla f(x) = \lambda \nabla g(x)$ zusammen mit $g(x) = 0$.
+    \end{itemize}
+
+    \textbf{Schritt 3: Ecken, Spitzen und Schnittpunkte des Randes}
+    \begin{itemize}
+        \item Ist der Rand nur stückweise glatt (z.B. Dreieck, Polygon, Kreissektor), nimm alle Eckpunkte und Schnittpunkte der Randkurven zwingend als separate Kandidaten auf.
+    \end{itemize}
+
+    \textbf{Schritt 4: Weierstraß-Funktionswertvergleich}
+    \begin{itemize}
+        \item Berechne $f(p)$ für \textbf{alle} in den Schritten 1, 2 und 3 gesammelten Kandidatenpunkte.
+        \item Der \textbf{grösste} Funktionswert ist das globale Maximum von $f$ auf $K$.
+        \item Der \textbf{kleinste} Funktionswert ist das globale Minimum von $f$ auf $K$.
+        \item \textbf{Klausur-Tipp:} Die Hesse-Matrix muss für globale Extrema auf kompakten Mengen \textbf{nicht} berechnet werden!
+    \end{itemize}
+\end{important}

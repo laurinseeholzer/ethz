@@ -1,0 +1,165 @@
+\section{Machine Arithmetic, Error Propagation \& Matrix Computations}
+
+Modern numerical computation operates on physical computing hardware with finite memory and finite precision. A computer scientist must master how real numbers are discretized, how rounding errors propagate through algorithms, and how matrix algebraic structures dictate computational complexity.
+
+% -----------------------------------------------------------------------------
+\subsection{Floating-Point Representation \& Machine Precision}
+
+In the IEEE~754 standard, a normalized floating-point number $x \in \mathcal{M} \subset \mathbb{R}$ with base $B=2$ is represented as:
+\begin{equation}
+    x = (-1)^s \cdot (1 + f) \cdot 2^{e - \text{bias}} = (-1)^s \cdot \left( 1 + \sum_{i=1}^{m-1} b_i 2^{-i} \right) \cdot 2^{e - \text{bias}},
+\end{equation}
+where $s \in \{0, 1\}$ is the sign bit, $f$ is the fractional significand, the leading $1$ is an implicit hidden bit, and $e$ is the biased exponent. In standard double precision (\texttt{float64}), the word comprises 1 sign bit, 11 exponent bits ($\text{bias} = 1023$, effective exponent $e - \text{bias} \in [-1022, 1023]$), and 52 fraction bits ($m = 53$ significand bits).
+
+\begin{definition}
+    The \textbf{machine precision} (or unit roundoff) $\varepsilon_{\text{mach}}$ is defined as the distance between $1.0$ and the next larger representable floating-point number:
+    \begin{equation}
+        \varepsilon_{\text{mach}} := \inf \{ \delta > 0 : \operatorname{fl}(1.0 + \delta) > 1.0 \} = 2^{-52} \approx 2.22 \times 10^{-16}.
+    \end{equation}
+\end{definition}
+
+The floating-point number line is not a uniform continuum, but an expanding discrete lattice. The spacing between adjacent machine numbers scales directly with magnitude:
+\begin{equation}
+    \operatorname{gap}(x) \approx |x| \cdot \varepsilon_{\text{mach}}.
+\end{equation}
+Near $1.0$, the gap is $\approx 2.22 \times 10^{-16}$, whereas near $10^{16}$, the gap widens to $\approx 2.22 > 1.0$. Consequently, adding $1.0$ to $10^{16}$ produces no change: $\operatorname{fl}(10^{16} + 1) = 10^{16}$. Between any two consecutive powers of two $[2^k, 2^{k+1})$, there are always exactly $2^{52}$ equidistant numbers, ensuring nearly constant relative precision of 16 decimal digits.
+
+\begin{theorem}
+    In the \textbf{standard model of floating-point arithmetic}, any elementary operation $\odot \in \{+, -, \times, /\}$ on normalized machine numbers $x, y$ satisfies:
+    \begin{equation}
+        \operatorname{fl}(x \odot y) = (x \odot y)(1 + \delta), \quad \text{with } |\delta| \le \varepsilon_{\text{mach}}.
+    \end{equation}
+\end{theorem}
+
+When calculations produce magnitudes exceeding $\approx 1.79 \times 10^{308}$, the hardware assigns signed infinity ($\pm \infty$, overflow). Conversely, when a non-zero result drops below $2^{-1022} \approx 2.22 \times 10^{-308}$, IEEE~754 prevents abrupt underflow to zero via \textbf{subnormal numbers}:
+\begin{equation}
+    x = (-1)^s \cdot (0.f)_2 \cdot 2^{-1022}.
+\end{equation}
+This provides gradual underflow down to $2^{-1074} \approx 4.9 \times 10^{-324}$ by progressively relinquishing significand bits. Invalid algebraic operations ($0/0$, $\infty - \infty$) produce \texttt{NaN}, which propagates through any subsequent arithmetic.
+
+% -----------------------------------------------------------------------------
+\subsection{Conditioning \& Catastrophic Cancellation}
+
+Numerical errors arise from two distinct sources: the mathematical sensitivity of the underlying problem, and the numerical stability of the algorithm executing the solution.
+
+\begin{definition}
+    For a differentiable mapping $f: \mathbb{R}^n \to \mathbb{R}^m$, the \textbf{absolute condition number} and \textbf{relative condition number} quantify output sensitivity to infinitesimal input perturbations:
+    \begin{equation}
+        \kappa_{\text{abs}}(x) := \|Df(x)\|, \qquad \kappa_{\text{rel}}(x) := \frac{\|Df(x)\| \|x\|}{\|f(x)\|}.
+    \end{equation}
+\end{definition}
+
+Conditioning is an intrinsic geometric property of the problem itself. If $\kappa_{\text{rel}} \gg 1$, the problem is ill-conditioned: small input uncertainties cause large output deviations regardless of the algorithm. By contrast, stability is a property of the algorithm. A backward stable algorithm computes the exact solution to a slightly perturbed problem. In double precision, an ill-conditioned problem loses approximately $\log_{10}(\kappa_{\text{rel}})$ decimal digits:
+\begin{equation}
+    \text{Correct digits} \approx 16 - \log_{10}(\kappa_{\text{rel}}).
+\end{equation}
+
+\begin{theorem}
+    In floating-point arithmetic, \textbf{catastrophic cancellation} amplifies relative errors: if $\tilde{x} = x(1 + \delta_x)$ and $\tilde{y} = y(1 + \delta_y)$ with $|\delta_x|, |\delta_y| \le \varepsilon$, then:
+    \begin{equation}
+        \frac{|(x - y) - (\tilde{x} - \tilde{y})|}{|x - y|} \le \frac{|x| + |y|}{|x - y|} \varepsilon.
+    \end{equation}
+\end{theorem}
+
+Catastrophic cancellation occurs when subtracting two nearly equal approximations $x \approx y$. When identical leading bits cancel out, normalizing the floating-point result shifts trailing rounding noise into the leading, most significant bits of the mantissa, permanently destroying precision.
+
+\begin{important}
+    To prevent catastrophic cancellation, expressions with subtractions of near-equal quantities must be \textbf{algebraically reformulated}:
+    \begin{itemize}
+        \item \textbf{Quadratic roots ($x^2 - 2px + q = 0$, $p > 0, p^2 \gg q$):} The naive subtraction $x_2 = p - \sqrt{p^2 - q}$ destroys precision. Compute the safe root first, then obtain the smaller root via \textbf{Vieta's identity}:
+        \begin{equation}
+            x_1 = p + \operatorname{sign}(p)\sqrt{p^2 - q}, \qquad x_2 = \frac{q}{x_1}.
+        \end{equation}
+        \item \textbf{Conjugation:} For $x \gg 1$, rewrite the difference of square roots:
+        \begin{equation}
+            \sqrt{x+1} - \sqrt{x} = \frac{1}{\sqrt{x+1} + \sqrt{x}}.
+        \end{equation}
+        \item \textbf{Small-argument functions:} For $|x| \ll 1$, evaluate $1 - \cos x = 2\sin^2(x/2)$, and use dedicated library routines such as $\ln(1+x) \to \texttt{np.log1p(x)}$ and $e^x - 1 \to \texttt{np.expm1(x)}$.
+    \end{itemize}
+\end{important}
+
+% -----------------------------------------------------------------------------
+\subsection{Numerical Differentiation \& Extrapolation}
+
+Approximating derivatives via finite differences faces an unavoidable trade-off between mathematical truncation error and floating-point cancellation.
+
+\begin{theorem}
+    In the \textbf{differentiation error balance}, let $f \in C^3(\mathbb{R})$. In floating-point arithmetic with roundoff $\varepsilon_{\text{mach}}$, the computational error of the forward difference quotient satisfies:
+    \begin{equation}
+        \left| f'(x) - \frac{\tilde{f}(x+h) - \tilde{f}(x)}{h} \right| \le \underbrace{\frac{h}{2} |f''(x)|}_{\text{Truncation } \mathcal{O}(h)} + \underbrace{\frac{2 \varepsilon_{\text{mach}} |f(x)|}{h}}_{\text{Roundoff } \mathcal{O}(\varepsilon_{\text{mach}} / h)}.
+    \end{equation}
+    Equating the two terms yields the optimal step size:
+    \begin{equation}
+        h_{\text{opt}} \approx 2 \sqrt{\frac{\varepsilon_{\text{mach}} |f(x)|}{|f''(x)|}} \sim \sqrt{\varepsilon_{\text{mach}}} \approx 10^{-8},
+    \end{equation}
+    yielding a minimal total error of $\mathcal{O}(\sqrt{\varepsilon_{\text{mach}}}) \approx 10^{-8}$.
+\end{theorem}
+
+On a log-log plot, the total error forms a characteristic $V$-shaped curve. For large $h$, truncation error dominates. As $h \to 0$, subtractive cancellation between $f(x+h)$ and $f(x)$ explodes upon division by $h$. Standard forward differences inevitably lose half of the 16 available digits.
+
+For the central difference quotient:
+\begin{equation}
+    D_h^0 f(x) := \frac{f(x+h) - f(x-h)}{2h},
+\end{equation}
+the truncation error is $\mathcal{O}(h^2)$, yielding an optimal step size of $h_{\text{opt}} \sim \varepsilon_{\text{mach}}^{1/3} \approx 10^{-5}$ and a minimum error of $\mathcal{O}(\varepsilon_{\text{mach}}^{2/3}) \approx 10^{-10}$.
+
+\begin{theorem}
+    The \textbf{complex-step derivative approximation} for a real-analytic function $f: \mathbb{C} \to \mathbb{C}$ expands $f(x + \mathrm{i}h)$ in a complex Taylor series:
+    \begin{equation}
+        f(x + \mathrm{i}h) = f(x) + \mathrm{i}h f'(x) - \frac{h^2}{2} f''(x) - \mathrm{i}\frac{h^3}{6} f'''(x) + \mathcal{O}(h^4).
+    \end{equation}
+    Taking the imaginary part and dividing by $h$ yields:
+    \begin{equation}
+        f'(x) = \frac{\operatorname{Im}(f(x + \mathrm{i}h))}{h} + \mathcal{O}(h^2).
+    \end{equation}
+\end{theorem}
+
+Because $x$ and $f(x)$ are purely real, $f(x)$ contributes zero to the imaginary axis. The derivative $h f'(x)$ is extracted directly without any subtraction. Consequently, the complex-step formula contains no subtractive cancellation. One can choose $h = 10^{-20}$, reducing truncation error below machine precision and achieving full 16-digit accuracy in a single complex function evaluation.
+
+\begin{definition}
+    In \textbf{Richardson extrapolation}, when an approximation $d(h)$ has an asymptotic expansion in known even powers of $h$:
+    \begin{equation}
+        d(h) = f'(x) + c_1 h^2 + c_2 h^4 + c_3 h^6 + \dots,
+    \end{equation}
+    evaluating at step sizes $h$ and $h/2$ allows eliminating the leading $h^2$ error term:
+    \begin{equation}
+        R_{1,1} = \frac{4 d(h/2) - d(h)}{3} = f'(x) + \mathcal{O}(h^4).
+    \end{equation}
+    Evaluating at $h_l = h/2^l$ generates the triangular \textbf{Richardson tableau}:
+    \begin{equation}
+        R_{l,k} = \frac{4^k R_{l,k-1} - R_{l-1,k-1}}{4^k - 1}, \quad 1 \le k \le l \le L, \quad \text{with } |f'(x) - R_{l,k}| = \mathcal{O}\left( \left(\frac{h}{2^l}\right)^{2k+2} \right).
+    \end{equation}
+\end{definition}
+
+Richardson extrapolation eliminates mathematical truncation error order by order while keeping $h$ moderately large (e.g., $h = 0.1$), avoiding the cancellation regime altogether.
+
+% -----------------------------------------------------------------------------
+\subsection{Exploiting Matrix Structure \& Associativity}
+
+In scientific computing, parenthesization and algebraic structure govern computational complexity. Unstructured matrix products lead to prohibitive runtime and memory footprints.
+
+\textbf{Diagonal Scaling:} Let $D = \operatorname{diag}(d) \in \mathbb{R}^{n \times n}$ and $A \in \mathbb{R}^{n \times n}$. The product scales each row independently:
+\begin{equation}
+    (DA)_{i,j} = d_i A_{i,j}.
+\end{equation}
+Forming $D$ explicitly and running dense matrix multiplication requires $\mathcal{O}(n^2)$ memory and $\mathcal{O}(n^3)$ flops. Evaluating via row broadcasting (\texttt{d[:, None] * A}) executes in $n^2$ flops and $\mathcal{O}(1)$ auxiliary memory.
+
+\textbf{Rank-1 Matrix-Vector Multiplication:} To evaluate $y = (A + u v^T) x$ with $A \in \mathbb{R}^{n \times n}$ and $u, v, x \in \mathbb{R}^n$, applying associativity yields:
+\begin{equation}
+    y = A x + u (v^T x).
+\end{equation}
+Computing the dot product $\alpha = v^T x$ costs $2n$ flops, scaling $u$ by $\alpha$ costs $n$ flops, and adding to $A x$ costs $2n^2 + n$ flops. The total cost is:
+\begin{equation}
+    2n^2 + 4n = \mathcal{O}(n^2) \text{ flops},
+\end{equation}
+with $\mathcal{O}(n)$ memory, completely avoiding the construction of the dense $n \times n$ outer product $u v^T$.
+
+\textbf{Kronecker Product Association:} For matrices $A \in \mathbb{R}^{m \times n}$, $B \in \mathbb{R}^{p \times q}$, and vector $x \in \mathbb{R}^{n q}$, the Kronecker product satisfies:
+\begin{equation}
+    (A \otimes B) \operatorname{vec}(X) = \operatorname{vec}(B X A^T),
+\end{equation}
+where $X \in \mathbb{R}^{q \times n}$ satisfies $\operatorname{vec}(X) = x$. For $m=n=p=q$, forming $A \otimes B$ explicitly requires an $n^2 \times n^2$ matrix requiring $\mathcal{O}(n^4)$ storage and flops. Evaluating $B X A^T$ via two successive dense matrix multiplications costs only:
+\begin{equation}
+    4n^3 = \mathcal{O}(n^3) \text{ flops},
+\end{equation}
+and $\mathcal{O}(n^2)$ storage, reducing complexity by a full factor of $n$.

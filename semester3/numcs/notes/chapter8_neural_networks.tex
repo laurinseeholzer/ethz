@@ -1,0 +1,55 @@
+\section{Deep Neural Networks as Nonlinear Least Squares}
+
+Deep Learning is often discussed using artificial intelligence metaphors. From a rigorous numerical perspective, training a Deep Neural Network (DNN) is simply solving a massive, high-dimensional \textbf{nonlinear least squares fitting problem} using vectorized linear algebra and reverse-mode automatic differentiation.
+
+% -----------------------------------------------------------------------------
+\subsection{Supervised Learning Formulation}
+
+\begin{definition}
+    In \textbf{supervised learning}, let $\mathcal{D} = \{ (t_m, y_m) \}_{m=1}^{M}$ be a training set of $M$ input-output observations with $t_m \in \mathbb{R}^{d_{\text{in}}}$ and $y_m \in \mathbb{R}^{d_{\text{out}}}$. We parametrize an approximating function $f^*(\cdot; \theta): \mathbb{R}^{d_{\text{in}}} \to \mathbb{R}^{d_{\text{out}}}$ governed by parameters $\theta \in \mathbb{R}^P$. The objective is to find $\theta^*$ minimizing the Mean Squared Error (MSE) loss:
+    \begin{equation}
+        L(\theta) := \frac{1}{2M} \sum_{m=1}^{M} \|f^*(t_m; \theta) - y_m\|_2^2 = \frac{1}{2M} \|F(\theta)\|_2^2,
+    \end{equation}
+    where $F(\theta) \in \mathbb{R}^{M \cdot d_{\text{out}}}$ is the concatenated residual vector.
+\end{definition}
+
+Just as classical polynomial interpolation fits a curve through 2D points, a deep neural network fits a continuous high-dimensional hypersurface through data points in $\mathbb{R}^{d_{\text{in}}}$. Because parameter count $P$ frequently ranges from $10^5$ to $10^{11}$, second-order Newton or Gauss-Newton methods (which require solving $P \times P$ linear systems in $\mathcal{O}(P^3)$ flops) are computationally impossible. Optimization is carried out via stochastic first-order gradient methods (e.g., ADAM, SGD).
+
+% -----------------------------------------------------------------------------
+\subsection{Network Architecture \& Forward Propagation}
+
+Consider an $L$-layer \textbf{Multilayer Perceptron (MLP)} with layer widths $[d_0, d_1, \dots, d_L]$, where $d_0 = d_{\text{in}}$ and $d_L = d_{\text{out}}$. For a batch of $B$ samples represented as row vectors $Z^{(0)} = T \in \mathbb{R}^{B \times d_0}$, the forward pass evaluates layer-by-layer for $l = 1, \dots, L$:
+\begin{align}
+    A^{(l)} &= Z^{(l-1)} W^{(l)} + \mathbf{1}_B b^{(l)} \in \mathbb{R}^{B \times d_l} \quad &&\text{(Affine Transformation)}, \\
+    Z^{(l)} &= \sigma\left( A^{(l)} \right) \in \mathbb{R}^{B \times d_l} \quad &&\text{(Element-Wise Non-Linear Activation)},
+\end{align}
+with weight matrices $W^{(l)} \in \mathbb{R}^{d_{l-1} \times d_l}$, bias row vectors $b^{(l)} \in \mathbb{R}^{1 \times d_l}$, and activation function $\sigma: \mathbb{R} \to \mathbb{R}$ (such as ReLU $\sigma(x) = \max(0, x)$, Tanh, or Sigmoid).
+
+Geometrically, the network alternates between affine linear rotations/shears ($Z W + b$) and non-linear coordinate foldings ($\sigma$). Stacking these layers untangles non-linearly separable data manifolds into linearly separable representations at the output. Evaluating layer $l$ requires a dense matrix product $Z^{(l-1)} W^{(l)}$ costing $2 B d_{l-1} d_l$ flops, yielding a total forward pass cost of $\mathcal{O}(B \cdot P)$ flops, where $P = \sum_{l=1}^L d_{l-1} d_l$.
+
+\newpage
+\subsection{Backpropagation as Automatic Differentiation}
+
+\begin{definition}
+    The \textbf{layer error sensitivities} (adjoint variables) of the batch loss $L$ with respect to the pre-activations $A^{(l)}$ are defined as:
+    \begin{equation}
+        \Delta^{(l)} := \frac{\partial L}{\partial A^{(l)}} \in \mathbb{R}^{B \times d_l}.
+    \end{equation}
+\end{definition}
+
+\begin{theorem}
+    The \textbf{backpropagation recurrence} applies the multivariable chain rule backwards from the output layer $L$ down to layer $1$. For squared error loss with linear output activation, the output sensitivity is:
+    \begin{equation}
+        \Delta^{(L)} = \frac{1}{B} \left( Z^{(L)} - Y \right) \in \mathbb{R}^{B \times d_L}.
+    \end{equation}
+    The hidden layer sensitivities ($l = L-1, \dots, 1$) propagate through the transposed weights:
+    \begin{equation}
+        \Delta^{(l)} = \left( \Delta^{(l+1)} (W^{(l+1)})^T \right) \odot \sigma'\left( A^{(l)} \right),
+    \end{equation}
+    where $\odot$ denotes the element-wise Hadamard product. The corresponding parameter gradients are:
+    \begin{equation}
+        \frac{\partial L}{\partial W^{(l)}} = \left( Z^{(l-1)} \right)^T \Delta^{(l)} \in \mathbb{R}^{d_{l-1} \times d_l}, \qquad \frac{\partial L}{\partial b^{(l)}} = \mathbf{1}_B^T \Delta^{(l)} \in \mathbb{R}^{1 \times d_l}.
+    \end{equation}
+\end{theorem}
+
+Evaluating gradients via finite differences would require $P+1$ forward passes ($\mathcal{O}(P^2)$ work), which is impossible for $P = 10^7$. Reverse-mode automatic differentiation exploits the chain rule backwards: the sensitivity equation $\Delta^{(l+1)} (W^{(l+1)})^T$ mirrors the forward pass $Z^{(l-1)} W^{(l)}$ with the weight matrix transposed. All $P$ partial derivatives are computed simultaneously in a single backward pass costing $\mathcal{O}(B \cdot P)$ flops (roughly $2\times$ the forward pass). The only trade-off is memory: all intermediate activations $A^{(l)}$ and $Z^{(l)}$ must be cached during the forward pass so they remain available for backward multiplication.

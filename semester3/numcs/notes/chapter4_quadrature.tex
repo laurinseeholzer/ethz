@@ -1,0 +1,130 @@
+\section{Numerical Quadrature (Integration)}
+
+Computing definite integrals $I(f) = \int_{a}^{b} f(x) dx$ analytically is frequently impossible when antiderivatives lack elementary representations or when $f$ is given as a black-box routine. Numerical quadrature replaces continuous integration with a discrete weighted sum.
+
+% -----------------------------------------------------------------------------
+\subsection{Interpolatory Quadrature \& Degree of Exactness}
+
+\begin{definition}
+    An $s$-point \textbf{quadrature formula} on $[a, b]$ has the form:
+    \begin{equation}
+        Q_{[a, b]}(f) := \sum_{j=1}^{s} w_j f(c_j),
+    \end{equation}
+    with quadrature nodes $c_j \in [a, b]$ and quadrature weights $w_j \in \mathbb{R}$.
+    The \textbf{degree of exactness} $d \in \mathbb{N}_0$ is the maximal integer such that the rule integrates all polynomials in $\mathcal{P}_d$ exactly:
+    \begin{equation}
+        Q(p) = \int_{a}^{b} p(x) dx, \quad \forall p \in \mathcal{P}_d, \quad \text{and } \exists q \in \mathcal{P}_{d+1} \text{ with } Q(q) \neq \int_{a}^{b} q(x) dx.
+    \end{equation}
+\end{definition}
+
+A quadrature rule is \textbf{interpolatory} if it integrates the Lagrange interpolant of $f$ on nodes $\{c_j\}_{j=1}^s$. The weights are given by integrating the cardinal basis polynomials:
+\begin{equation}
+    w_j = \int_{a}^{b} \ell_j(x) dx, \quad \text{where } \ell_j(x) = \prod_{k \neq j} \frac{x - c_k}{c_j - c_k}.
+\end{equation}
+Any such rule has degree $d \ge s - 1$.
+
+Symmetric rules with an odd number of nodes gain an extra degree of exactness for free. If nodes and weights are symmetric about the midpoint $m = \frac{a+b}{2}$, expanding the error in monomials $(x - m)^k$ reveals that both the true integral and the quadrature sum vanish identically for every odd power $k$ by antisymmetry:
+\begin{equation}
+    \int_{a}^{b} (x - m)^k dx = 0, \qquad \sum_{j=1}^{s} w_j (c_j - m)^k = 0 \quad (\text{for odd } k).
+\end{equation}
+Consequently, the 1-point midpoint rule has degree $d = 1$ (rather than $0$), and the 3-point Simpson rule has degree $d = 3$ (rather than $2$).
+
+% -----------------------------------------------------------------------------
+\subsection{Newton-Cotes Breakdown \& Gauss-Legendre Quadrature}
+
+Newton-Cotes formulas integrate the polynomial interpolant of $f$ on equidistant nodes $c_j = a + (j-1)\frac{b-a}{s-1}$. Under roundoff errors $|\tilde{f}(c_j) - f(c_j)| \le \varepsilon_{\text{mach}}|f(c_j)|$, the computational quadrature error satisfies:
+\begin{equation}
+    |Q(f) - Q(\tilde{f})| \le \varepsilon_{\text{mach}} \|f\|_\infty \sum_{j=1}^{s} |w_j|.
+\end{equation}
+Because $\sum_{j=1}^s w_j = b - a$, if all weights are positive ($w_j > 0$), then $\sum |w_j| = b - a$, and roundoff is never amplified. However, for equidistant nodes with $s \ge 9$, weights oscillate with large alternating positive and negative values, causing:
+\begin{equation}
+    \sum_{j=1}^{s} |w_j| \to \infty \quad \text{exponentially as } s \to \infty.
+\end{equation}
+High-order Newton-Cotes rules suffer catastrophic cancellation and are numerically unusable.
+
+\begin{theorem}
+    By the \textbf{fundamental theorem of Gauss quadrature}, an $s$-point quadrature rule $Q(f) = \sum_{j=1}^{s} w_j f(c_j)$ on $[-1, 1]$ achieves the \textbf{maximal possible degree of exactness}:
+    \begin{equation}
+        d = 2s - 1
+    \end{equation}
+    if and only if:
+    \begin{enumerate}
+        \item The nodes $c_1, \dots, c_s$ are the $s$ distinct roots of the $s$-th degree \textbf{Legendre polynomial} $P_s(x)$ on $(-1, 1)$,
+        \item The weights are given by $w_j = \int_{-1}^{1} \ell_j(x) dx$.
+    \end{enumerate}
+    Furthermore, \textbf{all weights are strictly positive}: $w_j > 0$ for all $j = 1, \dots, s$.
+\end{theorem}
+\begin{proof}
+    Let $p \in \mathcal{P}_{2s-1}$. Polynomial division gives $p(x) = q(x) P_s(x) + r(x)$ with $q, r \in \mathcal{P}_{s-1}$. By $L^2$-orthogonality of Legendre polynomials, $\int_{-1}^1 q(x) P_s(x) dx = 0$, so $\int p = \int r$. At nodes $c_j$, $P_s(c_j) = 0$, so $p(c_j) = r(c_j)$. Because $Q$ integrates $r \in \mathcal{P}_{s-1}$ exactly, $Q(p) = Q(r) = \int r = \int p$.
+    To prove weight positivity, set $p(x) = (\ell_k(x))^2 \in \mathcal{P}_{2s-2}$. Then:
+    \begin{equation}
+        0 < \int_{-1}^{1} (\ell_k(x))^2 dx = Q((\ell_k)^2) = \sum_{j=1}^{s} w_j (\ell_k(c_j))^2 = w_k.
+    \end{equation}
+\end{proof}
+
+An $s$-point rule possesses $2s$ degrees of freedom ($s$ nodes and $s$ weights). By placing nodes at Legendre roots (which cluster toward $\pm 1$ like Chebyshev nodes), Gauss quadrature doubles the exactness degree to $2s - 1$ while guaranteeing unconditional stability.
+
+\begin{theorem}
+    The \textbf{Golub-Welsch algorithm} constructs the symmetric tridiagonal Jacobi matrix $J \in \mathbb{R}^{s \times s}$ from the Legendre recurrence $\beta_j P_j(x) = x P_{j-1}(x) - \beta_{j-1} P_{j-2}(x)$:
+    \begin{equation}
+        J = \begin{pmatrix}
+            0 & \beta_1 & & \\
+            \beta_1 & 0 & \beta_2 & \\
+            & \beta_2 & \ddots & \beta_{s-1} \\
+            & & \beta_{s-1} & 0
+        \end{pmatrix}, \qquad \beta_j = \frac{j}{\sqrt{4j^2 - 1}}.
+    \end{equation}
+    The quadrature nodes $c_j$ are the eigenvalues of $J$, and weights are:
+    \begin{equation}
+        w_j = 2 (v_{j,1})^2,
+    \end{equation}
+    where $v_j$ is the normalized eigenvector corresponding to $c_j$. All nodes and weights are computed simultaneously in $\mathcal{O}(s^2)$ flops.
+\end{theorem}
+
+% -----------------------------------------------------------------------------
+\subsection{Composite Rules \& Romberg Integration}
+
+Partitioning $[a, b]$ into $N$ subintervals of width $h = \frac{b-a}{N}$ with knots $x_k = a + k h$ yields the composite trapezoidal and Simpson rules:
+\begin{align}
+    T_N(f) &:= h \left[ \frac{1}{2}f(a) + \sum_{k=1}^{N-1} f(x_k) + \frac{1}{2}f(b) \right], \quad &&\text{Error } \mathcal{O}(h^2), \\
+    S_N(f) &:= \frac{h}{6} \sum_{k=1}^{N} \left[ f(x_{k-1}) + 4 f\left(\frac{x_{k-1}+x_k}{2}\right) + f(x_k) \right], \quad &&\text{Error } \mathcal{O}(h^4).
+\end{align}
+
+For $f \in C^{2m+2}([a, b])$, the composite trapezoidal error admits the \textbf{Euler-Maclaurin expansion} in even powers of $h$:
+\begin{equation}
+    T(h) = \int_{a}^{b} f(x) dx + c_1 h^2 + c_2 h^4 + c_3 h^6 + \dots
+\end{equation}
+If $f$ is smooth and periodic (all boundary derivatives match), every boundary difference in the expansion vanishes identically, resulting in \textbf{exponential spectral convergence}.
+
+For non-periodic functions, Richardson extrapolation on $T(h)$ with step sizes $h_l = h/2^l$ constructs the \textbf{Romberg tableau}:
+\begin{equation}
+    R_{l,0} = T_{2^l}(f), \qquad R_{l,k} = \frac{4^k R_{l,k-1} - R_{l-1,k-1}}{4^k - 1}, \quad 1 \le k \le l \le L,
+\end{equation}
+where column $k$ achieves convergence order $\mathcal{O}(h^{2k+2})$. Under mesh doubling ($N \to 2N$), all existing function evaluation points are reused, requiring evaluations only at the newly added interval midpoints.
+
+% -----------------------------------------------------------------------------
+\subsection{Multidimensional Quadrature}
+
+Integrating over the $d$-dimensional hypercube $I(f) = \int_{[0, 1]^d} f(x) dx$ highlights the fundamental limits of grid methods.
+
+\textbf{Tensor Product Grids \& The Curse of Dimensionality:} Placing $n$ points along each of the $d$ axes requires $N = n^d$ evaluations. If the 1D rule has error $\mathcal{O}(n^{-r})$, the multidimensional error decays as:
+\begin{equation}
+    \text{Error} = \mathcal{O}\left( N^{-r/d} \right).
+\end{equation}
+For $d = 10$, placing just 10 points per axis demands $10^{10}$ function evaluations, rendering full tensor grids computationally intractable.
+
+\textbf{Sparse Grids (Smolyak Technique):} For functions with bounded mixed derivatives, Smolyak's combination technique selects anisotropic subsets of tensor product rules where multi-indices satisfy $|\mathbf{k}|_1 \le l + d - 1$. This preserves error convergence:
+\begin{equation}
+    \mathcal{O}\left( N^{-r} (\log N)^{(d-1)(r+1)} \right),
+\end{equation}
+while requiring only $N = \mathcal{O}(2^l d^l / l!)$ points, breaking the curse of dimensionality for moderate dimensions ($d \le 20$).
+
+\textbf{Monte Carlo Integration:} Let $X_1, \dots, X_N \overset{\text{i.i.d.}}{\sim} \mathcal{U}([0, 1]^d)$. The \textbf{Monte Carlo estimator}:
+\begin{equation}
+    I_N(f) := \frac{1}{N} \sum_{i=1}^{N} f(X_i)
+\end{equation}
+has probabilistic error governed by the Central Limit Theorem:
+\begin{equation}
+    |I_N(f) - I(f)| \sim \frac{\sigma(f)}{\sqrt{N}} = \mathcal{O}(N^{-1/2}).
+\end{equation}
+The convergence rate $\mathcal{O}(N^{-1/2})$ is \textbf{strictly independent of dimension $d$}. Evaluating $N$ samples costs $\mathcal{O}(d \cdot N)$ flops. Variance reduction techniques (control variates and importance sampling) reduce the constant $\sigma(f)$ to accelerate practical convergence.

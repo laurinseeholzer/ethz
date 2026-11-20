@@ -1,83 +1,276 @@
-\section{Complexity Theory}
+\section{Komplexitätstheorie}
 
-\subsection{Fundamental Complexity Classes}
+Während sich die Berechenbarkeitstheorie mit der prinzipiellen Lösbarkeit von Problemen befasst, untersucht die Komplexitätstheorie den quantitativen Ressourcenbedarf (Rechenzeit und Speicherplatz) algorithmischer Lösungen.
 
-\begin{definition}
-    \textbf{Time and Space Complexity Classes:}
+\subsection{Komplexitätsmaße und Deterministische Klassen}
+
+\begin{definition}[Ressourcenmaße für Mehrband-Turingmaschinen]
+    Sei $M$ eine deterministische Turingmaschine mit einem separaten Nur-Lese-Eingabeband (mit Randmarkern $\text{\textcent} w \$$) und $k \ge 1$ Lese-/Schreib-Arbeitsbändern.
     \begin{itemize}
-        \item $\text{TIME}(t(n))$: Class of languages decidable by a deterministic TM running in time $O(t(n))$.
-        \item $\text{SPACE}(s(n))$: Class of languages decidable by a deterministic TM using space $O(s(n))$.
+        \item \textbf{Rechenzeit:} Für $w \in \Sigma^*$ ist $\mathrm{Time}_M(w)$ die Anzahl der Schritte bis zum Erreichen einer Stoppkonfiguration. Die \textbf{Zeitkomplexität} von $M$ ist:
+        \[
+            T_M(n) = \max \{\mathrm{Time}_M(w) \mid w \in \Sigma^*, |w| = n\}.
+        \]
+        \item \textbf{Speicherplatz:} Für $w \in \Sigma^*$ ist $\mathrm{Space}_M(w)$ die Gesamtzahl verschiedener Zellen, die auf den $k$ Arbeitsbändern während der Berechnung besucht werden. (Das Eingabeband zählt \textbf{nicht} zum Speicherbedarf!). Die \textbf{Raumkomplexität} von $M$ ist:
+        \[
+            S_M(n) = \max \{\mathrm{Space}_M(w) \mid w \in \Sigma^*, |w| = n\}.
+        \]
     \end{itemize}
 \end{definition}
 
-\begin{definition}
-    \textbf{Core Deterministic Classes:}
-    \begin{itemize}
-        \item $\text{DLOG} = \text{SPACE}(\log n)$
-        \item $\text{P} = \bigcup_{c} \text{TIME}(n^c)$ (Polynomial Time)
-        \item $\text{PSPACE} = \bigcup_{c} \text{SPACE}(n^c)$ (Polynomial Space)
-        \item $\text{EXPTIME} = \bigcup_{c} \text{TIME}(2^{n^c})$ (Exponential Time)
-    \end{itemize}
-\end{definition}
-
-\subsection{Basic Time vs. Space Relations}
-
-\begin{lemma}
-    \textbf{Time bounds Space:}
-    $$
-        \text{TIME}(t(n)) \subseteq \text{SPACE}(t(n))
-    $$
-    \textit{Reason:} A TM can write to at most one new tape cell per step.
-\end{lemma}
-
-\begin{theorem}
-    \textbf{Space bounds Time:} For space bounds $s(n) \ge \log n$:
-    $$
-        \text{SPACE}(s(n)) \subseteq \text{TIME}(2^{O(s(n))})
-    $$
+\begin{theorem}[Linear Speedup Theorem]
+    Sei $M$ eine $k$-Band-Turingmaschine ($k \ge 2$) mit Zeitkomplexität $T(n)$, sodass $\lim_{n \to \infty} \frac{T(n)}{n} = \infty$. Dann existiert für jedes $\varepsilon > 0$ eine $k$-Band-Turingmaschine $M'$, die dieselbe Sprache entscheidet und für alle $n$ erfüllt:
+    \[
+        T_{M'}(n) \le \varepsilon \cdot T(n) + n + 2.
+    \]
 \end{theorem}
 
-\begin{proof}[Proof Idea (Configuration Bounding)]
-    An inner configuration of a space-bounded TM is defined by $(q, w, i, j)$ where $q \in Q$ is the state, $w \in \Gamma^{s(n)}$ is the tape content, $i$ is the input head position ($i \le n+2$), and $j$ is the work head position ($j \le s(n)$).
-
-    The total number of unique configurations is bounded by:
-    $$
-        \text{Total Configs} \le |Q| \cdot (n+2) \cdot |\Gamma|^{s(n)} \cdot s(n) \le 2^{O(s(n))}
-    $$
-    If a deterministic TM does not repeat a configuration, it must halt within this many steps.
+\begin{proof}
+    \textbf{Beweisidee:} Wir fassen jeweils $m$ benachbarte Bandsymbole zu einem einzigen Superelement eines vergrößerten Arbeitsalphabets $\Gamma' = \Gamma^m$ zusammen (Blockkompression).
+    
+    Wähle $m \in \mathbb{N}$ so groß, dass $\frac{6}{m} \le \varepsilon$. In einer initialen Phase liest $M'$ die Eingabe $w$ in $n+2$ Schritten und komprimiert sie blöckeweise auf das Arbeitsband. Ein Block von $m$ Schritten der ursprünglichen Maschine $M$ kann den Kopf höchstens in die benachbarten Superzellen führen. $M'$ liest in einem Zyklus aus 6 Schritten die aktuelle Superzelle sowie deren linken und rechten Nachbarn, bestimmt den Zustand und die Bandinhalte von $M$ nach $m$ Schritten vollständig in ihrer endlichen Kontrolle und aktualisiert die Superzellen. Pro $m$ Schritten von $M$ benötigt $M'$ somit nur höchstens 6 Einzelschritte.
 \end{proof}
 
-\subsection{Constructibility of Functions}
-
-To avoid pathological edge cases, time/space bounds are assumed to be constructible:
-
-\begin{definition}
-    \textbf{Constructibility:}
+\begin{definition}[Deterministische Komplexitätsklassen]
+    Für Funktionen $t, s : \mathbb{N} \to \mathbb{N}$ definieren wir:
+    \begin{align*}
+        \mathrm{DTIME}(t(n)) &= \{L \subseteq \Sigma^* \mid \exists \text{ DTM } M \text{ mit } L = L(M) \text{ und } T_M(n) = O(t(n))\}, \\
+        \mathrm{DSPACE}(s(n)) &= \{L \subseteq \Sigma^* \mid \exists \text{ DTM } M \text{ mit } L = L(M) \text{ und } S_M(n) = O(s(n))\}.
+    \end{align*}
+    Die fundamentalen deterministischen Klassen sind:
     \begin{itemize}
-        \item \textbf{Space-constructible (\textit{platzkonstruierbar}):} A function $s: \mathbb{N} \to \mathbb{N}$ where a TM can compute/mark $s(n)$ space on input $0^n$ using at most $O(s(n))$ space (e.g., $\lceil \log(n+1) \rceil, n^k, 2^n$).
-        \item \textbf{Time-constructible (\textit{zeitkonstruierbar}):} A function $t: \mathbb{N} \to \mathbb{N}$ where a TM can write $0^{t(n)}$ on input $0^n$ in $O(t(n))$ steps.
+        \item $\mathrm{DLOG} = \mathrm{DSPACE}(\log n)$ (deterministischer logarithmischer Platz),
+        \item $\mathrm{P} = \bigcup_{k \ge 1} \mathrm{DTIME}(n^k)$ (in deterministischer polynomieller Zeit lösbar),
+        \item $\mathrm{PSPACE} = \bigcup_{k \ge 1} \mathrm{DSPACE}(n^k)$ (in polynomieller Platzkomplexität lösbar),
+        \item $\mathrm{EXPTIME} = \bigcup_{k \ge 1} \mathrm{DTIME}(2^{n^k})$ (in exponentieller Zeit lösbar).
     \end{itemize}
 \end{definition}
 
-\subsection{Main Class Hierarchy \& Separation Theorems}
+% -----------------------------------------------------------------------------
+\subsection{Konstruierbarkeit und Hierarchiesätze}
 
-\begin{theorem}
-    \textbf{Inclusion Chain:}
-    $$
-        \text{DLOG} \subseteq \text{P} \subseteq \text{PSPACE} \subseteq \text{EXPTIME}
-    $$
-\end{theorem}
-
-\begin{theorem}
-    \textbf{Hierarchy Theorems (Separating Classes):}
+\begin{definition}[Raum- und Zeitkonstruierbarkeit]
     \begin{itemize}
-        \item \textbf{Space Hierarchy Theorem:} If $s_1(n) = o(s_2(n))$ and $s_2$ is space-constructible:
-        $$
-            \text{SPACE}(s_1(n)) \subsetneq \text{SPACE}(s_2(n))
-        $$
-        \item \textbf{Time Hierarchy Theorem:} If $t_1(n) \log(t_1(n)) = o(t_2(n))$ and $t_2$ is time-constructible:
-        $$
-            \text{TIME}(t_1(n)) \subsetneq \text{TIME}(t_2(n))
-        $$
+        \item Eine Funktion $s : \mathbb{N} \to \mathbb{N}$ mit $s(n) \ge \log n$ heißt \textbf{raumkonstruierbar}, falls eine DTM existiert, die auf Eingabe $1^n$ in Platz $O(s(n))$ das Wort $\text{\textcent} \sqcup^{s(n)}$ erzeugt (also genau $s(n)$ Zellen markiert).
+        \item Eine Funktion $t : \mathbb{N} \to \mathbb{N}$ mit $t(n) \ge n$ heißt \textbf{zeitkonstruierbar}, falls eine DTM existiert, die auf Eingabe $1^n$ in genau $O(t(n))$ Schritten anhält.
     \end{itemize}
+\end{definition}
+
+\begin{theorem}[Fundamentale Konfigurationsschranke]
+    Sei $M$ eine DTM mit separatem Eingabeband der Länge $n$ und $k$ Arbeitsbändern, deren Speicherplatz durch $s(n) \ge \log n$ beschränkt ist. Die Gesamtzahl aller paarweise verschiedenen Konfigurationen von $M$ ist beschränkt durch:
+    \[
+        |\mathrm{Konf}(M, n)| \le |Q| \cdot (n + 2) \cdot (s(n))^k \cdot |\Gamma|^{k \cdot s(n)} \le c^{s(n)}
+    \]
+    für eine hinreichend große Konstante $c > 1$.
 \end{theorem}
+
+\begin{proof}
+    \textbf{Beweisidee:} Wir multiplizieren die Freiheitsgrade aller Zustandskomponenten der Maschine.
+    
+    Eine Konfiguration ist eindeutig festgelegt durch:
+    \begin{enumerate}
+        \item Den Zustand $q \in Q$ (genau $|Q|$ Möglichkeiten).
+        \item Die Kopfposition auf dem Eingabeband (genau $n+2$ Positionen: $\text{\textcent}, w_1, \dots, w_n, \$$).
+        \item Die Kopfpositionen auf den $k$ Arbeitsbändern (jeweils höchstens $s(n)$, also $(s(n))^k$).
+        \item Die Bandinhalte der $k$ Arbeitsbänder der Länge $s(n)$ (jeweils $|\Gamma|^{s(n)}$, insgesamt $|\Gamma|^{k \cdot s(n)}$).
+    \end{enumerate}
+    Da $s(n) \ge \log n$, gilt $n+2 \le 2^{O(s(n))}$ und $(s(n))^k \le 2^{O(s(n))}$. Durch Zusammenfassung der Basen ergibt sich $|Q| (n+2) (s(n))^k |\Gamma|^{k s(n)} \le c^{s(n)}$ für ein geeignetes $c > 1$.
+\end{proof}
+
+\begin{theorem}[Beziehung zwischen Raum und Zeit]
+    Hält eine $s(n)$-platzbeschränkte DTM auf jeder Eingabe an, so kann sie keine Konfiguration wiederholen (andernfalls geriete sie in eine deterministische Endlosschleife). Folglich gilt:
+    \[
+        \mathrm{DSPACE}(s(n)) \subseteq \mathrm{DTIME}(c^{s(n)}).
+    \]
+    Insbesondere impliziert dies die fundamentalen Inklusionen:
+    \[
+        \mathrm{DLOG} \subseteq \mathrm{P} \quad \text{und} \quad \mathrm{PSPACE} \subseteq \mathrm{EXPTIME}.
+    \]
+\end{theorem}
+
+\begin{theorem}[Raum- und Zeithierarchiesätze]
+    Für konstruierbare Schrankenfunktionen existieren echte Trennungen:
+    \begin{itemize}
+        \item \textbf{Raumhierarchiesatz:} Gilt $f(n) = o(g(n))$ für eine raumkonstruierbare Funktion $g(n) \ge \log n$, so gilt:
+        \[
+            \mathrm{DSPACE}(f(n)) \subsetneq \mathrm{DSPACE}(g(n)).
+        \]
+        \item \textbf{Zeithierarchiesatz:} Gilt $f(n) \log f(n) = o(g(n))$ für eine zeitkonstruierbare Funktion $g(n)$, so gilt:
+        \[
+            \mathrm{DTIME}(f(n)) \subsetneq \mathrm{DTIME}(g(n)).
+        \]
+    \end{itemize}
+    Daraus folgt unmittelbar: $\mathrm{P} \subsetneq \mathrm{EXPTIME}$ sowie $\mathrm{DLOG} \subsetneq \mathrm{PSPACE}$.
+\end{theorem}
+
+% -----------------------------------------------------------------------------
+\subsection{Nichtdeterminismus und der Satz von Savitch}
+
+\begin{definition}[Nichtdeterministische Komplexitätsklassen]
+    Für Funktionen $t, s : \mathbb{N} \to \mathbb{N}$ ist $\mathrm{NTIME}(t(n))$ bzw.\ $\mathrm{NSPACE}(s(n))$ die Klasse aller Sprachen, die von einer NTM in maximaler Pfadlänge $O(t(n))$ bzw.\ maximalem Platzbedarf $O(s(n))$ akzeptiert werden:
+    \begin{itemize}
+        \item $\mathrm{NLOG} = \mathrm{NSPACE}(\log n)$,
+        \item $\mathrm{NP} = \bigcup_{k \ge 1} \mathrm{NTIME}(n^k)$,
+        \item $\mathrm{NPSPACE} = \bigcup_{k \ge 1} \mathrm{NSPACE}(n^k)$.
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}[Abschlusseigenschaften von NTIME]
+    Für jede Funktion $t(n) \ge n$ ist die Sprachklasse $\mathrm{NTIME}(t(n))$ abgeschlossen unter:
+    \begin{enumerate}
+        \item \textbf{Vereinigung:} $L_1, L_2 \in \mathrm{NTIME}(t(n)) \implies L_1 \cup L_2 \in \mathrm{NTIME}(t(n))$.
+        \item \textbf{Konkatenation:} $L_1, L_2 \in \mathrm{NTIME}(t(n)) \implies L_1 \cdot L_2 \in \mathrm{NTIME}(t(n))$.
+        \item \textbf{Kleene-Stern:} $L \in \mathrm{NTIME}(t(n)) \implies L^* \in \mathrm{NTIME}(t(n))$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \textbf{Beweisidee:} Wir nutzen die nichtdeterministische Verzweigung, um Aufteilungen der Eingabe in linearer Zeit zu "raten".
+    
+    Zu 1: Eine NTM rät im ersten Schritt ein Bit $b \in \{1, 2\}$ und simuliert auf demselben Pfad die Maschine für $L_b$.
+    Zu 2: Auf Eingabe $w$ mit $|w|=n$ rät die NTM nichtdeterministisch einen Zerlegungspunkt $1 \le i \le n$, sodass $w = u v$ mit $|u|=i$. Anschließend simuliert sie $M_1$ auf $u$ und, falls diese akzeptiert, $M_2$ auf $v$. Die Gesamtlaufzeit ist $O(n + t(i) + t(n-i)) = O(t(n))$.
+    Zu 3: Die NTM rät sukzessive die Zerlegung $w = u_1 u_2 \dots u_m$ "on-the-fly" und führt für jeden Teilblock die Simulation von $M_L$ aus.
+\end{proof}
+
+\begin{theorem}[Satz von Savitch (1970)]
+    Für jede raumkonstruierbare Funktion $s(n) \ge \log n$ gilt:
+    \[
+        \mathrm{NSPACE}(s(n)) \subseteq \mathrm{DSPACE}((s(n))^2).
+    \]
+    Insbesondere folgt daraus:
+    \[
+        \mathrm{PSPACE} = \mathrm{NPSPACE}.
+    \]
+\end{theorem}
+
+\begin{proof}
+    \textbf{Beweisidee:} Die Existenz eines akzeptierenden Pfades im Konfigurationsgraphen wird mittels eines rekursiven \emph{Divide-and-Conquer}-Verfahrens für das Erreichbarkeitsproblem (Mittelpunktsuche) deterministisch überprüft.
+    
+    Sei $N$ eine $s(n)$-platzbeschränkte NTM. Nach der Konfigurationsschranke besitzt $N$ auf einer Eingabe der Länge $n$ höchstens $M = c^{s(n)}$ Konfigurationen. Existiert ein akzeptierender Pfad, so existiert auch einer der Länge höchstens $M$.
+    
+    Wir definieren eine rekursive boolesche Funktion $\mathrm{Reachable}(C_1, C_2, t)$, die prüft, ob $C_2$ von $C_1$ aus in höchstens $t$ Schritten erreichbar ist:
+    \begin{enumerate}
+        \item Basisfall $t = 1$: Prüfe direkt, ob $C_1 = C_2$ oder $C_1 \vdash_N C_2$.
+        \item Rekursionsschritt $t > 1$: Iteriere über alle $C_{\mathrm{mid}} \in \mathrm{Konf}(N, n)$:
+        Prüfe, ob sowohl $\mathrm{Reachable}(C_1, C_{\mathrm{mid}}, \lceil t/2 \rceil)$
+        als auch $\mathrm{Reachable}(C_{\mathrm{mid}}, C_2, \lfloor t/2 \rfloor)$ wahr sind. Sobald ein solches $C_{\mathrm{mid}}$ existiert, gib \texttt{true} zurück.
+    \end{enumerate}
+    \textbf{Platzbedarfsanalyse:} Die maximale Rekursionstiefe beträgt $\lceil\log_2 M\rceil = \log_2(c^{s(n)}) = O(s(n))$. In jedem Rekursionsrahmen muss lediglich die aktuelle Zwischenkonfiguration $C_{\mathrm{mid}}$ sowie die Rahmenzähler gespeichert werden, was jeweils $O(s(n))$ Platz erfordert. Nach Rückkehr aus einem Teilzweig wird der Speicher des Unteraufrufs wiederverwendet. Der Gesamtspeicherbedarf auf dem Rekursionsstapel beträgt daher:
+    \[
+        \text{Tiefe} \times \text{Platz pro Rahmen} = O(s(n)) \cdot O(s(n)) = O((s(n))^2).
+    \]
+\end{proof}
+
+% -----------------------------------------------------------------------------
+\subsection{Die Klasse NP und Verifizierer}
+
+\begin{theorem}[Äquivalenz von NTMs und Verifizierern]
+    Eine Sprache $L \subseteq \Sigma^*$ liegt genau dann in $\mathrm{NP}$, wenn ein polynomieller Verifizierer $V \in \mathrm{P}$ und ein Polynom $p$ existieren, sodass für alle $w \in \Sigma^*$ gilt:
+    \[
+        w \in L \iff \exists c \in \Sigma^* \text{ mit } |c| \le p(|w|) \text{ und } V(w, c) = \text{akzeptiert}.
+    \]
+    Das Wort $c$ heißt \textbf{Zertifikat} (oder \textbf{Zeuge}) für $w \in L$.
+\end{theorem}
+
+\begin{proof}
+    \textbf{Beweisidee:} Wir identifizieren den akzeptierenden Rechenpfad einer NTM mit dem Zertifikat des Verifizierers.
+    
+    "$\implies$": Sei $L \in \mathrm{NP}$, entschieden von einer NTM $N$ mit Zeitschranke $q(n)$. Gilt $w \in L$, existiert eine Folge nichtdeterministischer Übergänge der Länge $m \le q(|w|)$, die zu $q_{\mathrm{accept}}$ führt. Wir wählen diese Übergangsfolge $c = d_1 d_2 \dots d_m$ als Zertifikat. Der Verifizierer $V(w, c)$ simuliert $N$ deterministisch auf $w$ entlang der in $c$ kodierten Schritte. Dies läuft in Zeit $O(q(|w|)) = O(p(|w|))$ und akzeptiert gdw. der Pfad akzeptierend ist.
+    
+    "$\impliedby$": Sei $L$ durch einen polynomiellen Verifizierer $V(w, c)$ mit Schranke $p(n)$ charakterisiert. Wir konstruieren eine NTM $N$: Auf Eingabe $w$ rät $N$ nichtdeterministisch in $p(|w|)$ Schritten ein beliebiges Wort $c \in \Sigma^*$ mit $|c| \le p(|w|)$. Danach führt $N$ den deterministischen Algorithmus $V(w, c)$ aus. Da das Raten und die Verifikation in polynomieller Zeit erfolgen, gilt $L \in \mathrm{NP}$.
+\end{proof}
+
+% -----------------------------------------------------------------------------
+\subsection{NP-Vollständigkeit und der Satz von Cook-Levin}
+
+\begin{definition}[Polynomielle Reduktion / Karp-Reduktion]
+    Eine Sprache $L_1$ heißt \textbf{polynomiell reduzierbar} auf $L_2$ (notiert $L_1 \le_p L_2$), falls eine in polynomieller Zeit berechenbare Funktion $f : \Sigma_1^* \to \Sigma_2^*$ existiert, sodass für alle $w \in \Sigma_1^*$ gilt:
+    \[
+        w \in L_1 \iff f(w) \in L_2.
+    \]
+\end{definition}
+
+\begin{definition}[NP-Härte und NP-Vollständigkeit]
+    Eine Sprache $L$ heißt:
+    \begin{itemize}
+        \item \textbf{NP-hart}, falls für alle Sprachen $L' \in \mathrm{NP}$ gilt: $L' \le_p L$.
+        \item \textbf{NP-vollständig} ($\mathrm{NPC}$), falls $L \in \mathrm{NP}$ und $L$ NP-hart ist.
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}[Satz von Cook-Levin (1971)]
+    Das Erfüllbarkeitsproblem der Aussagenlogik ($\mathrm{SAT}$) ist NP-vollständig:
+    \[
+        \mathrm{SAT} = \{\Phi \in \mathrm{PropFormeln} \mid \exists \text{ erfüllende Belegung für } \Phi\} \in \mathrm{NPC}.
+    \]
+\end{theorem}
+
+\begin{proof}
+    \textbf{Beweisidee:} Wir kodieren die gesamte Berechnungsmatrix (das \emph{Tableau}) einer beliebigen polynomiellen NTM auf einer Eingabe $w$ in eine aussagenlogische Formel in KNF, deren Erfüllbarkeit äquivalent zur Existenz eines akzeptierenden Berechnungspfades ist.
+    
+    Sei $L \in \mathrm{NP}$ und $M$ eine NTM, die $L$ in Zeit $p(n)$ entscheidet. Das Tableau der Berechnung besitzt die Dimension $(p(n)+1) \times (2p(n)+3)$.
+    Wir definieren boolesche Variablen:
+    \begin{itemize}
+        \item $C_{i, j, s} = 1 \iff$ In Schritt $i$ steht in Zelle $j$ das Bandsymbol $s \in \Gamma$.
+        \item $S_{i, q} = 1 \iff$ In Schritt $i$ befindet sich $M$ im Zustand $q \in Q$.
+        \item $H_{i, j} = 1 \iff$ In Schritt $i$ steht der Lese-/Schreibkopf auf Zelle $j$.
+    \end{itemize}
+    Die Gesamtformel $\Phi_{M, w}$ ist die Konjunktion aus vier Klauselgruppen:
+    \begin{enumerate}
+        \item $\Phi_{\mathrm{start}}$: Erzwingt die Startkonfiguration zum Zeitschritt $i=0$ (Zustand $q_0$, Kopf auf Zelle 0, Eingabe $w$ auf den ersten $n$ Zellen, sonst $\sqcup$).
+        \item $\Phi_{\mathrm{unique}}$: Garantiert, dass zu jedem Zeitschritt $i$ genau ein Zustand aktiv ist, der Kopf auf genau einer Zelle steht und jede Zelle genau ein Symbol enthält.
+        \item $\Phi_{\mathrm{step}}$: Erzwingt lokale Übergangskonsistenz:
+        Befindet sich der Kopf in Schritt $i$ nicht auf Zelle $j$, bleibt der Inhalt unverändert ($C_{i+1, j, s} \leftrightarrow C_{i, j, s}$). Befindet sich der Kopf auf Zelle $j$, müssen Zustand, geschriebenes Symbol und Kopfbewegung für Schritt $i+1$ mit einer zulässigen Regel aus $\delta(q, s)$ übereinstimmen.
+        \item $\Phi_{\mathrm{accept}}$: Erzwingt das Erreichen des akzeptierenden Zustands: $\bigvee_{i=0}^{p(n)} S_{i, q_{\mathrm{accept}}}$.
+    \end{enumerate}
+    Jede dieser Teilformeln lässt sich in KNF ausdrücken. Die Gesamtlänge von $\Phi_{M, w}$ ist $O(p(n)^2)$, also polynomiell in $n = |w|$, und in polynomieller Zeit konstruierbar.
+\end{proof}
+
+\begin{theorem}[Kanonische NP-Vollständigkeitsreduktionen]
+    Es gilt die Reduktionskette:
+    \[
+        \mathrm{SAT} \le_p \mathrm{3SAT} \le_p \mathrm{CLIQUE} \le_p \mathrm{IND\text{-}SET} \le_p \mathrm{VERTEX\text{-}COVER}.
+    \]
+\end{theorem}
+
+\begin{proof}
+    \textbf{Beweisidee:} Wir transformieren schrittweise logische Klauseln in Graphstrukturen und nutzen graphentheoretische Dualitäten.
+    
+    \textbf{1. $\mathrm{SAT} \le_p \mathrm{3SAT}$:} Klauseln mit mehr als 3 Literalen $(l_1 \lor l_2 \lor \dots \lor l_k)$ werden durch Einführen frischer Hilfsvariablen $y_1, \dots, y_{k-3}$ kaskadiert aufgespalten:
+    \[
+        (l_1 \lor l_2 \lor y_1) \land (\overline{y}_1 \lor l_3 \lor y_2) \land \dots \land (\overline{y}_{k-3} \lor l_{k-1} \lor l_k).
+    \]
+    \textbf{2. $\mathrm{3SAT} \le_p \mathrm{CLIQUE}$:} Gegeben $\Phi = C_1 \land \dots \land C_m$ mit 3 Literalen pro Klausel. Konstruiere Graph $G=(V, E)$: Für jedes Literalvorkommen existiert ein Knoten. Kanten verbinden zwei Knoten genau dann, wenn sie aus \textbf{verschiedenen} Klauseln stammen und nicht komplementär zueinander sind ($l \neq \overline{l}'$). Eine Clique der Größe $m$ wählt genau ein erfüllendes Literal pro Klausel widerspruchsfrei aus.
+    
+    \textbf{3. $\mathrm{CLIQUE} \le_p \mathrm{IND\text{-}SET}$:} Ein Teilgraph $S \subseteq V$ ist eine Clique in $G \iff S$ ist eine unabhängige Menge (Independent Set) im Komplementgraphen $\overline{G} = (V, \binom{V}{2} \setminus E)$.
+    
+    \textbf{4. $\mathrm{IND\text{-}SET} \le_p \mathrm{VERTEX\text{-}COVER}$:} \textbf{Dualitätssatz von Gallai:} In jedem ungerichteten Graphen $G = (V, E)$ ist $S \subseteq V$ genau dann eine unabhängige Menge, wenn das Komplement $V \setminus S$ eine Knotenüberdeckung (Vertex Cover) ist. Die Reduktion setzt daher $k' = |V| - k$.
+\end{proof}
+
+\begin{definition}[Optimierungsklassen PO und NPO]
+    Ein Optimierungsproblem $U = (I, \mathrm{sol}, \mathrm{cost}, \mathrm{goal})$ besteht aus Eingaben $I$, zulässigen Lösungen $\mathrm{sol}(x)$, Bewertungsfunktion $\mathrm{cost}$ und Ziel $\mathrm{goal} \in \{\min, \max\}$.
+    \begin{itemize}
+        \item $U \in \mathrm{PO}$, falls eine optimale Lösung in deterministischer Polynomialzeit berechenbar ist.
+        \item $U \in \mathrm{NPO}$, falls zulässige Lösungen polynomiell lang sind, Lösungseigenschaft und Kosten in P prüfbar sind.
+    \end{itemize}
+\end{definition}
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption{Übersicht der Komplexitätsklassen und ihrer Inklusionen}
+    \label{tab:komplexitaet}
+    \vspace{0.5em}
+    \begin{tabular}{p{4.2cm}p{4cm}p{5.5cm}}
+        \toprule
+        \textbf{Klasse} & \textbf{Ressourcenschranke} & \textbf{Vollständige Probleme} \\
+        \midrule
+        $\mathrm{DLOG}$ & $\mathrm{DSPACE}(\log n)$ & Deterministische Erreichbarkeit \\
+        $\mathrm{NLOG}$ & $\mathrm{NSPACE}(\log n)$ & Gerichtete Erreichbarkeit ($\mathrm{ST\text{-}CONN}$) \\
+        $\mathrm{P}$ & $\bigcup_k \mathrm{DTIME}(n^k)$ & $\mathrm{HORN\text{-}SAT}$, Lineare Programmierung \\
+        $\mathrm{NP}$ & $\bigcup_k \mathrm{NTIME}(n^k)$ & $\mathrm{3SAT}, \mathrm{CLIQUE}, \mathrm{VERTEX\text{-}COVER}$ \\
+        $\mathrm{PSPACE} = \mathrm{NPSPACE}$ & $\bigcup_k \mathrm{DSPACE}(n^k)$ & $\mathrm{QBF}$ (Quantifizierte Formeln) \\
+        $\mathrm{EXPTIME}$ & $\bigcup_k \mathrm{DTIME}(2^{n^k})$ & Verallgemeinertes Schach / Go \\
+        \bottomrule
+    \end{tabular}
+\end{table}

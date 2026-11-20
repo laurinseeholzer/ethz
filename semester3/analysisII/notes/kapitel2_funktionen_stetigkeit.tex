@@ -1,0 +1,163 @@
+\section{Vektorwertige Funktionen \& Stetigkeit}
+
+\subsection{Grundlagen mehrdimensionaler Funktionen}
+
+\begin{definition}
+    \textbf{Vektorwertige Funktion:} Eine Abbildung $f: D \subset \mathbb{R}^n \to \mathbb{R}^m$ ordnet jedem Vektor $x = (x_1, \dots, x_n)^T \in D$ einen Bildvektor zu:
+    $$ f(x) = \begin{pmatrix} f_1(x) \\ \vdots \\ f_m(x) \end{pmatrix} = \big( f_1(x_1, \dots, x_n), \dots, f_m(x_1, \dots, x_n) \big)^T $$
+    Die reellwertigen Funktionen $f_i: D \to \mathbb{R}$ ($i = 1, \dots, m$) heissen \textbf{Komponentenfunktionen} von $f$.
+    \begin{itemize}
+        \item Für $m = 1$: \textbf{Skalarfeld} (z.B. Temperatur- oder Höhenverteilung).
+        \item Für $n = 1, m > 1$: \textbf{Kurve} bzw. Raumkurve $\gamma: I \to \mathbb{R}^m$.
+        \item Für $n > 1, m > 1$: \textbf{Vektorfeld} (z.B. Strömungs- oder Gravitationsfeld).
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    \textbf{Graph \& Niveaumengen (Level Sets):}
+    \begin{itemize}
+        \item Der \textbf{Graph} von $f: D \subset \mathbb{R}^n \to \mathbb{R}^m$ ist die Teilmenge:
+        $$ \operatorname{graph}(f) := \{ (x, f(x)) \in \mathbb{R}^{n+m} \mid x \in D \} $$
+        \item Für ein Skalarfeld $f: D \subset \mathbb{R}^n \to \mathbb{R}$ und einen Wert $c \in \mathbb{R}$ heisst
+        $$ N_c(f) := \{ x \in D \mid f(x) = c \} = f^{-1}(\{c\}) $$
+        die \textbf{Niveaumenge} zum Niveau $c$.
+        Im $\mathbb{R}^2$ heissen sie \textbf{Niveaulinien / Höhenlinien}, im $\mathbb{R}^3$ \textbf{Niveauflächen}.
+    \end{itemize}
+\end{definition}
+
+\subsection{Grenzwerte von Funktionen}
+
+\begin{definition}
+    \textbf{Grenzwert einer Funktion:} Sei $D \subset \mathbb{R}^n$, $x_0 \in \mathbb{R}^n$ ein Häufungspunkt von $D$ und $f: D \to \mathbb{R}^m$. Der Vektor $y^* \in \mathbb{R}^m$ heisst \textbf{Grenzwert} von $f$ für $x \to x_0$, geschrieben $\lim_{x \to x_0} f(x) = y^*$, falls gilt:
+    $$ \forall \varepsilon > 0 \; \exists \delta > 0 \; \forall x \in D: \big( 0 < \|x - x_0\| < \delta \implies \|f(x) - y^*\| < \varepsilon \big) $$
+\end{definition}
+
+\begin{theorem}
+    \textbf{Heine-Kriterium:} \\
+    Es gilt $\lim_{x \to x_0} f(x) = y^*$ genau dann, wenn für \textit{jede} Folge $(x_k)_{k \in \mathbb{N}} \subset D \setminus \{x_0\}$ mit $\lim_{k \to \infty} x_k = x_0$ gilt:
+    $$ \lim_{k \to \infty} f(x_k) = y^* $$
+\end{theorem}
+
+\begin{example}
+    \textbf{Kochrezept: Grenzwert \& Stetigkeit im $\mathbb{R}^2$ untersuchen}
+    
+    Gegeben sei $f(x, y)$ und gesucht ist das Verhalten an einer kritischen Stelle, meist $(x_0, y_0) = (0, 0)$.
+
+    \textbf{Teil A: Verdacht auf Nichtexistenz (Widerlegen via Pfadtests)}
+    \begin{enumerate}
+        \item \textbf{Geradentest:} Annäherung entlang beliebiger Ursprungsgeraden $y = mx$ (bzw. $x = 0$ separat):
+        $$ \lim_{x \to 0} f(x, mx) = L(m) $$
+        Hängt das Ergebnis $L(m)$ von der Steigung $m$ ab, so \textbf{existiert der Grenzwert nicht}.
+        \item \textbf{Parabeltest (Gradabgleich):}
+        Haben Zähler und Nenner unterschiedliche Potenzen (z.B. Nenner $x^2 + y^4$), so testen Geraden $y = mx$ nur das Verhalten $x^2 + m^2 x^2 = \mathcal{O}(x^2)$. Setze stattdessen eine Parabel ein, die die Grade der Summanden im Nenner ausgleicht (hier: $x = k y^2$):
+        $$ \lim_{y \to 0} f(k y^2, y) = L(k) $$
+        Hängt das Ergebnis von $k$ ab, so \textbf{existiert der Grenzwert nicht}.
+    \end{enumerate}
+
+    \textbf{Teil B: Verdacht auf Existenz (Beweisen via Abschätzung oder Polarkoordinaten)}
+    \begin{enumerate}
+        \item \textbf{Polarkoordinaten mit $\varphi$-unabhängiger Majorante:}
+        Setze $x = r \cos\varphi, y = r \sin\varphi$ mit $r \to 0$. Schätze den Betrag ab:
+        $$ |f(r\cos\varphi, r\sin\varphi) - L| \le g(r) $$
+        Gilt $\lim_{r \to 0} g(r) = 0$ \textbf{gleichmässig in $\varphi$} (d.h. $g(r)$ enthält kein $\varphi$), so existiert der Grenzwert und ist gleich $L$.
+        \item \textbf{Nullfolgenabschätzung / Sandwich-Theorem:}
+        Nutze bekannte Ungleichungen wie $|xy| \le \frac{1}{2}(x^2 + y^2)$ oder $|x| \le \sqrt{x^2 + y^2}$:
+        $$ 0 \le |f(x, y) - L| \le C \cdot (x^2 + y^2)^\alpha \quad (\alpha > 0) \implies \lim_{(x,y)\to(0,0)} f(x, y) = L $$
+    \end{enumerate}
+\end{example}
+
+\begin{example}
+    \textbf{Pfadtests beweisen niemals die Existenz!}
+    Selbst wenn $\lim_{x \to 0} f(x, mx) = 0$ für \textbf{alle} Geraden gilt, kann der Grenzwert dennoch nicht existieren!
+    \textbf{Standardbeispiel:} $f(x, y) = \frac{x y^2}{x^2 + y^4}$ für $(x, y) \neq (0, 0)$.
+    \begin{itemize}
+        \item Auf Geraden $y = mx$: $f(x, mx) = \frac{m^2 x^3}{x^2 + m^4 x^4} = \frac{m^2 x}{1 + m^4 x^2} \xrightarrow{x \to 0} 0$.
+        \item Auf der Parabel $x = y^2$: $f(y^2, y) = \frac{y^4}{y^4 + y^4} = \frac{1}{2} \xrightarrow{y \to 0} \frac{1}{2} \neq 0$.
+    \end{itemize}
+    Der Grenzwert existiert nicht!
+\end{example}
+
+\begin{remark}
+    \textbf{Klausur-Rezept: Polarkoordinaten \& $\varphi$-unabhängige Majorante} \\
+    \textbf{Häufiger Klausurfehler:} \\
+    Viele Studierende setzen $x = r\cos\varphi, y = r\sin\varphi$ ein, halten $\varphi$ fest und lassen $r \to 0$ laufen. \textbf{Das beweist keine Stetigkeit!} Denn ein festes $\varphi$ entspricht lediglich einer Ursprungsgeraden mit Steigung $\tan\varphi$ – man führt damit nichts anderes als den Geradentest durch und übersieht gekrümmte Pfade.
+
+    \textbf{Das korrekte Rezept (Winkelunabhängige Majorante):}
+    \begin{enumerate}
+        \item Setze $x = r \cos\varphi$ und $y = r \sin\varphi$ ein und vereinfache mit $\cos^2\varphi + \sin^2\varphi = 1$.
+        \item Schätze den Betrag nach oben gegen eine Funktion $g(r)$ ab, die \textbf{kein $\varphi$ mehr enthält}:
+        $$ |f(r\cos\varphi, r\sin\varphi) - L| \le g(r) \quad \text{mit} \quad \lim_{r \to 0} g(r) = 0 $$
+        Nur wenn diese Schranke für \textit{alle} $\varphi \in [0, 2\pi)$ simultan gilt, ist die Konvergenz gleichmäßig in allen Richtungen bewiesen!
+    \end{enumerate}
+
+    \textbf{2-zeiliges Standardbeispiel:} Untersuche $f(x, y) = \frac{x^3}{x^2 + y^2}$ auf Stetigkeit in $(0, 0)$ mit $f(0, 0) := 0$:
+    $$ |f(r\cos\varphi, r\sin\varphi) - 0| = \left| \frac{r^3 \cos^3\varphi}{r^2} \right| = r |\cos^3\varphi| \le r =: g(r) \xrightarrow{r \to 0} 0 $$
+    Da $g(r) = r \to 0$ winkelunabhängig ist, folgt sofort $\lim_{(x,y)\to(0,0)} f(x, y) = 0 = f(0,0)$, also ist $f$ in $(0, 0)$ stetig.
+\end{remark}
+
+\subsection{Stetigkeit mehrdimensionaler Funktionen}
+
+\begin{definition}
+    \textbf{Stetigkeit:} Sei $D \subset \mathbb{R}^n$ und $x_0 \in D$. Die Funktion $f: D \to \mathbb{R}^m$ heisst \textbf{stetig in $x_0$}, falls
+    $$ \lim_{x \to x_0} f(x) = f(x_0) $$
+    gilt. $f$ heisst \textbf{stetig auf $D$}, falls $f$ in jedem Punkt $x \in D$ stetig ist.
+\end{definition}
+
+\begin{theorem}
+    \textbf{Äquivalente Charakterisierungen der Stetigkeit:}
+    Für eine Funktion $f: D \subset \mathbb{R}^n \to \mathbb{R}^m$ sind äquivalent:
+    \begin{enumerate}
+        \item \textbf{$\varepsilon$-$\delta$-Stetigkeit:} $\forall x_0 \in D \; \forall \varepsilon > 0 \; \exists \delta > 0 \; \forall x \in D: \|x - x_0\| < \delta \implies \|f(x) - f(x_0)\| < \varepsilon$.
+        \item \textbf{Folgenstetigkeit:} Für jede Folge $(x_k) \subset D$ mit $x_k \to x_0 \in D$ gilt $f(x_k) \to f(x_0)$.
+        \item \textbf{Topologische Stetigkeit (Urbilder):} Für jede offene Menge $V \subset \mathbb{R}^m$ ist das Urbild $f^{-1}(V) = \{x \in D \mid f(x) \in V\}$ relativ offen in $D$. (Analog: Urbilder abgeschlossener Mengen sind relativ abgeschlossen).
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+    \textbf{Topologische Stetigkeit: Warum Urbilder offener Mengen?} \\
+    \textbf{Der Brückenschlag zum $\varepsilon$-$\delta$-Kriterium:} \\
+    Warum definiert die moderne Topologie Stetigkeit über Urbilder ($f^{-1}(V)$ offen für jedes offene $V$) statt über Distanzen?
+    \begin{itemize}
+        \item Wähle im Bildraum als offene Menge $V$ den Ball $B_\varepsilon(f(x_0))$.
+        \item Dass das Urbild $f^{-1}(V)$ offen ist, bedeutet: Um den Punkt $x_0 \in f^{-1}(V)$ existiert ein Ball $B_\delta(x_0) \subset f^{-1}(V)$.
+        \item Bildet man diesen Ball ab, folgt $f(B_\delta(x_0)) \subset V = B_\varepsilon(f(x_0))$, was in Symbolen lautet:
+        $$ \|x - x_0\| < \delta \implies \|f(x) - f(x_0)\| < \varepsilon $$
+    \end{itemize}
+    Die topologische Definition ist also nichts anderes als das vertraute $\varepsilon$-$\delta$-Kriterium – nur koordinaten- und metrikenfrei formuliert!
+\end{remark}
+
+\begin{example}
+    \textbf{Klausurfalle: Urbild $\neq$ Bild!} \\
+    Die Stetigkeit garantiert die Offenheit \textbf{ausschließlich für das Urbild}, \textbf{niemals für das Bild}!
+    
+    Betrachte die stetige Funktion $f: \mathbb{R} \to \mathbb{R}, f(x) = x^2$ und das offene Intervall $U = (-1, 1)$.
+    Das Bild ist:
+    $$ f(U) = [0, 1) $$
+    Dieses Intervall ist im $\mathbb{R}$ \textbf{nicht offen}, da der Randpunkt $0$ im Bild liegt, aber keine Kugel $B_\varepsilon(0)$ ganz in $[0, 1)$ enthalten ist. (Funktionen, die offene Mengen stets auf offene Mengen abbilden, heissen \textit{offene Abbildungen}; Stetigkeit verlangt dies keineswegs!).
+\end{example}
+
+\begin{theorem}
+    \textbf{Eigenschaften stetiger Funktionen:}
+    \begin{itemize}
+        \item \textbf{Komponentenweise Stetigkeit:} $f = (f_1, \dots, f_m)^T: D \to \mathbb{R}^m$ ist stetig $\iff$ jede Komponentenfunktion $f_i: D \to \mathbb{R}$ ($i = 1, \dots, m$) ist stetig.
+        \item \textbf{Algebraische Kombinationen:} Sind $f, g: D \to \mathbb{R}^m$ stetig und $\lambda \in \mathbb{R}$, so sind auch $f + g$ und $\lambda f$ stetig. Für reellwertige $f, g: D \to \mathbb{R}$ sind auch $f \cdot g$ sowie $\frac{f}{g}$ (wo $g(x) \neq 0$) stetig.
+        \item \textbf{Komposition:} Sind $f: D \subset \mathbb{R}^n \to \mathbb{R}^m$ und $g: E \subset \mathbb{R}^m \to \mathbb{R}^p$ stetig mit $f(D) \subset E$, so ist die Komposition $g \circ f: D \to \mathbb{R}^p$ stetig.
+    \end{itemize}
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Kompaktheit und Stetigkeit:} Sei $K \subset \mathbb{R}^n$ kompakt und $f: K \to \mathbb{R}^m$ stetig.
+    Dann ist das Bild $f(K) \subset \mathbb{R}^m$ ebenfalls kompakt
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Extremsatz von Weierstraß:} \\
+    Sei $K \subset \mathbb{R}^n$ nicht-leer und \textbf{kompakt} (abgeschlossen und beschränkt) und $f: K \to \mathbb{R}$ \textbf{stetig}.
+    Dann nimmt $f$ auf $K$ ihr globales Maximum und ihr globales Minimum garantiert an:
+    $$ \exists x_{\min}, x_{\max} \in K \quad \text{mit} \quad f(x_{\min}) \le f(x) \le f(x_{\max}) \quad \forall x \in K $$
+\end{theorem}
+
+\begin{theorem}
+    \textbf{Gleichmässige Stetigkeit (Satz von Heine):} Eine Funktion $f: D \to \mathbb{R}^m$ heisst \textbf{gleichmässig stetig}, wenn $\forall \varepsilon > 0 \; \exists \delta > 0 \; \forall x, y \in D: \|x - y\| < \delta \implies \|f(x) - f(y)\| < \varepsilon$.
+    Ist $K \subset \mathbb{R}^n$ \textbf{kompakt} und $f: K \to \mathbb{R}^m$ stetig, so ist $f$ auf $K$ \textbf{automatisch gleichmässig stetig}.
+\end{theorem}

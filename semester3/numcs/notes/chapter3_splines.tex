@@ -1,0 +1,242 @@
+\section{Piecewise Polynomial Interpolation \& Splines}
+
+While global polynomial interpolation achieves spectral convergence for analytic functions when nodes are clustered like Chebyshev nodes, it remains fundamentally unsuited for functions with local roughness, kinks, or when data is supplied on fixed, arbitrary grids. Piecewise polynomial interpolation overcomes this by partitioning the interval $[a, b]$ into subintervals and fitting low-degree polynomials locally.
+
+\begin{definition}[Mesh Partition]
+    A mesh (or grid) on $[a, b]$ is a sequence of points:
+    \begin{equation}
+        \Delta: a = x_0 < x_1 < x_2 < \dots < x_N = b.
+    \end{equation}
+    The $j$-th subinterval is $I_j = [x_{j-1}, x_j]$ with local mesh width $h_j = x_j - x_{j-1}$. The global mesh width is $h = \max_{1 \le j \le N} h_j$.
+\end{definition}
+
+% -----------------------------------------------------------------------------
+\subsection{Piecewise Linear Interpolation}
+
+\begin{definition}[Piecewise Linear Interpolant]
+    The piecewise linear interpolant $s_{\Delta} \in C^0([a, b])$ satisfies $s_{\Delta}(x_j) = y_j$ for $j=0, \dots, N$, and on each subinterval $I_j = [x_{j-1}, x_j]$:
+    \begin{equation}
+        s_{\Delta}(x) = y_{j-1} + \frac{y_j - y_{j-1}}{h_j} (x - x_{j-1}) = \frac{x_j - x}{h_j} y_{j-1} + \frac{x - x_{j-1}}{h_j} y_j.
+    \end{equation}
+\end{definition}
+
+\begin{theorem}[Piecewise Linear Error Bound]
+    Let $f \in C^2([a, b])$. The interpolation error of the piecewise linear interpolant satisfies:
+    \begin{equation}
+        \|f - s_{\Delta}\|_{L^\infty([a, b])} \le \frac{h^2}{8} \|f''\|_{L^\infty([a, b])} = \mathcal{O}(h^2).
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    On each subinterval $I_j$, applying the Cauchy remainder theorem for degree $n=1$:
+    \begin{equation}
+        f(x) - s_{\Delta}(x) = \frac{f''(\xi_x)}{2} (x - x_{j-1})(x - x_j).
+    \end{equation}
+    The quadratic factor achieves its maximum magnitude at the midpoint $x = \frac{x_{j-1} + x_j}{2}$, where:
+    \begin{equation}
+        \max_{x \in I_j} |(x - x_{j-1})(x - x_j)| = \left(\frac{h_j}{2}\right)^2 = \frac{h_j^2}{4}.
+    \end{equation}
+    Multiplying by the factor $\frac{1}{2}$ yields the global bound $\frac{h^2}{8} \|f''\|_\infty$.
+\end{proof}
+
+% -----------------------------------------------------------------------------
+\subsection{Cubic Hermite Interpolation \& Shape-Preserving Splines (PCHIP)}
+
+Linear interpolation is continuous ($C^0$), but its derivative is discontinuous at every knot $x_j$, producing sharp visual kinks. When both function values and derivative values are known at the nodes, we use cubic Hermite interpolation.
+
+\begin{definition}[Cubic Hermite Interpolant]
+    Given values $y_j = f(x_j)$ and slopes $c_j = f'(x_j)$ for $j=0, \dots, N$, the cubic Hermite interpolant $s_H \in C^1([a, b])$ is the unique piecewise cubic polynomial satisfying:
+    \begin{equation}
+        s_H(x_j) = y_j, \quad s_H'(x_j) = c_j, \quad \forall j = 0, \dots, N.
+    \end{equation}
+    On $I_j = [x_{j-1}, x_j]$, introducing normalized coordinate $t = \frac{x - x_{j-1}}{h_j} \in [0, 1]$:
+    \begin{equation}
+        s_H(x(t)) = y_{j-1} H_0(t) + y_j H_1(t) + h_j c_{j-1} \widehat{H}_0(t) + h_j c_j \widehat{H}_1(t),
+    \end{equation}
+    where the cardinal cubic Hermite polynomials are:
+    \begin{align}
+        H_0(t) &= 1 - 3t^2 + 2t^3, \quad &&H_1(t) = 3t^2 - 2t^3, \\
+        \widehat{H}_0(t) &= t - 2t^2 + t^3, \quad &&\widehat{H}_1(t) = -t^2 + t^3.
+    \end{align}
+\end{definition}
+
+\begin{theorem}[Cubic Hermite Error Order]
+    If $f \in C^4([a, b])$ and slopes $c_j = f'(x_j)$ are exact, the cubic Hermite error satisfies:
+    \begin{equation}
+        \|f - s_H\|_{L^\infty([a, b])} \le \frac{h^4}{384} \|f^{(4)}\|_{L^\infty([a, b])} = \mathcal{O}(h^4).
+    \end{equation}
+\end{theorem}
+
+\begin{important}[Monotonicity Preservation \& PCHIP]
+    In physical modeling, financial curves, or density estimation, data is often strictly monotonic. Standard splines frequently introduce spurious oscillations (overshoots) between nodes.
+    \begin{itemize}
+        \item \textbf{Fritsch-Carlson Conditions:} A cubic polynomial on $[x_{j-1}, x_j]$ is monotonic if and only if the derivative pair $(c_{j-1}, c_j)$ lies within a specific ellipse in the plane of secant slopes $d_j = \frac{y_j - y_{j-1}}{h_j}$.
+        \item \textbf{PCHIP (Piecewise Cubic Hermite Interpolating Polynomial):} Available in \texttt{scipy.interpolate.PchipInterpolator}. It computes internal slopes $c_j$ using weighted harmonic means of neighboring secants $d_j$ and $d_{j+1}$. If $d_j$ and $d_{j+1}$ have opposite signs (a local extremum), PCHIP sets $c_j = 0$, guaranteeing that no new extrema are introduced!
+    \end{itemize}
+\end{important}
+
+% -----------------------------------------------------------------------------
+\subsection{Cubic Splines}
+
+When derivative data $c_j$ is \textit{not} available, can we construct a smooth interpolant that is twice continuously differentiable ($C^2$)? This leads to the concept of **cubic splines**.
+
+\begin{definition}[Cubic Spline]
+    A function $s: [a, b] \to \mathbb{R}$ is a cubic spline with respect to mesh $\Delta$ if:
+    \begin{enumerate}
+        \item $s(x_j) = y_j$ for all $j = 0, \dots, N$ (Interpolation),
+        \item $s|_{I_j} \in \mathcal{P}_3$ for each subinterval $I_j = [x_{j-1}, x_j]$, $j = 1, \dots, N$ (Piecewise Cubic),
+        \item $s \in C^2([a, b])$ (Global $C^2$ Continuity across all internal knots).
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[Degree-of-Freedom Counting \& Boundary Conditions]
+    \begin{itemize}
+        \item Each of the $N$ cubic polynomials has 4 coefficients, giving \textbf{$4N$ degrees of freedom}.
+        \item \textbf{Constraints:}
+        \begin{itemize}
+            \item Interpolation conditions: $s(x_{j-1}^+) = y_{j-1}$ and $s(x_j^-) = y_j$ on each $I_j$ gives $2N$ conditions.
+            \item Continuity of first derivative $s'(x_j^-) = s'(x_j^+)$ at $N-1$ interior knots gives $N-1$ conditions.
+            \item Continuity of second derivative $s''(x_j^-) = s''(x_j^+)$ at $N-1$ interior knots gives $N-1$ conditions.
+        \end{itemize}
+        \item Total constraints: $2N + (N - 1) + (N - 1) = 4N - 2$.
+    \end{itemize}
+    \textbf{There is a deficit of exactly 2 conditions.} Closing the system requires prescribing 2 boundary conditions.
+\end{theorem}
+
+\subsubsection{Derivation of the Tridiagonal System for Slopes}
+Let $c_j = s'(x_j)$ denote the unknown slopes. On interval $I_j$, $s|_{I_j}$ is the cubic Hermite interpolant determined by $(y_{j-1}, y_j, c_{j-1}, c_j)$. Computing the second derivatives at the boundaries of $I_j$ and $I_{j+1}$ and equating $s''(x_j^-) = s''(x_j^+)$ yields the following fundamental relation for $j = 1, \dots, N-1$:
+\begin{equation}
+    \frac{1}{h_j} c_{j-1} + 2\left(\frac{1}{h_j} + \frac{1}{h_{j+1}}\right) c_j + \frac{1}{h_{j+1}} c_{j+1} = 3\left( \frac{y_j - y_{j-1}}{h_j^2} + \frac{y_{j+1} - y_j}{h_{j+1}^2} \right).
+\end{equation}
+Setting $b_j = \frac{1}{h_{j+1}}$ and $d_j = \frac{y_{j+1} - y_j}{h_{j+1}}$, this becomes:
+\begin{equation}
+    b_{j-1} c_{j-1} + 2(b_{j-1} + b_j) c_j + b_j c_{j+1} = 3\left( \frac{d_{j-1}}{h_j} + \frac{d_j}{h_{j+1}} \right).
+\end{equation}
+
+\subsubsection{The Four Standard Boundary Conditions}
+\begin{enumerate}
+    \item \textbf{Clamped (Complete) Spline:} Slopes at the endpoints are specified: $s'(a) = c_0$ and $s'(b) = c_N$. This directly eliminates $c_0$ and $c_N$ from the unknowns, leaving an $(N-1) \times (N-1)$ tridiagonal system.
+    
+    \item \textbf{Natural Spline:} Second derivatives vanish at the boundaries:
+    \begin{equation}
+        s''(a) = s''(b) = 0.
+    \end{equation}
+    This gives the two closure equations:
+    \begin{align}
+        2 c_0 + c_1 &= 3 \frac{y_1 - y_0}{h_1}, \\
+        c_{N-1} + 2 c_N &= 3 \frac{y_N - y_{N-1}}{h_N}.
+    \end{align}
+    
+    \item \textbf{Periodic Spline:} For periodic data ($y_0 = y_N$), we enforce:
+    \begin{equation}
+        s'(a) = s'(b), \quad s''(a) = s''(b).
+    \end{equation}
+    This yields a cyclic tridiagonal system (non-zero corner elements).
+    
+    \item \textbf{Not-a-Knot Spline (SciPy Default):} The third derivative $s'''$ is continuous across $x_1$ and $x_{N-1}$. This means that the first two cubic segments coincide into a single cubic polynomial, as do the last two.
+\end{enumerate}
+
+\begin{theorem}[Minimum Bending Property of Natural Splines (Holladay)]
+    Let $s$ be the natural cubic spline interpolating $(x_j, y_j)_{j=0}^N$. For any other function $g \in C^2([a, b])$ that also interpolates $(x_j, y_j)$:
+    \begin{equation}
+        \int_{a}^{b} |s''(x)|^2 dx \le \int_{a}^{b} |g''(x)|^2 dx.
+    \end{equation}
+    A natural cubic spline minimizes total bending curvature energy. It mimics a flexible mechanical drafting spline passing through duck weights.
+\end{theorem}
+
+\begin{theorem}[Strict Diagonal Dominance \& Thomas Algorithm]
+    For both clamped and natural boundary closures, the tridiagonal matrix $A \in \mathbb{R}^{(N+1) \times (N+1)}$ satisfies:
+    \begin{equation}
+        |A_{j,j}| = 2(b_{j-1} + b_j) > b_{j-1} + b_j = \sum_{k \neq j} |A_{j,k}|.
+    \end{equation}
+    The system is \textbf{strictly diagonally dominant} and symmetric positive definite (SPD). It is uniquely solvable in $\mathcal{O}(N)$ flops and $\mathcal{O}(N)$ memory without pivoting using the \textbf{Thomas algorithm} (tridiagonal Gaussian elimination).
+\end{theorem}
+
+\begin{theorem}[Global Spline Convergence Order]
+    For $f \in C^4([a, b])$, the cubic spline $s$ satisfies:
+    \begin{equation}
+        \|f - s\|_{L^\infty([a, b])} = \mathcal{O}(h^4).
+    \end{equation}
+\end{theorem}
+
+% -----------------------------------------------------------------------------
+\subsection{B-Splines \& Cox-de Boor Algorithm}
+
+\begin{definition}[B-Spline Basis]
+    Given a non-decreasing knot vector $\tau = (t_0 \le t_1 \le \dots \le t_m)$, the $i$-th B-spline basis function of degree $p$, denoted $B_{i,p}(t)$, is defined recursively by the \textbf{Cox-de Boor recursion}:
+    \begin{align}
+        B_{i,0}(t) &:= \begin{cases} 1 & \text{if } t_i \le t < t_{i+1}, \\ 0 & \text{otherwise}, \end{cases} \\
+        B_{i,p}(t) &:= \frac{t - t_i}{t_{i+p} - t_i} B_{i,p-1}(t) + \frac{t_{i+p+1} - t}{t_{i+p+1} - t_{i+1}} B_{i+1,p-1}(t),
+    \end{align}
+    with the convention $0/0 := 0$.
+\end{definition}
+
+\begin{theorem}[Properties of B-Splines]
+    \begin{enumerate}
+        \item \textbf{Compact Local Support:} $B_{i,p}(t) = 0$ outside $[t_i, t_{i+p+1}]$. Perturbing a single control point has strictly local effect.
+        \item \textbf{Non-negativity:} $B_{i,p}(t) \ge 0$ for all $t$.
+        \item \textbf{Partition of Unity:} $\sum_i B_{i,p}(t) = 1$ for all $t$.
+    \end{enumerate}
+\end{theorem}
+
+% -----------------------------------------------------------------------------
+\subsection{Python Implementations for Chapter 3}
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+from scipy.interpolate import CubicSpline, PchipInterpolator
+
+def solve_thomas(a, b, c, d):
+    """
+    Solves a tridiagonal system Ax = d in O(N) flops using the Thomas algorithm.
+    a: subdiagonal (length N-1), b: main diagonal (length N), c: superdiagonal (length N-1).
+    """
+    n = len(b)
+    c_star = np.zeros(n - 1)
+    d_star = np.zeros(n)
+    
+    # Forward sweep
+    c_star[0] = c[0] / b[0]
+    d_star[0] = d[0] / b[0]
+    for i in range(1, n - 1):
+        denom = b[i] - a[i - 1] * c_star[i - 1]
+        c_star[i] = c[i] / denom
+        d_star[i] = (d[i] - a[i - 1] * d_star[i - 1]) / denom
+    denom = b[-1] - a[-1] * c_star[-1]
+    d_star[-1] = (d[-1] - a[-1] * d_star[-2]) / denom
+    
+    # Back substitution
+    x = np.zeros(n)
+    x[-1] = d_star[-1]
+    for i in range(n - 2, -1, -1):
+        x[i] = d_star[i] - c_star[i] * x[i + 1]
+    return x
+
+def natural_cubic_spline_slopes(x, y):
+    """
+    Constructs the tridiagonal system for a natural cubic spline s''(x_0)=s''(x_N)=0
+    and solves for slopes c_j = s'(x_j) in O(N) flops.
+    """
+    N = len(x) - 1
+    h = np.diff(x)
+    d = np.diff(y) / h
+    
+    b = np.zeros(N + 1)
+    a = np.zeros(N)
+    c = np.zeros(N)
+    rhs = np.zeros(N + 1)
+    
+    # Natural boundary at x_0: 2 c_0 + c_1 = 3 d_0
+    b[0] = 2.0; c[0] = 1.0; rhs[0] = 3.0 * d[0]
+    
+    # Interior knots
+    for j in range(1, N):
+        a[j - 1] = 1.0 / h[j - 1]
+        b[j] = 2.0 * (1.0 / h[j - 1] + 1.0 / h[j])
+        c[j] = 1.0 / h[j]
+        rhs[j] = 3.0 * (d[j - 1] / h[j - 1] + d[j] / h[j])
+        
+    # Natural boundary at x_N: c_{N-1} + 2 c_N = 3 d_{N-1}
+    a[N - 1] = 1.0; b[N] = 2.0; rhs[N] = 3.0 * d[-1]
+    
+    return solve_thomas(a, b, c, rhs)
+\end{lstlisting}

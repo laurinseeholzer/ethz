@@ -1,134 +1,134 @@
-\section{Datenschutzrecht (DSG)}
+\section{Datenschutzrecht (revDSG ab Sept. 2023)}
 
-\subsection{Grundbegriffe und Geltungsbereich}
+\subsection{Geltungsbereich und der relative Personenbezug}
+
+Das am 1. September 2023 in Kraft getretene totalrevidierte Schweizer Datenschutzgesetz (revDSG) bezweckt den Schutz der Persönlichkeit und der Grundrechte von Personen, über die Daten bearbeitet werden. Der Gesetzgeber hat den Geltungsbereich grundlegend harmonisiert:
+
+\begin{theorem}
+    \textbf{Ausschliesslicher Schutz natürlicher Personen:} \\
+    Das revDSG schützt \textbf{nur noch lebende natürliche Personen}. Der Schutz von Daten juristischer Personen (AG, GmbH, Vereine) wurde mit der Revision 2023 \textbf{ersatzlos gestrichen}! Daten von Unternehmen fallen ausschliesslich unter das Geschäftsgeheimnis (Art. 162 StGB) oder das Lauterkeitsrecht (UWG).
+\end{theorem}
+
+Ein Datum gilt als \textbf{Personendatum} (Art. 5 lit. a DSG), wenn es sich auf eine bestimmte oder bestimmbare Person bezieht. Nach dem in der Schweiz geltenden \textbf{relativen Bestimmbarkeitsbegriff} ist eine Person bestimmbar, wenn der Bearbeiter mit zumutbarem Aufwand und unter Berücksichtigung seines konkreten Interesses in der Lage ist, die Identität festzustellen (z.B. durch Verknüpfung von IP-Adressen mit Logfiles).
+
+\subsection{Besonders schützenswerte Daten und die Finanzdaten-Falle}
+
+Das Gesetz knüpft an bestimmte sensible Datenkategorien strengere Anforderungen (z.B. Pflicht zur ausdrücklichen Einwilligung bei Profiling mit hohem Risiko oder erhöhte Sicherheitsanforderungen):
 
 \begin{definition}
-    \textbf{Geltungsbereich des Schweizer Datenschutzgesetzes (revDSG):} Das revidierte DSG bezweckt den Schutz der Persönlichkeit und der Grundrechte natürlicher Personen, über die Personendaten bearbeitet werden (Art. 1 DSG). Juristische Personen fallen seit der Revision 2023 nicht mehr unter den Schutzbereich des DSG.
-\end{definition}
-
-\begin{definition}
-    \textbf{Kategorien von Daten:}
+    \textbf{Katalog der besonders schützenswerten Personendaten (Art. 5 lit. c DSG):}
     \begin{itemize}
-        \item \textbf{Personendaten (Art. 5 lit. a DSG):} Alle Angaben, die sich auf eine bestimmte oder bestimmbare natürliche Person beziehen. Bestimmbar ist eine Person, wenn sie direkt oder über Zusatzwissen (z.B. Verknüpfung mit Logfiles, Cookie-IDs, dynamischen IP-Adressen oder Verhaltensmustern) identifiziert werden kann.
-        \item \textbf{Besonders schützenswerte Personendaten (Art. 5 lit. c DSG):} Daten über:
-        \begin{itemize}
-            \item religiöse, weltanschauliche, politische oder gewerkschaftliche Ansichten oder Tätigkeiten,
-            \item die Gesundheit, die Intimsphäre oder die Zugehörigkeit zu einer Rasse oder Ethnie,
-            \item genetische Daten und biometrische Daten, die eine Person eindeutig identifizieren,
-            \item verwaltungs- und strafrechtliche Verfolgungen oder Sanktionen,
-            \item Massnahmen der sozialen Hilfe.
-        \end{itemize}
+        \item Daten über religiöse, weltanschauliche, politische oder gewerkschaftliche Ansichten oder Tätigkeiten.
+        \item Daten über die Gesundheit, die Intimsphäre oder die Rasse bzw. Ethnie.
+        \item Genetische Daten sowie biometrische Daten, die eine Person eindeutig identifizieren (z.B. Face-ID, Fingerprint).
+        \item Daten über verwaltungs- und strafrechtliche Verfolgungen oder Sanktionen sowie Massnahmen der sozialen Hilfe.
     \end{itemize}
 \end{definition}
 
 \begin{remark}
-    \textbf{Anonymisierung vs. Pseudonymisierung:}
-    \begin{itemize}
-        \item \textbf{Anonymisierung:} Der Personenbezug wird irreversibel vernichtet, sodass die betroffene Person von niemandem mehr identifiziert werden kann. Vollständig anonymisierte Daten fallen nicht mehr unter das DSG.
-        \item \textbf{Pseudonymisierung:} Der Name oder Identifikator wird durch ein Pseudonym ersetzt (z.B. User-ID), wobei der Zuordnungsschlüssel getrennt aufbewahrt wird. Da der Personenbezug mit dem Schlüssel wiederhergestellt werden kann, bleiben pseudonymisierte Daten vollwertige Personendaten im Sinne des DSG.
-        \item \textbf{Re-Identifikationsrisiko bei Big Data:} Bei umfangreichen Datenmengen genügt oft die Korrelation weniger Merkmale (z.B. PLZ, Geburtsdatum, Geschlecht), um scheinbar anonyme Datensätze eindeutig konkreten Personen zuzuordnen.
-    \end{itemize}
+    \textbf{Die grosse Finanzdaten-Falle:} \\
+    Kontostände, Kreditkartendaten, Steuererklärungen, Löhne oder Bonitäts-Scores sind im Schweizer Recht \textbf{KEINE besonders schützenswerten Personendaten}! Sie gelten als gewöhnliche Personendaten. Der Katalog in Art. 5 lit. c DSG ist abschliessend (Numerus clausus).
 \end{remark}
 
-\subsection{Bearbeitungsgrundsätze (Art. 6 und 7 DSG)}
+\subsection{Systemvergleich: Opt-out (Schweiz) vs. Verbotsprinzip (EU DSGVO)}
+
+Im Grundansatz unterscheidet sich das Schweizer Recht diametral von der europäischen DSGVO:
 
 \begin{theorem}
-    \textbf{Zwingende Bearbeitungsgrundsätze (Art. 6 DSG):} Jede Datenbearbeitung muss den folgenden Grundsätzen genügen:
-    \begin{enumerate}
-        \item \textbf{Rechtmässigkeit:} Datenbearbeitungen dürfen nicht gegen Rechtsnormen verstossen.
-        \item \textbf{Treu und Glauben (Transparenz):} Die Datenbeschaffung und deren Zweck müssen für die betroffene Person erkennbar sein; keine heimliche oder irreführende Datenbeschaffung.
-        \item \textbf{Zweckbindung:} Personendaten dürfen nur zu dem Zweck beschafft werden, der bei der Beschaffung angegeben wurde, aus den Umständen ersichtlich oder gesetzlich vorgesehen ist.
-        \item \textbf{Verhältnismässigkeit:} Die Bearbeitung muss zur Erreichung des Zwecks geeignet und erforderlich sein (Datenminimierung: nur so viele Daten wie nötig bearbeiten und so früh wie möglich löschen).
-        \item \textbf{Richtigkeit:} Wer Personendaten bearbeitet, muss sich über deren Richtigkeit vergewissern; unrichtige Daten müssen korrigiert oder gelöscht werden.
-        \item \textbf{Datensicherheit (Art. 8 DSG):} Angemessene technische und organisatorische Massnahmen (TOMs) gegen unbefugte Bearbeitung, Verlust oder Zerstörung.
-    \end{enumerate}
-\end{theorem}
-
-\begin{important}
-    \textbf{Legalitätsprinzip und Opt-out im Schweizer Recht:} \\
-    Die Bearbeitung von Personendaten ist grundsätzlich \textbf{erlaubt}, solange kein Bearbeitungsgrundsatz verletzt wird und kein Widerspruch der betroffenen Person vorliegt.
-    
-    Eine explizite Einwilligung (Opt-in) ist nach Schweizer Recht nur erforderlich bei besonders schützenswerten Daten, hochriskantem Profiling oder wenn eine Persönlichkeitsverletzung vorliegt, die nicht durch ein überwiegendes privates/öffentliches Interesse oder Gesetz gerechtfertigt ist.
-\end{important}
-
-\subsection{Rollenverteilung und Datenübermittlung}
-
-\begin{definition}
-    \textbf{Verantwortlicher vs. Auftragsbearbeiter:}
+    \textbf{Erlaubnisprinzip mit Schranken vs. Verbotsprinzip:}
     \begin{itemize}
-        \item \textbf{Verantwortlicher (Controller, Art. 5 lit. j DSG):} Die private Person oder das Bundesorgan, die allein oder zusammen mit anderen über den Zweck und die Mittel der Bearbeitung entscheidet. Trägt die Hauptverantwortung für die Einhaltung des DSG.
-        \item \textbf{Auftragsbearbeiter (Processor, Art. 5 lit. k DSG):} Bearbeitet Personendaten ausschliesslich im Auftrag und nach Weisung des Verantwortlichen (z.B. Cloud-Provider, SaaS-Anbieter).
-        \item \textbf{Auftragsbearbeitungsvertrag (AVV / DPA, Art. 9 DSG):} Die Delegation erfordert eine vertragliche oder gesetzliche Vereinbarung, die sicherstellt, dass der Auftragsbearbeiter Daten nur so bearbeitet, wie es der Verantwortliche selbst tun dürfte, und die Datensicherheit gewährleistet. Sub-Auftragsbearbeiter bedürfen der vorherigen Genehmigung.
-    \end{itemize}
-\end{definition}
-
-\begin{theorem}
-    \textbf{Bekanntgabe von Personendaten ins Ausland (Art. 16 f. DSG):}
-    Personendaten dürfen grundsätzlich nur dann ins Ausland bekanntgegeben werden, wenn der Zielstaat einen \textbf{angemessenen Datenschutz} gewährleistet (Staatenliste des Bundesrats, z.B. alle EU/EWR-Staaten sowie das Swiss-US Data Privacy Framework).
-    
-    Fehlt ein Angemessenheitsbeschluss (z.B. USA ohne DPF, sonstige Drittstaaten), ist ein Export nur zulässig bei:
-    \begin{itemize}
-        \item Geeigneten Garantien, insbesondere durch vom EDÖB anerkannte \textbf{Standardvertragsklauseln (EU Standard Contractual Clauses mit Schweizer Anpassung)}, oder
-        \item Ausnahmetatbeständen im Einzelfall (ausdrückliche Einwilligung, unmittelbare Vertragserfüllung).
+        \item \textbf{Schweizer revDSG (Opt-out-System):} Die Bearbeitung von Personendaten durch private Personen ist grundsätzlich \textbf{erlaubt}, solange die gesetzlichen Bearbeitungsgrundsätze (Art. 6 \& 8 DSG) eingehalten werden. Eine ausdrückliche Einwilligung ist im Regelfall \textbf{NICHT erforderlich}!
+        \item \textbf{Die 6 Bearbeitungsgrundsätze (Art. 6 \& 8 DSG):} (1) Rechtmässigkeit, (2) Treu und Glauben (Transparenz), (3) Zweckbindung, (4) Verhältnismässigkeit (Datenminimierung), (5) Richtigkeit und (6) Datensicherheit.
+        \item \textbf{Rechtfertigungsgründe (Art. 31 DSG):} Eine Rechtfertigung (z.B. Einwilligung oder überwiegendes privates Interesse) ist nur dann nötig, wenn eine Persönlichkeitsverletzung vorliegt. Die Abwicklung eines Vertrages (Art. 31 Abs. 2 lit. a DSG) stellt von Gesetzes wegen ein ausreichendes Rechtfertigungsinteresse dar!
+        \item \textbf{EU DSGVO (Opt-in / Verbotsprinzip):} Jede Datenbearbeitung ist grundsätzlich verboten, es sei denn, es liegt einer der sechs gesetzlichen Erlaubnistatbestände von Art. 6 DSGVO (wie z.B. Einwilligung) vor.
     \end{itemize}
 \end{theorem}
 
-\subsection{Betroffenenrechte und Organisatorisches}
+\subsection{Rollenverteilung: Verantwortlicher vs. Auftragsbearbeiter}
+
+Das Gesetz unterscheidet klar zwischen zwei Rollen in der Bearbeitungskette:
 
 \begin{definition}
-    \textbf{Rechte der betroffenen Personen:}
+    \textbf{Controller vs. Processor (Art. 5 lit. j und k DSG):}
     \begin{itemize}
-        \item \textbf{Auskunftsrecht (Art. 25 DSG):} Jede Person kann unentgeltlich verlangen, ob und welche Personendaten über sie bearbeitet werden, zu welchem Zweck und an wen sie übermittelt wurden (Frist: in der Regel innert 30 Tagen).
-        \item \textbf{Berichtigung und Löschung:} Recht auf Berichtigung unrichtiger Daten oder Löschung unrechtmässig bearbeiteter Daten.
-        \item \textbf{Recht auf Datenherausgabe und -übertragung (Datenportabilität, Art. 28 DSG):} Recht auf Aushändigung der eigenen Daten in einem gängigen elektronischen Format oder Übertragung an einen Drittanbieter.
+        \item \textbf{Verantwortlicher (Controller):} Die private Person oder das Bundesorgan, die allein oder gemeinsam über den \textbf{Zweck und die wesentlichen Mittel} der Datenbearbeitung entscheidet. Sie trägt die Hauptverantwortung für die Rechtmässigkeit.
+        \item \textbf{Auftragsbearbeiter (Processor):} Bearbeitet Daten rein im Auftrag und nach den \textbf{Weisungen} des Verantwortlichen (z.B. Hosting-Provider, SaaS-Anbieter).
+        \item \textbf{Auftragsbearbeitungsvertrag (AVV / DPA, Art. 9 DSG):} Der Verantwortliche muss vertraglich sicherstellen, dass der Auftragsbearbeiter Daten nur so bearbeitet, wie er es selbst tun dürfte, und die notwendige IT-Sicherheit garantiert.
     \end{itemize}
 \end{definition}
 
-\begin{definition}
-    \textbf{Organisatorische Unternehmenspflichten:}
+\subsection{Auslandstransfer von Daten (Art. 16 f. DSG)}
+
+Sollen Personendaten ins Ausland übermittelt oder auf Servern im Ausland gespeichert werden, prüft das Gesetz das Datenschutzniveau des Empfängerstaates:
+\begin{center}
+    \textbf{Staatenliste des Bundesrats} (Angemessenheit) $\;\lor\;$ \textbf{Standardvertragsklauseln (SCC) + TIA}
+\end{center}
+
+Gewährleistet der Zielstaat einen angemessenen Schutz (wie alle EU/EWR-Staaten oder US-Unternehmen, die nach dem Swiss-US Data Privacy Framework zertifiziert sind), ist der Transfer frei. Fehlt ein Angemessenheitsbeschluss (z.B. Drittstaaten), müssen \textbf{Standardvertragsklauseln (EU SCCs mit Schweizer Addendum)} abgeschlossen und ein \textbf{Transfer Impact Assessment (TIA)} durchgeführt werden.
+
+\subsection{Betroffenenrechte und Data Breaches}
+
+Das revDSG stärkt die Rechte der Bürger und verpflichtet Unternehmen zu Transparenz:
+
+\begin{theorem}
+    \textbf{Auskunftsbegehren und Meldepflicht bei Sicherheitsvorfällen:}
     \begin{itemize}
-        \item \textbf{Datenschutzerklärung (DSE, Art. 19 DSG):} Umfassende Informationspflicht bei der Beschaffung von Personendaten (Identität, Zweck, Empfänger, Auslandstransfers).
-        \item \textbf{Datenschutz-Folgenabschätzung (DSFA, Art. 22 DSG):} Pflicht zur vorgängigen schriftlichen Risikoanalyse bei Bearbeitungen, die ein hohes Risiko für die Persönlichkeit mit sich bringen (z.B. flächendeckende Videoüberwachung, Scoring, KI-Profiling).
-        \item \textbf{Privacy by Design \& Privacy by Default (Art. 7 DSG):} Systeme müssen ab Entwicklung datenschutzfreundlich konzipiert sein; Voreinstellungen müssen auf das Minimum an Datenbearbeitung beschränkt sein.
-        \item \textbf{Meldepflicht bei Datenschutzverletzungen (Data Breaches, Art. 24 DSG):} Verletzungen der Datensicherheit mit hohem Risiko für die Betroffenen müssen unverzüglich dem Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten (EDÖB) gemeldet werden.
+        \item \textbf{Auskunftsrecht (Art. 25 DSG):} Jede Person kann vom Verantwortlichen Auskunft verlangen, ob und welche Daten über sie bearbeitet werden. Die Auskunft ist in der Regel \textbf{kostenlos} und muss innert \textbf{30 Tagen} erteilt werden (Art. 16 DSV).
+        \item \textbf{Meldepflicht bei Data Breaches (Art. 24 DSG):} Verletzungen der Datensicherheit, die zu einem hohen Risiko für die Persönlichkeit führen (z.B. Datenabfluss durch Ransomware), müssen dem Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten (EDÖB) \textbf{so rasch als möglich} gemeldet werden (keine starre 72-Stunden-Frist wie in der EU).
+    \end{itemize}
+\end{theorem}
+
+\subsection{Strafbestimmungen: Bussen bis CHF 250'000 (Art. 60 ff. DSG)}
+
+Die strafrechtlichen Sanktionen des revDSG gehören zu den am meisten missverstandenen Themen im Schweizer Recht:
+
+\begin{theorem}
+    \textbf{MC-Kernregeln zu den Strafbestimmungen:}
+    \begin{itemize}
+        \item \textbf{Täterkreis:} Bestraft werden \textbf{ausschliesslich vorsätzlich handelnde NATÜRLICHE PERSONEN} (z.B. Geschäftsführer, IT-Leiter, Projektverantwortliche). \textbf{NIEMALS das Unternehmen!}
+        \item \textbf{Strafmass:} Bussen bis zu \textbf{CHF 250'000.--}.
+        \item \textbf{Keine Versicherung möglich:} Da es sich um eine persönliche Kriminalstrafe handelt, darf die Busse \textbf{nicht vom Unternehmen bezahlt oder von einer D\&O-Versicherung übernommen werden}!
+        \item \textbf{Fahrlässigkeit ist straflos:} Handeln aus Fahrlässigkeit zieht keine Busse nach Art. 60 ff. DSG nach sich.
+        \item \textbf{Zuständigkeit:} Der EDÖB kann \textbf{keine Bussen verhängen}! Strafverfahren werden von den kantonalen Staatsanwaltschaften geführt.
+    \end{itemize}
+\end{theorem}
+
+\subsection{Marketing: Spam-Verbot (UWG) vs. Cookies (FMG)}
+
+Im Bereich des digitalen Marketings greifen spezifische Normen des Fernmelde- und Lauterkeitsrechts:
+
+\begin{definition}
+    \textbf{Spam-Verbot (Opt-in) vs. Cookies (Opt-out):}
+    \begin{itemize}
+        \item \textbf{Spam-Verbot (Art. 3 Abs. 1 lit. o UWG):} Der massenhafte Versand von Werbe-E-Mails verlangt zwingend ein vorheriges \textbf{Opt-in} (ausdrückliche Einwilligung), korrekte Absenderangaben und einen funktionierenden Abmeldelink. \textbf{Ausnahme:} Bestehende Kunden dürfen für eigene ähnliche Waren ohne Vorab-Opt-in beworben werden, wenn sie bei der Erhebung und bei jeder Sendung auf das Ablehnungsrecht hingewiesen wurden.
+        \item \textbf{Cookies und Tracking (Art. 45c FMG):} Im Schweizer Recht gilt beim Setzen von Cookies das \textbf{Opt-out-Prinzip}. Es genügt, wenn die Website in der Datenschutzerklärung transparent über Zweck und Bearbeitung informiert und der Nutzer das Tracking ablehnen kann. Ein vorgeschaltetes Cookie-Consent-Banner ist nach Schweizer Recht \textbf{nicht gesetzlich zwingend}!
     \end{itemize}
 \end{definition}
 
-\begin{important}
-    \textbf{Strafbestimmungen (Art. 60 ff. DSG):}
-    Bei vorsätzlichen Verstössen gegen zentrale DSG-Vorschriften drohen \textbf{persönliche Bussen bis zu CHF 250'000.--}:
-    \begin{itemize}
-        \item Bestraft wird die handelnde \textbf{natürliche Person} (z.B. Geschäftsführer, IT-Leiter, Datenschutzbeauftragter), nicht das Unternehmen!
-        \item Strafbar sind u.a.: Falsche oder verweigerte Auskunft (Art. 25 DSG), Verletzung der Informationspflicht (Art. 19 DSG), Missachtung von Sorgfaltspflichten bei der Auftragsbearbeitung oder beim Auslandstransfer sowie Verletzung der beruflichen Schweigepflicht.
-    \end{itemize}
-\end{important}
-
-\subsection{Sonderfälle und Begleitgesetze}
-
-\begin{definition}
-    \textbf{Spam-Verbot im E-Commerce (Art. 3 Abs. 1 lit. o UWG):}
-    Wer Massenwerbung per E-Mail, SMS oder Messenger versendet, handelt unlauter, wenn nicht vorgängig die \textbf{Einwilligung der Kunden} eingeholt wurde (\textbf{Opt-in-Pflicht}), der korrekte Absender nicht genannt wird oder keine einfache, kostenlose Ablehnungsmöglichkeit vorhanden ist.
-    
-    \textbf{Ausnahme (Kundenbeziehung):} Keine vorherige Einwilligung nötig, wenn:
-    \begin{enumerate}
-        \item der Händler die Kontaktadresse beim Verkauf von Waren oder Dienstleistungen erhalten hat,
-        \item die Werbung ausschliesslich eigene, ähnliche Waren oder Dienstleistungen betrifft, und
-        \item dem Kunden bereits bei der Erhebung und bei jeder Sendung eine klare Abmeldemöglichkeit geboten wird.
-    \end{enumerate}
-\end{definition}
+\subsection{Künstliche Intelligenz: revDSG vs. EU AI Act}
 
 \begin{remark}
-    \textbf{Sterneintrag und Telefonwerbung (Art. 3 Abs. 1 lit. u UWG):}
-    Unlauter handelt, wer den Vermerk im Telefonbuch (,,Sterneintrag``), dass ein Kunde keine Werbeanrufe wünscht, missachtet und Werbeanrufe tätigt.
+    \textbf{Abgrenzung: revDSG vs. EU AI Act:} \\
+    Der EU AI Act ist \textbf{kein Datenschutzrecht}, sondern harmonisiertes \textbf{Produktsicherheitsrecht} für das Inverkehrbringen und den Betrieb von KI-Systemen:
+    \begin{itemize}
+        \item \textbf{Rechtsnatur:} Während das revDSG den Schutz der Persönlichkeit natürlicher Personen bei der Datenbearbeitung bezweckt, regelt der AI Act technische Sicherheits- und Risikoklassen von Software.
+        \item \textbf{Risikostufen:} Verbotene KI (z.B. Social Scoring, biometrische Fernidentifikation in Echtzeit) $\to$ Hochrisiko-KI (z.B. HR-Bewerbungstools, kritische Infrastruktur: strenge Konformitätsprüfungen) $\to$ Transparenzpflichten (z.B. Kennzeichnungspflicht für Chatbots, Deepfakes und KI-generierte Inhalte).
+    \end{itemize}
+    \textit{(Achtung MC-Falle: Compliance mit dem DSG/der DSGVO bedeutet nicht automatisch Compliance mit dem AI Act -- es sind zwei völlig getrennte Gesetzeswerke!)}
 \end{remark}
 
-\begin{definition}
-    \textbf{EU AI Act (Überblick und Relevanz für die Schweiz):}
-    Die Europäische Union reguliert Künstliche Intelligenz nach einem risikobasierten Ansatz:
+\begin{important}
+    \textbf{Typische MC-Fallen zu Kapitel 5:}
     \begin{itemize}
-        \item \textbf{Inakzeptables Risiko:} Vollständig verboten (z.B. Social Scoring, manipulative Verhaltensbeeinflussung, biometrische Echtzeitüberwachung).
-        \item \textbf{Hohes Risiko (High-Risk AI):} Strenge Zulassungsvoraussetzungen (Konformitätsbewertung, Risikomanagementsystem, hohe Datenqualität, Transparenz, menschliche Aufsicht; z.B. KI in kritischer Infrastruktur, HR-Bewerberscreening, Kreditwürdigkeitsprüfung).
-        \item \textbf{Minimales/Geringes Risiko:} Transparenzpflichten (z.B. Kennzeichnung von KI-generierten Inhalten / Deepfakes, Offenlegung von Chatbots).
+        \item \textbf{Falle 1 (Unternehmensbussen nach revDSG):} ,,Ein Schweizer Konzern missachtet vorsätzlich Informationspflichten und wird vom EDÖB mit einer Busse von CHF 250'000.-- bestraft.`` \\
+        $\rightarrow$ \textbf{FALSCH!} Das Schweizer DSG kennt \textbf{keine Unternehmensbussen}; bestraft wird ausschliesslich die handelnde natürliche Person. Zudem kann der EDÖB gar keine Bussen verhängen.
+        \item \textbf{Falle 2 (Bankdaten als besonders schützenswert):} ,,Weil Bankdaten unter das Bankkundengeheimnis fallen, sind sie nach Art. 5 lit. c DSG besonders schützenswerte Personendaten.`` \\
+        $\rightarrow$ \textbf{FALSCH!} Finanz- und Bankdaten sind \textbf{keine besonders schützenswerten Personendaten}!
+        \item \textbf{Falle 3 (Datenschutz für Gesellschaften):} ,,Eine AG kann gestützt auf das revDSG von Google verlangen, negative Firmeneinträge zu löschen.`` \\
+        $\rightarrow$ \textbf{FALSCH!} Das revDSG schützt seit September 2023 \textbf{nur noch natürliche Personen}.
+        \item \textbf{Falle 4 (Zwang zu Cookie-Bannern):} ,,Jede Schweizer Website, die Google Analytics einsetzt, muss zwingend ein Opt-in-Cookie-Banner vorschalten.`` \\
+        $\rightarrow$ \textbf{FALSCH!} Nach Art. 45c FMG gilt in der Schweiz das \textbf{Opt-out-Prinzip}; Information in der Datenschutzerklärung genügt.
+        \item \textbf{Falle 5 (DSG- und AI-Act-Compliance):} ,,Ein Unternehmen, das die Vorgaben des revDSG bzw. der DSGVO für KI einhält, erfüllt automatisch auch den EU AI Act.`` \\
+        $\rightarrow$ \textbf{FALSCH!} Der AI Act ist Produktsicherheitsrecht, kein Datenschutzrecht; es handelt sich um zwei völlig getrennte Gesetzeswerke!
     \end{itemize}
-    \textbf{Auswirkung auf Schweizer Unternehmen:} Schweizer Firmen unterliegen dem EU AI Act direkt, sobald sie KI-Systeme im EU-Markt in Verkehr bringen oder die Outputs ihrer KI in der EU genutzt werden (Marktortprinzip).
-\end{definition}
+\end{important}

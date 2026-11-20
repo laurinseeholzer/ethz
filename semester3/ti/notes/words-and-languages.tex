@@ -1,0 +1,147 @@
+\section{Symbole, Alphabete, Wörter, Sprachen und algorithmische Probleme}
+
+Die theoretische Informatik modelliert Information und Berechnung auf der Basis diskreter Symbole und Zeichenketten. Dieses Kapitel legt das formale Fundament für alle nachfolgenden Berechnungsmodelle.
+
+\subsection{Symbole, Alphabete und Wörter}
+
+\begin{definition}[Alphabet und Symbole]
+    Ein \textbf{Alphabet} $\Sigma$ ist eine nichtleere, endliche Menge von Zeichen, die wir als \textbf{Symbole} oder \textbf{Buchstaben} bezeichnen.
+\end{definition}
+
+\begin{beispiel}[Standardalphabete]
+    Typische Alphabete in der Informatik sind:
+    \begin{itemize}
+        \item Das binäre Alphabet $\Sigma_{\mathrm{bin}} = \{0, 1\}$,
+        \item Das lateinische Alphabet $\Sigma_{\mathrm{lat}} = \{a, b, \dots, z\}$,
+        \item Das logische Alphabet $\Sigma_{\mathrm{log}} = \{0, 1, \land, \lor, \neg, (, )\}$.
+    \end{itemize}
+\end{beispiel}
+
+\begin{definition}[Wort und Wortlänge]
+    Ein \textbf{Wort} $w$ über einem Alphabet $\Sigma$ ist eine endliche Folge von Symbolen aus $\Sigma$:
+    \[
+        w = a_1 a_2 \dots a_n \quad \text{mit } a_i \in \Sigma \text{ für } 1 \le i \le n.
+    \]
+    Die \textbf{Länge} des Wortes, notiert als $|w|$, ist die Anzahl der Symbolvorkommen ($|w| = n$).
+    Das eindeutige Wort der Länge 0 heißt \textbf{leeres Wort} und wird mit $\lambda$ (oder $\varepsilon$) bezeichnet ($|\lambda| = 0$).
+\end{definition}
+
+\begin{definition}[Operationen auf Wörtern]
+    Seien $u = a_1 \dots a_n$ und $v = b_1 \dots b_m$ Wörter über $\Sigma$.
+    \begin{itemize}
+        \item \textbf{Konkatenation (Verkettung):}
+        $u \cdot v = uv = a_1 \dots a_n b_1 \dots b_m$.
+        Die Konkatenation ist assoziativ, und $\lambda$ ist das neutrale Element:
+        \[
+            (u \cdot v) \cdot w = u \cdot (v \cdot w), \qquad u \cdot \lambda = \lambda \cdot u = u.
+        \]
+        \item \textbf{Wortumkehrung (Spiegelung):}
+        $w^R = (a_1 a_2 \dots a_n)^R = a_n \dots a_2 a_1$ mit $\lambda^R = \lambda$.
+        Es gilt stets $(uv)^R = v^R u^R$.
+        \item \textbf{Wortpotenz (Iteration):}
+        Für $k \in \mathbb{N}$ ist $w^k$ definiert durch $w^0 = \lambda$ und $w^{k+1} = w^k \cdot w$.
+        \item \textbf{Symbolzählung:} Für $a \in \Sigma$ bezeichnet $|w|_a$ die Häufigkeit des Symbols $a$ im Wort $w$.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[Präfix, Suffix und Teilwort]
+    Sei $w \in \Sigma^*$. Ein Wort $v \in \Sigma^*$ heißt:
+    \begin{itemize}
+        \item \textbf{Präfix} von $w$, falls ein $z \in \Sigma^*$ existiert mit $w = vz$ (echtes Präfix, falls $v \neq w$),
+        \item \textbf{Suffix} von $w$, falls ein $u \in \Sigma^*$ existiert mit $w = uv$ (echtes Suffix, falls $v \neq w$),
+        \item \textbf{Teilwort} (Teilstring / Faktor) von $w$, falls $u, z \in \Sigma^*$ existieren mit $w = uvz$.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[Kanonische / Quasilexikographische Ordnung]
+    Sei $\Sigma$ durch eine lineare Ordnung seiner Symbole geordnet ($s_1 < s_2 < \dots < s_k$). Die \textbf{kanonische Ordnung} $\le_{\mathrm{kan}}$ auf $\Sigma^*$ ordnet Wörter primär nach ihrer Länge und sekundär lexikographisch:
+    \[
+        u \le_{\mathrm{kan}} v \iff (|u| < |v|) \;\lor\; (|u| = |v| \land u \le_{\mathrm{lex}} v).
+    \]
+    Für $\Sigma = \{0, 1\}$ mit $0 < 1$ lautet die kanonische Aufzählung aller Wörter:
+    \[
+        \lambda, 0, 1, 00, 01, 10, 11, 000, 001, \dots
+    \]
+    Dies induziert eine Bijektion zwischen $\mathbb{N}$ und $\Sigma^*$ und beweist die Abzählbarkeit von $\Sigma^*$.
+\end{definition}
+
+% -----------------------------------------------------------------------------
+\subsection{Formale Sprachen und Sprachoperationen}
+
+\begin{definition}[Formale Sprache und Kleenesche Hülle]
+    Sei $\Sigma$ ein Alphabet.
+    \begin{itemize}
+        \item Die Menge aller endlichen Wörter über $\Sigma$ ist die \textbf{Kleenesche Hülle}:
+        \[
+            \Sigma^* = \bigcup_{k=0}^\infty \Sigma^k \quad \text{mit } \Sigma^0 = \{\lambda\}, \; \Sigma^1 = \Sigma, \; \Sigma^k = \{a_1 \dots a_k \mid a_i \in \Sigma\}.
+        \]
+        \item $\Sigma^+ = \Sigma^* \setminus \{\lambda\} = \bigcup_{k=1}^\infty \Sigma^k$ bezeichnet die Menge aller nichtleeren Wörter.
+        \item Jede Teilmenge $L \subseteq \Sigma^*$ heißt \textbf{formale Sprache} über dem Alphabet $\Sigma$.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[Sprachoperationen]
+    Seien $L, L_1, L_2 \subseteq \Sigma^*$ Sprachen über $\Sigma$.
+    \begin{itemize}
+        \item \textbf{Mengenoperationen:}
+        Vereinigung $L_1 \cup L_2$, Schnitt $L_1 \cap L_2$, Differenz $L_1 \setminus L_2$ sowie das Komplement $L^c = \Sigma^* \setminus L$.
+        \item \textbf{Produkt (Konkatenation von Sprachen):}
+        \[
+            L_1 \cdot L_2 = \{uv \mid u \in L_1, v \in L_2\}.
+        \]
+        \item \textbf{Sprachpotenz:}
+        $L^0 = \{\lambda\}$, $L^1 = L$ und $L^{k+1} = L^k \cdot L$ für alle $k \ge 0$.
+        \item \textbf{Kleene-Stern (Iterierte Hülle):}
+        \[
+            L^* = \bigcup_{k=0}^\infty L^k = L^0 \cup L^1 \cup L^2 \cup \dots
+        \]
+        \item \textbf{Kleene-Plus:}
+        \[
+            L^+ = \bigcup_{k=1}^\infty L^k = L \cdot L^*.
+        \]
+    \end{itemize}
+\end{definition}
+
+\begin{lemma}[Algebraische Eigenschaften von Sprachoperationen]
+    Für beliebige Sprachen $L, L_1, L_2, L_3 \subseteq \Sigma^*$ gilt:
+    \begin{align*}
+        L(L_1 \cup L_2) &= LL_1 \cup LL_2 \quad \text{(Distributivität über der Vereinigung)}, \\
+        L(L_1 \cap L_2) &\subseteq LL_1 \cap LL_2 \quad \text{(echte Inklusion im Allgemeinen)}.
+    \end{align*}
+\end{lemma}
+
+\begin{beispiel}[Echte Inklusion bei Schnitt]
+    Sei $L = \{a, ab\}$, $L_1 = \{b\}$, $L_2 = \{\lambda\}$.
+    Dann ist $L_1 \cap L_2 = \emptyset$, also $L(L_1 \cap L_2) = \emptyset$.
+    Jedoch ist $LL_1 = \{ab, abb\}$ und $LL_2 = \{a, ab\}$, sodass $LL_1 \cap LL_2 = \{ab\} \neq \emptyset$.
+\end{beispiel}
+
+% -----------------------------------------------------------------------------
+\subsection{Algorithmische Probleme und Entscheidungsprobleme}
+
+In der theoretischen Informatik werden Berechnungsprobleme durch Abbildungen über Alphabethüllen formuliert.
+
+\begin{definition}[Algorithmisches Problem]
+    Ein \textbf{algorithmisches Problem} ist eine Funktion
+    \[
+        f : D \to \Sigma_{\mathrm{out}}^* \quad \text{mit } D \subseteq \Sigma_{\mathrm{in}}^*.
+    \]
+    Gesucht ist ein mechanisches Verfahren (Algorithmus), das für jede zulässige Eingabe $x \in D$ nach endlich vielen elementaren Rechenschritten den Funktionswert $f(x)$ berechnet und ausgibt.
+\end{definition}
+
+\begin{definition}[Entscheidungsproblem und Spracherkennung]
+    Ein \textbf{Entscheidungsproblem} ist ein Problem mit binärem Ausgabealphabet $\{\mathrm{Ja}, \mathrm{Nein}\}$ bzw.\ $\{0, 1\}$.
+    Jedes Entscheidungsproblem korrespondiert bijektiv zu einer Sprache $L \subseteq \Sigma^*$:
+    \[
+        x \in L \iff \text{Die Antwort für Instanz } x \text{ lautet "`Ja"'}.
+    \]
+    Die \textbf{charakteristische Funktion} einer Sprache $L$ ist gegeben durch:
+    \[
+        \chi_L : \Sigma^* \to \{0, 1\}, \qquad \chi_L(x) = \begin{cases} 1 & \text{falls } x \in L, \\ 0 & \text{falls } x \notin L. \end{cases}
+    \]
+    Ein Algorithmus $A$ \textbf{entscheidet} die Sprache $L$, falls $A$ auf jeder Eingabe $x \in \Sigma^*$ nach endlich vielen Schritten hält und $\chi_L(x)$ ausgibt.
+\end{definition}
+
+\begin{remark}[Universalität des Wortmodells]
+    Jedes diskrete mathematische Objekt (Zahlen, Graphen, logische Formeln, Programme, Automaten) lässt sich durch eine geeignete Kodierungsfunktion $\mathrm{kod} : O \to \{0, 1\}^*$ als Binärwort darstellen. Die Theorie der formalen Sprachen erfasst somit sämtliche algorithmischen Fragestellungen ohne Beschränkung der Allgemeinheit.
+\end{remark}
